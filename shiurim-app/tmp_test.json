@@ -1,0 +1,154 @@
+<!-- ==start== dump {ts '2026-05-13 18:53:03'} format: html -->
+<div id="xpmssFVCTT3GmMDWEtM7DZw" class="-lucee-dump"><style>
+.-lucee-dump .disp-none { display: none; }
+</style>
+<script>
+window.__Lucee = { initialized : false,
+addEventListeners : function(selector, event, handler, useCapture){
+useCapture = useCapture || false;
+Array.prototype.forEach.call(
+document.querySelectorAll(selector)
+,function(el, ix) {
+el.addEventListener(event, handler, useCapture);
+}
+);
+}
+,getNextSiblings : function(el){
+var orig = el
+,result = [];
+while (el && el.nodeType === Node.ELEMENT_NODE) {
+if (el !== orig)
+result.push(el);
+el = el.nextElementSibling || el.nextSibling;
+}
+return result;
+}
+,onDocumentReady	: function(){
+var L = window.__Lucee;
+if (L.initialized)
+return;
+L.addEventListeners(".collapse-trigger", "click", function(evt){
+var tr = evt.target.closest("tr");
+var siblings = L.getNextSiblings(tr);
+siblings.forEach(function(el, ix){
+el.classList.toggle("disp-none");
+});
+});
+L.initialized = true;
+}
+}
+document.addEventListener("DOMContentLoaded", __Lucee.onDocumentReady);
+</script>
+<style type="text/css">
+div#xpmssFVCTT3GmMDWEtM7DZw table {font-family:Verdana, Geneva, Arial, Helvetica, sans-serif; font-size:11px; empty-cells:show; color:#000; border-collapse:collapse;}
+div#xpmssFVCTT3GmMDWEtM7DZw td {border:1px solid #000; vertical-align:top; padding:2px; empty-cells:show;}
+div#xpmssFVCTT3GmMDWEtM7DZw td span {font-weight:bold;}
+div#xpmssFVCTT3GmMDWEtM7DZw td.luceeN0 {color:#005122;border-color:#005122;background-color:#b7e4c7;}
+div#xpmssFVCTT3GmMDWEtM7DZw td.luceeH0 {color:#005122;border-color:#005122;background-color:#52b788;}
+div#xpmssFVCTT3GmMDWEtM7DZw td.luceeN1 {color:#990000;border-color:#990000;background-color:#fc9;}
+div#xpmssFVCTT3GmMDWEtM7DZw td.luceeH1 {color:#990000;border-color:#990000;background-color:#f60;}
+div#xpmssFVCTT3GmMDWEtM7DZw td.luceeN2 {color:#002949;border-color:#002949;background-color:#89c2d9;}
+div#xpmssFVCTT3GmMDWEtM7DZw td.luceeH2 {color:#002949;border-color:#002949;background-color:#468faf;}
+</style>
+<table title="I:\WWWRoot\Clients\YUTorah\www-classic\search\_get_search_results.cfm:691"><tr><td class="collapse-trigger luceeH2" colspan="3" style="cursor:pointer;"><span>Catch</span></td></tr><tr><td class="luceeH2">additional</td><td class="luceeN2"><table><tr><td class="collapse-trigger luceeH2" colspan="0" style="cursor:pointer;"><span>Struct (ordered)</span></td></tr></table></td></tr><tr><td class="luceeH2">Detail</td><td class="luceeN2"><table><tr><td class="luceeH1">string</td><td class="luceeN1">Only the following keys are available [ error, responseHeader, SHIURS_NOTEBOOK ].</td></tr></table></td></tr><tr><td class="luceeH2">ErrNumber</td><td class="luceeN2"><table><tr><td class="luceeH1">number</td><td class="luceeN1">0</td></tr></table></td></tr><tr><td class="luceeH2">ErrorCode</td><td class="luceeN2"><table><tr><td class="luceeH1">string</td><td class="luceeN1">0</td></tr></table></td></tr><tr><td class="luceeH2">Extended_Info</td><td class="luceeN2"><table><tr><td class="luceeH1">string</td><td class="luceeN1"></td></tr></table></td></tr><tr><td class="luceeH2">ExtendedInfo</td><td class="luceeN2"><table><tr><td class="luceeH1">string</td><td class="luceeN1"></td></tr></table></td></tr><tr><td class="luceeH2">Message</td><td class="luceeN2"><table><tr><td class="luceeH1">string</td><td class="luceeN1">The key [FACET_COUNTS] does not exist</td></tr></table></td></tr><tr><td class="luceeH2">StackTrace</td><td class="luceeN2"><table><tr><td class="luceeH1">string</td><td class="luceeN1">lucee.runtime.exp.ExpressionException: The key [FACET_COUNTS] does not exist
+at lucee.runtime.type.util.StructSupport.invalidKey(StructSupport.java:67)
+at lucee.runtime.type.StructImpl.get(StructImpl.java:179)
+at lucee.runtime.util.VariableUtilImpl.get(VariableUtilImpl.java:279)
+at lucee.runtime.util.VariableUtilImpl.getCollection(VariableUtilImpl.java:273)
+at lucee.runtime.PageContextImpl.us(PageContextImpl.java:1252)
+at search._get_search_results_cfm$cf.call(/search/_get_search_results.cfm:325)
+at lucee.runtime.PageContextImpl._doInclude(PageContextImpl.java:1050)
+at lucee.runtime.PageContextImpl._doInclude(PageContextImpl.java:944)
+at lucee.runtime.listener.ClassicAppListener._onRequest(ClassicAppListener.java:63)
+at lucee.runtime.listener.MixedAppListener.onRequest(MixedAppListener.java:42)
+at lucee.runtime.PageContextImpl.execute(PageContextImpl.java:2731)
+at lucee.runtime.PageContextImpl._execute(PageContextImpl.java:2718)
+at lucee.runtime.PageContextImpl.executeCFML(PageContextImpl.java:2689)
+at lucee.runtime.engine.Request.exe(Request.java:45)
+at lucee.runtime.engine.CFMLEngineImpl._service(CFMLEngineImpl.java:1155)
+at lucee.runtime.engine.CFMLEngineImpl.serviceCFML(CFMLEngineImpl.java:1112)
+at lucee.loader.engine.CFMLEngineWrapper.serviceCFML(CFMLEngineWrapper.java:97)
+at lucee.loader.servlet.CFMLServlet.service(CFMLServlet.java:51)
+at javax.servlet.http.HttpServlet.service(HttpServlet.java:733)
+at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)
+at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)
+at org.apache.coyote.ajp.AjpProcessor.service(AjpProcessor.java:433)
+at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)
+at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1707)
+at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+at java.base/java.lang.Thread.run(Unknown Source)
+</td></tr></table></td></tr><tr><td class="luceeH2">TagContext</td><td class="luceeN2"><table><tr><td class="collapse-trigger luceeH0" colspan="3" style="cursor:pointer;"><span>Array</span></td></tr><tr><td class="luceeH0">1</td><td class="luceeN0"><table><tr><td class="collapse-trigger luceeH2" colspan="3" style="cursor:pointer;"><span>Struct</span></td></tr><tr><td class="luceeH2">codePrintHTML</td><td class="luceeN2"><table><tr><td class="luceeH1">string</td><td class="luceeN1">323: &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;!---&amp;nbsp;collect&amp;nbsp;the&amp;nbsp;subcategories&amp;nbsp;into&amp;nbsp;a&amp;nbsp;list&amp;nbsp;---&amp;gt;&lt;br&gt;
+324: &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;cfset&amp;nbsp;subcategoryIdsList&amp;nbsp;=&amp;nbsp;&amp;quot;0&amp;quot;&amp;gt;&lt;br&gt;
+&lt;b&gt;325: &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;cfloop&amp;nbsp;from=&amp;quot;1&amp;quot;&amp;nbsp;to=&amp;quot;#arrayLen(resultObject.facet_counts.facet_fields.subcategoryid)#&amp;quot;&amp;nbsp;index=&amp;quot;counter&amp;quot;&amp;nbsp;step=&amp;quot;2&amp;quot;&amp;gt;&lt;/b&gt;&lt;br&gt;
+326: &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;cfset&amp;nbsp;id&amp;nbsp;=&amp;nbsp;resultObject.facet_counts.facet_fields.subcategoryid[counter]&amp;gt;&lt;br&gt;
+327: &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;cfif&amp;nbsp;id&amp;nbsp;neq&amp;nbsp;''&amp;gt;&lt;br&gt;
+</td></tr></table></td></tr><tr><td class="luceeH2">codePrintPlain</td><td class="luceeN2"><table><tr><td class="luceeH1">string</td><td class="luceeN1">323: &lt;!--- collect the subcategories into a list ---&gt;
+324: &lt;cfset subcategoryIdsList = &quot;0&quot;&gt;
+325: &lt;cfloop from=&quot;1&quot; to=&quot;#arrayLen(resultObject.facet_counts.facet_fields.subcategoryid)#&quot; index=&quot;counter&quot; step=&quot;2&quot;&gt;
+326: &lt;cfset id = resultObject.facet_counts.facet_fields.subcategoryid[counter]&gt;
+327: &lt;cfif id neq ''&gt;
+</td></tr></table></td></tr><tr><td class="luceeH2">column</td><td class="luceeN2"><table><tr><td class="luceeH1">number</td><td class="luceeN1">0</td></tr></table></td></tr><tr><td class="luceeH2">id</td><td class="luceeN2"><table><tr><td class="luceeH1">string</td><td class="luceeN1">??</td></tr></table></td></tr><tr><td class="luceeH2">line</td><td class="luceeN2"><table><tr><td class="luceeH1">number</td><td class="luceeN1">325</td></tr></table></td></tr><tr><td class="luceeH2">Raw_Trace</td><td class="luceeN2"><table><tr><td class="luceeH1">string</td><td class="luceeN1">search._get_search_results_cfm$cf.call(/search/_get_search_results.cfm:325)</td></tr></table></td></tr><tr><td class="luceeH2">template</td><td class="luceeN2"><table><tr><td class="luceeH1">string</td><td class="luceeN1">I:\WWWRoot\Clients\YUTorah\www-classic\search\_get_search_results.cfm</td></tr></table></td></tr><tr><td class="luceeH2">type</td><td class="luceeN2"><table><tr><td class="luceeH1">string</td><td class="luceeN1">cfml</td></tr></table></td></tr></table></td></tr></table></td></tr><tr><td class="luceeH2">type</td><td class="luceeN2"><table><tr><td class="luceeH1">string</td><td class="luceeN1">expression</td></tr></table></td></tr></table></div>
+<!-- ==stop== dump -->
+<table id="-lucee-err" cellpadding="4" cellspacing="1">
+<tr>
+<td colspan="2" class="label">Lucee 6.1.0.243 Error (lucee.runtime.net.mail.MailException)</td>
+</tr>
+<tr>
+<td class="label">Message</td>
+<td>no SMTP Server defined</td>
+</tr>
+<tr>
+<td class="label">Stacktrace</td>
+<td>The Error Occurred in<br>
+<a class="-lucee-icon-minus" id="__btn$1" onclick="__LUCEE.oc( this );" style="cursor: pointer;">
+<b>I:\WWWRoot\Clients\YUTorah\www-classic\search\_get_search_results.cfm: line 699</b>
+</a>
+<br>
+<blockquote class="expanded" id="__cst$1">
+697: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;cfdump&nbsp;var=&quot;#CGI#&quot;&nbsp;label=&quot;CGI&quot;&gt;<br>
+698: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;cfdump&nbsp;var=&quot;#cfcatch#&quot;&nbsp;label=&quot;cfcatch&quot;&gt;<br>
+<b>699: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/cfmail&gt;</b><br>
+700: &nbsp;&nbsp;&nbsp;&lt;/cfcatch&gt;<br>
+701: &lt;/cftry&gt;<br>
+<br>
+</blockquote>
+<a class="-lucee-icon-plus" id="__btn$2" onclick="__LUCEE.oc( this );" style="cursor: pointer;">
+<b>called from</b> I:\WWWRoot\Clients\YUTorah\www-classic\search\_get_search_results.cfm: line 690
+</a>
+<br>
+<blockquote class="collapsed" id="__cst$2">
+688: &nbsp;&nbsp;&nbsp;&lt;!---&lt;cfoutput&gt;#Replace(SerializeJSON(resultObject),&nbsp;&quot;'&quot;,&nbsp;&quot;\'&quot;,&nbsp;&quot;all&quot;)#&lt;/cfoutput&gt;---&gt;<br>
+689: <br>
+<b>690: &nbsp;&nbsp;&nbsp;&lt;cfcatch&gt;</b><br>
+691: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;cfoutput&gt;&lt;cfdump&nbsp;var=&quot;#cfcatch#&quot;&gt;&lt;/cfoutput&gt;<br>
+692: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;cfmail&nbsp;from=&quot;YUTorah&nbsp;(ERROR)&nbsp;&lt;noreply@yutorah.org&gt;&quot;&nbsp;to=&quot;#developerBccEmail#&quot;&nbsp;subject=&quot;ERROR:&nbsp;Error&nbsp;in&nbsp;/search/_get_search_results.cfm&quot;&nbsp;type=&quot;html&quot;&gt;<br>
+<br>
+</blockquote>
+</td>
+</tr>
+<tr>
+<td class="label">Java Stacktrace</td>
+<td>lucee.runtime.exp.NativeException: no SMTP Server defined<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.runtime.net.smtp.SMTPClient.send(SMTPClient.java:771)<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.runtime.tag.Mail.doEndTag(Mail.java:606)<br><span style='margin-right: 1em;'>&nbsp;</span>	at search._get_search_results_cfm$cf.call_000017(/search/_get_search_results.cfm:699)<br><span style='margin-right: 1em;'>&nbsp;</span>	at search._get_search_results_cfm$cf.call(/search/_get_search_results.cfm:690)<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.runtime.PageContextImpl._doInclude(PageContextImpl.java:1050)<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.runtime.PageContextImpl._doInclude(PageContextImpl.java:944)<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.runtime.listener.ClassicAppListener._onRequest(ClassicAppListener.java:63)<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.runtime.listener.MixedAppListener.onRequest(MixedAppListener.java:42)<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.runtime.PageContextImpl.execute(PageContextImpl.java:2731)<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.runtime.PageContextImpl._execute(PageContextImpl.java:2718)<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.runtime.PageContextImpl.executeCFML(PageContextImpl.java:2689)<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.runtime.engine.Request.exe(Request.java:45)<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.runtime.engine.CFMLEngineImpl._service(CFMLEngineImpl.java:1155)<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.runtime.engine.CFMLEngineImpl.serviceCFML(CFMLEngineImpl.java:1112)<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.loader.engine.CFMLEngineWrapper.serviceCFML(CFMLEngineWrapper.java:97)<br><span style='margin-right: 1em;'>&nbsp;</span>	at lucee.loader.servlet.CFMLServlet.service(CFMLServlet.java:51)<br><span style='margin-right: 1em;'>&nbsp;</span>	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:357)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.coyote.ajp.AjpProcessor.service(AjpProcessor.java:433)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1707)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)<br><span style='margin-right: 1em;'>&nbsp;</span>	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)<br><span style='margin-right: 1em;'>&nbsp;</span>	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)<br><span style='margin-right: 1em;'>&nbsp;</span>	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)<br><span style='margin-right: 1em;'>&nbsp;</span>	at java.base/java.lang.Thread.run(Unknown Source)<br><span style='margin-right: 1em;'>&nbsp;</span>Caused by: lucee.runtime.net.mail.MailException: no SMTP Server defined<br><span style='margin-right: 1em;'>&nbsp;</span>	... 38 more<br><span style='margin-right: 1em;'>&nbsp;</span></td>
+</tr>
+<tr>
+<td class="label">Timestamp</td>
+<td>
+5/13/26 6:53:03 PM EDT
+</td>
+</tr>
+</table>
+<br>

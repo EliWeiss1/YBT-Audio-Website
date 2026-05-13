@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sidebar-width: 280px;
+  --player-height: 96px;
+  --primary: #1a4a3a;        /* Deep forest green - Torah feel */
+  --primary-light: #2d7a5e;
+  --accent: #c8a84b;         /* Gold accent */
+  --surface: #ffffff;
+  --surface-2: #f5f3ef;      /* Warm off-white */
+  --border: #e5e0d8;
+  --text-muted: #7c7166;
+}
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Audio range slider styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #d1cac0;
+  border-radius: 999px;
+  height: 4px;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--primary);
+  border-radius: 50%;
+  height: 14px;
+  width: 14px;
+  margin-top: -5px;
+}

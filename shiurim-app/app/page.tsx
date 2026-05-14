@@ -1,9 +1,9 @@
-import { categories, flattenLectures } from '@/lib/lectures'
+import { categories, getAllLectures, flattenLectures } from '@/lib/lectures'
 import Link from 'next/link'
 import Image from 'next/image'
 
 export default function HomePage() {
-  const totalLectures = categories.reduce((sum, cat) => sum + flattenLectures(cat).length, 0)
+  const totalLectures = getAllLectures().length
 
   return (
     <div className="p-8 max-w-4xl mx-auto">

@@ -2,7 +2,6 @@ import { getNodeByPath, getPathToNode, flattenLectures, categories, TreeNode, Le
 import { normalizeRabbi, getRawVariants } from '@/lib/rabbi-normalization'
 import LectureCard from '@/components/lectures/LectureCard'
 import { createClient } from '@/lib/supabase-server'
-import { getAllProgress } from '@/lib/supabase'
 import Link from 'next/link'
 
 type Props = {
@@ -18,8 +17,14 @@ export default async function LecturesPage({ searchParams }: Props) {
 
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  const progress = user ? await getAllProgress(user.id) : []
-  const progressMap = Object.fromEntries(progress.map(p => [p.lecture_id, p]))
+  const { data: progressData } = user
+    ? await supabase
+        .from('progress')
+        .select('lecture_id, position_seconds, completed')
+        .eq('user_id', user.id)
+    : { data: [] }
+  const progress = progressData ?? []
+  const progressMap = Object.fromEntries(progress.map((p: { lecture_id: string; position_seconds: number; completed: boolean }) => [p.lecture_id, p]))
 
   const path = nodeId ? getPathToNode(nodeId) : null
   const activeNode = path ? getNodeByPath(path) : null

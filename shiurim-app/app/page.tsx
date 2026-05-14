@@ -2,13 +2,21 @@ import { categories, getAllLectures, flattenLectures } from '@/lib/lectures'
 import Link from 'next/link'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase-server'
-import { getRecentInProgress } from '@/lib/supabase'
 import ContinueListening from '@/components/lectures/ContinueListening'
 
 export default async function HomePage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  const recentProgress = user ? await getRecentInProgress(user.id, 5) : []
+  const { data: recentProgress } = user
+    ? await supabase
+        .from('progress')
+        .select('lecture_id, position_seconds, completed, last_listened_at')
+        .eq('user_id', user.id)
+        .eq('completed', false)
+        .gt('position_seconds', 0)
+        .order('last_listened_at', { ascending: false })
+        .limit(5)
+    : { data: [] }
 
   const totalLectures = getAllLectures().length
 

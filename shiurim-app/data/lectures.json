@@ -102973,482 +102973,6 @@
           ]
         },
         {
-          "id": "nach-koheles",
-          "label": "Koheles",
-          "lectures": [
-            {
-              "id": "D-131",
-              "title": "Koheles #5 Cont. / Slave Mentality",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/D-131%20Koheles%20no.5%2C%20Slave%20Mentality.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-005",
-              "title": "Koheles 1",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-005%20Koheles%20no.1.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-006",
-              "title": "Koheles 2",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-006%20Koheles%20no.2.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-008",
-              "title": "Koheles 3",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-008%20Koheles%20no.3.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-009",
-              "title": "Koheles 4",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-009%20Koheles%20no.4.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-010",
-              "title": "Koheles 5",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-010%20Koheles%20no.5.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-011",
-              "title": "Koheles 6",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-011%20Koheles%20no.6.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-012",
-              "title": "Koheles 7 - Chapter 2 (White Lake)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-012%20Koheles%207.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-026",
-              "title": "Koheles (1980)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-026%20Koheles%20-%20Perek%20Bais.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1980-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-027",
-              "title": "Koheles 1 (1986)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-027%20Koheles%20no.1.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1986-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-028",
-              "title": "Koheles 2 (1986)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-028%20Koheles%20no.2.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1986-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-029",
-              "title": "Koheles 3 (1986)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-029%20Koheles%20no.3.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1986-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-030",
-              "title": "Koheles 4 (1986)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-030%20Koheles%20no.4.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1986-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-031",
-              "title": "Koheles 5 (1986)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-031%20Koheles%20no.5.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1986-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-032",
-              "title": "Koheles 6 (1986)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-032%20Koheles%20no.6.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1986-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-033",
-              "title": "Koheles 7 (1986)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-033%20Koheles%20no.7.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1986-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-034",
-              "title": "Koheles 8 (1986)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-034%20Koheles%20no.8.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1986-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-035",
-              "title": "Koheles 9 (1986)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-035%20Koheles%20no.9.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1986-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-065",
-              "title": "Koheles 1995 #1",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-065%20Koheles%201995%20-%201.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1995-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-066",
-              "title": "Koheles 1995 #2",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-066%20Koheles%201995%20-%202.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1995-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-067",
-              "title": "Koheles 1995 #3",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-067%20Koheles%201995%20-%203.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1995-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-072",
-              "title": "Koheles 1995 #4",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-072%20Koheles%20-%204%20-%201995.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1995-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-075",
-              "title": "Koheles 1995 #5",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-075%20Koheles%20-%205%20-%201995.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1995-01-01",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-083",
-              "title": "Koheles on Accomplishment",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-083%20Koheles%20on%20Accomplishment.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-086",
-              "title": "Purpose of Sefer Koheles #1",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-086%20Purpose%20of%20Sefer%20Koheles%20-%202.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-087",
-              "title": "Purpose of Sefer Koheles #2",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-087%20Purpose%20of%20Sefer%20Koheles%20-%203.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-088",
-              "title": "Purpose of Sefer Koheles #3",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-088%20Purpose%20of%20Sefer%20Koheles%20-%204.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-089",
-              "title": "Purpose of Sefer Koheles #4",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-089%20Purpose%20of%20Sefer%20Koheles%20-%205.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-090",
-              "title": "Purpose of Sefer Koheles #5",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-090%20Purpose%20of%20Sefer%20Koheles%20-%206.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-091",
-              "title": "Purpose of Sefer Koheles #6",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-091%20Purpose%20of%20Sefer%20Koheles%20-%207.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-092",
-              "title": "Purpose of Sefer Koheles #7",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-092%20Purpose%20of%20Sefer%20Koheles%20-%208.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-093",
-              "title": "Purpose of Sefer Koheles #8",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-093%20Purpose%20of%20Sefer%20Koheles%20-%209.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-094",
-              "title": "Purpose of Sefer Koheles #9",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-094%20Purpose%20of%20Sefer%20Koheles%20-%2010.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-095",
-              "title": "Purpose of Sefer Koheles #10",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-095%20Purpose%20of%20Sefer%20Koheles%20-%2011.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "N-096",
-              "title": "Purpose of Sefer Koheles #11",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-096%20Succos%20-%202001%20Koheles%201.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "koheles"
-              ]
-            },
-            {
-              "id": "C-192",
-              "title": "Koheles's Complaints and Adam's Punishment 1",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Chumash/(1)%20Bereishit/1%20Bereishit/C-192%20Koheles's%20Complaints%20and%20Adam's%20Punishment%201.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "",
-              "date": "",
-              "tags": []
-            },
-            {
-              "id": "C-193",
-              "title": "Koheles's Complaints and Adam's Punishment 2",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Chumash/(1)%20Bereishit/1%20Bereishit/C-193%20Koheles's%20Complaints%20and%20Adam's%20Punishment%202.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "",
-              "date": "",
-              "tags": []
-            },
-            {
-              "id": "C-194",
-              "title": "Koheles's Complaints and Adam's Punishment 3",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Chumash/(1)%20Bereishit/1%20Bereishit/C-194%20Koheles's%20Complaints%20and%20Adam's%20Punishment%203.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "",
-              "date": "",
-              "tags": []
-            },
-            {
-              "id": "N-085",
-              "title": "Purpose of Sefer Koheles - 1",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-085%20Purpose%20of%20Sefer%20Koheles%20-%201.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "",
-              "date": "",
-              "tags": []
-            },
-            {
-              "id": "N-097",
-              "title": "Succos - 2001 Koheles 2",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-097%20Succos%20-%202001%20Koheles%202.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "",
-              "date": "",
-              "tags": []
-            }
-          ]
-        },
-        {
           "id": "nach-mishlei",
           "label": "Mishlei",
           "lectures": [
@@ -107636,96 +107160,6 @@
           ]
         },
         {
-          "id": "nach-ruth",
-          "label": "Ruth",
-          "lectures": [
-            {
-              "id": "N-001",
-              "title": "Ruth - Philosophy of Justice",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-001%20Megillas%20Ruth.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "ruth"
-              ]
-            },
-            {
-              "id": "N-054",
-              "title": "Ruth (5/21/95)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-054%20Ruth.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "1995-05-21",
-              "tags": [
-                "ruth"
-              ]
-            },
-            {
-              "id": "N-061",
-              "title": "Ruth Chapter 1:18 - Misametzes",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-061%20Ruth%20-%20Chapter%201%2C%2018.mp3",
-              "duration": 0,
-              "description": "Vilna Gaon on the Yetzer Tov and Yetzer Rah.",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "ruth"
-              ]
-            },
-            {
-              "id": "N-068",
-              "title": "Megilas Ruth #1",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-068%20Megillas%20Ruth%201%20-%201995.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "ruth"
-              ]
-            },
-            {
-              "id": "N-069",
-              "title": "Megilas Ruth #2",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-069%20Megillas%20Ruth%202%20-%201995.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "ruth"
-              ]
-            },
-            {
-              "id": "N-070",
-              "title": "Megilas Ruth #3",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-070%20Megillas%20Ruth%20-%203%20-%201995.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "ruth"
-              ]
-            },
-            {
-              "id": "N-071",
-              "title": "Megilas Ruth #4",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-071%20Megillas%20Ruth%20-%204%20-%201995.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "ruth"
-              ]
-            }
-          ]
-        },
-        {
           "id": "nach-tehillim",
           "label": "Tehillim",
           "lectures": [
@@ -109697,6 +109131,90 @@
                     "Rut"
                   ],
                   "sourceId": 872787
+                },
+                {
+                  "id": "N-001",
+                  "title": "Ruth - Philosophy of Justice",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-001%20Megillas%20Ruth.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "ruth"
+                  ]
+                },
+                {
+                  "id": "N-054",
+                  "title": "Ruth (5/21/95)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-054%20Ruth.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1995-05-21",
+                  "tags": [
+                    "ruth"
+                  ]
+                },
+                {
+                  "id": "N-061",
+                  "title": "Ruth Chapter 1:18 - Misametzes",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-061%20Ruth%20-%20Chapter%201%2C%2018.mp3",
+                  "duration": 0,
+                  "description": "Vilna Gaon on the Yetzer Tov and Yetzer Rah.",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "ruth"
+                  ]
+                },
+                {
+                  "id": "N-068",
+                  "title": "Megilas Ruth #1",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-068%20Megillas%20Ruth%201%20-%201995.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "ruth"
+                  ]
+                },
+                {
+                  "id": "N-069",
+                  "title": "Megilas Ruth #2",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-069%20Megillas%20Ruth%202%20-%201995.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "ruth"
+                  ]
+                },
+                {
+                  "id": "N-070",
+                  "title": "Megilas Ruth #3",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-070%20Megillas%20Ruth%20-%203%20-%201995.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "ruth"
+                  ]
+                },
+                {
+                  "id": "N-071",
+                  "title": "Megilas Ruth #4",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Ruth/N-071%20Megillas%20Ruth%20-%204%20-%201995.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "ruth"
+                  ]
                 }
               ]
             },
@@ -109951,6 +109469,476 @@
                     "Koheles"
                   ],
                   "sourceId": 1466
+                },
+                {
+                  "id": "D-131",
+                  "title": "Koheles #5 Cont. / Slave Mentality",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/D-131%20Koheles%20no.5%2C%20Slave%20Mentality.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-005",
+                  "title": "Koheles 1",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-005%20Koheles%20no.1.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-006",
+                  "title": "Koheles 2",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-006%20Koheles%20no.2.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-008",
+                  "title": "Koheles 3",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-008%20Koheles%20no.3.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-009",
+                  "title": "Koheles 4",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-009%20Koheles%20no.4.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-010",
+                  "title": "Koheles 5",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-010%20Koheles%20no.5.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-011",
+                  "title": "Koheles 6",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-011%20Koheles%20no.6.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-012",
+                  "title": "Koheles 7 - Chapter 2 (White Lake)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-012%20Koheles%207.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-026",
+                  "title": "Koheles (1980)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-026%20Koheles%20-%20Perek%20Bais.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1980-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-027",
+                  "title": "Koheles 1 (1986)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-027%20Koheles%20no.1.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1986-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-028",
+                  "title": "Koheles 2 (1986)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-028%20Koheles%20no.2.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1986-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-029",
+                  "title": "Koheles 3 (1986)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-029%20Koheles%20no.3.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1986-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-030",
+                  "title": "Koheles 4 (1986)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-030%20Koheles%20no.4.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1986-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-031",
+                  "title": "Koheles 5 (1986)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-031%20Koheles%20no.5.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1986-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-032",
+                  "title": "Koheles 6 (1986)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-032%20Koheles%20no.6.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1986-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-033",
+                  "title": "Koheles 7 (1986)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-033%20Koheles%20no.7.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1986-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-034",
+                  "title": "Koheles 8 (1986)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-034%20Koheles%20no.8.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1986-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-035",
+                  "title": "Koheles 9 (1986)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-035%20Koheles%20no.9.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1986-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-065",
+                  "title": "Koheles 1995 #1",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-065%20Koheles%201995%20-%201.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1995-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-066",
+                  "title": "Koheles 1995 #2",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-066%20Koheles%201995%20-%202.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1995-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-067",
+                  "title": "Koheles 1995 #3",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-067%20Koheles%201995%20-%203.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1995-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-072",
+                  "title": "Koheles 1995 #4",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-072%20Koheles%20-%204%20-%201995.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1995-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-075",
+                  "title": "Koheles 1995 #5",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-075%20Koheles%20-%205%20-%201995.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "1995-01-01",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-083",
+                  "title": "Koheles on Accomplishment",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-083%20Koheles%20on%20Accomplishment.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-086",
+                  "title": "Purpose of Sefer Koheles #1",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-086%20Purpose%20of%20Sefer%20Koheles%20-%202.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-087",
+                  "title": "Purpose of Sefer Koheles #2",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-087%20Purpose%20of%20Sefer%20Koheles%20-%203.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-088",
+                  "title": "Purpose of Sefer Koheles #3",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-088%20Purpose%20of%20Sefer%20Koheles%20-%204.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-089",
+                  "title": "Purpose of Sefer Koheles #4",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-089%20Purpose%20of%20Sefer%20Koheles%20-%205.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-090",
+                  "title": "Purpose of Sefer Koheles #5",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-090%20Purpose%20of%20Sefer%20Koheles%20-%206.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-091",
+                  "title": "Purpose of Sefer Koheles #6",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-091%20Purpose%20of%20Sefer%20Koheles%20-%207.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-092",
+                  "title": "Purpose of Sefer Koheles #7",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-092%20Purpose%20of%20Sefer%20Koheles%20-%208.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-093",
+                  "title": "Purpose of Sefer Koheles #8",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-093%20Purpose%20of%20Sefer%20Koheles%20-%209.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-094",
+                  "title": "Purpose of Sefer Koheles #9",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-094%20Purpose%20of%20Sefer%20Koheles%20-%2010.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-095",
+                  "title": "Purpose of Sefer Koheles #10",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-095%20Purpose%20of%20Sefer%20Koheles%20-%2011.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "N-096",
+                  "title": "Purpose of Sefer Koheles #11",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-096%20Succos%20-%202001%20Koheles%201.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "koheles"
+                  ]
+                },
+                {
+                  "id": "C-192",
+                  "title": "Koheles's Complaints and Adam's Punishment 1",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Chumash/(1)%20Bereishit/1%20Bereishit/C-192%20Koheles's%20Complaints%20and%20Adam's%20Punishment%201.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "",
+                  "date": "",
+                  "tags": []
+                },
+                {
+                  "id": "C-193",
+                  "title": "Koheles's Complaints and Adam's Punishment 2",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Chumash/(1)%20Bereishit/1%20Bereishit/C-193%20Koheles's%20Complaints%20and%20Adam's%20Punishment%202.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "",
+                  "date": "",
+                  "tags": []
+                },
+                {
+                  "id": "C-194",
+                  "title": "Koheles's Complaints and Adam's Punishment 3",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Chumash/(1)%20Bereishit/1%20Bereishit/C-194%20Koheles's%20Complaints%20and%20Adam's%20Punishment%203.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "",
+                  "date": "",
+                  "tags": []
+                },
+                {
+                  "id": "N-085",
+                  "title": "Purpose of Sefer Koheles - 1",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-085%20Purpose%20of%20Sefer%20Koheles%20-%201.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "",
+                  "date": "",
+                  "tags": []
+                },
+                {
+                  "id": "N-097",
+                  "title": "Succos - 2001 Koheles 2",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Koheles/N-097%20Succos%20-%202001%20Koheles%202.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "",
+                  "date": "",
+                  "tags": []
                 }
               ]
             },

@@ -1,6 +1,7 @@
-  'use client'
+'use client'
 
 import { useState, useMemo, useRef, useCallback } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 import Fuse from 'fuse.js'
@@ -142,10 +143,9 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
       {/* Logo + mobile close button */}
       <div className="px-5 py-4 border-b border-stone-200 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2" onClick={onClose}>
-          <span className="text-2xl">📚</span>
+          <Image src="/YBT_Logo.gif" alt="YBT Logo" width={40} height={40} className="rounded" unoptimized />
           <div>
-            <div className="font-bold text-stone-900 leading-tight">Shiurim</div>
-            <div className="text-xs text-stone-400">Library</div>
+            <div className="font-bold text-stone-900 leading-tight">YBT Shiurim</div>
           </div>
         </Link>
         {onClose && (

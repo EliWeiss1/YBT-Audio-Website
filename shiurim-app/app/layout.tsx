@@ -9,7 +9,7 @@ import { PlayerProvider } from '@/lib/player-context'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Shiurim Library',
+  title: 'YBT Shiurim',
   description: 'Browse, listen, and discuss thousands of shiurim',
 }
 

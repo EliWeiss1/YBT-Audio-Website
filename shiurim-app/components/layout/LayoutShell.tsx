@@ -97,7 +97,7 @@ export default function LayoutShell({
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <span className="font-semibold text-stone-900 text-sm">📚 Shiurim Library</span>
+            <span className="font-semibold text-stone-900 text-sm">YBT Shiurim</span>
           </div>
 
           {/* Spacer so auth button always floats right */}

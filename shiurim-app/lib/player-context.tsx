@@ -24,23 +24,44 @@ type PlayerState = {
 const PlayerContext = createContext<PlayerState | null>(null)
 
 export function PlayerProvider({ children, userId }: { children: ReactNode; userId?: string }) {
-  const audioRef = useRef<HTMLAudioElement | null>(null)
-  const saveTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const audioRef        = useRef<HTMLAudioElement | null>(null)
+  const saveTimerRef    = useRef<ReturnType<typeof setInterval> | null>(null)
   const playbackSpeedRef = useRef(1)
-  const [lecture, setLecture] = useState<FlatLecture | null>(null)
-  const [isPlaying, setIsPlaying] = useState(false)
+  // Stable ref to the "ended" handler so it always closes over current userId/lecture
+  const onEndedRef      = useRef<() => void>(() => {})
+
+  const [lecture, setLecture]       = useState<FlatLecture | null>(null)
+  const [isPlaying, setIsPlaying]   = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
-  const [duration, setDuration] = useState(0)
+  const [duration, setDuration]     = useState(0)
   const [playbackSpeed, setPlaybackSpeed] = useState(1)
 
-  // Save progress every 10 seconds
+  // Keep onEndedRef up to date with latest userId + lecture
+  useEffect(() => {
+    onEndedRef.current = () => {
+      setIsPlaying(false)
+      if (userId && lecture && audioRef.current) {
+        const dur = Math.floor(audioRef.current.duration)
+        saveProgress(userId, lecture.id, dur > 0 ? dur : 0, true, dur > 0 ? dur : undefined)
+      }
+    }
+  }, [userId, lecture])
+
+  // Save progress every 10 seconds while playing
   useEffect(() => {
     if (!userId || !lecture) return
     if (saveTimerRef.current) clearInterval(saveTimerRef.current)
     if (isPlaying) {
       saveTimerRef.current = setInterval(() => {
         if (audioRef.current) {
-          saveProgress(userId, lecture.id, Math.floor(audioRef.current.currentTime), audioRef.current.ended)
+          const dur = Math.floor(audioRef.current.duration)
+          saveProgress(
+            userId,
+            lecture.id,
+            Math.floor(audioRef.current.currentTime),
+            false,
+            dur > 0 ? dur : undefined
+          )
         }
       }, 10000)
     }
@@ -110,7 +131,8 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
       audio.playbackRate = playbackSpeedRef.current
       audio.addEventListener('timeupdate', () => setCurrentTime(Math.floor(audio.currentTime)))
       audio.addEventListener('loadedmetadata', () => setDuration(Math.floor(audio.duration)))
-      audio.addEventListener('ended', () => setIsPlaying(false))
+      // Always delegate to onEndedRef so it has current userId + lecture
+      audio.addEventListener('ended', () => onEndedRef.current())
       audio.play().catch(() => {})
       audioRef.current = audio
     }
@@ -122,13 +144,14 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     audioRef.current?.pause()
     setIsPlaying(false)
     if (userId && lecture && audioRef.current) {
-      saveProgress(userId, lecture.id, Math.floor(audioRef.current.currentTime), false)
+      const dur = Math.floor(audioRef.current.duration)
+      saveProgress(userId, lecture.id, Math.floor(audioRef.current.currentTime), false, dur > 0 ? dur : undefined)
     }
   }, [userId, lecture])
 
-  const resume = useCallback(() => { audioRef.current?.play(); setIsPlaying(true) }, [])
-  const seek = useCallback((s: number) => { if (audioRef.current) { audioRef.current.currentTime = s; setCurrentTime(s) } }, [])
-  const skip = useCallback((s: number) => { if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime + s) }, [])
+  const resume   = useCallback(() => { audioRef.current?.play(); setIsPlaying(true) }, [])
+  const seek     = useCallback((s: number) => { if (audioRef.current) { audioRef.current.currentTime = s; setCurrentTime(s) } }, [])
+  const skip     = useCallback((s: number) => { if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime + s) }, [])
   const setSpeed = useCallback((speed: number) => {
     if (audioRef.current) audioRef.current.playbackRate = speed
     playbackSpeedRef.current = speed

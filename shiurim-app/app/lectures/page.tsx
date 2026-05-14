@@ -20,7 +20,7 @@ export default async function LecturesPage({ searchParams }: Props) {
   const { data: progressData } = user
     ? await supabase
         .from('progress')
-        .select('lecture_id, position_seconds, completed')
+        .select('lecture_id, position_seconds, completed, duration_seconds')
         .eq('user_id', user.id)
     : { data: [] }
   const progress = progressData ?? []

@@ -9,6 +9,7 @@ type ProgressRow = {
   position_seconds: number
   completed: boolean
   last_listened_at: string
+  duration_seconds?: number | null
 }
 
 function formatTimeLeft(seconds: number): string {
@@ -46,11 +47,12 @@ export default function ContinueListening({ rows }: { rows: ProgressRow[] }) {
           const isActive      = activeLecture?.id === lecture.id
           const isThisPlaying = isActive && isPlaying
           const hasDuration   = lecture.duration > 0
-          const pct = hasDuration
-            ? Math.min(100, Math.round((row.position_seconds / lecture.duration) * 100))
+          const effectiveDuration = hasDuration ? lecture.duration : (row.duration_seconds ?? 0)
+          const pct = effectiveDuration
+            ? Math.min(100, Math.round((row.position_seconds / effectiveDuration) * 100))
             : 0
-          const secondsLeft = hasDuration
-            ? Math.max(0, lecture.duration - row.position_seconds)
+          const secondsLeft = effectiveDuration
+            ? Math.max(0, effectiveDuration - row.position_seconds)
             : 0
 
           const breadcrumb = lecture.breadcrumb.length > 1
@@ -99,7 +101,7 @@ export default function ContinueListening({ rows }: { rows: ProgressRow[] }) {
 
               {/* Progress indicator */}
               <div>
-                {hasDuration ? (
+                {effectiveDuration > 0 ? (
                   <>
                     <div className="h-1 w-full bg-stone-200 rounded-full overflow-hidden">
                       <div
@@ -110,7 +112,7 @@ export default function ContinueListening({ rows }: { rows: ProgressRow[] }) {
                     <div className="flex items-center justify-between mt-1.5">
                       <span className="text-xs text-stone-400">{formatTimeLeft(secondsLeft)}</span>
                       <span className="text-xs text-stone-300 tabular-nums">
-                        {formatDuration(lecture.duration)}
+                        {formatDuration(effectiveDuration)}
                       </span>
                     </div>
                   </>

@@ -45,15 +45,20 @@ export async function saveProgress(
   userId: string,
   lectureId: string,
   positionSeconds: number,
-  completed = false
+  completed = false,
+  durationSeconds?: number
 ) {
-  await supabase.from('progress').upsert({
+  const record: Record<string, unknown> = {
     user_id: userId,
     lecture_id: lectureId,
     position_seconds: positionSeconds,
     completed,
     last_listened_at: new Date().toISOString(),
-  }, { onConflict: 'user_id,lecture_id' })
+  }
+  if (durationSeconds && durationSeconds > 0) {
+    record.duration_seconds = durationSeconds
+  }
+  await supabase.from('progress').upsert(record, { onConflict: 'user_id,lecture_id' })
 }
 
 // ---- Comment helpers ----

@@ -7,7 +7,7 @@ import { usePlayer } from '@/lib/player-context'
 type Props = {
   lecture: Lecture | FlatLecture
   index: number
-  progress?: { position_seconds: number; completed: boolean } | null
+  progress?: { position_seconds: number; completed: boolean; duration_seconds?: number | null } | null
 }
 
 function formatTimeLeft(seconds: number): string {
@@ -34,19 +34,23 @@ export default function LectureCard({ lecture, index, progress }: Props) {
     else play(lecture.id, progress?.position_seconds ?? 0)
   }
 
-  const progressPct = progress && lecture.duration
-    ? Math.min(100, Math.round((progress.position_seconds / lecture.duration) * 100))
+  // Use stored duration from progress row as fallback when JSON duration is 0
+  const effectiveDuration = lecture.duration > 0
+    ? lecture.duration
+    : (progress?.duration_seconds ?? 0)
+
+  const progressPct = progress && effectiveDuration
+    ? Math.min(100, Math.round((progress.position_seconds / effectiveDuration) * 100))
     : 0
 
-  const secondsLeft = progress && lecture.duration
-    ? Math.max(0, lecture.duration - progress.position_seconds)
+  const secondsLeft = progress && effectiveDuration
+    ? Math.max(0, effectiveDuration - progress.position_seconds)
     : 0
 
   // isInProgress: has started but not finished — independent of whether we know the duration
   const isInProgress = !!progress && !progress.completed && progress.position_seconds > 0
   const isCompleted  = !!progress?.completed
-  // Can we show a real progress bar?
-  const hasBarData   = isInProgress && lecture.duration > 0 && progressPct > 0
+  const hasBarData   = isInProgress && effectiveDuration > 0 && progressPct > 0
 
   // Subtitle: breadcrumb if available, otherwise speaker
   const subtitle = 'breadcrumb' in lecture && lecture.breadcrumb.length > 1

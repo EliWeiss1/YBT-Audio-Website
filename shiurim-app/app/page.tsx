@@ -10,7 +10,7 @@ export default async function HomePage() {
   const { data: recentProgress } = user
     ? await supabase
         .from('progress')
-        .select('lecture_id, position_seconds, completed, last_listened_at')
+        .select('lecture_id, position_seconds, completed, last_listened_at, duration_seconds')
         .eq('user_id', user.id)
         .eq('completed', false)
         .gt('position_seconds', 0)

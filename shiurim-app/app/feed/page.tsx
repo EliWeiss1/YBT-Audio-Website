@@ -39,7 +39,7 @@ export default async function FeedPage() {
               {lecture && (
                 <div className="text-xs text-emerald-700 font-medium mb-3 flex items-center gap-1">
                   <span>📖</span>
-                  <span>{lecture.categoryLabel} › {lecture.subcategoryLabel} › {lecture.title}</span>
+                  <span>{[...lecture.breadcrumb, lecture.title].join(' › ')}</span>
                 </div>
               )}
 

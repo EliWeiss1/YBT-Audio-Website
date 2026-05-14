@@ -9,16 +9,26 @@ import type { User } from '@supabase/supabase-js'
 
 export default function LayoutShell({
   children,
-  user,
+  user: initialUser,
 }: {
   children: React.ReactNode
   user: User | null
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [user, setUser] = useState<User | null>(initialUser)
   const pathname = usePathname()
   const router = useRouter()
 
   useEffect(() => { setSidebarOpen(false) }, [pathname])
+
+  // Keep auth state in sync with Supabase session changes
+  useEffect(() => {
+    const supabase = createClient()
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+    return () => subscription.unsubscribe()
+  }, [])
 
   async function handleSignOut() {
     const supabase = createClient()

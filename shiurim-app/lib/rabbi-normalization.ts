@@ -6,6 +6,7 @@ const RABBI_GROUPS: Record<string, string[]> = {
   'Rabbi Cinamon': ['Rabbi Zev Cinamon', 'Rabbi Z. Cinamon'],
   'Rabbi Moskowitz': ['Rabbi M. Moskowitz', 'Rabbi Morton Moskowitz', 'Rabbi Moskowitz'],
   'Rabbi David Markowitz': ['Rabbi David Markowitz', 'Rabbi D. Markowitz'],
+  'Rabbi Schneeweiss': ['Rabbi Matthew Schneeweiss', 'Rabbi Mathew Schneeweiss', 'Rabbi Schneeweiss'],
 }
 
 // raw variant → canonical name (built once)

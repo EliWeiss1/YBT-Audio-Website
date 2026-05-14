@@ -26,6 +26,21 @@ export async function getAllProgress(userId: string) {
   return data ?? []
 }
 
+export async function getRecentInProgress(
+  userId: string,
+  limit = 5
+): Promise<Array<{ lecture_id: string; position_seconds: number; completed: boolean; last_listened_at: string }>> {
+  const { data } = await supabase
+    .from('progress')
+    .select('lecture_id, position_seconds, completed, last_listened_at')
+    .eq('user_id', userId)
+    .eq('completed', false)
+    .gt('position_seconds', 0)
+    .order('last_listened_at', { ascending: false })
+    .limit(limit)
+  return data ?? []
+}
+
 export async function saveProgress(
   userId: string,
   lectureId: string,

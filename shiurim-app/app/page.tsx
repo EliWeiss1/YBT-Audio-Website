@@ -1,8 +1,15 @@
 import { categories, getAllLectures, flattenLectures } from '@/lib/lectures'
 import Link from 'next/link'
 import Image from 'next/image'
+import { createClient } from '@/lib/supabase-server'
+import { getRecentInProgress } from '@/lib/supabase'
+import ContinueListening from '@/components/lectures/ContinueListening'
 
-export default function HomePage() {
+export default async function HomePage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  const recentProgress = user ? await getRecentInProgress(user.id, 5) : []
+
   const totalLectures = getAllLectures().length
 
   return (
@@ -35,6 +42,11 @@ export default function HomePage() {
           </Link>
         </div>
       </div>
+
+      {/* Continue listening strip — only shown when the user has in-progress shiurim */}
+      {recentProgress.length > 0 && (
+        <ContinueListening rows={recentProgress} />
+      )}
 
       {/* Category grid */}
       <h2 className="text-lg font-semibold text-stone-700 mb-4">Browse by Category</h2>

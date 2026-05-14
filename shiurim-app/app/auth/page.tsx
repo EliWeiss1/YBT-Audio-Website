@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase-browser'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function AuthPage() {
   const router = useRouter()
@@ -12,7 +12,9 @@ export default function AuthPage() {
   const [name, setName] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const searchParams = useSearchParams()
   const [message, setMessage] = useState('')
+  const linkError = searchParams.get('error') === 'invalid-link'
 
   const handleSubmit = async () => {
     setError(''); setMessage(''); setLoading(true)
@@ -70,7 +72,11 @@ export default function AuthPage() {
                          focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
           </div>
 
-          {error && <p className="text-red-600 text-xs">{error}</p>}
+          {(error || linkError) && (
+            <p className="text-red-600 text-xs">
+              {linkError ? 'This confirmation link is invalid or has expired. Please sign up again.' : error}
+            </p>
+          )}
           {message && <p className="text-emerald-600 text-xs">{message}</p>}
 
           <button onClick={handleSubmit} disabled={loading || !email || !password}

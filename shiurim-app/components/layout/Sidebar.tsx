@@ -245,7 +245,7 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
       </div>
 
       {/* Tree or search results */}
-      <nav className="flex-1 overflow-y-auto py-2 px-2 min-h-0">
+      <nav className="flex-1 overflow-y-auto py-2 px-2 min-h-0 mr-1.5">
         {query.length > 1 ? (
           <div>
             {searchResults.length === 0 ? (
@@ -293,7 +293,7 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
         </button>
 
         {rabbiSectionOpen && (
-          <div className="overflow-y-auto px-2 pb-2" style={{ maxHeight: '220px' }}>
+          <div className="overflow-y-auto px-2 pb-2 mr-1.5" style={{ maxHeight: '220px' }}>
             {selectedRabbis.length > 0 && (
               <button
                 onClick={clearRabbis}

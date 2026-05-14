@@ -48,7 +48,7 @@ export default function ContinueListening({ rows }: { rows: ProgressRow[] }) {
             : 0
 
           // Build a short breadcrumb label (everything except the lecture title itself)
-          const breadcrumb = 'breadcrumb' in lecture
+          const breadcrumb = lecture.breadcrumb.length > 1
             ? lecture.breadcrumb.slice(0, -1).join(' › ')
             : lecture.speaker
 

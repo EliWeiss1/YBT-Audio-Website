@@ -121,7 +121,7 @@ export default function BottomPlayer() {
         </button>
       </div>
 
-      <div className="hidden md:flex justify-center pb-1 gap-4 text-[10px] text-stone-500">
+      <div className="hidden md:flex justify-center pb-1 gap-4 text-[10px] text-stone-600">
         <span><kbd className="font-mono">Space</kbd> play/pause</span>
         <span><kbd className="font-mono">←</kbd> −15s</span>
         <span><kbd className="font-mono">→</kbd> +30s</span>

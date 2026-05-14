@@ -171,12 +171,12 @@ export default function LecturePlayer({ lectureId, userId }: Props) {
       </div>
 
       {/* Keyboard hints */}
-      <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-stone-300">
+      <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-stone-400">
         <span><kbd className="font-mono bg-stone-100 px-1 rounded">Space</kbd> play/pause</span>
         <span><kbd className="font-mono bg-stone-100 px-1 rounded">←</kbd> −15s</span>
         <span><kbd className="font-mono bg-stone-100 px-1 rounded">→</kbd> +30s</span>
         <span><kbd className="font-mono bg-stone-100 px-1 rounded">[</kbd> <kbd className="font-mono bg-stone-100 px-1 rounded">]</kbd> speed</span>
-        <span className="text-stone-200">· player stays active while you browse</span>
+        <span className="text-stone-400">· player stays active while you browse</span>
       </div>
       </>
     )}

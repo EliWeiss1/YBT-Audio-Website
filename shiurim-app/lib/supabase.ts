@@ -60,6 +60,19 @@ export async function getFeedComments(limit = 20) {
   return data ?? []
 }
 
+export async function updateComment(
+  commentId: string,
+  userId: string,
+  body: string
+) {
+  const { error } = await supabase
+    .from('comments')
+    .update({ body })
+    .eq('id', commentId)
+    .eq('user_id', userId)
+  return { error }
+}
+
 export async function postComment(
   userId: string,
   lectureId: string,

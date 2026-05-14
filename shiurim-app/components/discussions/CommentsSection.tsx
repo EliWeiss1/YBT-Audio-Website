@@ -1,11 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { postComment } from '@/lib/supabase'
+import { postComment, updateComment } from '@/lib/supabase'
 import { formatDistanceToNow } from 'date-fns'
 
 type Comment = {
   id: string
+  user_id: string
   body: string
   parent_id: string | null
   created_at: string
@@ -26,8 +27,27 @@ export default function CommentsSection({ lectureId, initialComments, userId, us
   const [replyText, setReplyText] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [editText, setEditText] = useState('')
+
   const topLevel = comments.filter(c => !c.parent_id)
   const replies = (parentId: string) => comments.filter(c => c.parent_id === parentId)
+
+  const handleEdit = (comment: Comment) => {
+    setEditingId(comment.id)
+    setEditText(comment.body)
+  }
+
+  const handleSaveEdit = async (commentId: string) => {
+    if (!userId || !editText.trim()) return
+    setSubmitting(true)
+    const { error } = await updateComment(commentId, userId, editText.trim())
+    if (!error) {
+      setComments(prev => prev.map(c => c.id === commentId ? { ...c, body: editText.trim() } : c))
+      setEditingId(null)
+    }
+    setSubmitting(false)
+  }
 
   const handleSubmit = async (body: string, parentId?: string) => {
     if (!userId || !body.trim()) return
@@ -89,12 +109,34 @@ export default function CommentsSection({ lectureId, initialComments, userId, us
 
         {topLevel.map(comment => (
           <div key={comment.id}>
-            <CommentBubble comment={comment} />
+            <CommentBubble
+              comment={comment}
+              isOwn={comment.user_id === userId}
+              isEditing={editingId === comment.id}
+              editText={editText}
+              onEdit={() => handleEdit(comment)}
+              onEditChange={setEditText}
+              onSaveEdit={() => handleSaveEdit(comment.id)}
+              onCancelEdit={() => setEditingId(null)}
+              submitting={submitting}
+            />
 
             {/* Replies */}
             <div className="ml-10 mt-3 space-y-3">
               {replies(comment.id).map(reply => (
-                <CommentBubble key={reply.id} comment={reply} isReply />
+                <CommentBubble
+                  key={reply.id}
+                  comment={reply}
+                  isReply
+                  isOwn={reply.user_id === userId}
+                  isEditing={editingId === reply.id}
+                  editText={editText}
+                  onEdit={() => handleEdit(reply)}
+                  onEditChange={setEditText}
+                  onSaveEdit={() => handleSaveEdit(reply.id)}
+                  onCancelEdit={() => setEditingId(null)}
+                  submitting={submitting}
+                />
               ))}
 
               {/* Reply input */}
@@ -142,12 +184,28 @@ export default function CommentsSection({ lectureId, initialComments, userId, us
   )
 }
 
-function CommentBubble({ comment, isReply = false }: { comment: Comment; isReply?: boolean }) {
+type BubbleProps = {
+  comment: Comment
+  isReply?: boolean
+  isOwn?: boolean
+  isEditing?: boolean
+  editText?: string
+  onEdit?: () => void
+  onEditChange?: (val: string) => void
+  onSaveEdit?: () => void
+  onCancelEdit?: () => void
+  submitting?: boolean
+}
+
+function CommentBubble({
+  comment, isReply = false, isOwn = false,
+  isEditing = false, editText = '', onEdit, onEditChange, onSaveEdit, onCancelEdit, submitting
+}: BubbleProps) {
   const initials = (comment.profiles.display_name ?? 'A')
     .split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 group/bubble">
       <div className={`${isReply ? 'w-7 h-7 text-xs' : 'w-9 h-9 text-sm'} rounded-full bg-emerald-100
                       text-emerald-800 font-bold flex items-center justify-center shrink-0`}>
         {initials}
@@ -160,8 +218,46 @@ function CommentBubble({ comment, isReply = false }: { comment: Comment; isReply
           <span className="text-xs text-stone-400">
             {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}
           </span>
+          {isOwn && !isEditing && (
+            <button
+              onClick={onEdit}
+              className="ml-1 text-xs text-stone-300 hover:text-emerald-600 transition-colors opacity-0 group-hover/bubble:opacity-100"
+              title="Edit comment"
+            >
+              ✏️
+            </button>
+          )}
         </div>
-        <p className="text-sm text-stone-700 leading-relaxed">{comment.body}</p>
+        {isEditing ? (
+          <div>
+            <textarea
+              value={editText}
+              onChange={e => onEditChange?.(e.target.value)}
+              rows={2}
+              autoFocus
+              className="w-full px-3 py-2 rounded-lg border border-emerald-300 text-sm resize-none
+                         focus:outline-none focus:border-emerald-400"
+            />
+            <div className="flex gap-2 mt-1.5">
+              <button
+                onClick={onSaveEdit}
+                disabled={!editText?.trim() || submitting}
+                className="px-4 py-1 bg-emerald-700 text-white text-xs font-medium rounded-lg
+                           hover:bg-emerald-800 disabled:opacity-50 transition-colors"
+              >
+                Save
+              </button>
+              <button
+                onClick={onCancelEdit}
+                className="px-4 py-1 text-stone-500 text-xs hover:text-stone-700 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm text-stone-700 leading-relaxed">{comment.body}</p>
+        )}
       </div>
     </div>
   )

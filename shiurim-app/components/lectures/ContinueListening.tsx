@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { getLectureById, formatDuration } from '@/lib/lectures'
 import { usePlayer } from '@/lib/player-context'
 
@@ -16,10 +17,15 @@ function formatTimeLeft(seconds: number): string {
   return `${mins} min left`
 }
 
+function formatMinutesIn(seconds: number): string {
+  const mins = Math.round(seconds / 60)
+  if (mins < 1) return 'Just started'
+  return `${mins} min in`
+}
+
 export default function ContinueListening({ rows }: { rows: ProgressRow[] }) {
   const { play, pause, isPlaying, lecture: activeLecture } = usePlayer()
 
-  // Resolve each row to a lecture object; skip any that no longer exist in the data
   const items = rows
     .map(row => ({ row, lecture: getLectureById(row.lecture_id) }))
     .filter((x): x is { row: ProgressRow; lecture: NonNullable<ReturnType<typeof getLectureById>> } =>
@@ -34,45 +40,50 @@ export default function ContinueListening({ rows }: { rows: ProgressRow[] }) {
         Continue Listening
       </h2>
 
-      {/* Horizontal scroll strip */}
       <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1
                       [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {items.map(({ row, lecture }) => {
           const isActive      = activeLecture?.id === lecture.id
           const isThisPlaying = isActive && isPlaying
-          const pct = lecture.duration
+          const hasDuration   = lecture.duration > 0
+          const pct = hasDuration
             ? Math.min(100, Math.round((row.position_seconds / lecture.duration) * 100))
             : 0
-          const secondsLeft = lecture.duration
+          const secondsLeft = hasDuration
             ? Math.max(0, lecture.duration - row.position_seconds)
             : 0
 
-          // Build a short breadcrumb label (everything except the lecture title itself)
           const breadcrumb = lecture.breadcrumb.length > 1
             ? lecture.breadcrumb.slice(0, -1).join(' › ')
             : lecture.speaker
 
           return (
-            <div
+            <Link
               key={lecture.id}
+              href={`/lectures/${encodeURIComponent(lecture.id)}`}
               className={`group relative flex flex-col justify-between shrink-0
                 min-w-[175px] max-w-[175px] sm:min-w-[195px] sm:max-w-[195px]
-                rounded-xl border p-4 cursor-pointer select-none transition-all
+                rounded-xl border p-4 select-none transition-all
                 hover:border-emerald-200 hover:shadow-sm
                 ${isActive
                   ? 'border-emerald-300 bg-emerald-50/60'
                   : 'border-stone-200 bg-white'}`}
-              onClick={() => isThisPlaying ? pause() : play(lecture.id, row.position_seconds)}
             >
-              {/* Play / pause icon — top-right corner */}
-              <div className={`absolute top-3 right-3 w-7 h-7 rounded-full shrink-0
-                flex items-center justify-center text-xs transition-colors
-                ${isActive
-                  ? 'bg-emerald-700 text-white'
-                  : 'bg-stone-100 text-stone-400 group-hover:bg-emerald-100 group-hover:text-emerald-700'}`}
+              {/* Play / pause button — stops propagation so it doesn't navigate */}
+              <button
+                onClick={e => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  isThisPlaying ? pause() : play(lecture.id, row.position_seconds)
+                }}
+                className={`absolute top-3 right-3 w-7 h-7 rounded-full shrink-0
+                  flex items-center justify-center text-xs transition-colors
+                  ${isActive
+                    ? 'bg-emerald-700 text-white'
+                    : 'bg-stone-100 text-stone-400 group-hover:bg-emerald-100 group-hover:text-emerald-700'}`}
               >
                 {isThisPlaying ? '⏸' : '▶'}
-              </div>
+              </button>
 
               {/* Title + breadcrumb */}
               <div className="pr-8 mb-3">
@@ -86,24 +97,30 @@ export default function ContinueListening({ rows }: { rows: ProgressRow[] }) {
                 )}
               </div>
 
-              {/* Progress bar + labels */}
+              {/* Progress indicator */}
               <div>
-                <div className="h-1 w-full bg-stone-200 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-emerald-400 rounded-full"
-                    style={{ width: `${pct}%` }}
-                  />
-                </div>
-                <div className="flex items-center justify-between mt-1.5">
-                  <span className="text-xs text-stone-400">{formatTimeLeft(secondsLeft)}</span>
-                  {lecture.duration ? (
-                    <span className="text-xs text-stone-300 tabular-nums">
-                      {formatDuration(lecture.duration)}
-                    </span>
-                  ) : null}
-                </div>
+                {hasDuration ? (
+                  <>
+                    <div className="h-1 w-full bg-stone-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-emerald-400 rounded-full"
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between mt-1.5">
+                      <span className="text-xs text-stone-400">{formatTimeLeft(secondsLeft)}</span>
+                      <span className="text-xs text-stone-300 tabular-nums">
+                        {formatDuration(lecture.duration)}
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-xs text-stone-400">
+                    {formatMinutesIn(row.position_seconds)}
+                  </div>
+                )}
               </div>
-            </div>
+            </Link>
           )
         })}
       </div>

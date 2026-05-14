@@ -16,6 +16,12 @@ function formatTimeLeft(seconds: number): string {
   return `${mins} min left`
 }
 
+function formatMinutesIn(seconds: number): string {
+  const mins = Math.round(seconds / 60)
+  if (mins < 1) return 'Started'
+  return `${mins} min in`
+}
+
 export default function LectureCard({ lecture, index, progress }: Props) {
   const { play, pause, isPlaying, lecture: activeLecture } = usePlayer()
 
@@ -32,12 +38,15 @@ export default function LectureCard({ lecture, index, progress }: Props) {
     ? Math.min(100, Math.round((progress.position_seconds / lecture.duration) * 100))
     : 0
 
-  const isInProgress = !!progress && !progress.completed && progressPct > 0
-  const isCompleted  = !!progress?.completed
-
-  const secondsLeft = isInProgress && lecture.duration
-    ? Math.max(0, lecture.duration - progress!.position_seconds)
+  const secondsLeft = progress && lecture.duration
+    ? Math.max(0, lecture.duration - progress.position_seconds)
     : 0
+
+  // isInProgress: has started but not finished — independent of whether we know the duration
+  const isInProgress = !!progress && !progress.completed && progress.position_seconds > 0
+  const isCompleted  = !!progress?.completed
+  // Can we show a real progress bar?
+  const hasBarData   = isInProgress && lecture.duration > 0 && progressPct > 0
 
   // Subtitle: breadcrumb if available, otherwise speaker
   const subtitle = 'breadcrumb' in lecture && lecture.breadcrumb.length > 1
@@ -82,16 +91,21 @@ export default function LectureCard({ lecture, index, progress }: Props) {
         {subtitle && (
           <div className="text-xs text-stone-400 mt-0.5 truncate">{subtitle}</div>
         )}
+
         {isInProgress && (
           <div className="mt-2">
-            <div className="h-1 w-full bg-stone-200 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-emerald-400 rounded-full transition-all"
-                style={{ width: `${progressPct}%` }}
-              />
-            </div>
-            {secondsLeft > 0 && (
-              <div className="text-xs text-stone-400 mt-0.5">{formatTimeLeft(secondsLeft)}</div>
+            {hasBarData ? (
+              <>
+                <div className="h-1 w-full bg-stone-200 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-emerald-400 rounded-full transition-all"
+                    style={{ width: `${progressPct}%` }}
+                  />
+                </div>
+                <div className="text-xs text-stone-400 mt-0.5">{formatTimeLeft(secondsLeft)}</div>
+              </>
+            ) : (
+              <div className="text-xs text-emerald-600/70">{formatMinutesIn(progress!.position_seconds)}</div>
             )}
           </div>
         )}

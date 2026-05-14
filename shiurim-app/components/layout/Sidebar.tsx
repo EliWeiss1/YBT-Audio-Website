@@ -1,6 +1,6 @@
   'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 import Fuse from 'fuse.js'
@@ -85,6 +85,27 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
   const searchParams = useSearchParams()
   const activeNodeId = searchParams.get('node') ?? ''
   const [query, setQuery] = useState('')
+  const [sidebarWidth, setSidebarWidth] = useState(280)
+  const isResizing = useRef(false)
+
+  const startResize = useCallback((e: React.MouseEvent) => {
+    e.preventDefault()
+    isResizing.current = true
+    const startX = e.clientX
+    const startWidth = sidebarWidth
+    const onMove = (ev: MouseEvent) => {
+      if (!isResizing.current) return
+      const newWidth = Math.min(520, Math.max(220, startWidth + ev.clientX - startX))
+      setSidebarWidth(newWidth)
+    }
+    const onUp = () => {
+      isResizing.current = false
+      window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mouseup', onUp)
+    }
+    window.addEventListener('mousemove', onMove)
+    window.addEventListener('mouseup', onUp)
+  }, [sidebarWidth])
 
   // Build active path for auto-expanding the tree
   const activePath = useMemo(() => {
@@ -114,7 +135,10 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
   const searchResults = query.length > 1 ? fuse.search(query).slice(0, 14) : []
 
   return (
-    <aside className="w-[280px] shrink-0 bg-white border-r border-stone-200 flex flex-col h-screen overflow-hidden">
+    <aside
+      className="shrink-0 bg-white border-r border-stone-200 flex flex-col h-screen overflow-hidden relative"
+      style={{ width: sidebarWidth }}
+    >
       {/* Logo + mobile close button */}
       <div className="px-5 py-4 border-b border-stone-200 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2" onClick={onClose}>
@@ -181,7 +205,7 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
                   onClick={() => { setQuery(''); onClose?.() }}
                   className="block px-3 py-2 rounded-lg hover:bg-stone-50 mb-1"
                 >
-                  <div className="text-sm font-medium text-stone-800 truncate">{item.title}</div>
+                  <div className="text-sm font-medium text-stone-800 leading-snug">{item.title}</div>
                   <div className="text-xs text-stone-400 truncate">
                     {item.breadcrumb.join(' › ')}
                   </div>
@@ -197,6 +221,13 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
           ))
         )}
       </nav>
+
+      {/* Resize handle */}
+      <div
+        onMouseDown={startResize}
+        className="absolute top-0 right-0 w-1.5 h-full cursor-col-resize z-10 hover:bg-emerald-200 active:bg-emerald-300 transition-colors"
+        title="Drag to resize"
+      />
 
     </aside>
   )

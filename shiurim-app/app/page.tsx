@@ -1,5 +1,6 @@
 import { categories, flattenLectures } from '@/lib/lectures'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function HomePage() {
   const totalLectures = categories.reduce((sum, cat) => sum + flattenLectures(cat).length, 0)
@@ -9,9 +10,10 @@ export default function HomePage() {
 
       {/* Hero */}
       <div className="mb-12">
-        <h1 className="text-4xl font-bold text-stone-900 mb-3">
-          📚 Shiurim Library
-        </h1>
+        <div className="flex items-center gap-3 mb-3">
+          <Image src="/YBT_Logo.gif" alt="YBT Logo" width={52} height={52} className="rounded" unoptimized />
+          <h1 className="text-4xl font-bold text-stone-900">YBT Shiurim</h1>
+        </div>
         <p className="text-stone-500 text-lg">
           {totalLectures.toLocaleString()} shiurim across {categories.length} categories.
           Browse, listen, and join the discussion.

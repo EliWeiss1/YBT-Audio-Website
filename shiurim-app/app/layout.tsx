@@ -21,7 +21,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en">
       <body className={inter.className}>
         <PlayerProvider userId={user?.id}>
-          <LayoutShell>
+          <LayoutShell user={user ?? null}>
             {children}
           </LayoutShell>
           <BottomPlayer />

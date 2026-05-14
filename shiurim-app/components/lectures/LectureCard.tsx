@@ -10,6 +10,12 @@ type Props = {
   progress?: { position_seconds: number; completed: boolean } | null
 }
 
+function formatTimeLeft(seconds: number): string {
+  if (seconds <= 60) return '< 1 min left'
+  const mins = Math.round(seconds / 60)
+  return `${mins} min left`
+}
+
 export default function LectureCard({ lecture, index, progress }: Props) {
   const { play, pause, isPlaying, lecture: activeLecture } = usePlayer()
 
@@ -23,7 +29,14 @@ export default function LectureCard({ lecture, index, progress }: Props) {
   }
 
   const progressPct = progress && lecture.duration
-    ? Math.round((progress.position_seconds / lecture.duration) * 100)
+    ? Math.min(100, Math.round((progress.position_seconds / lecture.duration) * 100))
+    : 0
+
+  const isInProgress = !!progress && !progress.completed && progressPct > 0
+  const isCompleted  = !!progress?.completed
+
+  const secondsLeft = isInProgress && lecture.duration
+    ? Math.max(0, lecture.duration - progress!.position_seconds)
     : 0
 
   // Subtitle: breadcrumb if available, otherwise speaker
@@ -34,12 +47,19 @@ export default function LectureCard({ lecture, index, progress }: Props) {
   return (
     <div className={`group flex items-center gap-4 p-4 rounded-xl border transition-all
       hover:border-emerald-200 hover:bg-emerald-50/30
-      ${isActive ? 'border-emerald-200 bg-emerald-50/50' : 'border-stone-100 bg-white'}`}
+      ${isActive
+        ? 'border-emerald-300 bg-emerald-50/50'
+        : isCompleted
+          ? 'border-emerald-200 bg-emerald-50/40'
+          : 'border-stone-100 bg-white'}`}
     >
       {/* Index / play button */}
       <div className="w-8 text-center shrink-0">
-        <span className={`text-sm text-stone-400 group-hover:hidden ${isActive ? 'hidden' : 'block'}`}>
-          {index}
+        <span className={`text-sm group-hover:hidden
+          ${isActive ? 'hidden' : 'block'}
+          ${isCompleted ? 'text-emerald-400' : 'text-stone-400'}`}
+        >
+          {isCompleted ? '✓' : index}
         </span>
         <button
           onClick={handlePlay}
@@ -54,24 +74,31 @@ export default function LectureCard({ lecture, index, progress }: Props) {
 
       {/* Title + meta */}
       <Link href={`/lectures/${encodeURIComponent(lecture.id)}`} className="flex-1 min-w-0">
-        <div className={`text-sm font-medium truncate ${isActive ? 'text-emerald-800' : 'text-stone-800'}`}>
+        <div className={`text-sm font-medium truncate
+          ${isActive ? 'text-emerald-800' : isCompleted ? 'text-stone-500' : 'text-stone-800'}`}
+        >
           {lecture.title}
         </div>
         {subtitle && (
           <div className="text-xs text-stone-400 mt-0.5 truncate">{subtitle}</div>
         )}
-        {progress && !progress.completed && progressPct > 0 && (
-          <div className="mt-1.5 h-1 w-24 bg-stone-200 rounded-full overflow-hidden">
-            <div className="h-full bg-emerald-400 rounded-full" style={{ width: `${progressPct}%` }} />
+        {isInProgress && (
+          <div className="mt-2">
+            <div className="h-1 w-full bg-stone-200 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-emerald-400 rounded-full transition-all"
+                style={{ width: `${progressPct}%` }}
+              />
+            </div>
+            {secondsLeft > 0 && (
+              <div className="text-xs text-stone-400 mt-0.5">{formatTimeLeft(secondsLeft)}</div>
+            )}
           </div>
         )}
       </Link>
 
-      {/* Right: duration + completion */}
-      <div className="flex items-center gap-3 shrink-0">
-        {progress?.completed && (
-          <span className="text-emerald-500 text-sm" title="Completed">✓</span>
-        )}
+      {/* Right: duration */}
+      <div className="shrink-0">
         <span className="text-xs text-stone-400 tabular-nums">
           {lecture.duration ? formatDuration(lecture.duration) : ''}
         </span>

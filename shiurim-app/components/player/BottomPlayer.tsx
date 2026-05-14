@@ -100,7 +100,7 @@ export default function BottomPlayer() {
                     {playbackSpeed === speed && <span className="text-emerald-500 text-xs">✓</span>}
                   </button>
                 ))}
-                <div className="border-t border-stone-100 mt-1 px-3 py-1.5 text-[10px] text-stone-300">
+                <div className="border-t border-stone-100 mt-1 px-3 py-1.5 text-[10px] text-stone-400">
                   [ / ] to adjust
                 </div>
               </div>
@@ -121,7 +121,7 @@ export default function BottomPlayer() {
         </button>
       </div>
 
-      <div className="hidden md:flex justify-center pb-1 gap-4 text-[10px] text-stone-300">
+      <div className="hidden md:flex justify-center pb-1 gap-4 text-[10px] text-stone-500">
         <span><kbd className="font-mono">Space</kbd> play/pause</span>
         <span><kbd className="font-mono">←</kbd> −15s</span>
         <span><kbd className="font-mono">→</kbd> +30s</span>

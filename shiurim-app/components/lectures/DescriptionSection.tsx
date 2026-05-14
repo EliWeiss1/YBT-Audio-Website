@@ -87,7 +87,7 @@ export default function DescriptionSection({ lectureId, initialDescription, user
           <p className="text-sm text-stone-600 leading-relaxed">{description}</p>
           <button
             onClick={() => { setDraft(description); setEditing(true) }}
-            className="mt-3 text-xs text-stone-400 hover:text-emerald-700 transition-colors flex items-center gap-1"
+            className="mt-3 text-xs text-stone-500 hover:text-emerald-700 transition-colors flex items-center gap-1"
           >
             ✏️ Edit description
           </button>
@@ -95,8 +95,8 @@ export default function DescriptionSection({ lectureId, initialDescription, user
       ) : (
         <button
           onClick={() => { setDraft(''); setEditing(true) }}
-          className="w-full py-3 px-4 rounded-xl border border-dashed border-stone-200
-                     text-sm text-stone-400 hover:text-emerald-700 hover:border-emerald-300
+          className="w-full py-3 px-4 rounded-xl border border-dashed border-stone-300
+                     text-sm text-stone-500 hover:text-emerald-700 hover:border-emerald-300
                      hover:bg-emerald-50 transition-all text-left"
         >
           + Add a description for this shiur

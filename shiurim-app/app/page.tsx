@@ -54,7 +54,7 @@ export default async function HomePage() {
 
       {/* Continue listening strip — only shown when the user has in-progress shiurim */}
       {recentProgressRows.length > 0 && (
-        <ContinueListening rows={recentProgressRows} />
+        <ContinueListening rows={recentProgressRows} userId={user!.id} />
       )}
 
       {/* Category grid */}

@@ -52,13 +52,25 @@ export async function saveProgress(
     user_id: userId,
     lecture_id: lectureId,
     position_seconds: positionSeconds,
-    completed,
     last_listened_at: new Date().toISOString(),
   }
   if (durationSeconds && durationSeconds > 0) {
     record.duration_seconds = durationSeconds
   }
+  // Never downgrade a completed shiur back to in-progress.
+  // Only include `completed` in the upsert when it is true.
+  if (completed) {
+    record.completed = true
+  }
   await supabase.from('progress').upsert(record, { onConflict: 'user_id,lecture_id' })
+}
+
+export async function deleteProgress(userId: string, lectureId: string) {
+  await supabase
+    .from('progress')
+    .delete()
+    .eq('user_id', userId)
+    .eq('lecture_id', lectureId)
 }
 
 // ---- Comment helpers ----

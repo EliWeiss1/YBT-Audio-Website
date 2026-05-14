@@ -1,15 +1,15 @@
-import { getNodeByPath, getPathToNode, flattenLectures, categories, TreeNode } from '@/lib/lectures'
+import { getNodeByPath, getPathToNode, flattenLectures, categories, TreeNode, Lecture } from '@/lib/lectures'
 import LectureCard from '@/components/lectures/LectureCard'
 import { createClient } from '@/lib/supabase-server'
 import { getAllProgress } from '@/lib/supabase'
 import Link from 'next/link'
 
 type Props = {
-  searchParams: Promise<{ node?: string }>
+  searchParams: Promise<{ node?: string; rabbi?: string }>
 }
 
 export default async function LecturesPage({ searchParams }: Props) {
-  const { node: nodeId } = await searchParams
+  const { node: nodeId, rabbi: rabbiParam } = await searchParams
 
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -53,7 +53,7 @@ export default async function LecturesPage({ searchParams }: Props) {
       </div>
 
       {activeNode ? (
-        <NodeContent node={activeNode} progressMap={progressMap} />
+        <NodeContent node={activeNode} progressMap={progressMap} rabbiFilter={rabbiParam} />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {categories.map(cat => {
@@ -78,15 +78,65 @@ export default async function LecturesPage({ searchParams }: Props) {
   )
 }
 
+function RabbiFilter({
+  lectures,
+  nodeId,
+  activeRabbi,
+}: {
+  lectures: Lecture[]
+  nodeId: string
+  activeRabbi: string | undefined
+}) {
+  const speakers = Array.from(new Set(lectures.map(l => l.speaker).filter(Boolean))).sort()
+  if (speakers.length < 2) return null
+
+  return (
+    <div className="flex items-center gap-2 flex-wrap mb-5">
+      <Link
+        href={`/lectures?node=${nodeId}`}
+        className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border transition-colors
+          ${!activeRabbi
+            ? 'bg-emerald-700 text-white border-emerald-700'
+            : 'border-stone-200 text-stone-500 hover:border-stone-300 hover:text-stone-700'}`}
+      >
+        All
+      </Link>
+      {speakers.map(speaker => {
+        const isActive = activeRabbi === speaker
+        return (
+          <Link
+            key={speaker}
+            href={`/lectures?node=${nodeId}&rabbi=${encodeURIComponent(speaker)}`}
+            className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border transition-colors
+              ${isActive
+                ? 'bg-emerald-700 text-white border-emerald-700'
+                : 'border-stone-200 text-stone-500 hover:border-stone-300 hover:text-stone-700'}`}
+          >
+            {speaker}
+          </Link>
+        )
+      })}
+    </div>
+  )
+}
+
 function NodeContent({
   node,
   progressMap,
+  rabbiFilter,
 }: {
   node: TreeNode
   progressMap: Record<string, { position_seconds: number; completed: boolean }>
+  rabbiFilter: string | undefined
 }) {
   const hasChildren = node.children && node.children.length > 0
   const hasLectures = node.lectures && node.lectures.length > 0
+
+  const filteredLectures = hasLectures
+    ? (rabbiFilter
+        ? node.lectures!.filter(l => l.speaker === rabbiFilter)
+        : node.lectures!)
+    : []
 
   return (
     <div className="space-y-8">
@@ -125,16 +175,27 @@ function NodeContent({
               General
             </h2>
           )}
-          <div className="space-y-2">
-            {node.lectures!.map((lecture, i) => (
-              <LectureCard
-                key={`${node.id}-${lecture.id}`}
-                lecture={lecture}
-                index={i + 1}
-                progress={progressMap[lecture.id]}
-              />
-            ))}
-          </div>
+
+          <RabbiFilter
+            lectures={node.lectures!}
+            nodeId={node.id}
+            activeRabbi={rabbiFilter}
+          />
+
+          {filteredLectures.length === 0 ? (
+            <p className="text-sm text-stone-400 py-4">No shiurim found for this filter.</p>
+          ) : (
+            <div className="space-y-2">
+              {filteredLectures.map((lecture, i) => (
+                <LectureCard
+                  key={`${node.id}-${lecture.id}`}
+                  lecture={lecture}
+                  index={i + 1}
+                  progress={progressMap[lecture.id]}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

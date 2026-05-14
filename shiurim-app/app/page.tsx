@@ -17,6 +17,7 @@ export default async function HomePage() {
         .order('last_listened_at', { ascending: false })
         .limit(5)
     : { data: [] }
+  const recentProgressRows = recentProgress ?? []
 
   const totalLectures = getAllLectures().length
 
@@ -52,8 +53,8 @@ export default async function HomePage() {
       </div>
 
       {/* Continue listening strip — only shown when the user has in-progress shiurim */}
-      {recentProgress.length > 0 && (
-        <ContinueListening rows={recentProgress} />
+      {recentProgressRows.length > 0 && (
+        <ContinueListening rows={recentProgressRows} />
       )}
 
       {/* Category grid */}

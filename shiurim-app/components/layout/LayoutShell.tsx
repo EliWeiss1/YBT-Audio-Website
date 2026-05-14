@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase-browser'
 import Sidebar from './Sidebar'
+import ProfileDrawer from './ProfileDrawer'
 import type { User } from '@supabase/supabase-js'
 
 export default function LayoutShell({
@@ -38,15 +39,7 @@ export default function LayoutShell({
 
   const AuthButton = () =>
     user ? (
-      <div className="flex items-center gap-2">
-        <span className="text-xs text-stone-500 hidden sm:block truncate max-w-[140px]">{user.email}</span>
-        <button
-          onClick={handleSignOut}
-          className="px-3 py-1.5 text-xs font-medium text-stone-600 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors"
-        >
-          Sign out
-        </button>
-      </div>
+      <ProfileDrawer user={user} onSignOut={handleSignOut} />
     ) : (
       <Link
         href="/auth"

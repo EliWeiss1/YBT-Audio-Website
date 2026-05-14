@@ -1,4 +1,5 @@
 import { getNodeByPath, getPathToNode, flattenLectures, categories, TreeNode, Lecture } from '@/lib/lectures'
+import { normalizeRabbi, getRawVariants } from '@/lib/rabbi-normalization'
 import LectureCard from '@/components/lectures/LectureCard'
 import { createClient } from '@/lib/supabase-server'
 import { getAllProgress } from '@/lib/supabase'
@@ -10,7 +11,7 @@ type Props = {
 
 export default async function LecturesPage({ searchParams }: Props) {
   const { node: nodeId, rabbi: rabbiParam } = await searchParams
-  // comma-separated list of selected rabbis, e.g. "Rabbi Chait,Rabbi Feder"
+  // comma-separated canonical names, e.g. "Rabbi Chait,Rabbi Feder"
   const selectedRabbis = rabbiParam
     ? rabbiParam.split(',').map(r => decodeURIComponent(r.trim())).filter(Boolean)
     : []
@@ -91,13 +92,18 @@ function RabbiFilter({
   nodeId: string
   selectedRabbis: string[]
 }) {
-  const speakers = Array.from(new Set(lectures.map(l => l.speaker).filter(Boolean))).sort()
-  if (speakers.length < 2) return null
+  // Derive canonical speaker names present in this node
+  const speakers = Array.from(
+    new Set(lectures.map(l => normalizeRabbi(l.speaker)).filter(Boolean))
+  ).sort()
 
-  function toggledHref(speaker: string): string {
-    const next = selectedRabbis.includes(speaker)
-      ? selectedRabbis.filter(r => r !== speaker)
-      : [...selectedRabbis, speaker]
+  // Show pills if: 2+ local speakers, OR a global filter is active (so user can switch)
+  if (speakers.length < 2 && selectedRabbis.length === 0) return null
+
+  function toggledHref(canonical: string): string {
+    const next = selectedRabbis.includes(canonical)
+      ? selectedRabbis.filter(r => r !== canonical)
+      : [...selectedRabbis, canonical]
     if (next.length === 0) return `/lectures?node=${nodeId}`
     return `/lectures?node=${nodeId}&rabbi=${next.map(encodeURIComponent).join(',')}`
   }
@@ -113,18 +119,18 @@ function RabbiFilter({
       >
         All
       </Link>
-      {speakers.map(speaker => {
-        const isActive = selectedRabbis.includes(speaker)
+      {speakers.map(canonical => {
+        const isActive = selectedRabbis.includes(canonical)
         return (
           <Link
-            key={speaker}
-            href={toggledHref(speaker)}
+            key={canonical}
+            href={toggledHref(canonical)}
             className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border transition-colors
               ${isActive
                 ? 'bg-emerald-700 text-white border-emerald-700'
                 : 'border-stone-200 text-stone-500 hover:border-stone-300 hover:text-stone-700'}`}
           >
-            {speaker}
+            {canonical}
           </Link>
         )
       })}
@@ -144,9 +150,12 @@ function NodeContent({
   const hasChildren = node.children && node.children.length > 0
   const hasLectures = node.lectures && node.lectures.length > 0
 
+  // Expand canonical selections to raw variants for matching
+  const rawVariants = new Set(selectedRabbis.flatMap(getRawVariants))
+
   const filteredLectures = hasLectures
     ? (selectedRabbis.length > 0
-        ? node.lectures!.filter(l => selectedRabbis.includes(l.speaker))
+        ? node.lectures!.filter(l => rawVariants.has(l.speaker))
         : node.lectures!)
     : []
 
@@ -195,7 +204,9 @@ function NodeContent({
           />
 
           {filteredLectures.length === 0 ? (
-            <p className="text-sm text-stone-400 py-4">No shiurim found for this filter.</p>
+            <p className="text-sm text-stone-400 py-4">
+              No shiurim by {selectedRabbis.join(' or ')} in this section.
+            </p>
           ) : (
             <div className="space-y-2">
               {filteredLectures.map((lecture, i) => (

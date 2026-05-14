@@ -3,9 +3,10 @@
 import { useState, useMemo, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import Fuse from 'fuse.js'
 import { categories, getAllLectures, TreeNode } from '@/lib/lectures'
+import { normalizeRabbi, getRawVariants } from '@/lib/rabbi-normalization'
 
 // ─── Recursive tree node ──────────────────────────────────────────────────────
 
@@ -87,6 +88,7 @@ function TreeItem({
 export default function Sidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const router = useRouter()
   const activeNodeId = searchParams.get('node') ?? ''
   const [query, setQuery] = useState('')
   const [sidebarWidth, setSidebarWidth] = useState(280)
@@ -133,38 +135,58 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
 
   const allLectures = useMemo(() => getAllLectures(), [])
 
-  // Speakers sorted by lecture count descending
+  // Canonical speaker names sorted by total lecture count descending
   const speakerCounts = useMemo(() => {
     const counts: Record<string, number> = {}
     for (const l of allLectures) {
-      if (l.speaker) counts[l.speaker] = (counts[l.speaker] ?? 0) + 1
+      if (l.speaker) {
+        const canonical = normalizeRabbi(l.speaker)
+        counts[canonical] = (counts[canonical] ?? 0) + 1
+      }
     }
     return Object.entries(counts).sort((a, b) => b[1] - a[1])
   }, [allLectures])
 
-  // rabbi param to thread into tree leaf hrefs
+  // rabbiParam carries canonical names — lecture page normalizes for filtering
   const rabbiParam = selectedRabbis.length > 0
     ? selectedRabbis.map(encodeURIComponent).join(',')
     : ''
 
-  // Fuse runs on the rabbi-filtered pool when a selection is active
-  const searchPool = useMemo(
-    () => selectedRabbis.length > 0
-      ? allLectures.filter(l => selectedRabbis.includes(l.speaker))
-      : allLectures,
-    [allLectures, selectedRabbis]
-  )
+  function toggleRabbi(canonical: string) {
+    const next = selectedRabbis.includes(canonical)
+      ? selectedRabbis.filter(r => r !== canonical)
+      : [...selectedRabbis, canonical]
+    setSelectedRabbis(next)
+
+    // If currently viewing a node page, push updated URL immediately
+    if (activeNodeId) {
+      const newParam = next.map(encodeURIComponent).join(',')
+      const newHref = newParam
+        ? `/lectures?node=${activeNodeId}&rabbi=${newParam}`
+        : `/lectures?node=${activeNodeId}`
+      router.push(newHref)
+    }
+  }
+
+  function clearRabbis() {
+    setSelectedRabbis([])
+    if (activeNodeId) {
+      router.push(`/lectures?node=${activeNodeId}`)
+    }
+  }
+
+  // Fuse runs on the rabbi-filtered pool (expanded to raw variants)
+  const searchPool = useMemo(() => {
+    if (selectedRabbis.length === 0) return allLectures
+    const rawVariants = new Set(selectedRabbis.flatMap(getRawVariants))
+    return allLectures.filter(l => rawVariants.has(l.speaker))
+  }, [allLectures, selectedRabbis])
+
   const fuse = useMemo(() => new Fuse(searchPool, {
     keys: ['title', 'description', 'speaker', 'tags', 'breadcrumb'],
     threshold: 0.3,
   }), [searchPool])
   const searchResults = query.length > 1 ? fuse.search(query).slice(0, 14) : []
-
-  function toggleRabbi(speaker: string) {
-    setSelectedRabbis(prev =>
-      prev.includes(speaker) ? prev.filter(r => r !== speaker) : [...prev, speaker]
-    )
-  }
 
   return (
     <aside
@@ -257,37 +279,35 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
       <div className="border-t border-stone-200 shrink-0">
         <button
           onClick={() => setRabbiSectionOpen(o => !o)}
-          className="w-full flex items-center justify-between px-4 py-2.5 text-xs font-semibold
-                     text-stone-500 uppercase tracking-wide hover:bg-stone-50 transition-colors"
+          className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-stone-50 transition-colors"
         >
           <span className="flex items-center gap-2">
-            By Rabbi
+            <span className="text-sm font-bold text-stone-700">By Rabbi</span>
             {selectedRabbis.length > 0 && (
-              <span className="bg-emerald-700 text-white text-xs font-medium px-1.5 py-0.5 rounded-full
-                               normal-case tracking-normal leading-none">
+              <span className="bg-emerald-700 text-white text-xs font-medium px-1.5 py-0.5 rounded-full leading-none">
                 {selectedRabbis.length}
               </span>
             )}
           </span>
-          <span className={`text-stone-400 transition-transform duration-150 ${rabbiSectionOpen ? 'rotate-90' : ''}`}>›</span>
+          <span className={`text-stone-400 text-xs transition-transform duration-150 ${rabbiSectionOpen ? 'rotate-90' : ''}`}>›</span>
         </button>
 
         {rabbiSectionOpen && (
           <div className="overflow-y-auto px-2 pb-2" style={{ maxHeight: '220px' }}>
             {selectedRabbis.length > 0 && (
               <button
-                onClick={() => setSelectedRabbis([])}
+                onClick={clearRabbis}
                 className="w-full text-left px-3 py-1 text-xs text-stone-400 hover:text-stone-600 transition-colors"
               >
                 Clear all
               </button>
             )}
-            {speakerCounts.map(([speaker, count]) => {
-              const isSelected = selectedRabbis.includes(speaker)
+            {speakerCounts.map(([canonical, count]) => {
+              const isSelected = selectedRabbis.includes(canonical)
               return (
                 <button
-                  key={speaker}
-                  onClick={() => toggleRabbi(speaker)}
+                  key={canonical}
+                  onClick={() => toggleRabbi(canonical)}
                   className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-sm
                                transition-colors mb-0.5 text-left
                     ${isSelected
@@ -303,7 +323,7 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
                         </svg>
                       )}
                     </span>
-                    <span className="truncate">{speaker}</span>
+                    <span className="truncate">{canonical}</span>
                   </span>
                   <span className="text-xs text-stone-300 ml-2 shrink-0">{count}</span>
                 </button>

@@ -10,6 +10,10 @@ type Props = {
 
 export default async function LecturesPage({ searchParams }: Props) {
   const { node: nodeId, rabbi: rabbiParam } = await searchParams
+  // comma-separated list of selected rabbis, e.g. "Rabbi Chait,Rabbi Feder"
+  const selectedRabbis = rabbiParam
+    ? rabbiParam.split(',').map(r => decodeURIComponent(r.trim())).filter(Boolean)
+    : []
 
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -53,7 +57,7 @@ export default async function LecturesPage({ searchParams }: Props) {
       </div>
 
       {activeNode ? (
-        <NodeContent node={activeNode} progressMap={progressMap} rabbiFilter={rabbiParam} />
+        <NodeContent node={activeNode} progressMap={progressMap} selectedRabbis={selectedRabbis} />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {categories.map(cat => {
@@ -81,32 +85,40 @@ export default async function LecturesPage({ searchParams }: Props) {
 function RabbiFilter({
   lectures,
   nodeId,
-  activeRabbi,
+  selectedRabbis,
 }: {
   lectures: Lecture[]
   nodeId: string
-  activeRabbi: string | undefined
+  selectedRabbis: string[]
 }) {
   const speakers = Array.from(new Set(lectures.map(l => l.speaker).filter(Boolean))).sort()
   if (speakers.length < 2) return null
+
+  function toggledHref(speaker: string): string {
+    const next = selectedRabbis.includes(speaker)
+      ? selectedRabbis.filter(r => r !== speaker)
+      : [...selectedRabbis, speaker]
+    if (next.length === 0) return `/lectures?node=${nodeId}`
+    return `/lectures?node=${nodeId}&rabbi=${next.map(encodeURIComponent).join(',')}`
+  }
 
   return (
     <div className="flex items-center gap-2 flex-wrap mb-5">
       <Link
         href={`/lectures?node=${nodeId}`}
         className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border transition-colors
-          ${!activeRabbi
+          ${selectedRabbis.length === 0
             ? 'bg-emerald-700 text-white border-emerald-700'
             : 'border-stone-200 text-stone-500 hover:border-stone-300 hover:text-stone-700'}`}
       >
         All
       </Link>
       {speakers.map(speaker => {
-        const isActive = activeRabbi === speaker
+        const isActive = selectedRabbis.includes(speaker)
         return (
           <Link
             key={speaker}
-            href={`/lectures?node=${nodeId}&rabbi=${encodeURIComponent(speaker)}`}
+            href={toggledHref(speaker)}
             className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border transition-colors
               ${isActive
                 ? 'bg-emerald-700 text-white border-emerald-700'
@@ -123,18 +135,18 @@ function RabbiFilter({
 function NodeContent({
   node,
   progressMap,
-  rabbiFilter,
+  selectedRabbis,
 }: {
   node: TreeNode
   progressMap: Record<string, { position_seconds: number; completed: boolean }>
-  rabbiFilter: string | undefined
+  selectedRabbis: string[]
 }) {
   const hasChildren = node.children && node.children.length > 0
   const hasLectures = node.lectures && node.lectures.length > 0
 
   const filteredLectures = hasLectures
-    ? (rabbiFilter
-        ? node.lectures!.filter(l => l.speaker === rabbiFilter)
+    ? (selectedRabbis.length > 0
+        ? node.lectures!.filter(l => selectedRabbis.includes(l.speaker))
         : node.lectures!)
     : []
 
@@ -179,7 +191,7 @@ function NodeContent({
           <RabbiFilter
             lectures={node.lectures!}
             nodeId={node.id}
-            activeRabbi={rabbiFilter}
+            selectedRabbis={selectedRabbis}
           />
 
           {filteredLectures.length === 0 ? (

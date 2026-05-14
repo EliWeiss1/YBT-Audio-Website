@@ -13,19 +13,22 @@ function TreeItem({
   node,
   depth = 0,
   activePath,
+  rabbiParam,
 }: {
   node: TreeNode
   depth?: number
   activePath: string[]
+  rabbiParam: string
 }) {
   const isInActivePath = activePath.includes(node.id)
   const [open, setOpen] = useState(isInActivePath)
   const isLeaf = !node.children || node.children.length === 0
   const lectureCount = node.lectures?.length
 
-  // Leaf node — links to the browse page for this node
   if (isLeaf) {
-    const href = `/lectures?node=${node.id}`
+    const href = rabbiParam
+      ? `/lectures?node=${node.id}&rabbi=${rabbiParam}`
+      : `/lectures?node=${node.id}`
     const isActive = activePath[activePath.length - 1] === node.id
     return (
       <Link
@@ -44,7 +47,6 @@ function TreeItem({
     )
   }
 
-  // Branch node — expandable
   return (
     <div>
       <button
@@ -71,6 +73,7 @@ function TreeItem({
               node={child}
               depth={depth + 1}
               activePath={activePath}
+              rabbiParam={rabbiParam}
             />
           ))}
         </div>
@@ -87,6 +90,8 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
   const activeNodeId = searchParams.get('node') ?? ''
   const [query, setQuery] = useState('')
   const [sidebarWidth, setSidebarWidth] = useState(280)
+  const [selectedRabbis, setSelectedRabbis] = useState<string[]>([])
+  const [rabbiSectionOpen, setRabbiSectionOpen] = useState(false)
   const isResizing = useRef(false)
 
   const startResize = useCallback((e: React.MouseEvent) => {
@@ -108,7 +113,6 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
     window.addEventListener('mouseup', onUp)
   }, [sidebarWidth])
 
-  // Build active path for auto-expanding the tree
   const activePath = useMemo(() => {
     if (!activeNodeId) return []
     function findPath(node: TreeNode, target: string, path: string[]): string[] | null {
@@ -127,20 +131,47 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
     return []
   }, [activeNodeId])
 
-  // Fuzzy search across all lectures
   const allLectures = useMemo(() => getAllLectures(), [])
-  const fuse = useMemo(() => new Fuse(allLectures, {
+
+  // Speakers sorted by lecture count descending
+  const speakerCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    for (const l of allLectures) {
+      if (l.speaker) counts[l.speaker] = (counts[l.speaker] ?? 0) + 1
+    }
+    return Object.entries(counts).sort((a, b) => b[1] - a[1])
+  }, [allLectures])
+
+  // rabbi param to thread into tree leaf hrefs
+  const rabbiParam = selectedRabbis.length > 0
+    ? selectedRabbis.map(encodeURIComponent).join(',')
+    : ''
+
+  // Fuse runs on the rabbi-filtered pool when a selection is active
+  const searchPool = useMemo(
+    () => selectedRabbis.length > 0
+      ? allLectures.filter(l => selectedRabbis.includes(l.speaker))
+      : allLectures,
+    [allLectures, selectedRabbis]
+  )
+  const fuse = useMemo(() => new Fuse(searchPool, {
     keys: ['title', 'description', 'speaker', 'tags', 'breadcrumb'],
     threshold: 0.3,
-  }), [allLectures])
+  }), [searchPool])
   const searchResults = query.length > 1 ? fuse.search(query).slice(0, 14) : []
+
+  function toggleRabbi(speaker: string) {
+    setSelectedRabbis(prev =>
+      prev.includes(speaker) ? prev.filter(r => r !== speaker) : [...prev, speaker]
+    )
+  }
 
   return (
     <aside
       className="shrink-0 bg-white border-r border-stone-200 flex flex-col h-screen overflow-hidden relative"
       style={{ width: sidebarWidth }}
     >
-      {/* Logo + mobile close button */}
+      {/* Logo + mobile close */}
       <div className="px-5 py-4 border-b border-stone-200 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2" onClick={onClose}>
           <Image src="/YBT_Logo.gif" alt="YBT Logo" width={40} height={40} className="rounded" unoptimized />
@@ -192,7 +223,7 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
       </div>
 
       {/* Tree or search results */}
-      <nav className="flex-1 overflow-y-auto py-2 px-2">
+      <nav className="flex-1 overflow-y-auto py-2 px-2 min-h-0">
         {query.length > 1 ? (
           <div>
             {searchResults.length === 0 ? (
@@ -216,11 +247,71 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
         ) : (
           categories.map(cat => (
             <div key={cat.id} className="mb-1">
-              <TreeItem node={cat} depth={0} activePath={activePath} />
+              <TreeItem node={cat} depth={0} activePath={activePath} rabbiParam={rabbiParam} />
             </div>
           ))
         )}
       </nav>
+
+      {/* By Rabbi section */}
+      <div className="border-t border-stone-200 shrink-0">
+        <button
+          onClick={() => setRabbiSectionOpen(o => !o)}
+          className="w-full flex items-center justify-between px-4 py-2.5 text-xs font-semibold
+                     text-stone-500 uppercase tracking-wide hover:bg-stone-50 transition-colors"
+        >
+          <span className="flex items-center gap-2">
+            By Rabbi
+            {selectedRabbis.length > 0 && (
+              <span className="bg-emerald-700 text-white text-xs font-medium px-1.5 py-0.5 rounded-full
+                               normal-case tracking-normal leading-none">
+                {selectedRabbis.length}
+              </span>
+            )}
+          </span>
+          <span className={`text-stone-400 transition-transform duration-150 ${rabbiSectionOpen ? 'rotate-90' : ''}`}>›</span>
+        </button>
+
+        {rabbiSectionOpen && (
+          <div className="overflow-y-auto px-2 pb-2" style={{ maxHeight: '220px' }}>
+            {selectedRabbis.length > 0 && (
+              <button
+                onClick={() => setSelectedRabbis([])}
+                className="w-full text-left px-3 py-1 text-xs text-stone-400 hover:text-stone-600 transition-colors"
+              >
+                Clear all
+              </button>
+            )}
+            {speakerCounts.map(([speaker, count]) => {
+              const isSelected = selectedRabbis.includes(speaker)
+              return (
+                <button
+                  key={speaker}
+                  onClick={() => toggleRabbi(speaker)}
+                  className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-sm
+                               transition-colors mb-0.5 text-left
+                    ${isSelected
+                      ? 'bg-emerald-50 text-emerald-800 font-medium'
+                      : 'text-stone-600 hover:bg-stone-50'}`}
+                >
+                  <span className="flex items-center gap-2 truncate">
+                    <span className={`w-3.5 h-3.5 rounded-sm border flex items-center justify-center shrink-0 transition-colors
+                      ${isSelected ? 'bg-emerald-700 border-emerald-700' : 'border-stone-300'}`}>
+                      {isSelected && (
+                        <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 12 12">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M2 6l3 3 5-5" />
+                        </svg>
+                      )}
+                    </span>
+                    <span className="truncate">{speaker}</span>
+                  </span>
+                  <span className="text-xs text-stone-300 ml-2 shrink-0">{count}</span>
+                </button>
+              )
+            })}
+          </div>
+        )}
+      </div>
 
       {/* Resize handle */}
       <div
@@ -228,7 +319,6 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
         className="absolute top-0 right-0 w-1.5 h-full cursor-col-resize z-10 hover:bg-emerald-200 active:bg-emerald-300 transition-colors"
         title="Drag to resize"
       />
-
     </aside>
   )
 }

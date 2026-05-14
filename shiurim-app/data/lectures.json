@@ -103449,137 +103449,6 @@
           ]
         },
         {
-          "id": "nach-meggilas-esther",
-          "label": "Meggilas Esther",
-          "lectures": [
-            {
-              "id": "N-002",
-              "title": "Megillat Esther - Central Ideas",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-002%20Esther%20Central%20Ideas.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "esther",
-                "purim"
-              ]
-            },
-            {
-              "id": "N-037",
-              "title": "Ideas in Megilah - Characters in the Megillah",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-037%20Ideas%20in%20Megilla.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "esther",
-                "purim"
-              ]
-            },
-            {
-              "id": "N-050",
-              "title": "Characters in Megilah #1",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-050%20Analysis%20of%20the%20Characters%20in%20the%20Megilla%20no.1.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "esther",
-                "purim"
-              ]
-            },
-            {
-              "id": "N-051",
-              "title": "Characters in Megilah #2",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-051%20Analysis%20of%20the%20Characters%20in%20the%20Megilla%20no.2.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "esther",
-                "purim"
-              ]
-            },
-            {
-              "id": "N-052",
-              "title": "Megilah - Matanos LaEvyonim",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-052%20Midas%20Achashveirosh%20no.1.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "purim"
-              ]
-            },
-            {
-              "id": "N-053",
-              "title": "Midos Achashverosh",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-053%20Midas%20Achashveirosh%20no.2.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "esther"
-              ]
-            },
-            {
-              "id": "N-063",
-              "title": "Megilas Ester #1",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-063%20Megillas%20Esther%201%20audio.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "esther",
-                "purim"
-              ]
-            },
-            {
-              "id": "N-064",
-              "title": "Megilas Ester #2",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-064%20Megillas%20Esther%202%20audio1.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "",
-              "tags": [
-                "esther",
-                "purim"
-              ]
-            },
-            {
-              "id": "N-084",
-              "title": "Esther's Plan (3/7/01)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Holidays/Purim/Megilla/N-084%20Esther's%20Plan.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Chait",
-              "date": "2001-03-07",
-              "tags": [
-                "esther",
-                "purim"
-              ]
-            },
-            {
-              "id": "N-104",
-              "title": "The Downfall of Haman",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-104%20The%20Downfall%20of%20Haman.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "",
-              "date": "",
-              "tags": []
-            }
-          ]
-        },
-        {
           "id": "nach-mishlei",
           "label": "Mishlei",
           "lectures": [
@@ -109567,6 +109436,131 @@
                     "Esther"
                   ],
                   "sourceId": 872702
+                },
+                {
+                  "id": "N-002",
+                  "title": "Megillat Esther - Central Ideas",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-002%20Esther%20Central%20Ideas.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "esther",
+                    "purim"
+                  ]
+                },
+                {
+                  "id": "N-037",
+                  "title": "Ideas in Megilah - Characters in the Megillah",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-037%20Ideas%20in%20Megilla.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "esther",
+                    "purim"
+                  ]
+                },
+                {
+                  "id": "N-050",
+                  "title": "Characters in Megilah #1",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-050%20Analysis%20of%20the%20Characters%20in%20the%20Megilla%20no.1.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "esther",
+                    "purim"
+                  ]
+                },
+                {
+                  "id": "N-051",
+                  "title": "Characters in Megilah #2",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-051%20Analysis%20of%20the%20Characters%20in%20the%20Megilla%20no.2.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "esther",
+                    "purim"
+                  ]
+                },
+                {
+                  "id": "N-052",
+                  "title": "Megilah - Matanos LaEvyonim",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-052%20Midas%20Achashveirosh%20no.1.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "purim"
+                  ]
+                },
+                {
+                  "id": "N-053",
+                  "title": "Midos Achashverosh",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-053%20Midas%20Achashveirosh%20no.2.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "esther"
+                  ]
+                },
+                {
+                  "id": "N-063",
+                  "title": "Megilas Ester #1",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-063%20Megillas%20Esther%201%20audio.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "esther",
+                    "purim"
+                  ]
+                },
+                {
+                  "id": "N-064",
+                  "title": "Megilas Ester #2",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-064%20Megillas%20Esther%202%20audio1.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "",
+                  "tags": [
+                    "esther",
+                    "purim"
+                  ]
+                },
+                {
+                  "id": "N-084",
+                  "title": "Esther's Plan (3/7/01)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Holidays/Purim/Megilla/N-084%20Esther's%20Plan.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "Rabbi Chait",
+                  "date": "2001-03-07",
+                  "tags": [
+                    "esther",
+                    "purim"
+                  ]
+                },
+                {
+                  "id": "N-104",
+                  "title": "The Downfall of Haman",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Meggilas%20Esther/N-104%20The%20Downfall%20of%20Haman.mp3",
+                  "duration": 0,
+                  "description": "",
+                  "speaker": "",
+                  "date": "",
+                  "tags": []
                 }
               ]
             },

@@ -6,7 +6,7 @@ import { formatDuration } from '@/lib/lectures'
 import Link from 'next/link'
 
 export default function BottomPlayer() {
-  const { lecture, isPlaying, currentTime, duration, pause, resume, seek, skip, playbackSpeed, setSpeed } = usePlayer()
+  const { lecture, isPlaying, currentTime, duration, pause, resume, seek, skip, playbackSpeed, setSpeed, dismiss } = usePlayer()
   const [showSpeeds, setShowSpeeds] = useState(false)
 
   if (!lecture) return null
@@ -107,6 +107,18 @@ export default function BottomPlayer() {
             )}
           </div>
         </div>
+
+        {/* Close / dismiss button */}
+        <button
+          onClick={dismiss}
+          className="shrink-0 p-1.5 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors"
+          title="Close player"
+          aria-label="Close player"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
 
       <div className="hidden md:flex justify-center pb-1 gap-4 text-[10px] text-stone-300">

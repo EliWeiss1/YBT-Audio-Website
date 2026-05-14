@@ -18,6 +18,7 @@ type PlayerState = {
   seek: (seconds: number) => void
   skip: (seconds: number) => void
   setSpeed: (speed: number) => void
+  dismiss: () => void
 }
 
 const PlayerContext = createContext<PlayerState | null>(null)
@@ -134,8 +135,21 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     setPlaybackSpeed(speed)
   }, [])
 
+  const dismiss = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current.src = ''
+      audioRef.current = null
+    }
+    if (saveTimerRef.current) clearInterval(saveTimerRef.current)
+    setLecture(null)
+    setIsPlaying(false)
+    setCurrentTime(0)
+    setDuration(0)
+  }, [])
+
   return (
-    <PlayerContext.Provider value={{ lecture, isPlaying, currentTime, duration, playbackSpeed, play, pause, resume, seek, skip, setSpeed }}>
+    <PlayerContext.Provider value={{ lecture, isPlaying, currentTime, duration, playbackSpeed, play, pause, resume, seek, skip, setSpeed, dismiss }}>
       {children}
     </PlayerContext.Provider>
   )

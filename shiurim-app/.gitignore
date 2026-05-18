@@ -7,6 +7,9 @@ node_modules/
 .next/
 out/
 
+# Generated at build time
+public/lectures-data/
+
 # Environment variables - NEVER commit this
 .env.local
 .env.*.local

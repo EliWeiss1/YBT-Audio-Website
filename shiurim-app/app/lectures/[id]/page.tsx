@@ -1,12 +1,13 @@
 import { getLectureById, getAdjacentLectures, formatDuration } from '@/lib/lectures'
-import { getLectureComments } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
-import { createClient } from '@/lib/supabase-server'
-import LecturePlayer from '@/components/player/LecturePlayer'
-import CommentsSection from '@/components/discussions/CommentsSection'
-import DescriptionSection from '@/components/lectures/DescriptionSection'
+import LectureAuthSection from '@/components/lectures/LectureAuthSection'
+import CommentsLoader from '@/components/discussions/CommentsLoader'
 import Link from 'next/link'
 import { format } from 'date-fns'
+
+// Cache each lecture page for 1 hour — drastically reduces server function invocations.
+// Auth, comments, and description load client-side after the cached shell is served.
+export const revalidate = 3600
 
 type Props = {
   params: Promise<{ id: string }>
@@ -14,28 +15,12 @@ type Props = {
 
 export default async function LecturePage({ params }: Props) {
   const { id: rawId } = await params
-  // Next.js 16 + Turbopack doesn't decode dynamic route params, so do it ourselves
+  // Next.js 16 + Turbopack doesn't decode dynamic route params
   const id = decodeURIComponent(rawId)
   const lecture = getLectureById(id)
   if (!lecture) notFound()
 
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
-  const [comments, descriptionRow] = await Promise.all([
-    getLectureComments(id),
-    supabase
-      .from('lecture_descriptions')
-      .select('body')
-      .eq('lecture_id', id)
-      .maybeSingle(),
-  ])
-
-  // Supabase-stored description takes precedence over the JSON fallback
-  const description = descriptionRow.data?.body ?? lecture.description ?? ''
-
   const { prev, next } = getAdjacentLectures(id)
-
   const breadcrumbItems = lecture.breadcrumb
 
   return (
@@ -87,15 +72,11 @@ export default async function LecturePage({ params }: Props) {
         </div>
       )}
 
-      {/* Description — editable by logged-in users */}
-      <DescriptionSection
+      {/* Description + player — loads client-side after cache hit */}
+      <LectureAuthSection
         lectureId={lecture.id}
-        initialDescription={description}
-        userId={user?.id}
+        jsonDescription={lecture.description ?? ''}
       />
-
-      {/* Audio player */}
-      <LecturePlayer lectureId={lecture.id} userId={user?.id} />
 
       {/* Prev / Next navigation */}
       <div className="flex justify-between gap-4 my-8">
@@ -132,13 +113,9 @@ export default async function LecturePage({ params }: Props) {
         ) : <div className="flex-1" />}
       </div>
 
-      {/* Comments */}
-      <CommentsSection
-        lectureId={lecture.id}
-        initialComments={comments}
-        userId={user?.id}
-        userDisplayName={user?.user_metadata?.full_name}
-      />
+      {/* Comments — loads client-side after cache hit */}
+      <CommentsLoader lectureId={lecture.id} />
+
     </div>
   )
 }

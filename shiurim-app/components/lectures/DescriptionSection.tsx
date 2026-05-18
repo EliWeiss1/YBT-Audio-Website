@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { upsertLectureDescription } from '@/lib/supabase'
 
 type Props = {
@@ -15,6 +15,14 @@ export default function DescriptionSection({ lectureId, initialDescription, user
   const [draft, setDraft] = useState(initialDescription)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // Sync when the parent loads the Supabase description after mount
+  useEffect(() => {
+    if (!editing) {
+      setDescription(initialDescription)
+      setDraft(initialDescription)
+    }
+  }, [initialDescription]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSave = async () => {
     if (!userId) return

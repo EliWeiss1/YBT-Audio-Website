@@ -1,7 +1,6 @@
 import { getNodeByPath, getPathToNode, flattenLectures, categories, TreeNode, Lecture } from '@/lib/lectures'
 import { normalizeRabbi, getRawVariants } from '@/lib/rabbi-normalization'
-import LectureCard from '@/components/lectures/LectureCard'
-import { createClient } from '@/lib/supabase-server'
+import LectureListWithProgress from '@/components/lectures/LectureListWithProgress'
 import Link from 'next/link'
 
 type Props = {
@@ -10,21 +9,9 @@ type Props = {
 
 export default async function LecturesPage({ searchParams }: Props) {
   const { node: nodeId, rabbi: rabbiParam } = await searchParams
-  // comma-separated canonical names, e.g. "Rabbi Chait,Rabbi Feder"
   const selectedRabbis = rabbiParam
     ? rabbiParam.split(',').map(r => decodeURIComponent(r.trim())).filter(Boolean)
     : []
-
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  const { data: progressData } = user
-    ? await supabase
-        .from('progress')
-        .select('lecture_id, position_seconds, completed, duration_seconds')
-        .eq('user_id', user.id)
-    : { data: [] }
-  const progress = progressData ?? []
-  const progressMap = Object.fromEntries(progress.map((p: { lecture_id: string; position_seconds: number; completed: boolean }) => [p.lecture_id, p]))
 
   const path = nodeId ? getPathToNode(nodeId) : null
   const activeNode = path ? getNodeByPath(path) : null
@@ -63,7 +50,7 @@ export default async function LecturesPage({ searchParams }: Props) {
       </div>
 
       {activeNode ? (
-        <NodeContent node={activeNode} progressMap={progressMap} selectedRabbis={selectedRabbis} />
+        <NodeContent node={activeNode} selectedRabbis={selectedRabbis} />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {categories.map(cat => {
@@ -97,12 +84,10 @@ function RabbiFilter({
   nodeId: string
   selectedRabbis: string[]
 }) {
-  // Derive canonical speaker names present in this node
   const speakers = Array.from(
     new Set(lectures.map(l => normalizeRabbi(l.speaker)).filter(Boolean))
   ).sort()
 
-  // Show pills if: 2+ local speakers, OR a global filter is active (so user can switch)
   if (speakers.length < 2 && selectedRabbis.length === 0) return null
 
   function toggledHref(canonical: string): string {
@@ -145,17 +130,14 @@ function RabbiFilter({
 
 function NodeContent({
   node,
-  progressMap,
   selectedRabbis,
 }: {
   node: TreeNode
-  progressMap: Record<string, { position_seconds: number; completed: boolean }>
   selectedRabbis: string[]
 }) {
   const hasChildren = node.children && node.children.length > 0
   const hasLectures = node.lectures && node.lectures.length > 0
 
-  // Expand canonical selections to raw variants for matching
   const rawVariants = new Set(selectedRabbis.flatMap(getRawVariants))
 
   const filteredLectures = hasLectures
@@ -213,16 +195,10 @@ function NodeContent({
               No shiurim by {selectedRabbis.join(' or ')} in this section.
             </p>
           ) : (
-            <div className="space-y-2">
-              {filteredLectures.map((lecture, i) => (
-                <LectureCard
-                  key={`${node.id}-${lecture.id}`}
-                  lecture={lecture}
-                  index={i + 1}
-                  progress={progressMap[lecture.id]}
-                />
-              ))}
-            </div>
+            <LectureListWithProgress
+              lectures={filteredLectures}
+              nodeId={node.id}
+            />
           )}
         </div>
       )}

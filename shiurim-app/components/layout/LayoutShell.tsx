@@ -53,7 +53,7 @@ export default function LayoutShell({
     <div className="flex h-screen bg-stone-50 text-stone-900">
 
       {/* ── Desktop sidebar (always visible ≥ md) ── */}
-      <div className="hidden md:flex">
+      <div className="hidden md:flex md:h-screen">
         <Sidebar />
       </div>
 

@@ -190,7 +190,7 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
 
   return (
     <aside
-      className="shrink-0 bg-white border-r border-stone-200 flex flex-col h-screen overflow-hidden relative"
+      className="shrink-0 bg-white border-r border-stone-200 flex flex-col h-full overflow-hidden relative"
       style={{ width: sidebarWidth }}
     >
       {/* Logo + mobile close */}
@@ -275,7 +275,7 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
         )}
       </nav>
 
-      {/* By Rabbi section */}
+      {/* By Rabbi section — shrink-0 keeps it pinned at the bottom regardless of tree height */}
       <div className="border-t border-stone-200 shrink-0">
         <button
           onClick={() => setRabbiSectionOpen(o => !o)}

@@ -29210,9 +29210,74 @@
           ]
         },
         {
-          "id": "discussion-ahavat-hashem",
-          "label": "Ahavat Hashem",
+          "id": "discussion-ahavat-yirat-hashem",
+          "label": "Ahavat/Yirat Hashem",
           "lectures": [
+            {
+              "id": "YBT-1156408",
+              "title": "Sunday Shiur - Yiras Hashem and a Roadmap for Human Perfection",
+              "audioUrl": "https://download.yutorah.org/2025/22624/1156408.MP3",
+              "duration": 5700,
+              "description": "",
+              "speaker": "Rabbi Aron Zimmer",
+              "date": "2025-11-23",
+              "tags": [
+                "Yirat Hashem"
+              ],
+              "sourceId": 1156408
+            },
+            {
+              "id": "YBT-1131215",
+              "title": "Ahavas Hashem Complex and Human Perfection",
+              "audioUrl": "https://download.yutorah.org/2025/22624/1131215.MP3",
+              "duration": 6780,
+              "description": "",
+              "speaker": "Rabbi Aron Zimmer",
+              "date": "2025-03-30",
+              "tags": [
+                "Ahavat Hashem"
+              ],
+              "sourceId": 1131215
+            },
+            {
+              "id": "YBT-1077436",
+              "title": "Serving Hashem out of Love and Fear",
+              "audioUrl": "https://download.yutorah.org/2023/22624/1077436.MP3",
+              "duration": 2520,
+              "description": "",
+              "speaker": "Rabbi E. Feder",
+              "date": "2023-09-26",
+              "tags": [
+                "Ahavat Hashem"
+              ],
+              "sourceId": 1077436
+            },
+            {
+              "id": "YBT-1054283",
+              "title": "Sunday Shiur: Oveid MeAhavah",
+              "audioUrl": "https://download.yutorah.org/2023/22624/1054283.MP3",
+              "duration": 5100,
+              "description": "",
+              "speaker": "Rabbi Pesach Chait",
+              "date": "2023-01-08",
+              "tags": [
+                "Ahavat Hashem"
+              ],
+              "sourceId": 1054283
+            },
+            {
+              "id": "YBT-933393",
+              "title": "Yiras Shamayim And Knowledge",
+              "audioUrl": "http://ybt.org/students/2019-2020/razimmer/2019_09_24-Yiras_Shamayim_And_Knowledge-Rabbi_A_Zimmer.MP3",
+              "duration": 0,
+              "description": "",
+              "speaker": "Rabbi Aron Zimmer",
+              "date": "2019-09-24",
+              "tags": [
+                "Yirat Hashem"
+              ],
+              "sourceId": 933393
+            },
             {
               "id": "D-34",
               "title": "Ahavas Hashem and Olam Habba (D-34)",
@@ -29319,77 +29384,6 @@
               "speaker": "",
               "date": "",
               "tags": []
-            }
-          ]
-        },
-        {
-          "id": "discussion-ahavat-yirat-hashem",
-          "label": "Ahavat/Yirat Hashem",
-          "lectures": [
-            {
-              "id": "YBT-1156408",
-              "title": "Sunday Shiur - Yiras Hashem and a Roadmap for Human Perfection",
-              "audioUrl": "https://download.yutorah.org/2025/22624/1156408.MP3",
-              "duration": 5700,
-              "description": "",
-              "speaker": "Rabbi Aron Zimmer",
-              "date": "2025-11-23",
-              "tags": [
-                "Yirat Hashem"
-              ],
-              "sourceId": 1156408
-            },
-            {
-              "id": "YBT-1131215",
-              "title": "Ahavas Hashem Complex and Human Perfection",
-              "audioUrl": "https://download.yutorah.org/2025/22624/1131215.MP3",
-              "duration": 6780,
-              "description": "",
-              "speaker": "Rabbi Aron Zimmer",
-              "date": "2025-03-30",
-              "tags": [
-                "Ahavat Hashem"
-              ],
-              "sourceId": 1131215
-            },
-            {
-              "id": "YBT-1077436",
-              "title": "Serving Hashem out of Love and Fear",
-              "audioUrl": "https://download.yutorah.org/2023/22624/1077436.MP3",
-              "duration": 2520,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2023-09-26",
-              "tags": [
-                "Ahavat Hashem"
-              ],
-              "sourceId": 1077436
-            },
-            {
-              "id": "YBT-1054283",
-              "title": "Sunday Shiur: Oveid MeAhavah",
-              "audioUrl": "https://download.yutorah.org/2023/22624/1054283.MP3",
-              "duration": 5100,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2023-01-08",
-              "tags": [
-                "Ahavat Hashem"
-              ],
-              "sourceId": 1054283
-            },
-            {
-              "id": "YBT-933393",
-              "title": "Yiras Shamayim And Knowledge",
-              "audioUrl": "http://ybt.org/students/2019-2020/razimmer/2019_09_24-Yiras_Shamayim_And_Knowledge-Rabbi_A_Zimmer.MP3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Rabbi Aron Zimmer",
-              "date": "2019-09-24",
-              "tags": [
-                "Yirat Hashem"
-              ],
-              "sourceId": 933393
             }
           ]
         },

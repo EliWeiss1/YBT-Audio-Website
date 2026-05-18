@@ -28,7 +28,10 @@ export default async function HomePage() {
       <div className="mb-12">
         <div className="flex items-center gap-3 mb-3">
           <Image src="/YBT_Logo.gif" alt="YBT Logo" width={52} height={52} className="rounded" unoptimized />
-          <h1 className="text-4xl font-bold text-stone-900">YBT Shiurim</h1>
+          <div>
+            <h1 className="text-4xl font-bold text-stone-900">YBT Shiurim</h1>
+            <p className="text-xs text-stone-400 tracking-widest uppercase mt-0.5">Yeshiva Bnei Torah</p>
+          </div>
         </div>
         <p className="text-stone-500 text-lg">
           {totalLectures.toLocaleString()} shiurim across {categories.length} categories.

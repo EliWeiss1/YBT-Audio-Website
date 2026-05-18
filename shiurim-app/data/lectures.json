@@ -3,7 +3,7 @@
     {
       "id": "bnai-noach",
       "label": "Bnai Noach",
-      "icon": "📖",
+      "icon": "🌍",
       "children": [
         {
           "id": "bnai-noach-sets",
@@ -70371,7 +70371,7 @@
     {
       "id": "holidays",
       "label": "Holidays",
-      "icon": "🕎",
+      "icon": "📅",
       "children": [
         {
           "id": "holidays-chanukah",
@@ -84415,7 +84415,7 @@
     {
       "id": "kisvei-rishonim",
       "label": "Kisvei Rishonim",
-      "icon": "📖",
+      "icon": "🖋️",
       "children": [
         {
           "id": "kisvei-rishonim-rambam",
@@ -102573,7 +102573,7 @@
     {
       "id": "nach",
       "label": "Nach",
-      "icon": "📜",
+      "icon": "📖",
       "lectures": [
         {
           "id": "N-3",
@@ -113074,7 +113074,7 @@
     {
       "id": "gemarah",
       "label": "Gemarah",
-      "icon": "📖",
+      "icon": "📕",
       "children": [
         {
           "id": "pesachim",
@@ -245923,7 +245923,7 @@
     {
       "id": "mishna",
       "label": "Mishna",
-      "icon": "📖",
+      "icon": "📗",
       "children": [
         {
           "id": "mishna-general",

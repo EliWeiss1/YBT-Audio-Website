@@ -4,7 +4,6 @@ import { useState, useMemo, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
-import type { MouseEvent } from 'react'
 import Fuse from 'fuse.js'
 import { categories, getAllLectures, TreeNode } from '@/lib/lectures'
 import { normalizeRabbi, getRawVariants } from '@/lib/rabbi-normalization'
@@ -335,7 +334,7 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
                   {/* "View all" pill — always visible on mobile, hover-only on desktop */}
                   <Link
                     href={`/rabbi/${encodeURIComponent(canonical)}`}
-                    onClick={(e: MouseEvent) => e.stopPropagation()}
+                    onClick={(e) => e.stopPropagation()}
                     className="shrink-0 text-xs text-emerald-600 border border-emerald-200 bg-emerald-50
                                rounded-full px-1.5 py-0.5 leading-none whitespace-nowrap
                                sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"

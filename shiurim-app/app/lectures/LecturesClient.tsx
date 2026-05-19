@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { normalizeRabbi, getRawVariants } from '@/lib/rabbi-normalization'
+import { normalizeRabbi } from '@/lib/rabbi-normalization'
+import { createClient } from '@/lib/supabase-browser'
 import LectureListWithProgress from '@/components/lectures/LectureListWithProgress'
 import Link from 'next/link'
 import type { Lecture } from '@/lib/lectures'
@@ -74,7 +75,9 @@ export default function LecturesClient() {
 
   const [data, setData] = useState<RootData | NodePageData | null>(null)
   const [loading, setLoading] = useState(true)
+  const [overrideMap, setOverrideMap] = useState<Record<string, string>>({})
 
+  // Fetch node data from CDN
   useEffect(() => {
     setLoading(true)
     const url = nodeId
@@ -84,6 +87,26 @@ export default function LecturesClient() {
       .then(r => r.json())
       .then(d => { setData(d); setLoading(false) })
   }, [nodeId])
+
+  // After node data loads, fetch speaker overrides for this node's lectures
+  useEffect(() => {
+    const lectures = (data as NodePageData)?.lectures
+    if (!lectures || lectures.length === 0) { setOverrideMap({}); return }
+    const supabase = createClient()
+    supabase
+      .from('speaker_overrides')
+      .select('lecture_id, speaker')
+      .in('lecture_id', lectures.map((l: Lecture) => l.id))
+      .then(({ data: rows }) => {
+        setOverrideMap(
+          rows
+            ? Object.fromEntries(
+                rows.map((r: { lecture_id: string; speaker: string }) => [r.lecture_id, r.speaker])
+              )
+            : {}
+        )
+      })
+  }, [data])
 
   if (loading || !data) return <LoadingSkeleton />
 
@@ -138,7 +161,7 @@ export default function LecturesClient() {
         <p className="text-stone-400 text-sm mt-1">{node.totalCount} shiurim</p>
       </div>
 
-      <NodeContent node={node} selectedRabbis={selectedRabbis} />
+      <NodeContent node={node} selectedRabbis={selectedRabbis} overrideMap={overrideMap} />
     </div>
   )
 }
@@ -149,13 +172,15 @@ function RabbiFilter({
   lectures,
   nodeId,
   selectedRabbis,
+  overrideMap,
 }: {
   lectures: Lecture[]
   nodeId: string
   selectedRabbis: string[]
+  overrideMap: Record<string, string>
 }) {
   const speakers = Array.from(
-    new Set(lectures.map(l => normalizeRabbi(l.speaker)).filter(Boolean))
+    new Set(lectures.map(l => overrideMap[l.id] ?? normalizeRabbi(l.speaker)).filter(Boolean))
   ).sort()
 
   if (speakers.length < 2 && selectedRabbis.length === 0) return null
@@ -203,18 +228,20 @@ function RabbiFilter({
 function NodeContent({
   node,
   selectedRabbis,
+  overrideMap,
 }: {
   node: NodePageData
   selectedRabbis: string[]
+  overrideMap: Record<string, string>
 }) {
   const hasChildren = node.children && node.children.length > 0
   const hasLectures = node.lectures && node.lectures.length > 0
 
-  const rawVariants = new Set(selectedRabbis.flatMap(getRawVariants))
+  const effectiveSpeaker = (l: Lecture) => overrideMap[l.id] ?? normalizeRabbi(l.speaker)
 
   const filteredLectures = hasLectures
     ? (selectedRabbis.length > 0
-        ? node.lectures!.filter(l => rawVariants.has(l.speaker))
+        ? node.lectures!.filter(l => selectedRabbis.includes(effectiveSpeaker(l)))
         : node.lectures!)
     : []
 
@@ -256,6 +283,7 @@ function NodeContent({
             lectures={node.lectures!}
             nodeId={node.id}
             selectedRabbis={selectedRabbis}
+            overrideMap={overrideMap}
           />
 
           {filteredLectures.length === 0 ? (

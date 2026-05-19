@@ -1,7 +1,9 @@
-import { getLectureById, getAdjacentLectures, formatDuration } from '@/lib/lectures'
+import { getLectureById, getAdjacentLectures, formatDuration, getAllLectures } from '@/lib/lectures'
+import { normalizeRabbi } from '@/lib/rabbi-normalization'
 import { notFound } from 'next/navigation'
 import LectureAuthSection from '@/components/lectures/LectureAuthSection'
 import CommentsLoader from '@/components/discussions/CommentsLoader'
+import SpeakerEditor from '@/components/lectures/SpeakerEditor'
 import Link from 'next/link'
 import { format } from 'date-fns'
 
@@ -22,6 +24,11 @@ export default async function LecturePage({ params }: Props) {
 
   const { prev, next } = getAdjacentLectures(id)
   const breadcrumbItems = lecture.breadcrumb
+
+  // Build the canonical rabbi list for the dropdown (deduplicated, sorted)
+  const allRabbis = Array.from(
+    new Set(getAllLectures().map(l => normalizeRabbi(l.speaker)).filter(Boolean))
+  ).sort()
 
   return (
     <div className="px-4 py-6 sm:p-8 max-w-3xl mx-auto">
@@ -53,7 +60,13 @@ export default async function LecturePage({ params }: Props) {
 
       {/* Meta row */}
       <div className="flex flex-wrap items-center gap-4 text-sm text-stone-500 mb-6">
-        {lecture.speaker && <span>🎓 {lecture.speaker}</span>}
+        {lecture.speaker && (
+          <SpeakerEditor
+            lectureId={lecture.id}
+            defaultSpeaker={normalizeRabbi(lecture.speaker)}
+            allRabbis={allRabbis}
+          />
+        )}
         {lecture.duration > 0 && <span>⏱ {formatDuration(lecture.duration)}</span>}
         {lecture.date && (
           <span>📅 {format(new Date(lecture.date), 'MMM d, yyyy')}</span>

@@ -129,3 +129,25 @@ create policy "Logged-in users can insert descriptions"
   on public.lecture_descriptions for insert with check (auth.uid() is not null);
 create policy "Logged-in users can update descriptions"
   on public.lecture_descriptions for update using (auth.uid() is not null);
+
+-- ============================================
+-- SPEAKER OVERRIDES
+-- Crowd-sourced rabbi/speaker corrections.
+-- Any logged-in user can correct the speaker
+-- on a shiur. One override row per lecture.
+-- Run this block if adding to an existing deployment.
+-- ============================================
+create table public.speaker_overrides (
+  lecture_id text primary key,
+  speaker text not null,
+  updated_by uuid references public.profiles(id),
+  updated_at timestamp with time zone default now()
+);
+
+alter table public.speaker_overrides enable row level security;
+create policy "Speaker overrides are viewable by everyone"
+  on public.speaker_overrides for select using (true);
+create policy "Logged-in users can insert speaker overrides"
+  on public.speaker_overrides for insert with check (auth.uid() is not null);
+create policy "Logged-in users can update speaker overrides"
+  on public.speaker_overrides for update using (auth.uid() is not null);

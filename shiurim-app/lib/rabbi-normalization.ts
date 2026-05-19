@@ -2,7 +2,7 @@
 const RABBI_GROUPS: Record<string, string[]> = {
   'Rabbi Chait': ['Rabbi Yisroel Chait', 'Rabbi Chait'],
   'Rabbi Mann': ['Rabbi Reuven Mann', 'Rabbi Mann'],
-  'Rabbi Bald': ['Rabbi Henoch Bald', 'Rabbi H. Bald', 'R. H. Bald'],
+  'Rabbi Bald': ['Rabbi Henoch Bald', 'Rabbi H. Bald', 'R. H. Bald', 'Rabbi Bald'],
   'Rabbi Cinamon': ['Rabbi Zev Cinamon', 'Rabbi Z. Cinamon'],
   'Rabbi Moskowitz': ['Rabbi M. Moskowitz', 'Rabbi Morton Moskowitz', 'Rabbi Moskowitz'],
   'Rabbi David Markowitz': ['Rabbi David Markowitz', 'Rabbi D. Markowitz'],

@@ -4,6 +4,7 @@ import { useState, useMemo, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
+import type { MouseEvent } from 'react'
 import Fuse from 'fuse.js'
 import { categories, getAllLectures, TreeNode } from '@/lib/lectures'
 import { normalizeRabbi, getRawVariants } from '@/lib/rabbi-normalization'
@@ -305,16 +306,19 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
             {speakerCounts.map(([canonical, count]) => {
               const isSelected = selectedRabbis.includes(canonical)
               return (
-                <button
+                <div
                   key={canonical}
-                  onClick={() => toggleRabbi(canonical)}
-                  className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-sm
-                               transition-colors mb-0.5 text-left
+                  className={`group flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm
+                               transition-colors mb-0.5
                     ${isSelected
-                      ? 'bg-emerald-50 text-emerald-800 font-medium'
+                      ? 'bg-emerald-50 text-emerald-800'
                       : 'text-stone-600 hover:bg-stone-50'}`}
                 >
-                  <span className="flex items-center gap-2 truncate">
+                  {/* Checkbox + name — clicking this area toggles the filter */}
+                  <button
+                    onClick={() => toggleRabbi(canonical)}
+                    className="flex items-center gap-2 flex-1 min-w-0 text-left"
+                  >
                     <span className={`w-3.5 h-3.5 rounded-sm border flex items-center justify-center shrink-0 transition-colors
                       ${isSelected ? 'bg-emerald-700 border-emerald-700' : 'border-stone-300'}`}>
                       {isSelected && (
@@ -323,10 +327,22 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
                         </svg>
                       )}
                     </span>
-                    <span className="truncate">{canonical}</span>
-                  </span>
-                  <span className="text-xs text-stone-300 ml-2 shrink-0">{count}</span>
-                </button>
+                    <span className={`truncate font-medium ${isSelected ? '' : 'font-normal'}`}>{canonical}</span>
+                  </button>
+
+                  <span className="text-xs text-stone-300 shrink-0">{count}</span>
+
+                  {/* "View all" pill — always visible on mobile, hover-only on desktop */}
+                  <Link
+                    href={`/rabbi/${encodeURIComponent(canonical)}`}
+                    onClick={(e: MouseEvent) => e.stopPropagation()}
+                    className="shrink-0 text-xs text-emerald-600 border border-emerald-200 bg-emerald-50
+                               rounded-full px-1.5 py-0.5 leading-none whitespace-nowrap
+                               sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+                  >
+                    View all
+                  </Link>
+                </div>
               )
             })}
           </div>

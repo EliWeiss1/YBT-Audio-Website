@@ -60,7 +60,7 @@ export default function LectureCard({ lecture, index, progress, speakerOverride 
     : effectiveSpeaker
 
   return (
-    <div className={`group flex items-center gap-4 p-4 rounded-xl border transition-all
+    <div className={`group flex items-start gap-4 p-4 rounded-xl border transition-all
       hover:border-emerald-200 hover:bg-emerald-50/30
       ${isActive
         ? 'border-emerald-300 bg-emerald-50/50'
@@ -69,7 +69,7 @@ export default function LectureCard({ lecture, index, progress, speakerOverride 
           : 'border-stone-100 bg-white'}`}
     >
       {/* Index / play button */}
-      <div className="w-8 text-center shrink-0">
+      <div className="w-8 text-center shrink-0 mt-0.5">
         <span className={`text-sm group-hover:hidden
           ${isActive ? 'hidden' : 'block'}
           ${isCompleted ? 'text-emerald-400' : 'text-stone-400'}`}
@@ -89,13 +89,13 @@ export default function LectureCard({ lecture, index, progress, speakerOverride 
 
       {/* Title + meta */}
       <Link href={`/lectures/${encodeURIComponent(lecture.id)}`} className="flex-1 min-w-0">
-        <div className={`text-sm font-medium truncate
+        <div className={`text-sm font-medium
           ${isActive ? 'text-emerald-800' : isCompleted ? 'text-stone-500' : 'text-stone-800'}`}
         >
           {lecture.title}
         </div>
         {subtitle && (
-          <div className="text-xs text-stone-400 mt-0.5 truncate">{subtitle}</div>
+          <div className="text-xs text-stone-400 mt-0.5">{subtitle}</div>
         )}
 
         {isInProgress && (

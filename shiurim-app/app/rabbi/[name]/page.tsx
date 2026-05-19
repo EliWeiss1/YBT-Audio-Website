@@ -1,6 +1,7 @@
 import { getAllLectures, FlatLecture } from '@/lib/lectures'
 import { normalizeRabbi, getRawVariants } from '@/lib/rabbi-normalization'
 import { notFound } from 'next/navigation'
+import { createClient } from '@/lib/supabase-server'
 import RabbiPageClient from './RabbiPageClient'
 
 export const revalidate = 3600
@@ -19,8 +20,25 @@ export default async function RabbiPage({ params }: Props) {
   const { name: rawName } = await params
   const canonicalName = decodeURIComponent(rawName)
 
+  // Fetch all speaker overrides so we can apply them to the JSON data
+  const supabase = await createClient()
+  const { data: overridesData } = await supabase
+    .from('speaker_overrides')
+    .select('lecture_id, speaker')
+  const overrideMap = new Map<string, string>(
+    (overridesData ?? []).map((o: { lecture_id: string; speaker: string }) => [o.lecture_id, o.speaker])
+  )
+
   const rawVariants = new Set(getRawVariants(canonicalName))
-  const rabbiLectures = getAllLectures().filter(l => rawVariants.has(l.speaker))
+
+  // A lecture belongs to this rabbi if:
+  // - it has an override pointing to canonicalName, OR
+  // - its JSON speaker normalizes to canonicalName AND it has no override pointing elsewhere
+  const rabbiLectures = getAllLectures().filter(l => {
+    const override = overrideMap.get(l.id)
+    if (override !== undefined) return override === canonicalName
+    return rawVariants.has(l.speaker)
+  })
 
   if (rabbiLectures.length === 0) notFound()
 

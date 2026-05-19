@@ -8,6 +8,7 @@ type Props = {
   lecture: Lecture | FlatLecture
   index: number
   progress?: { position_seconds: number; completed: boolean; duration_seconds?: number | null } | null
+  speakerOverride?: string
 }
 
 function formatTimeLeft(seconds: number): string {
@@ -22,7 +23,7 @@ function formatMinutesIn(seconds: number): string {
   return `${mins} min in`
 }
 
-export default function LectureCard({ lecture, index, progress }: Props) {
+export default function LectureCard({ lecture, index, progress, speakerOverride }: Props) {
   const { play, pause, isPlaying, lecture: activeLecture } = usePlayer()
 
   const isActive = activeLecture?.id === lecture.id
@@ -52,10 +53,11 @@ export default function LectureCard({ lecture, index, progress }: Props) {
   const isCompleted  = !!progress?.completed
   const hasBarData   = isInProgress && effectiveDuration > 0 && progressPct > 0
 
-  // Subtitle: breadcrumb if available, otherwise speaker
+  // Subtitle: breadcrumb if available, otherwise speaker (prefer override)
+  const effectiveSpeaker = speakerOverride ?? lecture.speaker
   const subtitle = 'breadcrumb' in lecture && lecture.breadcrumb.length > 1
     ? lecture.breadcrumb.slice(1).join(' › ')
-    : lecture.speaker
+    : effectiveSpeaker
 
   return (
     <div className={`group flex items-center gap-4 p-4 rounded-xl border transition-all

@@ -67,7 +67,11 @@ export default function SpeakerEditor({ lectureId, defaultSpeaker, allRabbis }: 
   if (!currentSpeaker && !defaultSpeaker) return null
 
   // Build list: ensure current speaker is always present even if not in allRabbis
-  const options = Array.from(new Set([...allRabbis, currentSpeaker].filter(Boolean))).sort()
+  // allRabbis is pre-sorted by count from the server; keep that order, append current if missing
+  const knownSet = new Set(allRabbis)
+  const options = knownSet.has(currentSpeaker)
+    ? allRabbis
+    : [...allRabbis, currentSpeaker].filter(Boolean)
 
   return (
     <div className="relative inline-flex items-center gap-1.5" ref={dropdownRef}>

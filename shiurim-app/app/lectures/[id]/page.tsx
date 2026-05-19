@@ -25,10 +25,16 @@ export default async function LecturePage({ params }: Props) {
   const { prev, next } = getAdjacentLectures(id)
   const breadcrumbItems = lecture.breadcrumb
 
-  // Build the canonical rabbi list for the dropdown (deduplicated, sorted)
-  const allRabbis = Array.from(
-    new Set(getAllLectures().map(l => normalizeRabbi(l.speaker)).filter(Boolean))
-  ).sort()
+  // Build the canonical rabbi list for the dropdown, sorted by shiur count (most first)
+  const allLectures = getAllLectures()
+  const rabbiCounts = new Map<string, number>()
+  for (const l of allLectures) {
+    const r = normalizeRabbi(l.speaker)
+    if (r) rabbiCounts.set(r, (rabbiCounts.get(r) ?? 0) + 1)
+  }
+  const allRabbis = Array.from(rabbiCounts.entries())
+    .sort((a, b) => b[1] - a[1])
+    .map(([name]) => name)
 
   return (
     <div className="px-4 py-6 sm:p-8 max-w-3xl mx-auto">

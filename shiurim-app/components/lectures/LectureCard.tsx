@@ -117,11 +117,26 @@ export default function LectureCard({ lecture, index, progress, speakerOverride 
         )}
       </Link>
 
-      {/* Right: duration */}
-      <div className="shrink-0">
+      {/* Right: duration + download */}
+      <div className="shrink-0 flex flex-col items-end gap-1.5">
         <span className="text-xs text-stone-400 tabular-nums">
           {lecture.duration ? formatDuration(lecture.duration) : ''}
         </span>
+        {'audioUrl' in lecture && lecture.audioUrl && (
+          <a
+            href={`/api/download/${encodeURIComponent(lecture.id)}`}
+            onClick={e => e.stopPropagation()}
+            className="opacity-0 group-hover:opacity-100 transition-opacity
+                       flex items-center gap-1 text-[10px] text-stone-400 hover:text-emerald-600"
+            title="Download MP3"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                 className="w-3 h-3">
+              <path d="M8 1a.75.75 0 0 1 .75.75v6.69l1.97-1.97a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.53a.75.75 0 0 1 1.06-1.06L7.25 8.44V1.75A.75.75 0 0 1 8 1ZM2.5 13.25a.75.75 0 0 1 .75-.75h9.5a.75.75 0 0 1 0 1.5h-9.5a.75.75 0 0 1-.75-.75Z" />
+            </svg>
+            DL
+          </a>
+        )}
       </div>
     </div>
   )

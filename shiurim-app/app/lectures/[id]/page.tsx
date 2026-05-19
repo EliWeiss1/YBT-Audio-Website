@@ -77,6 +77,22 @@ export default async function LecturePage({ params }: Props) {
         {lecture.date && (
           <span>📅 {format(new Date(lecture.date), 'MMM d, yyyy')}</span>
         )}
+        {lecture.audioUrl && (
+          <a
+            href={`/api/download/${encodeURIComponent(lecture.id)}`}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg
+                       bg-stone-100 hover:bg-emerald-50 text-stone-600 hover:text-emerald-700
+                       border border-stone-200 hover:border-emerald-300 transition-all
+                       text-xs font-medium"
+            title="Download MP3"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                 className="w-3.5 h-3.5">
+              <path d="M8 1a.75.75 0 0 1 .75.75v6.69l1.97-1.97a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.53a.75.75 0 0 1 1.06-1.06L7.25 8.44V1.75A.75.75 0 0 1 8 1ZM2.5 13.25a.75.75 0 0 1 .75-.75h9.5a.75.75 0 0 1 0 1.5h-9.5a.75.75 0 0 1-.75-.75Z" />
+            </svg>
+            Download
+          </a>
+        )}
       </div>
 
       {/* Tags */}

@@ -116,6 +116,47 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     return () => window.removeEventListener('keydown', handler)
   }, [])
 
+  // ── Media Session API ────────────────────────────────────────────────────
+  // Registers this site as the active audio session with the OS so that
+  // headphone/Bluetooth play commands always come back here, not Spotify.
+  const setupMediaSession = useCallback((lec: FlatLecture) => {
+    if (typeof navigator === 'undefined' || !('mediaSession' in navigator)) return
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: lec.title,
+      artist: lec.speaker || 'Torah To Life',
+      album: lec.breadcrumb?.slice(0, -1).join(' › ') || 'Torah To Life',
+      // artwork omitted — add a logo URL here if you have one, e.g.:
+      // artwork: [{ src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' }]
+    })
+
+    // Wire hardware buttons → our player actions
+    const ms = navigator.mediaSession
+    ms.setActionHandler('play',         () => { audioRef.current?.play(); setIsPlaying(true);  ms.playbackState = 'playing' })
+    ms.setActionHandler('pause',        () => { audioRef.current?.pause(); setIsPlaying(false); ms.playbackState = 'paused'  })
+    ms.setActionHandler('stop',         () => onDismissRef.current())
+    ms.setActionHandler('seekbackward', (d) => { if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - (d.seekOffset ?? 15)) })
+    ms.setActionHandler('seekforward',  (d) => { if (audioRef.current) audioRef.current.currentTime = Math.min(audioRef.current.duration, audioRef.current.currentTime + (d.seekOffset ?? 30)) })
+    ms.setActionHandler('seekto',       (d) => { if (audioRef.current && d.seekTime != null) { audioRef.current.currentTime = d.seekTime; setCurrentTime(Math.floor(d.seekTime)) } })
+  }, [])
+
+  // Stable ref so dismiss handler inside mediaSession 'stop' always works
+  const onDismissRef = useRef<() => void>(() => {})
+
+  // Update positionState so the lock-screen scrubber is accurate
+  const updatePositionState = useCallback(() => {
+    if (typeof navigator === 'undefined' || !('mediaSession' in navigator)) return
+    if (!audioRef.current || !audioRef.current.duration) return
+    try {
+      navigator.mediaSession.setPositionState({
+        duration:     audioRef.current.duration,
+        playbackRate: audioRef.current.playbackRate,
+        position:     audioRef.current.currentTime,
+      })
+    } catch { /* ignore if not supported */ }
+  }, [])
+  // ─────────────────────────────────────────────────────────────────────────
+
   const play = useCallback((lectureId: string, startAt = 0) => {
     const found = getLectureById(lectureId)
     if (!found || !found.audioUrl) return
@@ -129,8 +170,8 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
       const audio = new Audio(found.audioUrl)
       audio.currentTime = startAt
       audio.playbackRate = playbackSpeedRef.current
-      audio.addEventListener('timeupdate', () => setCurrentTime(Math.floor(audio.currentTime)))
-      audio.addEventListener('loadedmetadata', () => setDuration(Math.floor(audio.duration)))
+      audio.addEventListener('timeupdate', () => { setCurrentTime(Math.floor(audio.currentTime)); updatePositionState() })
+      audio.addEventListener('loadedmetadata', () => { setDuration(Math.floor(audio.duration)); updatePositionState() })
       // Always delegate to onEndedRef so it has current userId + lecture
       audio.addEventListener('ended', () => onEndedRef.current())
       audio.play().catch(() => {})
@@ -138,25 +179,36 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     }
     setLecture(found)
     setIsPlaying(true)
-  }, [])
+    setupMediaSession(found)
+    if (typeof navigator !== 'undefined' && 'mediaSession' in navigator)
+      navigator.mediaSession.playbackState = 'playing'
+  }, [setupMediaSession, updatePositionState])
 
   const pause = useCallback(() => {
     audioRef.current?.pause()
     setIsPlaying(false)
+    if (typeof navigator !== 'undefined' && 'mediaSession' in navigator)
+      navigator.mediaSession.playbackState = 'paused'
     if (userId && lecture && audioRef.current) {
       const dur = Math.floor(audioRef.current.duration)
       saveProgress(userId, lecture.id, Math.floor(audioRef.current.currentTime), false, dur > 0 ? dur : undefined)
     }
   }, [userId, lecture])
 
-  const resume   = useCallback(() => { audioRef.current?.play(); setIsPlaying(true) }, [])
-  const seek     = useCallback((s: number) => { if (audioRef.current) { audioRef.current.currentTime = s; setCurrentTime(s) } }, [])
+  const resume = useCallback(() => {
+    audioRef.current?.play()
+    setIsPlaying(true)
+    if (typeof navigator !== 'undefined' && 'mediaSession' in navigator)
+      navigator.mediaSession.playbackState = 'playing'
+  }, [])
+  const seek     = useCallback((s: number) => { if (audioRef.current) { audioRef.current.currentTime = s; setCurrentTime(s); updatePositionState() } }, [updatePositionState])
   const skip     = useCallback((s: number) => { if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime + s) }, [])
   const setSpeed = useCallback((speed: number) => {
     if (audioRef.current) audioRef.current.playbackRate = speed
     playbackSpeedRef.current = speed
     setPlaybackSpeed(speed)
-  }, [])
+    updatePositionState()
+  }, [updatePositionState])
 
   const dismiss = useCallback(() => {
     if (audioRef.current) {
@@ -165,11 +217,21 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
       audioRef.current = null
     }
     if (saveTimerRef.current) clearInterval(saveTimerRef.current)
+    if (typeof navigator !== 'undefined' && 'mediaSession' in navigator) {
+      navigator.mediaSession.playbackState = 'none'
+      // Clear all handlers so the OS knows no media session is active
+      ;(['play','pause','stop','seekbackward','seekforward','seekto'] as MediaSessionAction[]).forEach(a => {
+        try { navigator.mediaSession.setActionHandler(a, null) } catch { /* ignore */ }
+      })
+    }
     setLecture(null)
     setIsPlaying(false)
     setCurrentTime(0)
     setDuration(0)
   }, [])
+
+  // Keep onDismissRef current so the mediaSession 'stop' handler works
+  useEffect(() => { onDismissRef.current = dismiss }, [dismiss])
 
   return (
     <PlayerContext.Provider value={{ lecture, isPlaying, currentTime, duration, playbackSpeed, play, pause, resume, seek, skip, setSpeed, dismiss }}>

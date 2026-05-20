@@ -138,7 +138,7 @@ export default function LectureCard({ lecture, index, progress, speakerOverride,
             href={`/api/download/${encodeURIComponent(lecture.id)}`}
             onClick={e => e.stopPropagation()}
             className="opacity-0 group-hover:opacity-100 transition-opacity
-                       flex items-center gap-1 text-[10px] text-stone-400 hover:text-emerald-600"
+                       hidden sm:flex items-center gap-1 text-[10px] text-stone-400 hover:text-emerald-600"
             title="Download MP3"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"

@@ -173,6 +173,24 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
       audio.addEventListener('loadedmetadata', () => { setDuration(Math.floor(audio.duration)); updatePositionState() })
       // Always delegate to onEndedRef so it has current userId + lecture
       audio.addEventListener('ended', () => onEndedRef.current())
+      // ── Interruption sync ──────────────────────────────────────────────
+      // Native 'pause' fires when the OS interrupts playback (phone call,
+      // Siri, another app stealing audio focus). Our setIsPlaying(false)
+      // in pause() only runs when WE pause — so without this, the UI stays
+      // stuck showing a pause button after an external interruption.
+      audio.addEventListener('pause', () => {
+        setIsPlaying(false)
+        if (typeof navigator !== 'undefined' && 'mediaSession' in navigator)
+          navigator.mediaSession.playbackState = 'paused'
+      })
+      // 'playing' fires when audio actually resumes after buffering or an
+      // interruption ends — more reliable than 'play' for state sync.
+      audio.addEventListener('playing', () => {
+        setIsPlaying(true)
+        if (typeof navigator !== 'undefined' && 'mediaSession' in navigator)
+          navigator.mediaSession.playbackState = 'playing'
+      })
+      // ──────────────────────────────────────────────────────────────────
       audio.play().catch(() => {})
       audioRef.current = audio
     }

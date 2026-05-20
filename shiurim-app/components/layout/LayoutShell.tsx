@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase-browser'
 import Sidebar from './Sidebar'
 import ProfileDrawer from './ProfileDrawer'
+import NavSearch from './NavSearch'
 import type { User } from '@supabase/supabase-js'
 
 export default function LayoutShell({
@@ -16,6 +17,7 @@ export default function LayoutShell({
   user: User | null
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [mobileSearchActive, setMobileSearchActive] = useState(false)
   const [user, setUser] = useState<User | null>(initialUser)
   const pathname = usePathname()
   const router = useRouter()
@@ -77,27 +79,33 @@ export default function LayoutShell({
       {/* ── Main content ── */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
 
-        {/* Top bar — mobile gets hamburger + title, desktop gets just the auth button */}
-        <header className="flex items-center justify-between gap-3 px-4 py-3 bg-white border-b border-stone-200 shrink-0">
-          {/* Left: hamburger (mobile only) + title (mobile only) */}
-          <div className="flex items-center gap-3 md:hidden">
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="p-2 rounded-lg text-stone-500 hover:bg-stone-100 transition-colors"
-              aria-label="Open menu"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-            <span className="font-semibold text-stone-900 text-sm">YBT Shiurim</span>
-          </div>
+        {/* Top bar */}
+        <header className="relative flex items-center gap-3 px-4 py-3 bg-white border-b border-stone-200 shrink-0">
+          {/* Left: hamburger + title (mobile only, hidden when mobile search is active) */}
+          {!mobileSearchActive && (
+            <div className="flex items-center gap-3 md:hidden shrink-0">
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="p-2 rounded-lg text-stone-500 hover:bg-stone-100 transition-colors"
+                aria-label="Open menu"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+              <span className="font-semibold text-stone-900 text-sm">YBT Shiurim</span>
+            </div>
+          )}
 
-          {/* Spacer so auth button always floats right */}
-          <div className="hidden md:block" />
+          {/* NavSearch: desktop = centered bar, mobile = icon / expanded */}
+          <NavSearch onMobileSearchChange={setMobileSearchActive} />
 
-          {/* Right: auth */}
-          <AuthButton />
+          {/* Right: auth (hidden on mobile when mobile search is active) */}
+          {!mobileSearchActive && (
+            <div className="shrink-0">
+              <AuthButton />
+            </div>
+          )}
         </header>
 
         <main className="flex-1 overflow-y-auto pb-28">

@@ -4,9 +4,8 @@ import { useState, useMemo, useRef, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
-import Fuse from 'fuse.js'
 import { categories, getAllLectures, TreeNode } from '@/lib/lectures'
-import { normalizeRabbi, getRawVariants } from '@/lib/rabbi-normalization'
+import { normalizeRabbi } from '@/lib/rabbi-normalization'
 
 // ─── Recursive tree node ──────────────────────────────────────────────────────
 
@@ -90,7 +89,6 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
   const searchParams = useSearchParams()
   const router = useRouter()
   const activeNodeId = searchParams.get('node') ?? ''
-  const [query, setQuery] = useState('')
   const [sidebarWidth, setSidebarWidth] = useState(280)
   const [selectedRabbis, setSelectedRabbis] = useState<string[]>([])
   const [rabbiSectionOpen, setRabbiSectionOpen] = useState(false)
@@ -175,19 +173,6 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
     }
   }
 
-  // Fuse runs on the rabbi-filtered pool (expanded to raw variants)
-  const searchPool = useMemo(() => {
-    if (selectedRabbis.length === 0) return allLectures
-    const rawVariants = new Set(selectedRabbis.flatMap(getRawVariants))
-    return allLectures.filter(l => rawVariants.has(l.speaker))
-  }, [allLectures, selectedRabbis])
-
-  const fuse = useMemo(() => new Fuse(searchPool, {
-    keys: ['title', 'description', 'speaker', 'tags', 'breadcrumb'],
-    threshold: 0.3,
-  }), [searchPool])
-  const searchResults = query.length > 1 ? fuse.search(query).slice(0, 14) : []
-
   return (
     <aside
       className="shrink-0 bg-white border-r border-stone-200 flex flex-col h-full overflow-hidden relative"
@@ -214,27 +199,6 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
         )}
       </div>
 
-      {/* Search */}
-      <div className="px-4 py-3 border-b border-stone-200">
-        <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm">🔍</span>
-          <input
-            type="text"
-            placeholder="Search shiurim..."
-            value={query}
-            onChange={e => setQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 text-sm bg-stone-50 border border-stone-200 rounded-lg
-                       focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
-          />
-          {query && (
-            <button
-              onClick={() => setQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 text-xs"
-            >✕</button>
-          )}
-        </div>
-      </div>
-
       {/* Feed link */}
       <div className="px-4 py-2 border-b border-stone-100">
         <Link href="/feed"
@@ -244,35 +208,13 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
         </Link>
       </div>
 
-      {/* Tree or search results */}
+      {/* Tree */}
       <nav className="flex-1 overflow-y-auto py-2 px-2 min-h-0 mr-1.5">
-        {query.length > 1 ? (
-          <div>
-            {searchResults.length === 0 ? (
-              <p className="px-3 py-4 text-sm text-stone-400 text-center">No results found</p>
-            ) : (
-              searchResults.map(({ item }) => (
-                <Link
-                  key={item.id}
-                  href={`/lectures/${encodeURIComponent(item.id)}`}
-                  onClick={() => { setQuery(''); onClose?.() }}
-                  className="block px-3 py-2 rounded-lg hover:bg-stone-50 mb-1"
-                >
-                  <div className="text-sm font-medium text-stone-800 leading-snug">{item.title}</div>
-                  <div className="text-xs text-stone-400 truncate">
-                    {item.breadcrumb.join(' › ')}
-                  </div>
-                </Link>
-              ))
-            )}
+        {categories.map(cat => (
+          <div key={cat.id} className="mb-1">
+            <TreeItem node={cat} depth={0} activePath={activePath} rabbiParam={rabbiParam} />
           </div>
-        ) : (
-          categories.map(cat => (
-            <div key={cat.id} className="mb-1">
-              <TreeItem node={cat} depth={0} activePath={activePath} rabbiParam={rabbiParam} />
-            </div>
-          ))
-        )}
+        ))}
       </nav>
 
       {/* By Rabbi section — shrink-0 keeps it pinned at the bottom regardless of tree height */}

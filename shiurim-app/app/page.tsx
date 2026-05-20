@@ -2,22 +2,33 @@ import { categories, getAllLectures, flattenLectures } from '@/lib/lectures'
 import Link from 'next/link'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase-server'
-import ContinueListening from '@/components/lectures/ContinueListening'
+import MyShiurim from '@/components/lectures/MyShiurim'
 
 export default async function HomePage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  const { data: recentProgress } = user
-    ? await supabase
-        .from('progress')
-        .select('lecture_id, position_seconds, completed, last_listened_at, duration_seconds')
-        .eq('user_id', user.id)
-        .eq('completed', false)
-        .gt('position_seconds', 0)
-        .order('last_listened_at', { ascending: false })
-        .limit(5)
-    : { data: [] }
-  const recentProgressRows = recentProgress ?? []
+
+  const [progressResult, savedResult] = user
+    ? await Promise.all([
+        supabase
+          .from('progress')
+          .select('lecture_id, position_seconds, completed, last_listened_at, duration_seconds')
+          .eq('user_id', user.id)
+          .eq('completed', false)
+          .gt('position_seconds', 0)
+          .order('last_listened_at', { ascending: false })
+          .limit(5),
+        supabase
+          .from('saved_lectures')
+          .select('lecture_id')
+          .eq('user_id', user.id)
+          .order('saved_at', { ascending: false })
+          .limit(5),
+      ])
+    : [{ data: [] }, { data: [] }]
+
+  const recentProgressRows = progressResult.data ?? []
+  const savedIds = (savedResult.data ?? []).map((r: { lecture_id: string }) => r.lecture_id)
 
   const totalLectures = getAllLectures().length
 
@@ -55,9 +66,13 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* Continue listening strip — only shown when the user has in-progress shiurim */}
-      {recentProgressRows.length > 0 && (
-        <ContinueListening rows={recentProgressRows} userId={user!.id} />
+      {/* My Shiurim strip — progress and/or saved, shown when user has either */}
+      {user && (recentProgressRows.length > 0 || savedIds.length > 0) && (
+        <MyShiurim
+          progressRows={recentProgressRows}
+          savedIds={savedIds}
+          userId={user.id}
+        />
       )}
 
       {/* Category grid */}

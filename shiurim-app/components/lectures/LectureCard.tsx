@@ -3,12 +3,15 @@
 import Link from 'next/link'
 import { FlatLecture, Lecture, formatDuration } from '@/lib/lectures'
 import { usePlayer } from '@/lib/player-context'
+import BookmarkButton from './BookmarkButton'
 
 type Props = {
   lecture: Lecture | FlatLecture
   index: number
   progress?: { position_seconds: number; completed: boolean; duration_seconds?: number | null } | null
   speakerOverride?: string
+  userId?: string | null
+  saved?: boolean
 }
 
 function formatTimeLeft(seconds: number): string {
@@ -23,7 +26,7 @@ function formatMinutesIn(seconds: number): string {
   return `${mins} min in`
 }
 
-export default function LectureCard({ lecture, index, progress, speakerOverride }: Props) {
+export default function LectureCard({ lecture, index, progress, speakerOverride, userId, saved }: Props) {
   const { play, pause, isPlaying, lecture: activeLecture } = usePlayer()
 
   const isActive = activeLecture?.id === lecture.id
@@ -117,11 +120,19 @@ export default function LectureCard({ lecture, index, progress, speakerOverride 
         )}
       </Link>
 
-      {/* Right: duration + download */}
-      <div className="shrink-0 flex flex-col items-end gap-1.5">
-        <span className="text-xs text-stone-400 tabular-nums">
-          {lecture.duration ? formatDuration(lecture.duration) : ''}
-        </span>
+      {/* Right: bookmark + duration + download */}
+      <div className="shrink-0 flex flex-col items-end gap-1">
+        <div className="flex items-center gap-0.5">
+          <BookmarkButton
+            lectureId={lecture.id}
+            userId={userId}
+            initialSaved={saved}
+            size="sm"
+          />
+          <span className="text-xs text-stone-400 tabular-nums">
+            {lecture.duration ? formatDuration(lecture.duration) : ''}
+          </span>
+        </div>
         {'audioUrl' in lecture && lecture.audioUrl && (
           <a
             href={`/api/download/${encodeURIComponent(lecture.id)}`}

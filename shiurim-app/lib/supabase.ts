@@ -144,3 +144,29 @@ export async function upsertLectureDescription(
   }, { onConflict: 'lecture_id' })
   return { error }
 }
+
+// ---- Saved lectures helpers ----
+
+export async function getSavedLectureIds(userId: string): Promise<string[]> {
+  const { data } = await supabase
+    .from('saved_lectures')
+    .select('lecture_id')
+    .eq('user_id', userId)
+    .order('saved_at', { ascending: false })
+  return (data ?? []).map(r => r.lecture_id)
+}
+
+export async function saveLecture(userId: string, lectureId: string) {
+  await supabase.from('saved_lectures').upsert(
+    { user_id: userId, lecture_id: lectureId, saved_at: new Date().toISOString() },
+    { onConflict: 'user_id,lecture_id' }
+  )
+}
+
+export async function unsaveLecture(userId: string, lectureId: string) {
+  await supabase
+    .from('saved_lectures')
+    .delete()
+    .eq('user_id', userId)
+    .eq('lecture_id', lectureId)
+}

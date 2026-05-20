@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import LectureAuthSection from '@/components/lectures/LectureAuthSection'
 import CommentsLoader from '@/components/discussions/CommentsLoader'
 import SpeakerEditor from '@/components/lectures/SpeakerEditor'
+import BookmarkButton from '@/components/lectures/BookmarkButton'
 import Link from 'next/link'
 import { format } from 'date-fns'
 
@@ -93,6 +94,8 @@ export default async function LecturePage({ params }: Props) {
             Download
           </a>
         )}
+        {/* Save for later — self-fetches auth + saved state client-side */}
+        <BookmarkButton lectureId={lecture.id} size="md" />
       </div>
 
       {/* Tags */}

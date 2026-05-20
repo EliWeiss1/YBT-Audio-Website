@@ -21,28 +21,52 @@ type Props = {
 export default function LectureListWithProgress({ lectures, nodeId }: Props) {
   const [progressMap, setProgressMap] = useState<ProgressMap>({})
   const [overrideMap, setOverrideMap] = useState<OverrideMap>({})
+  const [savedSet, setSavedSet]       = useState<Set<string>>(new Set())
+  // null = confirmed not logged in; undefined = auth check pending; string = user ID
+  const [userId, setUserId]           = useState<string | null | undefined>(undefined)
 
   useEffect(() => {
     const supabase = createClient()
     const ids = lectures.map(l => l.id)
 
-    // Fetch progress (auth-gated) and speaker overrides (public) in parallel
     async function load() {
-      const [progressResult, overridesResult] = await Promise.all([
-        supabase.auth.getUser().then(({ data: { user } }) => {
-          if (!user) return null
-          return supabase
-            .from('progress')
-            .select('lecture_id, position_seconds, completed, duration_seconds')
-            .eq('user_id', user.id)
-        }),
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) {
+        setUserId(null)
+        // Still fetch public overrides
+        const { data: overrides } = await supabase
+          .from('speaker_overrides')
+          .select('lecture_id, speaker')
+          .in('lecture_id', ids)
+        if (overrides) {
+          setOverrideMap(
+            Object.fromEntries(overrides.map(o => [o.lecture_id, o.speaker]))
+          )
+        }
+        return
+      }
+
+      // Authenticated: fetch progress, overrides, and saved set in parallel
+      const [progressResult, overridesResult, savedResult] = await Promise.all([
+        supabase
+          .from('progress')
+          .select('lecture_id, position_seconds, completed, duration_seconds')
+          .eq('user_id', user.id),
         supabase
           .from('speaker_overrides')
           .select('lecture_id, speaker')
           .in('lecture_id', ids),
+        supabase
+          .from('saved_lectures')
+          .select('lecture_id')
+          .eq('user_id', user.id)
+          .in('lecture_id', ids),
       ])
 
-      if (progressResult && 'data' in progressResult && progressResult.data) {
+      setUserId(user.id)
+
+      if (progressResult.data) {
         setProgressMap(
           Object.fromEntries(
             progressResult.data.map(
@@ -61,6 +85,10 @@ export default function LectureListWithProgress({ lectures, nodeId }: Props) {
           )
         )
       }
+
+      if (savedResult.data) {
+        setSavedSet(new Set(savedResult.data.map(r => r.lecture_id)))
+      }
     }
 
     load()
@@ -75,6 +103,8 @@ export default function LectureListWithProgress({ lectures, nodeId }: Props) {
           index={i + 1}
           progress={progressMap[lecture.id]}
           speakerOverride={overrideMap[lecture.id]}
+          userId={userId}
+          saved={savedSet.has(lecture.id)}
         />
       ))}
     </div>

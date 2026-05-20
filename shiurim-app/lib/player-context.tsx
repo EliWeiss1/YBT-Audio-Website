@@ -126,8 +126,7 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
       title: lec.title,
       artist: lec.speaker || 'Torah To Life',
       album: lec.breadcrumb?.slice(0, -1).join(' › ') || 'Torah To Life',
-      // artwork omitted — add a logo URL here if you have one, e.g.:
-      // artwork: [{ src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' }]
+      artwork: [{ src: '/YBT_Logo.gif', sizes: '512x512', type: 'image/gif' }]
     })
 
     // Wire hardware buttons → our player actions

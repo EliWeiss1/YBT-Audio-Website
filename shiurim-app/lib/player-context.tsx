@@ -134,9 +134,14 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     ms.setActionHandler('play',         () => { audioRef.current?.play(); setIsPlaying(true);  ms.playbackState = 'playing' })
     ms.setActionHandler('pause',        () => { audioRef.current?.pause(); setIsPlaying(false); ms.playbackState = 'paused'  })
     ms.setActionHandler('stop',         () => onDismissRef.current())
-    ms.setActionHandler('seekbackward', (d) => { if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - (d.seekOffset ?? 15)) })
-    ms.setActionHandler('seekforward',  (d) => { if (audioRef.current) audioRef.current.currentTime = Math.min(audioRef.current.duration, audioRef.current.currentTime + (d.seekOffset ?? 30)) })
-    ms.setActionHandler('seekto',       (d) => { if (audioRef.current && d.seekTime != null) { audioRef.current.currentTime = d.seekTime; setCurrentTime(Math.floor(d.seekTime)) } })
+    ms.setActionHandler('seekbackward',  (d) => { if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - (d.seekOffset ?? 15)) })
+    ms.setActionHandler('seekforward',   (d) => { if (audioRef.current) audioRef.current.currentTime = Math.min(audioRef.current.duration, audioRef.current.currentTime + (d.seekOffset ?? 30)) })
+    ms.setActionHandler('seekto',        (d) => { if (audioRef.current && d.seekTime != null) { audioRef.current.currentTime = d.seekTime; setCurrentTime(Math.floor(d.seekTime)) } })
+    // Android notification shade only renders previoustrack/nexttrack as buttons
+    // — seekbackward/seekforward don't get visible controls there.
+    // Map these to the same −15s/+30s skip so Android users get tappable buttons.
+    ms.setActionHandler('previoustrack', () => { if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 15) })
+    ms.setActionHandler('nexttrack',     () => { if (audioRef.current) audioRef.current.currentTime = Math.min(audioRef.current.duration, audioRef.current.currentTime + 30) })
   }, [])
 
   // Stable ref so dismiss handler inside mediaSession 'stop' always works
@@ -237,7 +242,7 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     if (typeof navigator !== 'undefined' && 'mediaSession' in navigator) {
       navigator.mediaSession.playbackState = 'none'
       // Clear all handlers so the OS knows no media session is active
-      ;(['play','pause','stop','seekbackward','seekforward','seekto'] as MediaSessionAction[]).forEach(a => {
+      ;(['play','pause','stop','seekbackward','seekforward','seekto','previoustrack','nexttrack'] as MediaSessionAction[]).forEach(a => {
         try { navigator.mediaSession.setActionHandler(a, null) } catch { /* ignore */ }
       })
     }

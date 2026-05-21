@@ -92,7 +92,7 @@ export default function LectureCard({ lecture, index, progress, speakerOverride,
 
       {/* Title + meta */}
       <Link href={`/lectures/${encodeURIComponent(lecture.id)}`} className="flex-1 min-w-0">
-        <div className={`text-sm font-medium
+        <div className={`text-sm font-medium break-words
           ${isActive ? 'text-emerald-800' : isCompleted ? 'text-stone-500' : 'text-stone-800'}`}
         >
           {lecture.title}

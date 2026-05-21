@@ -113,6 +113,18 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
     return [...exact, ...rest].map(r => r.item)
   }, [fuse, debouncedQuery])
 
+  // Rabbi counts from current search results only — drives dropdown order + counts
+  const resultSpeakerCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    for (const l of rawResults) {
+      if (l.speaker) {
+        const canonical = normalizeRabbi(l.speaker)
+        counts[canonical] = (counts[canonical] ?? 0) + 1
+      }
+    }
+    return Object.entries(counts).sort((a, b) => b[1] - a[1])
+  }, [rawResults])
+
   // Available categories from current raw results
   const availableCategories = useMemo(() => {
     const seen: Record<string, boolean> = {}
@@ -278,7 +290,7 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
         {rabbiDropdownOpen && (
           <div className="absolute top-full left-0 mt-1 w-56 bg-white border border-stone-200 rounded-lg shadow-md z-50 overflow-hidden">
             <div className="overflow-y-auto" style={{ maxHeight: '220px' }}>
-              {speakerCounts.map(([canonical]) => {
+              {resultSpeakerCounts.map(([canonical, count]) => {
                 const isSelected = selectedRabbis.includes(canonical)
                 return (
                   <button
@@ -295,7 +307,8 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
                         </svg>
                       )}
                     </span>
-                    <span className="truncate">{canonical}</span>
+                    <span className="truncate flex-1">{canonical}</span>
+                    <span className={`text-xs tabular-nums shrink-0 ${isSelected ? 'text-[#7F77DD]' : 'text-stone-400'}`}>{count}</span>
                   </button>
                 )
               })}
@@ -356,25 +369,26 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
     >
       <FilterBar />
 
-      {activeSummary && (
-        <div className="flex items-center gap-2 px-4 py-2 bg-stone-50 border-b border-stone-200 flex-wrap text-xs text-stone-500">
-          <span>{filteredResults.length} shiurim</span>
-          {selectedRabbis.map(r => (
-            <span key={r} className="flex items-center gap-1 bg-[#EEEDFE] text-[#3C3489] border border-[#AFA9EC] rounded-full px-2 py-0.5">
-              {r}
-              <button onClick={() => removeRabbi(r)} className="hover:text-[#534AB7]">×</button>
-            </span>
-          ))}
-          {selectedCategories.map(c => (
-            <span key={c} className="flex items-center gap-1 bg-[#EEEDFE] text-[#3C3489] border border-[#AFA9EC] rounded-full px-2 py-0.5">
-              {c}
-              <button onClick={() => removeCategory(c)} className="hover:text-[#534AB7]">×</button>
-            </span>
-          ))}
-        </div>
-      )}
+      {/* Always-visible count bar */}
+      <div className="flex items-center gap-2 px-4 py-2 bg-stone-50 border-b border-stone-200 flex-wrap text-xs text-stone-500">
+        <span className="font-medium text-stone-600">
+          {activeSummary ? `${filteredResults.length} of ${rawResults.length}` : `${rawResults.length}`} shiurim
+        </span>
+        {selectedRabbis.map(r => (
+          <span key={r} className="flex items-center gap-1 bg-[#EEEDFE] text-[#3C3489] border border-[#AFA9EC] rounded-full px-2 py-0.5">
+            {r}
+            <button onClick={() => removeRabbi(r)} className="hover:text-[#534AB7]">×</button>
+          </span>
+        ))}
+        {selectedCategories.map(c => (
+          <span key={c} className="flex items-center gap-1 bg-[#EEEDFE] text-[#3C3489] border border-[#AFA9EC] rounded-full px-2 py-0.5">
+            {c}
+            <button onClick={() => removeCategory(c)} className="hover:text-[#534AB7]">×</button>
+          </span>
+        ))}
+      </div>
 
-      <div className="overflow-y-auto" style={{ maxHeight: activeSummary ? 'calc(70vh - 100px)' : 'calc(70vh - 60px)' }}>
+      <div className="overflow-y-auto" style={{ maxHeight: 'calc(70vh - 100px)' }}>
         {filteredResults.length === 0 ? (
           <p className="px-4 py-8 text-sm text-stone-400 text-center">No results found</p>
         ) : (

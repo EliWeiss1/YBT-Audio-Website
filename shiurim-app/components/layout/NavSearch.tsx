@@ -52,6 +52,7 @@ function ResultRow({ lecture, query, onClose }: { lecture: FlatLecture; query: s
 
 export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChange?: (active: boolean) => void }) {
   const [query, setQuery] = useState('')
+  const [debouncedQuery, setDebouncedQuery] = useState('')
   const [open, setOpen] = useState(false)
   const [mobileSearchActive, setMobileSearchActive] = useState(false)
   const [rabbiDropdownOpen, setRabbiDropdownOpen] = useState(false)
@@ -64,7 +65,33 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
   const desktopContainerRef = useRef<HTMLDivElement>(null)
   const mobileContainerRef = useRef<HTMLDivElement>(null)
 
-  const allLectures = useMemo(() => getAllLectures(), [])
+  // ── Deferred init: runs after first paint so it doesn't block page load ──
+  const [allLectures, setAllLectures] = useState<FlatLecture[]>([])
+  const [fuse, setFuse] = useState<Fuse<FlatLecture> | null>(null)
+
+  useEffect(() => {
+    const lectures = getAllLectures()
+    setAllLectures(lectures)
+    setFuse(new Fuse(lectures, {
+      keys: [
+        { name: 'title', weight: 3 },
+        { name: 'speaker', weight: 1.5 },
+        { name: 'tags', weight: 1 },
+        { name: 'breadcrumb', weight: 0.5 },
+        { name: 'description', weight: 0.5 },
+      ],
+      threshold: 0.2,
+      includeMatches: false,
+      distance: 80,
+      minMatchCharLength: 2,
+    }))
+  }, [])
+
+  // ── 150ms debounce: Fuse only runs after typing pauses ──
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedQuery(query), 150)
+    return () => clearTimeout(t)
+  }, [query])
 
   const speakerCounts = useMemo(() => {
     const counts: Record<string, number> = {}
@@ -77,28 +104,14 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
     return Object.entries(counts).sort((a, b) => b[1] - a[1])
   }, [allLectures])
 
-  const fuse = useMemo(() => new Fuse(allLectures, {
-    keys: [
-      { name: 'title', weight: 3 },
-      { name: 'speaker', weight: 1.5 },
-      { name: 'tags', weight: 1 },
-      { name: 'breadcrumb', weight: 0.5 },
-      { name: 'description', weight: 0.5 },
-    ],
-    threshold: 0.2,
-    includeMatches: false,
-    distance: 80,
-    minMatchCharLength: 2,
-  }), [allLectures])
-
   const rawResults: FlatLecture[] = useMemo(() => {
-    if (query.length < 2) return []
-    const results = fuse.search(query)
-    const lowerQuery = query.toLowerCase()
+    if (!fuse || debouncedQuery.length < 2) return []
+    const results = fuse.search(debouncedQuery)
+    const lowerQuery = debouncedQuery.toLowerCase()
     const exact = results.filter(r => r.item.title.toLowerCase().includes(lowerQuery))
     const rest = results.filter(r => !r.item.title.toLowerCase().includes(lowerQuery))
     return [...exact, ...rest].map(r => r.item)
-  }, [fuse, query])
+  }, [fuse, debouncedQuery])
 
   // Available categories from current raw results
   const availableCategories = useMemo(() => {
@@ -131,7 +144,7 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
     return results
   }, [rawResults, selectedRabbis, selectedCategories, sortMode])
 
-  const hasResults = query.length >= 2
+  const hasResults = debouncedQuery.length >= 2
   const showPanel = open && hasResults
 
   function closeAll() {
@@ -176,9 +189,13 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
   function handleQueryChange(val: string) {
     setQuery(val)
     setOpen(val.length >= 2)
-    // Reset category filter if it's no longer in available results
     if (val.length < 2) {
       setSelectedCategories([])
+    }
+    // Exit mobile search mode when bar is fully cleared
+    if (val === '' && mobileSearchActive) {
+      setMobileSearchActive(false)
+      onMobileSearchChange?.(false)
     }
   }
 
@@ -242,9 +259,9 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
   // ─── Filter bar ───────────────────────────────────────────────────────────────
 
   const FilterBar = () => (
-    <div className="flex items-center gap-2 px-4 py-2 bg-white border-b border-stone-200 flex-wrap">
-      {/* Rabbi dropdown */}
-      <div className="relative">
+    <div className="flex items-center gap-2 px-4 py-2 bg-white border-b border-stone-200">
+      {/* Rabbi dropdown — fixed left */}
+      <div className="relative shrink-0">
         <button
           onClick={() => setRabbiDropdownOpen(o => !o)}
           className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors whitespace-nowrap
@@ -297,24 +314,26 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
         )}
       </div>
 
-      {/* Category pills */}
-      {availableCategories.map(cat => (
-        <button
-          key={cat}
-          onClick={() => toggleCategory(cat)}
-          className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors whitespace-nowrap
-            ${selectedCategories.includes(cat)
-              ? 'bg-[#EEEDFE] text-[#3C3489] border-[#AFA9EC]'
-              : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'}`}
-        >
-          {cat}
-        </button>
-      ))}
+      {/* Category pills — horizontally scrollable middle */}
+      <div className="flex items-center gap-2 overflow-x-auto flex-1 min-w-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        {availableCategories.map(cat => (
+          <button
+            key={cat}
+            onClick={() => toggleCategory(cat)}
+            className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors whitespace-nowrap
+              ${selectedCategories.includes(cat)
+                ? 'bg-[#EEEDFE] text-[#3C3489] border-[#AFA9EC]'
+                : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'}`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
 
-      {/* Date sort pill — cycles relevance → newest → oldest → relevance */}
+      {/* Date sort pill — fixed right, cycles relevance → newest → oldest → relevance */}
       <button
         onClick={() => setSortMode(m => m === 'relevance' ? 'newest' : m === 'newest' ? 'oldest' : 'relevance')}
-        className={`ml-auto flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors whitespace-nowrap
+        className={`shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors whitespace-nowrap
           ${sortMode !== 'relevance'
             ? 'bg-[#EEEDFE] text-[#3C3489] border-[#AFA9EC]'
             : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'}`}
@@ -360,7 +379,7 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
           <p className="px-4 py-8 text-sm text-stone-400 text-center">No results found</p>
         ) : (
           filteredResults.map(lecture => (
-            <ResultRow key={lecture.id} lecture={lecture} query={query} onClose={closeAll} />
+            <ResultRow key={lecture.id} lecture={lecture} query={debouncedQuery} onClose={closeAll} />
           ))
         )}
       </div>
@@ -371,8 +390,8 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
 
   return (
     <>
-      {/* Desktop search bar */}
-      <div ref={desktopContainerRef} className="hidden md:flex flex-1 max-w-xl mx-4">
+      {/* Desktop search bar — right-aligned */}
+      <div ref={desktopContainerRef} className="hidden md:flex ml-auto w-72">
         {searchInputJSX}
       </div>
 

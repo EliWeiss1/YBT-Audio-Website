@@ -133,6 +133,11 @@ export default function LectureCard({ lecture, index, progress, speakerOverride,
             {lecture.duration ? formatDuration(lecture.duration) : ''}
           </span>
         </div>
+        {lecture.date && (
+          <span className="text-xs text-stone-300 tabular-nums">
+            {new Date(lecture.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
+          </span>
+        )}
         {'audioUrl' in lecture && lecture.audioUrl && (
           <a
             href={`/api/download/${encodeURIComponent(lecture.id)}`}

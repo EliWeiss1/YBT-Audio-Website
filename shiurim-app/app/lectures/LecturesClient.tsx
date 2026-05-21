@@ -173,11 +173,13 @@ function RabbiFilter({
   nodeId,
   selectedRabbis,
   overrideMap,
+  noMargin = false,
 }: {
   lectures: Lecture[]
   nodeId: string
   selectedRabbis: string[]
   overrideMap: Record<string, string>
+  noMargin?: boolean
 }) {
   const speakers = Array.from(
     new Set(lectures.map(l => overrideMap[l.id] ?? normalizeRabbi(l.speaker)).filter(Boolean))
@@ -194,7 +196,7 @@ function RabbiFilter({
   }
 
   return (
-    <div className="flex items-center gap-2 flex-wrap mb-5">
+    <div className={`flex items-center gap-2 flex-wrap${noMargin ? '' : ' mb-5'}`}>
       <Link
         href={`/lectures?node=${nodeId}`}
         className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border transition-colors
@@ -234,16 +236,26 @@ function NodeContent({
   selectedRabbis: string[]
   overrideMap: Record<string, string>
 }) {
+  const [sortOrder, setSortOrder] = useState<'default' | 'newest' | 'oldest'>('default')
+
   const hasChildren = node.children && node.children.length > 0
   const hasLectures = node.lectures && node.lectures.length > 0
 
   const effectiveSpeaker = (l: Lecture) => overrideMap[l.id] ?? normalizeRabbi(l.speaker)
 
-  const filteredLectures = hasLectures
-    ? (selectedRabbis.length > 0
-        ? node.lectures!.filter(l => selectedRabbis.includes(effectiveSpeaker(l)))
-        : node.lectures!)
-    : []
+  const filteredLectures = (() => {
+    const base = hasLectures
+      ? (selectedRabbis.length > 0
+          ? node.lectures!.filter(l => selectedRabbis.includes(effectiveSpeaker(l)))
+          : node.lectures!)
+      : []
+    if (sortOrder === 'default') return base
+    return [...base].sort((a, b) => {
+      const da = a.date ?? ''
+      const db = b.date ?? ''
+      return sortOrder === 'newest' ? db.localeCompare(da) : da.localeCompare(db)
+    })
+  })()
 
   return (
     <div className="space-y-8">
@@ -279,12 +291,27 @@ function NodeContent({
             </h2>
           )}
 
-          <RabbiFilter
-            lectures={node.lectures!}
-            nodeId={node.id}
-            selectedRabbis={selectedRabbis}
-            overrideMap={overrideMap}
-          />
+          <div className="flex items-center justify-between gap-3 mb-5">
+            <RabbiFilter
+              lectures={node.lectures!}
+              nodeId={node.id}
+              selectedRabbis={selectedRabbis}
+              overrideMap={overrideMap}
+              noMargin
+            />
+            <button
+              onClick={() => setSortOrder(s => s === 'default' ? 'newest' : s === 'newest' ? 'oldest' : 'default')}
+              className={`shrink-0 flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium border transition-colors whitespace-nowrap
+                ${sortOrder !== 'default'
+                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                  : 'bg-white text-stone-500 border-stone-200 hover:border-stone-300'}`}
+            >
+              {sortOrder === 'newest' ? 'Newest first' : sortOrder === 'oldest' ? 'Oldest first' : 'Date'}
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
+              </svg>
+            </button>
+          </div>
 
           {filteredLectures.length === 0 ? (
             <p className="text-sm text-stone-400 py-4">

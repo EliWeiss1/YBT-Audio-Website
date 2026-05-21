@@ -106,12 +106,27 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
 
   const rawResults: FlatLecture[] = useMemo(() => {
     if (!fuse || debouncedQuery.length < 2) return []
-    const results = fuse.search(debouncedQuery)
     const lowerQuery = debouncedQuery.toLowerCase()
-    const exact = results.filter(r => r.item.title.toLowerCase().includes(lowerQuery))
-    const rest = results.filter(r => !r.item.title.toLowerCase().includes(lowerQuery))
-    return [...exact, ...rest].map(r => r.item)
-  }, [fuse, debouncedQuery])
+
+    // Always include exact substring matches in title — catches codes like "D-4"
+    // that Fuse's bitap algorithm scores poorly due to hyphens/special chars
+    const exactIds = new Set<string>()
+    const exactMatches = allLectures.filter(l => {
+      if (l.title.toLowerCase().includes(lowerQuery)) {
+        exactIds.add(l.id)
+        return true
+      }
+      return false
+    })
+
+    // Fuse fuzzy results for everything else
+    const fuseResults = fuse.search(debouncedQuery)
+    const fuzzyOnly = fuseResults
+      .filter(r => !exactIds.has(r.item.id))
+      .map(r => r.item)
+
+    return [...exactMatches, ...fuzzyOnly]
+  }, [fuse, debouncedQuery, allLectures])
 
   // Rabbi counts from current search results only — drives dropdown order + counts
   const resultSpeakerCounts = useMemo(() => {

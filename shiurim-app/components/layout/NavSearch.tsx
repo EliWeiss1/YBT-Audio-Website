@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useRef, useEffect } from 'react'
+import React, { useState, useMemo, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Fuse from 'fuse.js'
 import type { FlatLecture } from '@/lib/lectures'
@@ -9,12 +9,20 @@ import { normalizeRabbi } from '@/lib/rabbi-normalization'
 
 // ─── Highlight helper ─────────────────────────────────────────────────────────
 
-function highlight(text: string, query: string): React.ReactNode {
-  if (!query || query.length < 2) return text
+// Compile highlight regex once per query — passed into ResultRow as a prop
+function buildHighlightRegex(query: string): RegExp | null {
+  if (!query || query.length < 2) return null
   const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const parts = text.split(new RegExp(`(${escaped})`, 'gi'))
+  return new RegExp(`(${escaped})`, 'gi')
+}
+
+function highlight(text: string, regex: RegExp | null): React.ReactNode {
+  if (!regex) return text
+  regex.lastIndex = 0
+  const parts = text.split(regex)
+  regex.lastIndex = 0
   return parts.map((part, i) =>
-    new RegExp(`^${escaped}$`, 'i').test(part)
+    i % 2 === 1
       ? <mark key={i} className="bg-transparent text-[#534AB7] font-semibold not-italic">{part}</mark>
       : part
   )
@@ -22,10 +30,16 @@ function highlight(text: string, query: string): React.ReactNode {
 
 // ─── Result row ───────────────────────────────────────────────────────────────
 
-function ResultRow({ lecture, query, onClose }: { lecture: FlatLecture; query: string; onClose: () => void }) {
+const ResultRow = React.memo(function ResultRow({
+  lecture, regex, onClose
+}: {
+  lecture: FlatLecture
+  regex: RegExp | null
+  onClose: () => void
+}) {
   const category = lecture.breadcrumb[0] ?? ''
   const dateStr = lecture.date
-    ? new Date(lecture.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+    ? new Date(lecture.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
     : ''
   const dur = lecture.duration ? formatDuration(lecture.duration) : ''
 
@@ -36,17 +50,17 @@ function ResultRow({ lecture, query, onClose }: { lecture: FlatLecture; query: s
       className="block px-4 py-3 hover:bg-stone-50 border-b border-stone-100 last:border-0 transition-colors"
     >
       <div className="text-sm font-medium text-stone-800 leading-snug">
-        {highlight(lecture.title, query)}
+        {highlight(lecture.title, regex)}
       </div>
       <div className="text-xs text-stone-400 mt-0.5 flex flex-wrap gap-x-2">
-        {lecture.speaker && <span>{highlight(lecture.speaker, query)}</span>}
+        {lecture.speaker && <span>{highlight(lecture.speaker, regex)}</span>}
         {category && <span>{category}</span>}
         {dateStr && <span>{dateStr}</span>}
         {dur && <span>{dur}</span>}
       </div>
     </Link>
   )
-}
+})
 
 // ─── NavSearch ────────────────────────────────────────────────────────────────
 
@@ -125,7 +139,8 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
       .filter(r => !exactIds.has(r.item.id))
       .map(r => r.item)
 
-    return [...exactMatches, ...fuzzyOnly]
+    // Cap at 200 — rendering 400+ rows at once causes the freeze
+    return [...exactMatches, ...fuzzyOnly].slice(0, 200)
   }, [fuse, debouncedQuery, allLectures])
 
   // Rabbi counts from current search results only — drives dropdown order + counts
@@ -170,6 +185,9 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
 
     return results
   }, [rawResults, selectedRabbis, selectedCategories, sortMode])
+
+  // Build regex once per debounced query — shared across all ResultRow renders
+  const highlightRegex = useMemo(() => buildHighlightRegex(debouncedQuery), [debouncedQuery])
 
   const hasResults = debouncedQuery.length >= 2
   const showPanel = open && hasResults
@@ -408,7 +426,7 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
           <p className="px-4 py-8 text-sm text-stone-400 text-center">No results found</p>
         ) : (
           filteredResults.map(lecture => (
-            <ResultRow key={lecture.id} lecture={lecture} query={debouncedQuery} onClose={closeAll} />
+            <ResultRow key={lecture.id} lecture={lecture} regex={highlightRegex} onClose={closeAll} />
           ))
         )}
       </div>

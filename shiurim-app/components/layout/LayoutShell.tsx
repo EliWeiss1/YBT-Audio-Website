@@ -102,7 +102,7 @@ export default function LayoutShell({
 
           {/* Right: auth (hidden on mobile when mobile search is active) */}
           {!mobileSearchActive && (
-            <div className="shrink-0 ml-2">
+            <div className="shrink-0 ml-auto md:ml-2">
               <AuthButton />
             </div>
           )}

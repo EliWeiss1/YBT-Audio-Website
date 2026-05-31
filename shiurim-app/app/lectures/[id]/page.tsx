@@ -1,4 +1,4 @@
-import { getLectureById, getAdjacentLectures, formatDuration, getAllLectures } from '@/lib/lectures'
+import { getLectureById, formatDuration, getAllLectures } from '@/lib/lectures'
 import { normalizeRabbi } from '@/lib/rabbi-normalization'
 import { notFound } from 'next/navigation'
 import LectureAuthSection from '@/components/lectures/LectureAuthSection'
@@ -23,7 +23,6 @@ export default async function LecturePage({ params }: Props) {
   const lecture = getLectureById(id)
   if (!lecture) notFound()
 
-  const { prev, next } = getAdjacentLectures(id)
   const breadcrumbItems = lecture.breadcrumb
 
   // Build the canonical rabbi list for the dropdown, sorted by shiur count (most first)
@@ -115,41 +114,6 @@ export default async function LecturePage({ params }: Props) {
         lectureId={lecture.id}
         jsonDescription={lecture.description ?? ''}
       />
-
-      {/* Prev / Next navigation */}
-      <div className="flex justify-between gap-4 my-8">
-        {prev ? (
-          <Link href={`/lectures/${encodeURIComponent(prev.id)}`}
-            className="flex-1 p-4 rounded-xl border border-stone-200 hover:border-emerald-300
-                       hover:bg-emerald-50 transition-all group">
-            <div className="text-xs text-stone-400 mb-1">← Previous</div>
-            <div className="text-sm font-medium text-stone-700 group-hover:text-emerald-800 line-clamp-2">
-              {prev.title}
-            </div>
-            {prev.breadcrumb.length > 1 && (
-              <div className="text-xs text-stone-300 mt-1 truncate">
-                {prev.breadcrumb.slice(1).join(' › ')}
-              </div>
-            )}
-          </Link>
-        ) : <div className="flex-1" />}
-
-        {next ? (
-          <Link href={`/lectures/${encodeURIComponent(next.id)}`}
-            className="flex-1 p-4 rounded-xl border border-stone-200 hover:border-emerald-300
-                       hover:bg-emerald-50 transition-all group text-right">
-            <div className="text-xs text-stone-400 mb-1">Next →</div>
-            <div className="text-sm font-medium text-stone-700 group-hover:text-emerald-800 line-clamp-2">
-              {next.title}
-            </div>
-            {next.breadcrumb.length > 1 && (
-              <div className="text-xs text-stone-300 mt-1 truncate">
-                {next.breadcrumb.slice(1).join(' › ')}
-              </div>
-            )}
-          </Link>
-        ) : <div className="flex-1" />}
-      </div>
 
       {/* Comments — loads client-side after cache hit */}
       <CommentsLoader lectureId={lecture.id} />

@@ -151,13 +151,19 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     ms.setActionHandler('pause',        () => { audioRef.current?.pause(); setIsPlaying(false); ms.playbackState = 'paused'  })
     ms.setActionHandler('stop',         () => onDismissRef.current())
     ms.setActionHandler('seekbackward',  (d) => { if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - (d.seekOffset ?? 15)) })
-    ms.setActionHandler('seekforward',   (d) => { if (audioRef.current) audioRef.current.currentTime = Math.min(audioRef.current.duration, audioRef.current.currentTime + (d.seekOffset ?? 30)) })
+    ms.setActionHandler('seekforward',   (d) => { if (audioRef.current) audioRef.current.currentTime = Math.min(audioRef.current.duration, audioRef.current.currentTime + (d.seekOffset ?? 15)) })
     ms.setActionHandler('seekto',        (d) => { if (audioRef.current && d.seekTime != null) { audioRef.current.currentTime = d.seekTime; setCurrentTime(Math.floor(d.seekTime)) } })
-    // Android notification shade only renders previoustrack/nexttrack as buttons
-    // — seekbackward/seekforward don't get visible controls there.
-    // Map these to the same −15s/+30s skip so Android users get tappable buttons.
-    ms.setActionHandler('previoustrack', () => { if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 15) })
-    ms.setActionHandler('nexttrack',     () => { if (audioRef.current) audioRef.current.currentTime = Math.min(audioRef.current.duration, audioRef.current.currentTime + 30) })
+    // iOS lock screen shows EITHER track-skip buttons OR the circular ±15s seek
+    // arrows — previoustrack/nexttrack win if registered, hiding the seek arrows.
+    // Android's notification shade is the opposite: it only renders
+    // previoustrack/nexttrack as tappable buttons. So register them everywhere
+    // except iOS, mapped to the same ±15s seek.
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+      || (navigator.userAgent.includes('Mac') && typeof document !== 'undefined' && 'ontouchend' in document) // iPadOS reports as Mac
+    if (!isIOS) {
+      ms.setActionHandler('previoustrack', () => { if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 15) })
+      ms.setActionHandler('nexttrack',     () => { if (audioRef.current) audioRef.current.currentTime = Math.min(audioRef.current.duration, audioRef.current.currentTime + 15) })
+    }
   }, [])
 
   // Stable ref so dismiss handler inside mediaSession 'stop' always works

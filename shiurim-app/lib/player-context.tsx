@@ -3,7 +3,7 @@
 import { createContext, useContext, useRef, useState, useEffect, useCallback, ReactNode } from 'react'
 import { savePosition, initProgressQueue } from '@/lib/progress-queue'
 import { getLectureByIdSync, loadCatalog } from '@/lib/client-catalog'
-import { resolveAudioSrc } from '@/lib/downloads'
+import { resolveAudioSrc, getDownloadAsLecture } from '@/lib/downloads'
 import type { FlatLecture } from '@/lib/lecture-utils'
 
 export const PLAYBACK_SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
@@ -137,7 +137,12 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
       title: lec.title,
       artist: lec.speaker || 'Torah To Life',
       album: lec.breadcrumb?.slice(0, -1).join(' › ') || 'Torah To Life',
-      artwork: [{ src: '/YBT_Logo.gif', sizes: '512x512', type: 'image/gif' }]
+      // PNG artwork: iOS lock screen is picky — invalid/GIF artwork can
+      // degrade the whole control set, not just the image.
+      artwork: [
+        { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+        { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      ]
     })
 
     // Wire hardware buttons → our player actions
@@ -216,10 +221,15 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     setupMediaSession(found)
     if (typeof navigator !== 'undefined' && 'mediaSession' in navigator)
       navigator.mediaSession.playbackState = 'playing'
-  }, [ensureAudioElement, setupMediaSession])
+    // Initialize the lock-screen scrubber/buttons right away, not only on
+    // the first timeupdate (updatePositionState no-ops until metadata loads).
+    updatePositionState()
+  }, [ensureAudioElement, setupMediaSession, updatePositionState])
 
   const play = useCallback((lectureId: string, startAt = 0) => {
-    const cached = getLectureByIdSync(lectureId)
+    // Downloaded shiurim must play even when the catalog isn't available
+    // (fully offline) — synthesize the lecture from the download record.
+    const cached = getLectureByIdSync(lectureId) ?? getDownloadAsLecture(lectureId)
     if (cached) {
       if (cached.audioUrl) startPlayback(cached, startAt)
       return
@@ -231,10 +241,14 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     audio.play().catch(() => {})
     loadCatalog()
       .then(() => {
-        const found = getLectureByIdSync(lectureId)
+        const found = getLectureByIdSync(lectureId) ?? getDownloadAsLecture(lectureId)
         if (found?.audioUrl) startPlayback(found, startAt)
       })
-      .catch(() => {})
+      .catch(() => {
+        // Catalog fetch failed (offline) — a downloaded shiur should still play.
+        const found = getDownloadAsLecture(lectureId)
+        if (found?.audioUrl) startPlayback(found, startAt)
+      })
   }, [startPlayback, ensureAudioElement])
 
   const pause = useCallback(() => {

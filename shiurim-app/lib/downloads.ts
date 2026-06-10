@@ -20,6 +20,9 @@ export type DownloadRecord = {
   duration: number
   bytes: number
   downloadedAt: string
+  // Optional: records saved before this field existed don't have it; playback
+  // then falls back to the cached downloadUrl() copy.
+  audioUrl?: string
 }
 
 export function downloadUrl(lectureId: string): string {
@@ -59,7 +62,7 @@ export function onDownloadsChanged(handler: () => void): () => void {
 // ── Download / delete ────────────────────────────────────────────────────────
 
 export async function downloadLecture(
-  lecture: Pick<FlatLecture, 'id' | 'title' | 'speaker' | 'duration'> & { breadcrumb?: string[] },
+  lecture: Pick<FlatLecture, 'id' | 'title' | 'speaker' | 'duration' | 'audioUrl'> & { breadcrumb?: string[] },
   onProgress?: (receivedBytes: number, totalBytes: number) => void
 ): Promise<void> {
   if (!isDownloadSupported()) throw new Error('Downloads are not supported in this browser')
@@ -103,6 +106,7 @@ export async function downloadLecture(
     duration: lecture.duration,
     bytes: blob.size,
     downloadedAt: new Date().toISOString(),
+    audioUrl: lecture.audioUrl,
   })
   writeRecords(records)
 
@@ -124,6 +128,27 @@ export async function deleteDownload(lectureId: string): Promise<void> {
 }
 
 // ── Playback resolution ──────────────────────────────────────────────────────
+
+/** Synthesize a playable FlatLecture from a download record, so downloaded
+ *  shiurim play even when the catalog isn't loaded (e.g. fully offline).
+ *  The downloadUrl() fallback is safe: it's only reachable when the file is
+ *  in the cache, and the service worker serves it with Range support. */
+export function getDownloadAsLecture(lectureId: string): FlatLecture | null {
+  const record = listDownloads().find(r => r.lectureId === lectureId)
+  if (!record) return null
+  return {
+    id: record.lectureId,
+    title: record.title,
+    speaker: record.speaker,
+    duration: record.duration,
+    breadcrumb: record.breadcrumb,
+    audioUrl: record.audioUrl ?? downloadUrl(record.lectureId),
+    nodeId: '',
+    date: '',
+    tags: [],
+    description: '',
+  }
+}
 
 /** The src the player should use: the cached same-origin copy when this
  *  lecture is downloaded AND a service worker is in control (it serves the

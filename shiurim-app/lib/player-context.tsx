@@ -153,10 +153,18 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     ms.setActionHandler('seekbackward',  (d) => { if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - (d.seekOffset ?? 15)) })
     ms.setActionHandler('seekforward',   (d) => { if (audioRef.current) audioRef.current.currentTime = Math.min(audioRef.current.duration, audioRef.current.currentTime + (d.seekOffset ?? 15)) })
     ms.setActionHandler('seekto',        (d) => { if (audioRef.current && d.seekTime != null) { audioRef.current.currentTime = d.seekTime; setCurrentTime(Math.floor(d.seekTime)) } })
-    // Deliberately NOT registering previoustrack/nexttrack: when present they
-    // claim the visible button slots on both iOS and Android, drawing |< >|
-    // track-skip icons. With only seekbackward/seekforward registered, the OS
-    // renders rewind/forward ±15s arrows instead.
+    // iOS lock screen shows EITHER track-skip buttons OR the circular ±15s seek
+    // arrows — previoustrack/nexttrack win if registered, hiding the seek arrows.
+    // Android is the opposite: without previoustrack/nexttrack the notification
+    // shows only play/pause (confirmed on-device; seekbackward/seekforward get
+    // no visible buttons there). So register them everywhere except iOS,
+    // mapped to the same ±15s seek.
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+      || (navigator.userAgent.includes('Mac') && typeof document !== 'undefined' && 'ontouchend' in document) // iPadOS reports as Mac
+    if (!isIOS) {
+      ms.setActionHandler('previoustrack', () => { if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 15) })
+      ms.setActionHandler('nexttrack',     () => { if (audioRef.current) audioRef.current.currentTime = Math.min(audioRef.current.duration, audioRef.current.currentTime + 15) })
+    }
   }, [])
 
   // Stable ref so dismiss handler inside mediaSession 'stop' always works

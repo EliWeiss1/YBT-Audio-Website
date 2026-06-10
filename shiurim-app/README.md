@@ -51,6 +51,7 @@ Server code reads the JSON directly via `lib/lectures.ts` (server-only). Client 
 Hand-written (no bundler plugin — survives Next.js bundler changes):
 
 - **Pages:** network-first, cached fallback, `/offline` fallback page
+- **Precached shell:** `/`, `/offline` and `/downloads` (plus the chunks their HTML references) are cached at install and refreshed at most once per 24h, so Downloads is reachable offline without a prior visit; every other page needs one online visit first
 - **`/_next/static/`:** cache-first (immutable hashed assets)
 - **`/lectures-data/`, icons, images:** stale-while-revalidate
 - **`/api/download/:id`:** served from the `audio-downloads-v1` cache **with Range support** (so seeking works offline); this cache is written only by `lib/downloads.ts`
@@ -66,6 +67,7 @@ Hand-written (no bundler plugin — survives Next.js bundler changes):
 - Browser storage is quota-limited and (rarely) evictable, especially on iOS. The app requests persistent storage and reconciles missing files on the Downloads page.
 - Most audio is hosted by ybt.org / yutorah.org. Downloading externally hosted content for offline use may be subject to those sites' terms of service — review before promoting the feature widely.
 - iOS runs PWAs slightly less reliably than native apps for long background playback; audio with the screen locked works, but iOS may reclaim the app under memory pressure.
+- **iOS storage is per-app:** the installed home-screen app and the Safari tab have *separate* storage — shiurim downloaded in Safari do not appear in the installed app (and vice versa). Save them inside the app you'll listen from.
 
 ## Development
 

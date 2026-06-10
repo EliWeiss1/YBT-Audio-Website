@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { usePlayer, PLAYBACK_SPEEDS } from '@/lib/player-context'
-import { formatDuration } from '@/lib/lectures'
+import { formatDuration } from '@/lib/lecture-utils'
 import Link from 'next/link'
 
 export default function BottomPlayer() {
@@ -17,7 +17,7 @@ export default function BottomPlayer() {
     : lecture.speaker
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-stone-200 shadow-lg">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-stone-200 shadow-lg safe-bottom">
       <div className="flex items-center gap-2 sm:gap-4 px-3 sm:px-6 py-3 max-w-screen-xl mx-auto">
 
         {/* Lecture info — narrower on mobile, exact w-48 on desktop */}
@@ -32,8 +32,9 @@ export default function BottomPlayer() {
         {/* Center controls — identical to original on desktop */}
         <div className="flex-1 flex flex-col items-center gap-1.5">
           <div className="flex items-center gap-3">
+            {/* p-2 -m-1 widens the touch target without changing the layout */}
             <button onClick={() => skip(-15)} title="Back 15s (←)"
-              className="flex flex-col items-center text-stone-500 hover:text-stone-800 transition-colors">
+              className="flex flex-col items-center text-stone-500 hover:text-stone-800 transition-colors p-2 -m-1">
               <span className="text-lg leading-none">⟨</span>
               <span className="text-[9px] leading-none mt-0.5">15</span>
             </button>
@@ -46,7 +47,7 @@ export default function BottomPlayer() {
               {isPlaying ? '⏸' : '▶'}
             </button>
             <button onClick={() => skip(30)} title="Forward 30s (→)"
-              className="flex flex-col items-center text-stone-500 hover:text-stone-800 transition-colors">
+              className="flex flex-col items-center text-stone-500 hover:text-stone-800 transition-colors p-2 -m-1">
               <span className="text-lg leading-none">⟩</span>
               <span className="text-[9px] leading-none mt-0.5">30</span>
             </button>
@@ -64,9 +65,10 @@ export default function BottomPlayer() {
               }}>
               <div className="absolute left-0 top-0 h-full bg-emerald-500 rounded-full"
                 style={{ width: `${progress}%` }} />
+              {/* -inset-y-2 grows the touch target beyond the 4px visual bar */}
               <input type="range" min={0} max={duration || 100} value={currentTime}
                 onChange={e => seek(Number(e.target.value))}
-                className="absolute inset-0 w-full opacity-0 cursor-pointer" />
+                className="absolute -inset-y-2 inset-x-0 w-full opacity-0 cursor-pointer" />
             </div>
             <span className="text-xs text-stone-400 tabular-nums w-10 shrink-0">
               {formatDuration(duration)}

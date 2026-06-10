@@ -53,4 +53,48 @@ writeFileSync(
   })
 )
 
-console.log(`[generate-node-data] wrote ${outDir}`)
+// ── catalog.json — full flat lecture list for client-side search/lookups ─────
+// Mirrors lib/lectures.ts getAllLectures(): lectures-before-children order,
+// first occurrence wins on duplicate ids. Fetched lazily by lib/client-catalog.ts
+// so the 9.4MB source JSON never ends up in the JS bundle.
+const seenIds = new Set()
+const flatCatalog = []
+function flattenInto(node, breadcrumb) {
+  const crumb = [...breadcrumb, node.label]
+  if (node.lectures) {
+    for (const lec of node.lectures) {
+      if (seenIds.has(lec.id)) continue
+      seenIds.add(lec.id)
+      flatCatalog.push({ ...lec, breadcrumb: crumb, nodeId: node.id })
+    }
+  }
+  if (node.children) {
+    for (const child of node.children) flattenInto(child, crumb)
+  }
+}
+for (const cat of data.categories) flattenInto(cat, [])
+writeFileSync(join(outDir, 'catalog.json'), JSON.stringify(flatCatalog))
+
+// ── tree.json — full category tree without lectures, for the sidebar ─────────
+function toTreeNode(node) {
+  return {
+    id: node.id,
+    label: node.label,
+    ...(node.icon ? { icon: node.icon } : {}),
+    count: flattenCount(node),
+    ...(node.children ? { children: node.children.map(toTreeNode) } : {}),
+  }
+}
+writeFileSync(
+  join(outDir, 'tree.json'),
+  JSON.stringify({ categories: data.categories.map(toTreeNode) })
+)
+
+// ── speakers.json — raw speaker → lecture count (client normalizes names) ────
+const speakerCounts = {}
+for (const lec of flatCatalog) {
+  if (lec.speaker) speakerCounts[lec.speaker] = (speakerCounts[lec.speaker] ?? 0) + 1
+}
+writeFileSync(join(outDir, 'speakers.json'), JSON.stringify(speakerCounts))
+
+console.log(`[generate-node-data] wrote ${outDir} (${flatCatalog.length} lectures in catalog.json)`)

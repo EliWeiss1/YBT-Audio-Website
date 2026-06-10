@@ -17,6 +17,23 @@
 /* Smooth scrolling */
 html { scroll-behavior: smooth; }
 
+/* ── PWA / standalone-mode ergonomics ──────────────────────────────────────── */
+
+/* Stop the rubber-band overscroll from revealing a void behind the app shell
+   when installed to the home screen. */
+html, body { overscroll-behavior-y: none; }
+
+/* Pad fixed chrome away from the notch / home indicator (viewport-fit=cover). */
+.safe-top { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
+/* In standalone mode the browser UI is gone — kill tap-highlight flashes and
+   accidental text selection on player controls for a native feel. */
+@media (display-mode: standalone) {
+  * { -webkit-tap-highlight-color: transparent; }
+  button { user-select: none; -webkit-user-select: none; }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }

@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, useMemo, useRef, useCallback } from 'react'
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
-import { categories, getAllLectures, TreeNode } from '@/lib/lectures'
+import { loadTree, loadSpeakerCounts, type CatalogTreeNode } from '@/lib/client-catalog'
 import { normalizeRabbi } from '@/lib/rabbi-normalization'
 
 // ─── Recursive tree node ──────────────────────────────────────────────────────
@@ -15,7 +15,7 @@ function TreeItem({
   activePath,
   rabbiParam,
 }: {
-  node: TreeNode
+  node: CatalogTreeNode
   depth?: number
   activePath: string[]
   rabbiParam: string
@@ -23,7 +23,7 @@ function TreeItem({
   const isInActivePath = activePath.includes(node.id)
   const [open, setOpen] = useState(isInActivePath)
   const isLeaf = !node.children || node.children.length === 0
-  const lectureCount = node.lectures?.length
+  const lectureCount = isLeaf ? node.count : undefined
 
   if (isLeaf) {
     const href = rabbiParam
@@ -113,9 +113,21 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
     window.addEventListener('mouseup', onUp)
   }, [sidebarWidth])
 
+  // Tree + speaker counts come from tiny generated JSON files (a few KB) —
+  // fetched once, service-worker cached, no lecture data in the JS bundle.
+  const [tree, setTree] = useState<CatalogTreeNode[]>([])
+  const [rawSpeakerCounts, setRawSpeakerCounts] = useState<Record<string, number>>({})
+
+  useEffect(() => {
+    let alive = true
+    loadTree().then(t => { if (alive) setTree(t) }).catch(() => {})
+    loadSpeakerCounts().then(s => { if (alive) setRawSpeakerCounts(s) }).catch(() => {})
+    return () => { alive = false }
+  }, [])
+
   const activePath = useMemo(() => {
     if (!activeNodeId) return []
-    function findPath(node: TreeNode, target: string, path: string[]): string[] | null {
+    function findPath(node: CatalogTreeNode, target: string, path: string[]): string[] | null {
       const current = [...path, node.id]
       if (node.id === target) return current
       for (const child of node.children ?? []) {
@@ -124,26 +136,22 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
       }
       return null
     }
-    for (const cat of categories) {
+    for (const cat of tree) {
       const result = findPath(cat, activeNodeId, [])
       if (result) return result
     }
     return []
-  }, [activeNodeId])
-
-  const allLectures = useMemo(() => getAllLectures(), [])
+  }, [activeNodeId, tree])
 
   // Canonical speaker names sorted by total lecture count descending
   const speakerCounts = useMemo(() => {
     const counts: Record<string, number> = {}
-    for (const l of allLectures) {
-      if (l.speaker) {
-        const canonical = normalizeRabbi(l.speaker)
-        counts[canonical] = (counts[canonical] ?? 0) + 1
-      }
+    for (const [raw, count] of Object.entries(rawSpeakerCounts)) {
+      const canonical = normalizeRabbi(raw)
+      if (canonical) counts[canonical] = (counts[canonical] ?? 0) + count
     }
     return Object.entries(counts).sort((a, b) => b[1] - a[1])
-  }, [allLectures])
+  }, [rawSpeakerCounts])
 
   // rabbiParam carries canonical names — lecture page normalizes for filtering
   const rabbiParam = selectedRabbis.length > 0
@@ -199,18 +207,26 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
         )}
       </div>
 
-      {/* Feed link */}
+      {/* Feed + Downloads links */}
       <div className="px-4 py-2 border-b border-stone-100">
         <Link href="/feed"
           className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors
             ${pathname === '/feed' ? 'bg-emerald-50 text-emerald-800' : 'text-stone-600 hover:bg-stone-50'}`}>
           <span>🗣️</span> Discussion Feed
         </Link>
+        <Link href="/downloads"
+          className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors
+            ${pathname === '/downloads' ? 'bg-emerald-50 text-emerald-800' : 'text-stone-600 hover:bg-stone-50'}`}>
+          <span>📲</span> Downloads
+          <span className="ml-auto text-[10px] font-semibold text-emerald-600 bg-emerald-50 border border-emerald-100 rounded-full px-1.5 py-0.5 leading-none">
+            offline
+          </span>
+        </Link>
       </div>
 
       {/* Tree */}
       <nav className="flex-1 overflow-y-auto py-2 px-2 min-h-0 mr-1.5">
-        {categories.map(cat => (
+        {tree.map(cat => (
           <div key={cat.id} className="mb-1">
             <TreeItem node={cat} depth={0} activePath={activePath} rabbiParam={rabbiParam} />
           </div>

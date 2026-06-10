@@ -5,6 +5,7 @@ import LectureAuthSection from '@/components/lectures/LectureAuthSection'
 import CommentsLoader from '@/components/discussions/CommentsLoader'
 import SpeakerEditor from '@/components/lectures/SpeakerEditor'
 import BookmarkButton from '@/components/lectures/BookmarkButton'
+import DownloadButton from '@/components/lectures/DownloadButton'
 import Link from 'next/link'
 import { format } from 'date-fns'
 
@@ -92,6 +93,23 @@ export default async function LecturePage({ params }: Props) {
             </svg>
             Download
           </a>
+        )}
+        {/* Save offline — stores the audio in the browser cache for offline playback */}
+        {lecture.audioUrl && (
+          <DownloadButton
+            withLabel
+            lecture={{
+              id: lecture.id,
+              title: lecture.title,
+              audioUrl: lecture.audioUrl,
+              duration: lecture.duration,
+              description: '',
+              speaker: lecture.speaker,
+              date: lecture.date,
+              tags: [],
+              breadcrumb: lecture.breadcrumb,
+            }}
+          />
         )}
         {/* Save for later — self-fetches auth + saved state client-side */}
         <BookmarkButton lectureId={lecture.id} size="md" />

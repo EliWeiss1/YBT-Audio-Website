@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { getLectureById, formatDuration } from '@/lib/lectures'
+import { formatDuration } from '@/lib/lecture-utils'
+import { useCatalog } from '@/lib/use-catalog'
 import { usePlayer } from '@/lib/player-context'
 import { createClient } from '@/lib/supabase-browser'
 import { deleteProgress, unsaveLecture } from '@/lib/supabase'
@@ -71,6 +72,7 @@ function MyShiurimModal({
   const [deleting, setDeleting]     = useState<string | null>(null)
   const [unsaving, setUnsaving]     = useState<string | null>(null)
   const { play, pause, isPlaying, lecture: activeLecture } = usePlayer()
+  const { getLectureById } = useCatalog()
 
   // Fetch listening history
   useEffect(() => {
@@ -383,6 +385,7 @@ function MyShiurimModal({
 
 function ProgressChip({ row, onDelete }: { row: ProgressRow; onDelete: (id: string) => void }) {
   const { play, pause, isPlaying, lecture: activeLecture } = usePlayer()
+  const { getLectureById } = useCatalog()
   const lecture = getLectureById(row.lecture_id)
   if (!lecture) return null
 
@@ -444,6 +447,7 @@ function ProgressChip({ row, onDelete }: { row: ProgressRow; onDelete: (id: stri
 
 function SavedChip({ lectureId, onUnsave }: { lectureId: string; onUnsave: (id: string) => void }) {
   const { play, pause, isPlaying, lecture: activeLecture } = usePlayer()
+  const { getLectureById } = useCatalog()
   const lecture = getLectureById(lectureId)
   if (!lecture) return null
 

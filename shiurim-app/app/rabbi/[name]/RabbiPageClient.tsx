@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import type { FlatLecture } from '@/lib/lectures'
+import type { FlatLecture } from '@/lib/lecture-utils'
 import LectureListWithProgress from '@/components/lectures/LectureListWithProgress'
 
 type CategoryGroup = { label: string; lectures: FlatLecture[] }

@@ -80,7 +80,7 @@ export default function LayoutShell({
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
 
         {/* Top bar */}
-        <header className="relative flex items-center gap-3 px-4 py-3 bg-white border-b border-stone-200 shrink-0">
+        <header className="relative flex items-center gap-3 px-4 py-3 bg-white border-b border-stone-200 shrink-0 safe-top">
           {/* Left: hamburger + title (mobile only, hidden when mobile search is active) */}
           {!mobileSearchActive && (
             <div className="flex items-center gap-3 md:hidden shrink-0">

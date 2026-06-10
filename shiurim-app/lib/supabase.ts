@@ -62,7 +62,9 @@ export async function saveProgress(
   if (completed) {
     record.completed = true
   }
-  await supabase.from('progress').upsert(record, { onConflict: 'user_id,lecture_id' })
+  // Surface failures (e.g. offline) so lib/progress-queue.ts can queue retries.
+  const { error } = await supabase.from('progress').upsert(record, { onConflict: 'user_id,lecture_id' })
+  return { error }
 }
 
 export async function deleteProgress(userId: string, lectureId: string) {

@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { getLectureById, formatDuration } from '@/lib/lectures'
+import { formatDuration } from '@/lib/lecture-utils'
+import { useCatalog } from '@/lib/use-catalog'
 import { usePlayer } from '@/lib/player-context'
 import { createClient } from '@/lib/supabase-browser'
 import { deleteProgress } from '@/lib/supabase'
@@ -54,6 +55,7 @@ function HistoryModal({
   const [filter, setFilter]     = useState<Filter>('in-progress')
   const [deleting, setDeleting] = useState<string | null>(null)
   const { play, pause, isPlaying, lecture: activeLecture } = usePlayer()
+  const { getLectureById } = useCatalog()
 
   useEffect(() => {
     const supabase = createClient()
@@ -252,6 +254,7 @@ export default function ContinueListening({
   userId: string
 }) {
   const { play, pause, isPlaying, lecture: activeLecture } = usePlayer()
+  const { getLectureById } = useCatalog()
   // Keep strip rows in state so deletes reflect immediately without a page reload
   const [stripRows, setStripRows] = useState(initialRows)
   const [modalOpen, setModalOpen] = useState(false)

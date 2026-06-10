@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react'
 import { usePlayer, PLAYBACK_SPEEDS } from '@/lib/player-context'
 import { getProgress } from '@/lib/supabase'
-import { formatDuration, getLectureById } from '@/lib/lectures'
+import { formatDuration } from '@/lib/lecture-utils'
+import { useCatalog } from '@/lib/use-catalog'
 
 type Props = {
   lectureId: string
@@ -32,9 +33,11 @@ export default function LecturePlayer({ lectureId, userId }: Props) {
     })
   }, [userId, lectureId])
 
-  // Check if audio is available for this lecture
+  // Check if audio is available for this lecture.
+  // While the catalog is still loading, render the player optimistically.
+  const { ready, getLectureById } = useCatalog()
   const lectureInfo = getLectureById(lectureId)
-  const hasAudio = !!(lectureInfo?.audioUrl)
+  const hasAudio = !ready || !!(lectureInfo?.audioUrl)
 
   const handlePlay = () => {
     if (isThisLecture) {

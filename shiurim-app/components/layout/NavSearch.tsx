@@ -3,8 +3,9 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Fuse from 'fuse.js'
-import type { FlatLecture } from '@/lib/lectures'
-import { getAllLectures, formatDuration } from '@/lib/lectures'
+import type { FlatLecture } from '@/lib/lecture-utils'
+import { formatDuration } from '@/lib/lecture-utils'
+import { loadCatalog } from '@/lib/client-catalog'
 import { normalizeRabbi } from '@/lib/rabbi-normalization'
 
 // ─── Highlight helper ─────────────────────────────────────────────────────────
@@ -84,21 +85,29 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
   const [fuse, setFuse] = useState<Fuse<FlatLecture> | null>(null)
 
   useEffect(() => {
-    const lectures = getAllLectures()
-    setAllLectures(lectures)
-    setFuse(new Fuse(lectures, {
-      keys: [
-        { name: 'title', weight: 3 },
-        { name: 'speaker', weight: 1.5 },
-        { name: 'tags', weight: 1 },
-        { name: 'breadcrumb', weight: 0.5 },
-        { name: 'description', weight: 0.5 },
-      ],
-      threshold: 0.2,
-      includeMatches: false,
-      distance: 80,
-      minMatchCharLength: 2,
-    }))
+    // Catalog is fetched (and service-worker cached) rather than bundled —
+    // keeps megabytes of lecture data out of the initial JS payload.
+    let alive = true
+    loadCatalog()
+      .then(lectures => {
+        if (!alive) return
+        setAllLectures(lectures)
+        setFuse(new Fuse(lectures, {
+          keys: [
+            { name: 'title', weight: 3 },
+            { name: 'speaker', weight: 1.5 },
+            { name: 'tags', weight: 1 },
+            { name: 'breadcrumb', weight: 0.5 },
+            { name: 'description', weight: 0.5 },
+          ],
+          threshold: 0.2,
+          includeMatches: false,
+          distance: 80,
+          minMatchCharLength: 2,
+        }))
+      })
+      .catch(() => {})
+    return () => { alive = false }
   }, [])
 
   // ── 150ms debounce: Fuse only runs after typing pauses ──

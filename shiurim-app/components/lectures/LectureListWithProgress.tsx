@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase-browser'
 import LectureCard from './LectureCard'
-import { Lecture } from '@/lib/lectures'
+import { Lecture } from '@/lib/lecture-utils'
 
 type ProgressEntry = {
   position_seconds: number

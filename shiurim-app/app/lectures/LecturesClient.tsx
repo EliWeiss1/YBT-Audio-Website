@@ -6,7 +6,7 @@ import { normalizeRabbi } from '@/lib/rabbi-normalization'
 import { createClient } from '@/lib/supabase-browser'
 import LectureListWithProgress from '@/components/lectures/LectureListWithProgress'
 import Link from 'next/link'
-import type { Lecture } from '@/lib/lectures'
+import type { Lecture } from '@/lib/lecture-utils'
 
 // ─── Types for CDN-fetched node data ─────────────────────────────────────────
 

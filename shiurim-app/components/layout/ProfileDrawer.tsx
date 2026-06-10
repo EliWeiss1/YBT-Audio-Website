@@ -3,7 +3,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase-browser'
-import { getLectureById, formatDuration } from '@/lib/lectures'
+import { formatDuration, type FlatLecture } from '@/lib/lecture-utils'
+import { useCatalog } from '@/lib/use-catalog'
 import { usePlayer } from '@/lib/player-context'
 import { deleteProgress } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
@@ -31,7 +32,10 @@ type ProgressFilter = 'in-progress' | 'completed'
 
 // ── Stats helpers ─────────────────────────────────────────────────────────────
 
-function computeStats(rows: ProgressRow[]): Stats {
+function computeStats(
+  rows: ProgressRow[],
+  getLectureById: (id: string) => FlatLecture | null
+): Stats {
   const completed  = rows.filter(r => r.completed).length
   const inProgress = rows.filter(r => !r.completed && r.position_seconds > 0).length
   const totalHours = rows.reduce((acc, r) => acc + (r.position_seconds ?? 0), 0) / 3600
@@ -156,6 +160,7 @@ function InProgressView({
   const [filter, setFilter]     = useState<ProgressFilter>('in-progress')
   const [deleting, setDeleting] = useState<string | null>(null)
   const { play, pause, isPlaying, lecture: activeLecture } = usePlayer()
+  const { getLectureById } = useCatalog()
 
   useEffect(() => {
     const supabase = createClient()
@@ -340,8 +345,10 @@ export default function ProfileDrawer({
   const [view, setView]       = useState<DrawerView>('main')
   const [stats, setStats]     = useState<Stats | null>(null)
   const [loading, setLoading] = useState(false)
+  const { ready: catalogReady, getLectureById } = useCatalog()
 
-  // Fetch progress whenever the drawer opens (or returns to main)
+  // Fetch progress whenever the drawer opens (or returns to main).
+  // Re-runs when the catalog finishes loading so topCategory fills in.
   useEffect(() => {
     if (!open || view !== 'main') return
     setLoading(true)
@@ -351,10 +358,10 @@ export default function ProfileDrawer({
       .select('lecture_id, position_seconds, completed, last_listened_at')
       .eq('user_id', user.id)
       .then(({ data }) => {
-        setStats(computeStats((data ?? []) as ProgressRow[]))
+        setStats(computeStats((data ?? []) as ProgressRow[], getLectureById))
         setLoading(false)
       })
-  }, [open, view, user.id])
+  }, [open, view, user.id, catalogReady, getLectureById])
 
   // Reset to main view when drawer closes
   const handleClose = () => {

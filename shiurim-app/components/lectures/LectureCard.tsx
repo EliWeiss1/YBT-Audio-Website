@@ -1,9 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { FlatLecture, Lecture, formatDuration } from '@/lib/lectures'
+import { FlatLecture, Lecture, formatDuration } from '@/lib/lecture-utils'
 import { usePlayer } from '@/lib/player-context'
 import BookmarkButton from './BookmarkButton'
+import DownloadButton from './DownloadButton'
 
 type Props = {
   lecture: Lecture | FlatLecture
@@ -123,6 +124,7 @@ export default function LectureCard({ lecture, index, progress, speakerOverride,
       {/* Right: bookmark + duration + download */}
       <div className="shrink-0 flex flex-col items-end gap-1">
         <div className="flex items-center gap-0.5">
+          <DownloadButton lecture={lecture} size="sm" />
           <BookmarkButton
             lectureId={lecture.id}
             userId={userId}

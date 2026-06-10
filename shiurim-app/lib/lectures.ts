@@ -1,38 +1,17 @@
+// SERVER-ONLY data access. Importing this module pulls the full 9.4MB
+// lectures.json into the bundle — client components must use
+// lib/lecture-utils.ts (types/helpers) and lib/client-catalog.ts (data,
+// fetched lazily from /lectures-data/catalog.json) instead.
+
 import lecturesData from '@/data/lectures.json'
+import type { Lecture, TreeNode, FlatLecture } from '@/lib/lecture-utils'
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-export type Lecture = {
-  id: string
-  title: string
-  audioUrl: string
-  duration: number
-  description: string
-  speaker: string
-  date: string
-  tags: string[]
-}
-
-// A TreeNode is either:
-//   - a leaf:   has `lectures`, no `children`
-//   - a branch: has `children`, no `lectures`
-export type TreeNode = {
-  id: string
-  label: string
-  icon?: string          // only on top-level category nodes
-  children?: TreeNode[]
-  lectures?: Lecture[]
-}
+export type { Lecture, TreeNode, FlatLecture }
+export { formatDuration } from '@/lib/lecture-utils'
 
 export const categories: TreeNode[] = lecturesData.categories as TreeNode[]
 
 // ─── Recursive helpers ────────────────────────────────────────────────────────
-
-/** Flatten every lecture in a subtree into a single array, with breadcrumb info. */
-export type FlatLecture = Lecture & {
-  breadcrumb: string[]    // e.g. ["Chumash", "Bereishit", "Noach"]
-  nodeId: string          // id of the leaf TreeNode that owns this lecture
-}
 
 export function flattenLectures(
   node: TreeNode,
@@ -105,13 +84,4 @@ export function getAdjacentLectures(lectureId: string) {
     prev: idx > 0 ? all[idx - 1] : null,
     next: idx < all.length - 1 ? all[idx + 1] : null,
   }
-}
-
-/** Format seconds as h:mm:ss or m:ss */
-export function formatDuration(seconds: number): string {
-  const h = Math.floor(seconds / 3600)
-  const m = Math.floor((seconds % 3600) / 60)
-  const s = seconds % 60
-  if (h > 0) return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
-  return `${m}:${String(s).padStart(2, '0')}`
 }

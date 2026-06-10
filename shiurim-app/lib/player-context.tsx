@@ -1,8 +1,10 @@
 'use client'
 
 import { createContext, useContext, useRef, useState, useEffect, useCallback, ReactNode } from 'react'
-import { saveProgress } from '@/lib/supabase'
-import { getLectureById, FlatLecture } from '@/lib/lectures'
+import { savePosition, initProgressQueue } from '@/lib/progress-queue'
+import { getLectureByIdSync, loadCatalog } from '@/lib/client-catalog'
+import { resolveAudioSrc } from '@/lib/downloads'
+import type { FlatLecture } from '@/lib/lecture-utils'
 
 export const PLAYBACK_SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
 
@@ -36,13 +38,22 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
   const [duration, setDuration]     = useState(0)
   const [playbackSpeed, setPlaybackSpeed] = useState(1)
 
+  // Flush offline-queued progress + warm the client catalog while idle, so
+  // the synchronous lookup in play() almost always hits.
+  useEffect(() => {
+    initProgressQueue()
+    const warm = () => { loadCatalog().catch(() => {}) }
+    if ('requestIdleCallback' in window) requestIdleCallback(warm)
+    else setTimeout(warm, 1500)
+  }, [])
+
   // Keep onEndedRef up to date with latest userId + lecture
   useEffect(() => {
     onEndedRef.current = () => {
       setIsPlaying(false)
       if (userId && lecture && audioRef.current) {
         const dur = Math.floor(audioRef.current.duration)
-        saveProgress(userId, lecture.id, dur > 0 ? dur : 0, true, dur > 0 ? dur : undefined)
+        savePosition(userId, lecture.id, dur > 0 ? dur : 0, true, dur > 0 ? dur : undefined)
       }
     }
   }, [userId, lecture])
@@ -55,7 +66,7 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
       saveTimerRef.current = setInterval(() => {
         if (audioRef.current) {
           const dur = Math.floor(audioRef.current.duration)
-          saveProgress(
+          savePosition(
             userId,
             lecture.id,
             Math.floor(audioRef.current.currentTime),
@@ -161,50 +172,70 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
   }, [])
   // ─────────────────────────────────────────────────────────────────────────
 
-  const play = useCallback((lectureId: string, startAt = 0) => {
-    const found = getLectureById(lectureId)
-    if (!found || !found.audioUrl) return
-    if (audioRef.current) {
-      audioRef.current.pause()
-      audioRef.current.src = found.audioUrl
-      audioRef.current.currentTime = startAt
-      audioRef.current.playbackRate = playbackSpeedRef.current
-      audioRef.current.play().catch(() => {})
-    } else {
-      const audio = new Audio(found.audioUrl)
-      audio.currentTime = startAt
-      audio.playbackRate = playbackSpeedRef.current
-      audio.addEventListener('timeupdate', () => { setCurrentTime(Math.floor(audio.currentTime)); updatePositionState() })
-      audio.addEventListener('loadedmetadata', () => { setDuration(Math.floor(audio.duration)); updatePositionState() })
-      // Always delegate to onEndedRef so it has current userId + lecture
-      audio.addEventListener('ended', () => onEndedRef.current())
-      // ── Interruption sync ──────────────────────────────────────────────
-      // Native 'pause' fires when the OS interrupts playback (phone call,
-      // Siri, another app stealing audio focus). Our setIsPlaying(false)
-      // in pause() only runs when WE pause — so without this, the UI stays
-      // stuck showing a pause button after an external interruption.
-      audio.addEventListener('pause', () => {
-        setIsPlaying(false)
-        if (typeof navigator !== 'undefined' && 'mediaSession' in navigator)
-          navigator.mediaSession.playbackState = 'paused'
-      })
-      // 'playing' fires when audio actually resumes after buffering or an
-      // interruption ends — more reliable than 'play' for state sync.
-      audio.addEventListener('playing', () => {
-        setIsPlaying(true)
-        if (typeof navigator !== 'undefined' && 'mediaSession' in navigator)
-          navigator.mediaSession.playbackState = 'playing'
-      })
-      // ──────────────────────────────────────────────────────────────────
-      audio.play().catch(() => {})
-      audioRef.current = audio
-    }
+  /** Create the shared <audio> element (with all listeners) if needed. */
+  const ensureAudioElement = useCallback(() => {
+    if (audioRef.current) return audioRef.current
+    const audio = new Audio()
+    audio.addEventListener('timeupdate', () => { setCurrentTime(Math.floor(audio.currentTime)); updatePositionState() })
+    audio.addEventListener('loadedmetadata', () => { setDuration(Math.floor(audio.duration)); updatePositionState() })
+    // Always delegate to onEndedRef so it has current userId + lecture
+    audio.addEventListener('ended', () => onEndedRef.current())
+    // ── Interruption sync ──────────────────────────────────────────────
+    // Native 'pause' fires when the OS interrupts playback (phone call,
+    // Siri, another app stealing audio focus). Our setIsPlaying(false)
+    // in pause() only runs when WE pause — so without this, the UI stays
+    // stuck showing a pause button after an external interruption.
+    audio.addEventListener('pause', () => {
+      setIsPlaying(false)
+      if (typeof navigator !== 'undefined' && 'mediaSession' in navigator)
+        navigator.mediaSession.playbackState = 'paused'
+    })
+    // 'playing' fires when audio actually resumes after buffering or an
+    // interruption ends — more reliable than 'play' for state sync.
+    audio.addEventListener('playing', () => {
+      setIsPlaying(true)
+      if (typeof navigator !== 'undefined' && 'mediaSession' in navigator)
+        navigator.mediaSession.playbackState = 'playing'
+    })
+    // ──────────────────────────────────────────────────────────────────
+    audioRef.current = audio
+    return audio
+  }, [updatePositionState])
+
+  const startPlayback = useCallback((found: FlatLecture, startAt: number) => {
+    const audio = ensureAudioElement()
+    audio.pause()
+    // Downloaded shiurim play from the service-worker cache (works offline);
+    // everything else streams from the original host.
+    audio.src = resolveAudioSrc(found)
+    audio.currentTime = startAt
+    audio.playbackRate = playbackSpeedRef.current
+    audio.play().catch(() => {})
     setLecture(found)
     setIsPlaying(true)
     setupMediaSession(found)
     if (typeof navigator !== 'undefined' && 'mediaSession' in navigator)
       navigator.mediaSession.playbackState = 'playing'
-  }, [setupMediaSession, updatePositionState])
+  }, [ensureAudioElement, setupMediaSession])
+
+  const play = useCallback((lectureId: string, startAt = 0) => {
+    const cached = getLectureByIdSync(lectureId)
+    if (cached) {
+      if (cached.audioUrl) startPlayback(cached, startAt)
+      return
+    }
+    // Catalog still loading (rare — it's warmed at idle). Nudge the audio
+    // element inside this user gesture so iOS keeps it "unlocked", letting
+    // playback start once the async lookup resolves.
+    const audio = ensureAudioElement()
+    audio.play().catch(() => {})
+    loadCatalog()
+      .then(() => {
+        const found = getLectureByIdSync(lectureId)
+        if (found?.audioUrl) startPlayback(found, startAt)
+      })
+      .catch(() => {})
+  }, [startPlayback, ensureAudioElement])
 
   const pause = useCallback(() => {
     audioRef.current?.pause()
@@ -213,7 +244,7 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
       navigator.mediaSession.playbackState = 'paused'
     if (userId && lecture && audioRef.current) {
       const dur = Math.floor(audioRef.current.duration)
-      saveProgress(userId, lecture.id, Math.floor(audioRef.current.currentTime), false, dur > 0 ? dur : undefined)
+      savePosition(userId, lecture.id, Math.floor(audioRef.current.currentTime), false, dur > 0 ? dur : undefined)
     }
   }, [userId, lecture])
 

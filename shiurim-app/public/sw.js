@@ -11,6 +11,10 @@
  * downloads) — this worker reads it but never adds to it.
  */
 
+// Any byte change to this file triggers the browser's SW update flow —
+// bump this on future edits to force one.
+const SW_VERSION = 'v2'
+
 const AUDIO_CACHE = 'audio-downloads-v1'
 const PAGES_CACHE = 'pages-v1'
 const STATIC_CACHE = 'static-v1'
@@ -19,21 +23,68 @@ const KNOWN_CACHES = [AUDIO_CACHE, PAGES_CACHE, STATIC_CACHE, DATA_CACHE]
 
 const OFFLINE_URL = '/offline'
 
+// Pages that must work offline WITHOUT a prior visit. Every route is
+// server-rendered, so nothing lands in the pages cache until fetched —
+// a user who downloads shiurim but never opens /downloads online would
+// otherwise hit the offline fallback instead of their downloads.
+const PRECACHE_PAGES = ['/', OFFLINE_URL, '/downloads']
+
+/** Precache the app shell: each page's HTML plus the static assets it
+ *  references (a cached document is useless offline if its scripts aren't
+ *  cached too). Assets are routed to the same cache the fetch handler
+ *  reads from: /_next/static/ → STATIC_CACHE, icons/logo → DATA_CACHE. */
+async function precacheShell() {
+  const pagesCache = await caches.open(PAGES_CACHE)
+  const staticCache = await caches.open(STATIC_CACHE)
+  const dataCache = await caches.open(DATA_CACHE)
+
+  for (const page of PRECACHE_PAGES) {
+    try {
+      const res = await fetch(page, { cache: 'reload' })
+      if (!res.ok) continue
+      const html = await res.clone().text()
+      await pagesCache.put(page, res)
+
+      const assets = new Set(html.match(/\/_next\/static\/[^"'\s>]+/g) || [])
+      for (const m of html.match(/\/(?:icons\/[^"'\s>]+|YBT_Logo\.gif)/g) || []) {
+        assets.add(m)
+      }
+      for (const asset of assets) {
+        try {
+          const url = asset.replace(/&amp;/g, '&')
+          const target = url.startsWith('/_next/static/') ? staticCache : dataCache
+          if (await target.match(url)) continue
+          const assetRes = await fetch(url)
+          if (assetRes.ok) await target.put(url, assetRes)
+        } catch {
+          /* one missing asset must not abort the shell */
+        }
+      }
+    } catch {
+      /* page unreachable (offline during install) — cached on a later visit */
+    }
+  }
+}
+
 // ── Lifecycle ────────────────────────────────────────────────────────────────
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     (async () => {
-      // Pre-cache the offline fallback page so it's available immediately.
-      const cache = await caches.open(PAGES_CACHE)
-      try {
-        await cache.add(OFFLINE_URL)
-      } catch {
-        /* offline during install — fallback will be cached on a later fetch */
-      }
+      await precacheShell()
       await self.skipWaiting()
     })()
   )
+})
+
+// The app pings { type: 'refresh-shell' } periodically so the precached
+// shell tracks new deploys (chunk hashes change every build) without
+// needing this worker file itself to change. Old chunks stay in
+// STATIC_CACHE, so previously cached pages keep working offline too.
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'refresh-shell') {
+    event.waitUntil(precacheShell())
+  }
 })
 
 self.addEventListener('activate', (event) => {

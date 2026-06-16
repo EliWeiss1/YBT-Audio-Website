@@ -6,7 +6,7 @@ import { getLectureByIdSync, loadCatalog } from '@/lib/client-catalog'
 import { resolveAudioSrc, getDownloadAsLecture } from '@/lib/downloads'
 import type { FlatLecture } from '@/lib/lecture-utils'
 
-export const PLAYBACK_SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
+export const PLAYBACK_SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3]
 
 type PlayerState = {
   lecture: FlatLecture | null

@@ -1,0 +1,1592 @@
+{
+  "categories": [
+    {
+      "id": "bnai-noach",
+      "label": "Bnai Noach",
+      "icon": "🌍",
+      "children": [
+        {
+          "id": "bnai-noach-sets",
+          "label": "Weekly Classes"
+        },
+        {
+          "id": "bnai-noach-conferences",
+          "label": "Conferences"
+        }
+      ]
+    },
+    {
+      "id": "chumash",
+      "label": "Chumash",
+      "icon": "📜",
+      "children": [
+        {
+          "id": "chumash-general",
+          "label": "General",
+          "children": [
+            {
+              "id": "chumash-arba-parshiyot",
+              "label": "Arba Parshiyot",
+              "children": [
+                {
+                  "id": "chumash-arba-parshiyot-zachor",
+                  "label": "Zachor"
+                },
+                {
+                  "id": "chumash-arba-parshiyot-parah",
+                  "label": "Parah"
+                },
+                {
+                  "id": "chumash-arba-parshiyot-hachodesh",
+                  "label": "Hachodesh"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "bereishit",
+          "label": "Bereishit",
+          "children": [
+            {
+              "id": "bereishit-bereishit",
+              "label": "Bereishit"
+            },
+            {
+              "id": "bereishit-noach",
+              "label": "Noach"
+            },
+            {
+              "id": "bereishit-lech-lecha",
+              "label": "Lech Lecha"
+            },
+            {
+              "id": "bereishit-vayeira",
+              "label": "Vayeira"
+            },
+            {
+              "id": "bereishit-chayei-sarah",
+              "label": "Chayei Sarah"
+            },
+            {
+              "id": "bereishit-toldot",
+              "label": "Toldot"
+            },
+            {
+              "id": "bereishit-vayeitzei",
+              "label": "Vayeitzei"
+            },
+            {
+              "id": "bereishit-vayishlach",
+              "label": "Vayishlach"
+            },
+            {
+              "id": "bereishit-vayeshev",
+              "label": "Vayeshev"
+            },
+            {
+              "id": "bereishit-miketz",
+              "label": "Miketz"
+            },
+            {
+              "id": "bereishit-vayigash",
+              "label": "Vayigash"
+            },
+            {
+              "id": "bereishit-vayechi",
+              "label": "Vayechi"
+            }
+          ]
+        },
+        {
+          "id": "shemot",
+          "label": "Shemot",
+          "children": [
+            {
+              "id": "shemot-shemot",
+              "label": "Shemot"
+            },
+            {
+              "id": "shemot-vaeira",
+              "label": "Va'eira"
+            },
+            {
+              "id": "shemot-bo",
+              "label": "Bo"
+            },
+            {
+              "id": "shemot-beshalach",
+              "label": "Beshalach"
+            },
+            {
+              "id": "shemot-yitro",
+              "label": "Yitro"
+            },
+            {
+              "id": "shemot-mishpatim",
+              "label": "Mishpatim"
+            },
+            {
+              "id": "shemot-terumah",
+              "label": "Terumah"
+            },
+            {
+              "id": "shemot-tetzaveh",
+              "label": "Tetzaveh"
+            },
+            {
+              "id": "shemot-ki-tisa",
+              "label": "Ki Tisa"
+            },
+            {
+              "id": "shemot-vayakhel",
+              "label": "Vayakhel"
+            },
+            {
+              "id": "shemot-pekudei",
+              "label": "Pekudei"
+            }
+          ]
+        },
+        {
+          "id": "vayikra",
+          "label": "Vayikra",
+          "children": [
+            {
+              "id": "vayikra-vayikra",
+              "label": "Vayikra"
+            },
+            {
+              "id": "vayikra-tzav",
+              "label": "Tzav"
+            },
+            {
+              "id": "vayikra-shemini",
+              "label": "Shemini"
+            },
+            {
+              "id": "vayikra-tazria",
+              "label": "Tazria"
+            },
+            {
+              "id": "vayikra-metzora",
+              "label": "Metzora"
+            },
+            {
+              "id": "vayikra-acharei",
+              "label": "Acharei"
+            },
+            {
+              "id": "vayikra-kedoshim",
+              "label": "Kedoshim"
+            },
+            {
+              "id": "vayikra-emor",
+              "label": "Emor"
+            },
+            {
+              "id": "vayikra-behar",
+              "label": "Behar"
+            },
+            {
+              "id": "vayikra-bechukotai",
+              "label": "Bechukotai"
+            }
+          ]
+        },
+        {
+          "id": "bamidbar",
+          "label": "Bamidbar",
+          "children": [
+            {
+              "id": "bamidbar-general",
+              "label": "General"
+            },
+            {
+              "id": "bamidbar-bamidbar",
+              "label": "Bamidbar"
+            },
+            {
+              "id": "bamidbar-nasso",
+              "label": "Nasso"
+            },
+            {
+              "id": "bamidbar-behaalotcha",
+              "label": "Beha'alotcha"
+            },
+            {
+              "id": "bamidbar-shelach",
+              "label": "Shelach"
+            },
+            {
+              "id": "bamidbar-korach",
+              "label": "Korach"
+            },
+            {
+              "id": "bamidbar-chukat",
+              "label": "Chukat"
+            },
+            {
+              "id": "bamidbar-balak",
+              "label": "Balak"
+            },
+            {
+              "id": "bamidbar-pinchas",
+              "label": "Pinchas"
+            },
+            {
+              "id": "bamidbar-mattot",
+              "label": "Mattot"
+            },
+            {
+              "id": "bamidbar-masei",
+              "label": "Masei"
+            }
+          ]
+        },
+        {
+          "id": "devarim",
+          "label": "Devarim",
+          "children": [
+            {
+              "id": "devarim-devarim",
+              "label": "Devarim"
+            },
+            {
+              "id": "devarim-vaetchanan",
+              "label": "Va'etchanan"
+            },
+            {
+              "id": "devarim-eikev",
+              "label": "Eikev"
+            },
+            {
+              "id": "devarim-reeh",
+              "label": "Re'eh"
+            },
+            {
+              "id": "devarim-shoftim",
+              "label": "Shoftim"
+            },
+            {
+              "id": "devarim-ki-teitzei",
+              "label": "Ki Teitzei"
+            },
+            {
+              "id": "devarim-ki-tavo",
+              "label": "Ki Tavo"
+            },
+            {
+              "id": "devarim-nitzavim",
+              "label": "Nitzavim"
+            },
+            {
+              "id": "devarim-vayeilech",
+              "label": "Vayelech"
+            },
+            {
+              "id": "devarim-haazinu",
+              "label": "Ha'azinu"
+            },
+            {
+              "id": "devarim-vezot-haberachah",
+              "label": "Vezot Haberachah"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "discussion",
+      "label": "Discussion",
+      "icon": "💬",
+      "children": [
+        {
+          "id": "discussion-archived",
+          "label": "2002–2014"
+        },
+        {
+          "id": "discussion-ahavat-yirat-hashem",
+          "label": "Ahavat/Yirat Hashem"
+        },
+        {
+          "id": "discussion-akeidah",
+          "label": "Akeidas Yitzchak"
+        },
+        {
+          "id": "discussion-amalek-holocaust",
+          "label": "Amalek, Holocaust"
+        },
+        {
+          "id": "discussion-angels",
+          "label": "Angels"
+        },
+        {
+          "id": "discussion-avodah-zara",
+          "label": "Avodah Zara"
+        },
+        {
+          "id": "discussion-avot",
+          "label": "Avot"
+        },
+        {
+          "id": "discussion-avraham",
+          "label": "Avraham"
+        },
+        {
+          "id": "discussion-bnei-noach",
+          "label": "B'nei Noach"
+        },
+        {
+          "id": "discussion-bein-adam-lchaveiro",
+          "label": "Bein Adam L'Chaveiro"
+        },
+        {
+          "id": "discussion-beit-hamikdash",
+          "label": "Beit HaMikdash"
+        },
+        {
+          "id": "discussion-bitachon",
+          "label": "Bitachon"
+        },
+        {
+          "id": "discussion-chesed-tzedaka",
+          "label": "Chesed and Tzedaka"
+        },
+        {
+          "id": "discussion-chinuch",
+          "label": "Chinuch"
+        },
+        {
+          "id": "discussion-derech-hashem",
+          "label": "Derech Hashem"
+        },
+        {
+          "id": "discussion-dvekus",
+          "label": "Dvekus"
+        },
+        {
+          "id": "discussion-emotions-logic",
+          "label": "Emotions vs. Logic"
+        },
+        {
+          "id": "discussion-emunah",
+          "label": "Emunah"
+        },
+        {
+          "id": "discussion-ethics",
+          "label": "Ethics"
+        },
+        {
+          "id": "discussion-ethics-of-avraham",
+          "label": "Ethics of Avraham"
+        },
+        {
+          "id": "discussion-eulogy",
+          "label": "Eulogy / Memorial"
+        },
+        {
+          "id": "discussion-exploring-judaism",
+          "label": "Exploring Judaism"
+        },
+        {
+          "id": "discussion-family-ishut",
+          "label": "Family & Ishut"
+        },
+        {
+          "id": "discussion-free-will",
+          "label": "Free Will"
+        },
+        {
+          "id": "discussion-general",
+          "label": "General Discussions"
+        },
+        {
+          "id": "discussion-geulah",
+          "label": "Geulah"
+        },
+        {
+          "id": "discussion-gods-providence",
+          "label": "God's Providence"
+        },
+        {
+          "id": "discussion-halacha-overview",
+          "label": "Halacha Overview"
+        },
+        {
+          "id": "discussion-hashem",
+          "label": "Hashem"
+        },
+        {
+          "id": "discussion-history",
+          "label": "History",
+          "children": [
+            {
+              "id": "discussion-history-bayit-sheni",
+              "label": "Bayit Sheni"
+            },
+            {
+              "id": "discussion-history-period-of-tanach",
+              "label": "Period of Tanach"
+            },
+            {
+              "id": "discussion-history-general",
+              "label": "General"
+            }
+          ]
+        },
+        {
+          "id": "discussion-ikkarei-emunah",
+          "label": "Ikkarei Emunah"
+        },
+        {
+          "id": "discussion-justice",
+          "label": "Justice"
+        },
+        {
+          "id": "discussion-kabalah",
+          "label": "Kabalah"
+        },
+        {
+          "id": "discussion-kedoshim-tihyu",
+          "label": "Kedoshim Tihyu"
+        },
+        {
+          "id": "discussion-kiddush-chilul-hashem",
+          "label": "Kiddush vs. Chilul Hashem"
+        },
+        {
+          "id": "discussion-kiruv",
+          "label": "Kiruv"
+        },
+        {
+          "id": "discussion-land-of-israel",
+          "label": "Land of Israel"
+        },
+        {
+          "id": "discussion-lashon-hara",
+          "label": "Lashon Hara"
+        },
+        {
+          "id": "discussion-leadership",
+          "label": "Leadership"
+        },
+        {
+          "id": "discussion-learning-chachma",
+          "label": "Learning and Chachma"
+        },
+        {
+          "id": "logic",
+          "label": "Logic",
+          "icon": "🧠",
+          "children": []
+        },
+        {
+          "id": "discussion-mashiach",
+          "label": "Mashiach"
+        },
+        {
+          "id": "discussion-middot",
+          "label": "Middot"
+        },
+        {
+          "id": "discussion-midrash",
+          "label": "Midrash",
+          "children": [
+            {
+              "id": "discussion-midrash-rabbah-torah",
+              "label": "Midrash Rabbah - Torah"
+            },
+            {
+              "id": "discussion-midrash-general",
+              "label": "General"
+            }
+          ]
+        },
+        {
+          "id": "discussion-mishlei",
+          "label": "Mishlei"
+        },
+        {
+          "id": "discussion-mitzvot",
+          "label": "Mitzvot"
+        },
+        {
+          "id": "discussion-modern-orthodoxy",
+          "label": "Modern Orthodoxy"
+        },
+        {
+          "id": "discussion-mussar",
+          "label": "Mussar"
+        },
+        {
+          "id": "discussion-olam-haba",
+          "label": "Olam Haba"
+        },
+        {
+          "id": "discussion-parenting",
+          "label": "Parenting"
+        },
+        {
+          "id": "discussion-perfection",
+          "label": "Perfection"
+        },
+        {
+          "id": "discussion-philosophy-halacha",
+          "label": "Philosophy of Halacha"
+        },
+        {
+          "id": "discussion-pluralism",
+          "label": "Pluralism"
+        },
+        {
+          "id": "discussion-politics",
+          "label": "Politics"
+        },
+        {
+          "id": "discussion-prophecy",
+          "label": "Prophecy"
+        },
+        {
+          "id": "discussion-qa",
+          "label": "Q&A"
+        },
+        {
+          "id": "discussion-rabbinic-authority",
+          "label": "Rabbinic Authority"
+        },
+        {
+          "id": "discussion-rebuke",
+          "label": "Rebuke"
+        },
+        {
+          "id": "discussion-relationships",
+          "label": "Relationships"
+        },
+        {
+          "id": "discussion-revelation",
+          "label": "Revelation"
+        },
+        {
+          "id": "discussion-reward-punishment",
+          "label": "Reward and Punishment"
+        },
+        {
+          "id": "discussion-science-medicine",
+          "label": "Science & Medicine"
+        },
+        {
+          "id": "discussion-shemittah",
+          "label": "Shemittah"
+        },
+        {
+          "id": "discussion-simcha",
+          "label": "Simcha / Happiness"
+        },
+        {
+          "id": "discussion-supernatural",
+          "label": "Supernatural"
+        },
+        {
+          "id": "discussion-tanya",
+          "label": "Tanya"
+        },
+        {
+          "id": "discussion-tefila",
+          "label": "Tefila"
+        },
+        {
+          "id": "discussion-teshuva",
+          "label": "Teshuva"
+        },
+        {
+          "id": "discussion-the-avos",
+          "label": "The Avos"
+        },
+        {
+          "id": "discussion-the-soul",
+          "label": "The Soul"
+        },
+        {
+          "id": "discussion-torah-misinai",
+          "label": "Torah Mi'Sinai"
+        },
+        {
+          "id": "discussion-torah-shebaal-peh",
+          "label": "Torah She-Ba'al Peh"
+        },
+        {
+          "id": "discussion-torah-umadda",
+          "label": "Torah U'Madda"
+        },
+        {
+          "id": "discussion-women",
+          "label": "Women"
+        },
+        {
+          "id": "discussion-yichud-hashem",
+          "label": "Yichud Hashem"
+        },
+        {
+          "id": "discussion-zionism",
+          "label": "Zionism"
+        }
+      ]
+    },
+    {
+      "id": "halacha",
+      "label": "Halacha",
+      "icon": "⚖️",
+      "children": [
+        {
+          "id": "halacha-general",
+          "label": "General Halacha"
+        },
+        {
+          "id": "halacha-adar-ii",
+          "label": "Adar II"
+        },
+        {
+          "id": "halacha-assara-btevet",
+          "label": "Assara B'Tevet"
+        },
+        {
+          "id": "halacha-aveilut",
+          "label": "Aveilut"
+        },
+        {
+          "id": "halacha-avodah-zarah",
+          "label": "Avodah Zarah"
+        },
+        {
+          "id": "halacha-basar-bechalav",
+          "label": "Basar Bechalav"
+        },
+        {
+          "id": "halacha-bein-adam-lchaveiro",
+          "label": "Bein Adam l'Chaveiro"
+        },
+        {
+          "id": "halacha-beit-din",
+          "label": "Beit Din"
+        },
+        {
+          "id": "halacha-beit-hamikdash",
+          "label": "Beit Hamikdash"
+        },
+        {
+          "id": "halacha-birchas-kohanim",
+          "label": "Birchas Kohanim"
+        },
+        {
+          "id": "halacha-birkat-hamazon",
+          "label": "Birkat Hamazon"
+        },
+        {
+          "id": "halacha-bishul",
+          "label": "Bishul"
+        },
+        {
+          "id": "halacha-bnei-noach",
+          "label": "Bnei Noach"
+        },
+        {
+          "id": "halacha-brachot",
+          "label": "Brachot"
+        },
+        {
+          "id": "halacha-brit-milah",
+          "label": "Brit Milah"
+        },
+        {
+          "id": "halacha-business",
+          "label": "Business"
+        },
+        {
+          "id": "halacha-challah",
+          "label": "Challah"
+        },
+        {
+          "id": "halacha-chanukah",
+          "label": "Chanukah"
+        },
+        {
+          "id": "halacha-chatzi-shiur",
+          "label": "Chatzi Shiur"
+        },
+        {
+          "id": "halacha-children",
+          "label": "Children"
+        },
+        {
+          "id": "halacha-chodosh",
+          "label": "Chodosh"
+        },
+        {
+          "id": "halacha-chol-hamoed",
+          "label": "Chol Hamoed"
+        },
+        {
+          "id": "halacha-choshen-mishpat",
+          "label": "Choshen Mishpat"
+        },
+        {
+          "id": "halacha-death-burial",
+          "label": "Death and Burial"
+        },
+        {
+          "id": "halacha-elul",
+          "label": "Elul"
+        },
+        {
+          "id": "halacha-eruvin",
+          "label": "Eruvin"
+        },
+        {
+          "id": "halacha-eved-ivri",
+          "label": "Eved Ivri"
+        },
+        {
+          "id": "halacha-even-haezer",
+          "label": "Even Haezer"
+        },
+        {
+          "id": "halacha-family-ishut",
+          "label": "Family & Ishut"
+        },
+        {
+          "id": "halacha-geirut",
+          "label": "Geirut"
+        },
+        {
+          "id": "halacha-gittin",
+          "label": "Gittin"
+        },
+        {
+          "id": "halacha-hechsher-keilim",
+          "label": "Hechsher Keilim"
+        },
+        {
+          "id": "halacha-hilkhot-seudah",
+          "label": "Hilkhot Seudah"
+        },
+        {
+          "id": "halacha-israel",
+          "label": "Israel"
+        },
+        {
+          "id": "halacha-kashrut",
+          "label": "Kashrut"
+        },
+        {
+          "id": "halacha-kibud-av-vaim",
+          "label": "Kibud Av v'Aim"
+        },
+        {
+          "id": "halacha-kiddush-hashem",
+          "label": "Kiddush Hashem"
+        },
+        {
+          "id": "halacha-kiddush-havdala",
+          "label": "Kiddush and Havdala"
+        },
+        {
+          "id": "halacha-kiddushin",
+          "label": "Kiddushin"
+        },
+        {
+          "id": "halacha-korbanot",
+          "label": "Korbanot"
+        },
+        {
+          "id": "halacha-lashon-harah",
+          "label": "Lashon Harah"
+        },
+        {
+          "id": "halacha-lifnei-iver",
+          "label": "Lifnei Iver"
+        },
+        {
+          "id": "halacha-lo-tasur",
+          "label": "Lo Tasur"
+        },
+        {
+          "id": "halacha-maaser",
+          "label": "Ma'aser"
+        },
+        {
+          "id": "halacha-marit-ayin",
+          "label": "Marit Ayin"
+        },
+        {
+          "id": "halacha-medicine",
+          "label": "Medicine"
+        },
+        {
+          "id": "halacha-mezuzah",
+          "label": "Mezuzah"
+        },
+        {
+          "id": "halacha-mikvaot",
+          "label": "Mikvaot"
+        },
+        {
+          "id": "halacha-minhagim",
+          "label": "Minhagim"
+        },
+        {
+          "id": "halacha-mishkan",
+          "label": "Mishkan"
+        },
+        {
+          "id": "halacha-muktza",
+          "label": "Muktza"
+        },
+        {
+          "id": "halacha-netilat-yadayim",
+          "label": "Netilat Yadayim"
+        },
+        {
+          "id": "halacha-nezikin",
+          "label": "Nezikin"
+        },
+        {
+          "id": "halacha-niddah",
+          "label": "Niddah"
+        },
+        {
+          "id": "halacha-orach-chaim",
+          "label": "Orach Chaim"
+        },
+        {
+          "id": "halacha-pat-akum",
+          "label": "Pat Akum"
+        },
+        {
+          "id": "halacha-pesach",
+          "label": "Pesach"
+        },
+        {
+          "id": "halacha-purim",
+          "label": "Purim"
+        },
+        {
+          "id": "halacha-rabbinic-laws",
+          "label": "Rabbinic Laws"
+        },
+        {
+          "id": "halacha-rosh-hashana",
+          "label": "Rosh Hashana"
+        },
+        {
+          "id": "halacha-science-medicine",
+          "label": "Science & Medicine"
+        },
+        {
+          "id": "halacha-sefirat-haomer",
+          "label": "Sefirat HaOmer"
+        },
+        {
+          "id": "halacha-shaatnez",
+          "label": "Shaatnez"
+        },
+        {
+          "id": "halacha-shabbat",
+          "label": "Shabbat"
+        },
+        {
+          "id": "halacha-shavuot",
+          "label": "Shavuot"
+        },
+        {
+          "id": "halacha-shechitah",
+          "label": "Shechitah"
+        },
+        {
+          "id": "halacha-sheimos",
+          "label": "Sheimos"
+        },
+        {
+          "id": "halacha-shema",
+          "label": "Shema"
+        },
+        {
+          "id": "halacha-shemittah",
+          "label": "Shemittah"
+        },
+        {
+          "id": "halacha-sheva-brachot",
+          "label": "Sheva Brachot"
+        },
+        {
+          "id": "halacha-shiluach-haken",
+          "label": "Shiluach Haken"
+        },
+        {
+          "id": "halacha-shtarot",
+          "label": "Shtarot"
+        },
+        {
+          "id": "halacha-shvuot-nedarim",
+          "label": "Shvuot and Nedarim"
+        },
+        {
+          "id": "halacha-sukkot",
+          "label": "Sukkot"
+        },
+        {
+          "id": "halacha-taarovos",
+          "label": "Taarovos"
+        },
+        {
+          "id": "halacha-taharos",
+          "label": "Taharos"
+        },
+        {
+          "id": "halacha-talmud",
+          "label": "Talmud"
+        },
+        {
+          "id": "halacha-tefillah",
+          "label": "Tefillah"
+        },
+        {
+          "id": "halacha-teshuvah",
+          "label": "Teshuvah"
+        },
+        {
+          "id": "halacha-tevilat-kaylim",
+          "label": "Tevilat Kaylim"
+        },
+        {
+          "id": "halacha-tfillin",
+          "label": "Tfillin"
+        },
+        {
+          "id": "halacha-torah",
+          "label": "Torah"
+        },
+        {
+          "id": "halacha-tzedakah",
+          "label": "Tzedakah"
+        },
+        {
+          "id": "halacha-tzitzis",
+          "label": "Tzitzis"
+        },
+        {
+          "id": "halacha-tzniut",
+          "label": "Tzniut"
+        },
+        {
+          "id": "halacha-war",
+          "label": "War"
+        },
+        {
+          "id": "halacha-weddings",
+          "label": "Weddings"
+        },
+        {
+          "id": "halacha-yichud",
+          "label": "Yichud"
+        },
+        {
+          "id": "halacha-yom-kippur",
+          "label": "Yom Kippur"
+        },
+        {
+          "id": "halacha-yom-tov",
+          "label": "Yom Tov"
+        },
+        {
+          "id": "halacha-yoreh-deah",
+          "label": "Yoreh Deah"
+        },
+        {
+          "id": "halacha-archived",
+          "label": "2002–2014"
+        },
+        {
+          "id": "shulchan-aruch",
+          "label": "Shulchan Aruch",
+          "icon": "🕍",
+          "children": [
+            {
+              "id": "yoreh-deah",
+              "label": "Yoreh Deah"
+            },
+            {
+              "id": "orach-chaim",
+              "label": "Orach Chaim"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "holidays",
+      "label": "Holidays",
+      "icon": "📅",
+      "children": [
+        {
+          "id": "holidays-chanukah",
+          "label": "Chanukah"
+        },
+        {
+          "id": "holidays-pesach",
+          "label": "Pesach",
+          "children": []
+        },
+        {
+          "id": "holidays-purim",
+          "label": "Purim",
+          "children": [
+            {
+              "id": "holidays-purim-megilla",
+              "label": "Megilla"
+            },
+            {
+              "id": "holidays-purim-purim",
+              "label": "Purim"
+            }
+          ]
+        },
+        {
+          "id": "holidays-rosh-hashana-yom-kippur",
+          "label": "Rosh HaShana & Yom Kipur"
+        },
+        {
+          "id": "holidays-shavuos",
+          "label": "Shavuos"
+        },
+        {
+          "id": "holidays-sukkos",
+          "label": "Sukkos"
+        },
+        {
+          "id": "holidays-tisha-bav",
+          "label": "Tisha B'Av"
+        },
+        {
+          "id": "holidays-adar",
+          "label": "Adar"
+        },
+        {
+          "id": "holidays-elul",
+          "label": "Elul"
+        },
+        {
+          "id": "holidays-lag-baomer",
+          "label": "Lag BaOmer"
+        },
+        {
+          "id": "holidays-rosh-chodesh",
+          "label": "Rosh Chodesh"
+        },
+        {
+          "id": "holidays-sefirat-haomer",
+          "label": "Sefirat HaOmer"
+        },
+        {
+          "id": "holidays-shabbat",
+          "label": "Shabbat"
+        },
+        {
+          "id": "holidays-tu-bav",
+          "label": "Tu B'Av"
+        },
+        {
+          "id": "holidays-yom-tov",
+          "label": "Yom Tov"
+        },
+        {
+          "id": "holidays-yom-tov-sheni",
+          "label": "Yom Tov Sheni"
+        },
+        {
+          "id": "holidays-fast-days",
+          "label": "Fast Days",
+          "children": [
+            {
+              "id": "holidays-fast-shiva-asar-btamuz",
+              "label": "Shiva Asar B'Tamuz"
+            },
+            {
+              "id": "holidays-fast-assara-btevet",
+              "label": "Assara B'Tevet"
+            },
+            {
+              "id": "holidays-fast-slichot",
+              "label": "Slichot"
+            },
+            {
+              "id": "holidays-fast-days-general",
+              "label": "General"
+            }
+          ]
+        },
+        {
+          "id": "holidays-three-weeks",
+          "label": "Three Weeks",
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "kisvei-chazal",
+      "label": "Kisvei Chazal",
+      "icon": "📚",
+      "children": [
+        {
+          "id": "kisvei-chazal-all",
+          "label": "Pirkei Avos & Other"
+        }
+      ]
+    },
+    {
+      "id": "kisvei-rishonim",
+      "label": "Kisvei Rishonim",
+      "icon": "🪶",
+      "children": [
+        {
+          "id": "kisvei-rishonim-rambam",
+          "label": "Rambam",
+          "children": [
+            {
+              "id": "kisvei-rishonim-rambam-general",
+              "label": "General"
+            },
+            {
+              "id": "kisvei-rishonim-rambam-shemonah-perakim",
+              "label": "Shemonah Perakim"
+            },
+            {
+              "id": "kisvei-rishonim-rambam-perek-chelek",
+              "label": "Perek Chelek",
+              "children": [
+                {
+                  "id": "kisvei-rishonim-rambam-intro-chelek",
+                  "label": "Intro to Chelek"
+                }
+              ]
+            },
+            {
+              "id": "kisvei-rishonim-rambam-yud-gimel-yesodos",
+              "label": "Yud Gimel Yesodos"
+            },
+            {
+              "id": "kisvei-rishonim-rambam-moreh-nevuchim",
+              "label": "Moreh Nevuchim"
+            }
+          ]
+        },
+        {
+          "id": "kisvei-rishonim-abarbanel",
+          "label": "Abarbanel"
+        },
+        {
+          "id": "kisvei-rishonim-ramban",
+          "label": "Ramban"
+        },
+        {
+          "id": "kisvei-rishonim-rashba",
+          "label": "Rashba"
+        },
+        {
+          "id": "kisvei-rishonim-kuzari",
+          "label": "Kuzari"
+        },
+        {
+          "id": "kisvei-rishonim-sefer-haikarim",
+          "label": "Sefer HaIkarim"
+        },
+        {
+          "id": "kisvei-rishonim-rav-avraham-ben-harambam",
+          "label": "Rav Avraham ben HaRambam"
+        },
+        {
+          "id": "kisvei-rishonim-r-chaim",
+          "label": "R' Chaim"
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "label": "Misc",
+      "icon": "📁",
+      "children": [
+        {
+          "id": "misc-general",
+          "label": "Misc"
+        },
+        {
+          "id": "misc-archived",
+          "label": "2002–2014"
+        }
+      ]
+    },
+    {
+      "id": "nach",
+      "label": "Nach",
+      "icon": "📖",
+      "children": [
+        {
+          "id": "nach-iyov",
+          "label": "Iyov"
+        },
+        {
+          "id": "nach-mishlei",
+          "label": "Mishlei"
+        },
+        {
+          "id": "nach-tehillim",
+          "label": "Tehillim"
+        },
+        {
+          "id": "nach-megillot",
+          "label": "Megillot",
+          "children": [
+            {
+              "id": "nach-megillot-esther",
+              "label": "Esther"
+            },
+            {
+              "id": "nach-megillot-rut",
+              "label": "Rut"
+            },
+            {
+              "id": "nach-megillot-kohelet",
+              "label": "Kohelet"
+            },
+            {
+              "id": "nach-megillot-shir-hashirim",
+              "label": "Shir Hashirim"
+            },
+            {
+              "id": "nach-megillot-eichah",
+              "label": "Eichah"
+            },
+            {
+              "id": "nach-megillot-general",
+              "label": "General"
+            }
+          ]
+        },
+        {
+          "id": "nach-chaggai",
+          "label": "Chaggai"
+        },
+        {
+          "id": "nach-hosheia",
+          "label": "Hosheia"
+        },
+        {
+          "id": "nach-malachi",
+          "label": "Malachi"
+        },
+        {
+          "id": "nach-melachim",
+          "label": "Melachim"
+        },
+        {
+          "id": "nach-shmuel",
+          "label": "Shmuel"
+        },
+        {
+          "id": "nach-shoftim",
+          "label": "Shoftim"
+        },
+        {
+          "id": "nach-yehoshua",
+          "label": "Yehoshua"
+        },
+        {
+          "id": "nach-yirmiyahu",
+          "label": "Yirmiyahu"
+        },
+        {
+          "id": "nach-yonah",
+          "label": "Yonah"
+        },
+        {
+          "id": "nach-archived",
+          "label": "2002–2014"
+        }
+      ]
+    },
+    {
+      "id": "rav-aaron-soloveitchik",
+      "label": "Rav Aaron Soloveitchik",
+      "icon": "👤",
+      "children": [
+        {
+          "id": "rav-aaron-general",
+          "label": "General"
+        },
+        {
+          "id": "rav-aaron-misc",
+          "label": "Misc Rav Aaron"
+        }
+      ]
+    },
+    {
+      "id": "rav-yd-soloveitchik",
+      "label": "Rav Y.D. Soloveitchick",
+      "icon": "👤",
+      "children": [
+        {
+          "id": "rav-yd-general",
+          "label": "General"
+        }
+      ]
+    },
+    {
+      "id": "gemarah",
+      "label": "Gemarah",
+      "icon": "📕",
+      "children": [
+        {
+          "id": "pesachim",
+          "label": "Pesachim"
+        },
+        {
+          "id": "eruvin",
+          "label": "Eruvin"
+        },
+        {
+          "id": "shabbos-gemarah",
+          "label": "Shabbos"
+        },
+        {
+          "id": "rosh-hashana-gemarah",
+          "label": "Rosh Hashana"
+        },
+        {
+          "id": "sukkah-gemarah",
+          "label": "Sukkah"
+        },
+        {
+          "id": "chanukah-gemarah",
+          "label": "Chanukah"
+        },
+        {
+          "id": "chulin",
+          "label": "Chulin"
+        },
+        {
+          "id": "nidah-gemarah",
+          "label": "Nidah"
+        },
+        {
+          "id": "nedarim-gemarah",
+          "label": "Nedarim"
+        },
+        {
+          "id": "baba-metziah",
+          "label": "Baba Metziah"
+        },
+        {
+          "id": "baba-kama",
+          "label": "Baba Kama"
+        },
+        {
+          "id": "gittin",
+          "label": "Gittin"
+        },
+        {
+          "id": "zevachim",
+          "label": "Zevachim"
+        },
+        {
+          "id": "yomah",
+          "label": "Yomah"
+        },
+        {
+          "id": "other-gemarah",
+          "label": "Other Tractates"
+        },
+        {
+          "id": "gemarah-aggadeta",
+          "label": "Aggadeta"
+        },
+        {
+          "id": "gemarah-arachin",
+          "label": "Arachin"
+        },
+        {
+          "id": "gemarah-avoda-zara",
+          "label": "Avoda Zara"
+        },
+        {
+          "id": "gemarah-bava-batra",
+          "label": "Bava Batra"
+        },
+        {
+          "id": "gemarah-bechorot",
+          "label": "Bechorot"
+        },
+        {
+          "id": "gemarah-beitza",
+          "label": "Beitza"
+        },
+        {
+          "id": "gemarah-berachot",
+          "label": "Berachot"
+        },
+        {
+          "id": "gemarah-chagiga",
+          "label": "Chagiga"
+        },
+        {
+          "id": "gemarah-horayot",
+          "label": "Horayot"
+        },
+        {
+          "id": "gemarah-keritut",
+          "label": "Keritut"
+        },
+        {
+          "id": "gemarah-ketuvot",
+          "label": "Ketuvot"
+        },
+        {
+          "id": "gemarah-kiddushin",
+          "label": "Kiddushin"
+        },
+        {
+          "id": "gemarah-makot",
+          "label": "Makot"
+        },
+        {
+          "id": "gemarah-megillah",
+          "label": "Megillah"
+        },
+        {
+          "id": "gemarah-menachot",
+          "label": "Menachot"
+        },
+        {
+          "id": "gemarah-moed-katan",
+          "label": "Moed Katan"
+        },
+        {
+          "id": "gemarah-nazir",
+          "label": "Nazir"
+        },
+        {
+          "id": "gemarah-sanhedrin",
+          "label": "Sanhedrin"
+        },
+        {
+          "id": "gemarah-shevuot",
+          "label": "Shevuot"
+        },
+        {
+          "id": "gemarah-sotah",
+          "label": "Sotah"
+        },
+        {
+          "id": "gemarah-taanit",
+          "label": "Taanit"
+        },
+        {
+          "id": "gemarah-temura",
+          "label": "Temura"
+        },
+        {
+          "id": "gemarah-yevamot",
+          "label": "Yevamot"
+        },
+        {
+          "id": "gemarah-yerushalmi",
+          "label": "Yerushalmi",
+          "children": [
+            {
+              "id": "gemarah-yerushalmi-bava-metzia",
+              "label": "Bava Metzia"
+            },
+            {
+              "id": "gemarah-yerushalmi-berachot",
+              "label": "Berachot"
+            },
+            {
+              "id": "gemarah-yerushalmi-shabbat",
+              "label": "Shabbat"
+            }
+          ]
+        },
+        {
+          "id": "gemarah-archived",
+          "label": "2002–2014"
+        }
+      ]
+    },
+    {
+      "id": "mishna",
+      "label": "Mishna",
+      "icon": "📗",
+      "children": [
+        {
+          "id": "mishna-bava-kamma",
+          "label": "Bava Kamma"
+        },
+        {
+          "id": "mishna-bava-metzia",
+          "label": "Bava Metzia"
+        },
+        {
+          "id": "mishna-brachot",
+          "label": "Brachot"
+        },
+        {
+          "id": "mishna-challah",
+          "label": "Challah"
+        },
+        {
+          "id": "mishna-gittin",
+          "label": "Gittin"
+        },
+        {
+          "id": "mishna-keilim",
+          "label": "Keilim"
+        },
+        {
+          "id": "mishna-kilayim",
+          "label": "Kilayim"
+        },
+        {
+          "id": "mishna-makkot",
+          "label": "Makkot"
+        },
+        {
+          "id": "mishna-menachot",
+          "label": "Menachot"
+        },
+        {
+          "id": "mishna-mikvaot",
+          "label": "Mikvaot"
+        },
+        {
+          "id": "mishna-moed-kattan",
+          "label": "Moed Kattan"
+        },
+        {
+          "id": "mishna-negaim",
+          "label": "Negaim"
+        },
+        {
+          "id": "mishna-pesachim",
+          "label": "Pesachim"
+        },
+        {
+          "id": "mishna-shabbat",
+          "label": "Shabbat"
+        },
+        {
+          "id": "mishna-sukkah",
+          "label": "Sukkah"
+        }
+      ]
+    }
+  ]
+}

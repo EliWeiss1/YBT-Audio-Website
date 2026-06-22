@@ -56,42 +56,53 @@ export async function POST(req: NextRequest) {
   const catResult = await categorize(title, description)
   const shouldFlag = catResult.tier === 2 && catResult.confidence === 'low'
 
-  // Step 5: Write to Supabase
-  await writePendingLecture({
-    id: lectureId,
-    title,
-    speaker: rabbi || 'Unknown',
-    date,
-    description,
-    audio_url: uploadResult.publicUrl,
-    duration: uploadResult.duration,
-    tags: [],
-    node_path: catResult.nodePath,
-  })
-
-  // Step 6: Write flag if low confidence
-  if (shouldFlag) {
-    const alternatives = 'alternatives' in catResult ? catResult.alternatives : []
-    await writeCategoryFlag({
-      shiurId: lectureId,
-      proposedPath: catResult.nodePath,
-      alternatives,
-      tier: catResult.tier,
-      confidence: catResult.confidence,
-    })
-    await sendFlagNotification({
-      shiurId: lectureId,
+  // Steps 5-7: Persist to DB, flag, and deploy — wrapped so an R2-orphan is
+  // avoided: if any write fails we record a failed_ingestions row instead.
+  try {
+    // Step 5: Write to Supabase
+    await writePendingLecture({
+      id: lectureId,
       title,
-      rabbi,
-      proposedPath: catResult.nodePath,
-      alternatives,
-      confidence: catResult.confidence,
-      tier: catResult.tier,
+      speaker: rabbi || 'Unknown',
+      date,
+      description,
+      audio_url: uploadResult.publicUrl,
+      duration: uploadResult.duration,
+      tags: [],
+      node_path: catResult.nodePath,
     })
-  }
 
-  // Step 7: Trigger rebuild
-  await triggerDeploy()
+    // Step 6: Write flag if low confidence
+    if (shouldFlag) {
+      const alternatives = 'alternatives' in catResult ? catResult.alternatives : []
+      await writeCategoryFlag({
+        shiurId: lectureId,
+        proposedPath: catResult.nodePath,
+        alternatives,
+        tier: catResult.tier,
+        confidence: catResult.confidence,
+      })
+      await sendFlagNotification({
+        shiurId: lectureId,
+        title,
+        rabbi,
+        proposedPath: catResult.nodePath,
+        alternatives,
+        confidence: catResult.confidence,
+        tier: catResult.tier,
+      })
+    }
+
+    // Step 7: Trigger rebuild
+    await triggerDeploy()
+  } catch (e) {
+    await writeFailedIngestion({
+      senderEmail, rawTitle: title, rawRabbi: rabbi,
+      zoomShareUrl, failureReason: `Write failed: ${String(e)}`,
+      rawEmailSnippet: rawEmail.toString('utf8').slice(0, 500),
+    })
+    return NextResponse.json({ error: 'Failed to persist shiur' }, { status: 500 })
+  }
 
   return NextResponse.json({
     ok: true,

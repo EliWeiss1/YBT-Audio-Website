@@ -19,6 +19,11 @@ export async function uploadAudioToR2(
   downloadUrl: string,
   r2Key: string,
 ): Promise<UploadResult | UploadError> {
+  if (process.env.INGEST_DRY_RUN === 'true') {
+    console.log('[DRY RUN] Would upload to R2:', { r2Key })
+    return { publicUrl: `DRY_RUN/${r2Key}`, duration: 0, r2Key }
+  }
+
   let audioResponse: Response
   try {
     audioResponse = await fetch(downloadUrl)

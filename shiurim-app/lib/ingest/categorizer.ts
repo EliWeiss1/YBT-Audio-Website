@@ -7,14 +7,16 @@ import folderHierarchy from '@/data/folder-hierarchy.json'
 const MASECHTA_ALIASES = Object.entries(masechtaLookup as Record<string, string[]>)
   .sort((a, b) => b[0].length - a[0].length)
 
-// Daf pattern: number optionally followed by a or b (e.g. "34a", "12", "5b")
-const DAF_RE = /\b\d+[ab]?\b/
+// Daf pattern: valid daf numbers 1-200 optionally followed by a or b (e.g. "34a", "12", "5b")
+// Excludes years (2024, 5784) and arbitrary large numbers.
+const DAF_RE = /\b([1-9]|[1-9]\d|1\d{2}|200)[ab]?\b/
 
 export async function categorize(title: string, description: string): Promise<CategorizeResult> {
   const lower = title.toLowerCase()
 
   for (const [alias, nodePath] of MASECHTA_ALIASES) {
-    if (lower.includes(alias)) {
+    const aliasRe = new RegExp(`\\b${alias.replace(/\s+/g, '\\s+')}\\b`)
+    if (aliasRe.test(lower)) {
       // Confirm there's a daf-like number in the title to avoid false positives
       // (e.g. "Shabbat Laws Overview" should not match "shabbat" without a daf)
       if (DAF_RE.test(title)) {
@@ -63,6 +65,22 @@ Rules:
     proposed_path: string[]
     confidence: 'high' | 'low'
     alternatives: string[][]
+  }
+
+  // Validate the proposed_path against the folder hierarchy to prevent
+  // hallucinated category IDs from silently producing invalid node_paths.
+  const categoryIds = new Set(
+    (folderHierarchy as { categories: Array<{ id: string }> }).categories.map(c => c.id)
+  )
+  const path = parsed.proposed_path
+  if (!path.length || !categoryIds.has(path[0])) {
+    // Return low-confidence with the proposed path to force an admin flag
+    return {
+      tier: 2,
+      nodePath: parsed.proposed_path,
+      confidence: 'low' as const,
+      alternatives: parsed.alternatives ?? [],
+    }
   }
 
   return {

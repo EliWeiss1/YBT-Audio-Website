@@ -1,3 +1,5 @@
+import { randomBytes } from 'crypto'
+
 export type IngestRequest = {
   title: string
   rabbi: string
@@ -31,4 +33,10 @@ export type PendingLecture = {
   duration: number
   tags: string[]
   node_path: string[]
+}
+
+export function generateLectureId(): string {
+  const date = new Date().toISOString().slice(0, 10).replace(/-/g, '')
+  const rand = randomBytes(3).toString('hex')
+  return `INGEST-${date}-${rand}`
 }

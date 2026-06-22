@@ -1,0 +1,6 @@
+name = "shiur-email-ingest"
+main = "email-worker.js"
+compatibility_date = "2024-01-01"
+
+[triggers]
+# email routing is configured in the Cloudflare dashboard, not here

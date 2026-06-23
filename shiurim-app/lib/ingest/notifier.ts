@@ -21,7 +21,7 @@ export async function sendFlagNotification(opts: {
     : '/admin/flags'
 
   await resend.emails.send({
-    from: 'ingest@noreply.ybt.org',
+    from: 'onboarding@resend.dev',
     to: adminEmail,
     subject: `[Shiur Ingest] Low-confidence categorization: ${opts.title}`,
     html: `

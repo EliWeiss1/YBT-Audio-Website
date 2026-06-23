@@ -97,7 +97,4 @@ Notes:
 
 ## Future ideas
 
-- Native deep-link email confirmation (currently sign-up confirmation opens in the browser via `/auth/confirm` — works fine, just not fancy)
-- Hardened session storage / encrypted local data
 - Migrating externally hosted audio into R2 for reliability + direct CORS downloads
-- Update toast ("new version available — refresh") instead of silent next-launch updates

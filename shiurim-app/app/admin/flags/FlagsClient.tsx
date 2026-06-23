@@ -65,11 +65,11 @@ export default function FlagsClient({
           search={search}
           setSearch={setSearch}
           onDismiss={() => {
-            setDismissed(prev => new Set([...prev, flag.id]))
+            setDismissed(prev => new Set(prev).add(flag.id))
             startTransition(() => dismissFlag(flag.id))
           }}
           onMove={(newPath: string[]) => {
-            setDismissed(prev => new Set([...prev, flag.id]))
+            setDismissed(prev => new Set(prev).add(flag.id))
             startTransition(() => moveFlag(flag.id, flag.shiur_id, newPath))
           }}
         />

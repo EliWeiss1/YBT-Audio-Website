@@ -1,17 +1,24 @@
-/**
- * Attempts to resolve a Zoom share page URL to a direct audio download URL.
- * Zoom share links like zoom.us/rec/share/... may be publicly accessible.
- * If the page requires a passcode or returns an error, we cannot proceed —
- * the caller should log this as a failed ingestion.
- */
 export type ZoomResolveResult =
   | { ok: true; downloadUrl: string; contentType: string }
   | { ok: false; reason: 'passcode_required' | 'fetch_failed' | 'no_audio_found'; detail?: string }
 
-export async function resolveZoomShareUrl(shareUrl: string): Promise<ZoomResolveResult> {
+const AUDIO_CONTENT_TYPES = ['audio/', 'video/', 'application/octet-stream', 'mpeg']
+
+function isAudioContentType(ct: string) {
+  return AUDIO_CONTENT_TYPES.some(t => ct.includes(t))
+}
+
+function toDropboxDirectUrl(url: string): string {
+  // Force direct download: replace or append dl=1
+  if (url.includes('dl=0')) return url.replace('dl=0', 'dl=1')
+  if (url.includes('dl=1')) return url
+  return url.includes('?') ? url + '&dl=1' : url + '?dl=1'
+}
+
+async function fetchAudio(url: string): Promise<ZoomResolveResult> {
   let response: Response
   try {
-    response = await fetch(shareUrl, {
+    response = await fetch(url, {
       headers: { 'User-Agent': 'Mozilla/5.0 (compatible; shiur-ingest/1.0)' },
       redirect: 'follow',
     })
@@ -24,24 +31,55 @@ export async function resolveZoomShareUrl(shareUrl: string): Promise<ZoomResolve
   }
 
   const contentType = response.headers.get('content-type') ?? ''
-
-  // If Zoom returns audio directly (rare but possible for some share types)
-  if (contentType.startsWith('audio/') || contentType.includes('mpeg')) {
-    return { ok: true, downloadUrl: shareUrl, contentType }
+  if (isAudioContentType(contentType)) {
+    return { ok: true, downloadUrl: response.url, contentType }
   }
 
-  // Zoom share pages redirect to a page that requires passcode entry
-  const html = await response.text()
-  if (html.includes('passcode') || html.includes('password') || html.includes('pwd=')) {
-    return { ok: false, reason: 'passcode_required' }
-  }
-
-  // Try to extract the direct download URL from the page HTML
-  // Zoom embed pages contain a direct file URL in a <source> tag or data attribute
-  const sourceMatch = html.match(/["'](https:\/\/[^"']*\.mp(?:3|4)[^"']*)["']/)
-  if (sourceMatch) {
-    return { ok: true, downloadUrl: sourceMatch[1], contentType: 'audio/mpeg' }
-  }
-
-  return { ok: false, reason: 'no_audio_found', detail: 'Could not extract audio URL from share page' }
+  return { ok: false, reason: 'no_audio_found', detail: `Unexpected content-type: ${contentType}` }
 }
+
+export async function resolveRecordingUrl(recordingUrl: string): Promise<ZoomResolveResult> {
+  // Direct audio file URL
+  if (/\.(mp3|m4a|wav|ogg|aac|flac)(\?|#|$)/i.test(recordingUrl)) {
+    return fetchAudio(recordingUrl)
+  }
+
+  // Dropbox shared link — force direct download
+  if (recordingUrl.includes('dropbox.com')) {
+    return fetchAudio(toDropboxDirectUrl(recordingUrl))
+  }
+
+  // Zoom cloud recording share link
+  if (recordingUrl.includes('zoom.us/rec/share/')) {
+    // Try /rec/download/ — works for publicly accessible recordings
+    const downloadUrl = recordingUrl.replace('/rec/share/', '/rec/download/')
+    const result = await fetchAudio(downloadUrl)
+    if (result.ok) return result
+
+    // Check if passcode is required
+    try {
+      const response = await fetch(downloadUrl, {
+        headers: { 'User-Agent': 'Mozilla/5.0 (compatible; shiur-ingest/1.0)' },
+        redirect: 'follow',
+      })
+      if (response.ok) {
+        const html = await response.text()
+        if (html.includes('type="password"') || html.includes("type='password'")) {
+          return { ok: false, reason: 'passcode_required' }
+        }
+      }
+    } catch { /* ignore */ }
+
+    return {
+      ok: false,
+      reason: 'no_audio_found',
+      detail: 'Zoom cloud recordings require API access; see docs/zoom-api-setup.md',
+    }
+  }
+
+  // Unknown URL type — try fetching it directly anyway
+  return fetchAudio(recordingUrl)
+}
+
+// Keep old export name as alias so any other callers don't break
+export const resolveZoomShareUrl = resolveRecordingUrl

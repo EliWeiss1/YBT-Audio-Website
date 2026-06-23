@@ -4,7 +4,7 @@ export type IngestRequest = {
   title: string
   rabbi: string
   description: string
-  zoomShareUrl: string
+  recordingUrl: string
   date: string        // ISO date string from email Date header
   senderEmail: string
 }
@@ -21,7 +21,7 @@ export type UploadResult = {
 
 export type IngestOutcome =
   | { status: 'success'; lectureId: string; nodePath: string[]; flagged: boolean }
-  | { status: 'failed'; reason: string; zoomShareUrl?: string }
+  | { status: 'failed'; reason: string; recordingUrl?: string }
 
 export type PendingLecture = {
   id: string

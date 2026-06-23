@@ -67,7 +67,7 @@ describe('parseIngestEmail', () => {
       title: 'Bava Kamma 34a — Damages for Fire',
       rabbi: 'Rabbi Weiss',
       description: 'Covers the halacha of aish mamono',
-      zoomShareUrl: 'https://zoom.us/rec/share/ABCDEF123456',
+      recordingUrl: 'https://zoom.us/rec/share/ABCDEF123456',
       date: '2025-01-15',
       senderEmail: 'rabbi@example.com',
     })
@@ -87,6 +87,39 @@ describe('parseIngestEmail', () => {
 
   it('uses only the first zoom share URL when multiple are present', async () => {
     const result = await parseIngestEmail(Buffer.from(FIXTURE_MULTI_ZOOM))
-    expect(result?.zoomShareUrl).toBe('https://zoom.us/rec/share/FIRST')
+    expect(result?.recordingUrl).toBe('https://zoom.us/rec/share/FIRST')
+  })
+
+  it('extracts a Dropbox link as the recording URL', async () => {
+    const fixture = `From: rabbi@example.com
+To: shiurim@ybt.org
+Date: Wed, 15 Jan 2025 10:30:00 +0000
+Subject: Shiur recording
+Content-Type: text/plain; charset=utf-8
+
+Title: Berachos 5a
+Rabbi: Rabbi Cohen
+Description: On suffering
+
+Recording: https://www.dropbox.com/s/abc123/shiur.mp3?dl=0
+`
+    const result = await parseIngestEmail(Buffer.from(fixture))
+    expect(result?.recordingUrl).toBe('https://www.dropbox.com/s/abc123/shiur.mp3?dl=0')
+  })
+
+  it('extracts a direct mp3 URL as the recording URL', async () => {
+    const fixture = `From: rabbi@example.com
+To: shiurim@ybt.org
+Date: Wed, 15 Jan 2025 10:30:00 +0000
+Subject: Shiur recording
+Content-Type: text/plain; charset=utf-8
+
+Title: Berachos 5a
+Rabbi: Rabbi Cohen
+
+https://cdn.example.com/recordings/berachos-5a.mp3
+`
+    const result = await parseIngestEmail(Buffer.from(fixture))
+    expect(result?.recordingUrl).toBe('https://cdn.example.com/recordings/berachos-5a.mp3')
   })
 })

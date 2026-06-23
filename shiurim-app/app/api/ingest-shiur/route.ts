@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { parseIngestEmail } from '@/lib/ingest/email-parser'
-import { resolveZoomShareUrl } from '@/lib/ingest/zoom-resolver'
+import { resolveRecordingUrl } from '@/lib/ingest/zoom-resolver'
 import { uploadAudioToR2 } from '@/lib/ingest/r2-uploader'
 import { categorize } from '@/lib/ingest/categorizer'
 import { writePendingLecture, writeFailedIngestion, writeCategoryFlag, triggerDeploy } from '@/lib/ingest/lectures-writer'
@@ -24,18 +24,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Could not parse email: missing title or Zoom URL' }, { status: 422 })
   }
 
-  const { title, rabbi, description, zoomShareUrl, date, senderEmail } = parsed
+  const { title, rabbi, description, recordingUrl, date, senderEmail } = parsed
 
-  // Step 2: Resolve Zoom share URL
-  const zoomResult = await resolveZoomShareUrl(zoomShareUrl)
+  // Step 2: Resolve recording URL to a direct download URL
+  const zoomResult = await resolveRecordingUrl(recordingUrl)
   if (!zoomResult.ok) {
     await writeFailedIngestion({
       senderEmail, rawTitle: title, rawRabbi: rabbi,
-      zoomShareUrl, failureReason: zoomResult.reason,
+      zoomShareUrl: recordingUrl, failureReason: zoomResult.reason,
       rawEmailSnippet: rawEmail.toString('utf8').slice(0, 500),
     })
-    await sendFailureNotification({ title, rabbi, zoomShareUrl, reason: zoomResult.reason })
-    return NextResponse.json({ error: `Zoom resolution failed: ${zoomResult.reason}` }, { status: 422 })
+    await sendFailureNotification({ title, rabbi, zoomShareUrl: recordingUrl, reason: zoomResult.reason })
+    return NextResponse.json({ error: `Recording resolution failed: ${zoomResult.reason}` }, { status: 422 })
   }
 
   // Step 3: Upload to R2
@@ -45,10 +45,10 @@ export async function POST(req: NextRequest) {
   if ('reason' in uploadResult) {
     await writeFailedIngestion({
       senderEmail, rawTitle: title, rawRabbi: rabbi,
-      zoomShareUrl, failureReason: uploadResult.reason,
+      zoomShareUrl: recordingUrl, failureReason: uploadResult.reason,
       rawEmailSnippet: rawEmail.toString('utf8').slice(0, 500),
     })
-    await sendFailureNotification({ title, rabbi, zoomShareUrl, reason: uploadResult.reason })
+    await sendFailureNotification({ title, rabbi, zoomShareUrl: recordingUrl, reason: uploadResult.reason })
     return NextResponse.json({ error: `Upload failed: ${uploadResult.reason}` }, { status: 500 })
   }
 
@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
   } catch (e) {
     await writeFailedIngestion({
       senderEmail, rawTitle: title, rawRabbi: rabbi,
-      zoomShareUrl, failureReason: `Write failed: ${String(e)}`,
+      zoomShareUrl: recordingUrl, failureReason: `Write failed: ${String(e)}`,
       rawEmailSnippet: rawEmail.toString('utf8').slice(0, 500),
     })
     return NextResponse.json({ error: 'Failed to persist shiur' }, { status: 500 })

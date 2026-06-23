@@ -2,7 +2,18 @@ import { simpleParser } from 'mailparser'
 import type { IngestRequest } from './types'
 import senderRabbiMap from '@/data/sender-rabbi-map.json'
 
-const ZOOM_SHARE_RE = /https:\/\/zoom\.us\/rec\/share\/[A-Za-z0-9_\-]+/
+const ZOOM_RE     = /https:\/\/(?:[\w-]+\.)?zoom\.us\/rec\/share\/[A-Za-z0-9._\-]+/
+const DROPBOX_RE  = /https:\/\/(?:www\.)?dropbox\.com\/(?:s|scl\/fi)\/[^\s"'<>]+/
+const AUDIO_RE    = /https?:\/\/[^\s"'<>]+\.(?:mp3|m4a|wav|ogg|aac|flac)(?:[?#][^\s"'<>]*)?/i
+
+function findRecordingUrl(text: string): string {
+  return (
+    text.match(ZOOM_RE)?.[0] ||
+    text.match(DROPBOX_RE)?.[0] ||
+    text.match(AUDIO_RE)?.[0] ||
+    ''
+  )
+}
 
 export async function parseIngestEmail(rawEmail: Buffer): Promise<IngestRequest | null> {
   const parsed = await simpleParser(rawEmail)
@@ -28,14 +39,13 @@ export async function parseIngestEmail(rawEmail: Buffer): Promise<IngestRequest 
   }
 
   const title = get('title')
-  const zoomMatch = body.match(ZOOM_SHARE_RE)
-  const zoomShareUrl = zoomMatch ? zoomMatch[0] : ''
+  const recordingUrl = findRecordingUrl(body)
 
-  // Need at least a title and a Zoom link to proceed
-  if (!title || !zoomShareUrl) return null
+  // Need at least a title and a recording link to proceed
+  if (!title || !recordingUrl) return null
 
   const rabbi = get('rabbi') || (senderRabbiMap as Record<string, string>)[senderEmail] || ''
   const description = get('description')
 
-  return { title, rabbi, description, zoomShareUrl, date: dateHeader, senderEmail }
+  return { title, rabbi, description, recordingUrl, date: dateHeader, senderEmail }
 }

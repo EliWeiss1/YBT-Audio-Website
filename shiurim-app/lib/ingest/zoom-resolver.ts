@@ -1,6 +1,8 @@
+import { resolveViaZoomApi } from '@/lib/zoom/recordings'
+
 export type ZoomResolveResult =
   | { ok: true; downloadUrl: string; contentType: string }
-  | { ok: false; reason: 'passcode_required' | 'fetch_failed' | 'no_audio_found'; detail?: string }
+  | { ok: false; reason: 'passcode_required' | 'fetch_failed' | 'no_audio_found' | 'no_oauth_token'; detail?: string }
 
 const AUDIO_CONTENT_TYPES = ['audio/', 'video/', 'application/octet-stream', 'mpeg']
 
@@ -38,7 +40,7 @@ async function fetchAudio(url: string): Promise<ZoomResolveResult> {
   return { ok: false, reason: 'no_audio_found', detail: `Unexpected content-type: ${contentType}` }
 }
 
-export async function resolveRecordingUrl(recordingUrl: string): Promise<ZoomResolveResult> {
+export async function resolveRecordingUrl(recordingUrl: string, senderEmail?: string): Promise<ZoomResolveResult> {
   // Direct audio file URL
   if (/\.(mp3|m4a|wav|ogg|aac|flac)(\?|#|$)/i.test(recordingUrl)) {
     return fetchAudio(recordingUrl)
@@ -51,7 +53,14 @@ export async function resolveRecordingUrl(recordingUrl: string): Promise<ZoomRes
 
   // Zoom cloud recording share link
   if (recordingUrl.includes('zoom.us/rec/share/')) {
-    // Try /rec/download/ — works for publicly accessible recordings
+    // Try OAuth API path first
+    if (senderEmail) {
+      const apiResult = await resolveViaZoomApi(recordingUrl, senderEmail)
+      if (apiResult.ok) return apiResult
+      if (apiResult.reason === 'no_oauth_token') return apiResult  // caller will notify admin
+    }
+
+    // Fall back to public /rec/download/ trick (works for some accounts)
     const downloadUrl = recordingUrl.replace('/rec/share/', '/rec/download/')
     const result = await fetchAudio(downloadUrl)
     if (result.ok) return result

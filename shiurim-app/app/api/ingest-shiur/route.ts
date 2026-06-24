@@ -4,7 +4,7 @@ import { resolveRecordingUrl } from '@/lib/ingest/zoom-resolver'
 import { uploadAudioToR2 } from '@/lib/ingest/r2-uploader'
 import { categorize } from '@/lib/ingest/categorizer'
 import { writePendingLecture, writeFailedIngestion, writeCategoryFlag, triggerDeploy } from '@/lib/ingest/lectures-writer'
-import { sendFlagNotification, sendFailureNotification } from '@/lib/ingest/notifier'
+import { sendFlagNotification, sendFailureNotification, sendOAuthMissingNotification } from '@/lib/ingest/notifier'
 import { generateLectureId } from '@/lib/ingest/types'
 
 export const runtime = 'nodejs'
@@ -27,14 +27,18 @@ export async function POST(req: NextRequest) {
   const { title, rabbi, description, recordingUrl, date, senderEmail } = parsed
 
   // Step 2: Resolve recording URL to a direct download URL
-  const zoomResult = await resolveRecordingUrl(recordingUrl)
+  const zoomResult = await resolveRecordingUrl(recordingUrl, senderEmail)
   if (!zoomResult.ok) {
+    if (zoomResult.reason === 'no_oauth_token') {
+      await sendOAuthMissingNotification({ title, rabbi, senderEmail, zoomShareUrl: recordingUrl })
+    } else {
+      await sendFailureNotification({ title, rabbi, zoomShareUrl: recordingUrl, reason: zoomResult.reason })
+    }
     await writeFailedIngestion({
       senderEmail, rawTitle: title, rawRabbi: rabbi,
       zoomShareUrl: recordingUrl, failureReason: zoomResult.reason,
       rawEmailSnippet: rawEmail.toString('utf8').slice(0, 500),
     })
-    await sendFailureNotification({ title, rabbi, zoomShareUrl: recordingUrl, reason: zoomResult.reason })
     return NextResponse.json({ error: `Recording resolution failed: ${zoomResult.reason}` }, { status: 422 })
   }
 

@@ -60,3 +60,26 @@ export async function sendFailureNotification(opts: {
     `,
   })
 }
+
+export async function sendOAuthMissingNotification({
+  title, rabbi, senderEmail, zoomShareUrl,
+}: { title: string; rabbi: string; senderEmail: string; zoomShareUrl: string }): Promise<void> {
+  if (process.env.INGEST_DRY_RUN === 'true') {
+    console.log('[DRY RUN] OAuth missing notification for:', senderEmail)
+    return
+  }
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? ''
+  const authorizeUrl = `${appUrl}/api/zoom/authorize?email=${encodeURIComponent(senderEmail)}&secret=${process.env.INGEST_SECRET}`
+  await resend.emails.send({
+    from: 'ingest@noreply.ybt.org',
+    to: adminEmail,
+    subject: `Action needed: Connect Zoom for ${senderEmail}`,
+    html: `
+      <p>A shiur from <strong>${rabbi || senderEmail}</strong> titled "<strong>${title}</strong>"
+      could not be ingested — no Zoom OAuth token is stored for <strong>${senderEmail}</strong>.</p>
+      <p>To authorize this account, send the rebbe this link:</p>
+      <p><a href="${authorizeUrl}">${authorizeUrl}</a></p>
+      <p>Zoom share URL: <a href="${zoomShareUrl}">${zoomShareUrl}</a></p>
+    `,
+  })
+}

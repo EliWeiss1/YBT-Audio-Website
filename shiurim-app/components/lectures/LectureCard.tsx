@@ -137,7 +137,7 @@ export default function LectureCard({ lecture, index, progress, speakerOverride,
         </div>
         {lecture.date && (
           <span className="text-xs text-stone-300 tabular-nums">
-            {new Date(lecture.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}
+            {new Date(lecture.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
           </span>
         )}
         {'audioUrl' in lecture && lecture.audioUrl && (

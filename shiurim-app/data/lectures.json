@@ -94221,19 +94221,6 @@
               "sourceId": 838914
             },
             {
-              "id": "YBT-828687",
-              "title": "Rav Chaim Nizkei Mamon Perek 4 Halacha 4",
-              "audioUrl": "http://ybt.org/audio/2014-2015/misc/Rav_Chaim_Nizkei_Mamon_Perek_4_Halacha_4_2_05_15_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-02-05",
-              "tags": [
-                "Rambam"
-              ],
-              "sourceId": 828687
-            },
-            {
               "id": "YBT-802612",
               "title": "Rav Chaim - Hilchos Eidus 20:2",
               "audioUrl": "http://www.ybt.org/audio/2013-2014/rpchait/gemara/R%27_Chaim-Hilchos_Eidus_20;2_11_19_13_Rabbi_P_Chait.mp3",
@@ -94988,32 +94975,6 @@
               "sourceId": 1382
             },
             {
-              "id": "YBT-942516",
-              "title": "Bava Kamma 13b Shor Shenagach vs Shor Haniskal Rav Chaim #2",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2020_01_09-Bava_Kamma_13b_Shor_Shenagach_vs_Shor_Haniskal_Rav_Chaim_#2-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2020-01-09",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 942516
-            },
-            {
-              "id": "YBT-941284",
-              "title": "Bava Kamma 13b Shor Shenagach vs Shor Haniskal Rav Chaim #1",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2020_01_02-Bava_Kamma_13b_Shor_Shenagach_vs_Shor_Haniskal_Rav_Chaim_#1-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2020-01-02",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 941284
-            },
-            {
               "id": "YBT-892272",
               "title": "Bava Kamma #36 Rav Chaim Hilchos Gezeila Vaveidah 9:1",
               "audioUrl": "http://ybt.org/audio/2017-2018/rpchait/gemara/2017_12_28_Bava_Kamma_36_Rav_Chaim_Hilchos_Gezeila_Vaveidah_9-1_Rabbi_P_Chait.mp3",
@@ -95103,72 +95064,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 858131
-            },
-            {
-              "id": "YBT-836651",
-              "title": "Rav Chaim Nizkei Mamon",
-              "audioUrl": "http://ybt.org/audio/2014-2015/rpchait/gemara/Rav_Chaim_Nizkei_Mamon_5_14_15_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-05-14",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 836651
-            },
-            {
-              "id": "YBT-835695",
-              "title": "Rav Chaim Bava Kamma Borrowing a shor muad",
-              "audioUrl": "http://ybt.org/audio/2014-2015/misc/Rav_Chaim_Bava_Kamma_Borrowing_a_shor_muad_4_30_15_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-04-30",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 835695
-            },
-            {
-              "id": "YBT-832160",
-              "title": "Rav Chaim Nizkei Mamon Perek 4 Halacha 4",
-              "audioUrl": "http://ybt.org/audio/2014-2015/misc/Rav_Chaim_Nizkei_Mamon_Perek_4_Halacha_4_3_12_15_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-03-12",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 832160
-            },
-            {
-              "id": "YBT-831162",
-              "title": "Rav Chaim Perek4 Halacha4 ",
-              "audioUrl": "http://ybt.org/audio/2014-2015/misc/Rav_Chaim_Perek4_Halacha4_2_26_15_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-02-26",
-              "tags": [
-                "Bava Kamma",
-                "Nezikin"
-              ],
-              "sourceId": 831162
-            },
-            {
-              "id": "YBT-829506",
-              "title": "Rav Chaim Perek - 4 Halacha 4",
-              "audioUrl": "http://ybt.org/audio/2014-2015/misc/Rav_Chaim_Perek4_Halacha4_2_12_15_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-02-12",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 829506
             },
             {
               "id": "YBT-808293",
@@ -165983,253 +165878,6 @@
               "sourceId": 951171
             },
             {
-              "id": "YBT-945015",
-              "title": "Bava Kamma 45a The Nezek of Bringing a Shor to Beis Din #3",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2020_02_06-Bava_Kamma_45a_The_Nezek_of_Bringing_a_Shor_to_Beis_Din_#3-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2020-02-06",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 945015
-            },
-            {
-              "id": "YBT-943665",
-              "title": "Bava Kamma 45a The Nezek of Bringing a Shor to Beis Din #2",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2020_01_23-Bava_Kamma_45a_The_Nezek_of_Bringing_a_Shor_to_Beis_Din_#2-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2020-01-23",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 943665
-            },
-            {
-              "id": "YBT-942787",
-              "title": "Bava Kamma 45a The Nezek of Bringing a Shor to Beis Din: Rashi #1",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2020_01_16-Bava_Kamma_45a_The_Nezek_of_Bringing_a_Shor_to_Beis_Din_Rashi_#1-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2020-01-16",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 942787
-            },
-            {
-              "id": "YBT-942516",
-              "title": "Bava Kamma 13b Shor Shenagach vs Shor Haniskal Rav Chaim #2",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2020_01_09-Bava_Kamma_13b_Shor_Shenagach_vs_Shor_Haniskal_Rav_Chaim_#2-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2020-01-09",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 942516
-            },
-            {
-              "id": "YBT-941284",
-              "title": "Bava Kamma 13b Shor Shenagach vs Shor Haniskal Rav Chaim #1",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2020_01_02-Bava_Kamma_13b_Shor_Shenagach_vs_Shor_Haniskal_Rav_Chaim_#1-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2020-01-02",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 941284
-            },
-            {
-              "id": "YBT-940757",
-              "title": "Bava Kamma 13b Shor Shenagach #2",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2019_12_26-Bava_Kamma_13b_Shor_Shenagach_#2-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-12-26",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 940757
-            },
-            {
-              "id": "YBT-940217",
-              "title": "Bava Kamma 13b Shor Shenagach",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2019_12_19-Bava_Kamma_13b_Shor_Shemazik-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-12-19",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 940217
-            },
-            {
-              "id": "YBT-939571",
-              "title": "Bava Kamma 44b Mekach Taos By Shor HaNiskal #2",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2019_12_12-Bava_Kamma_44b_Mekach_Taos_By_Shor_HaNiskal_#2-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-12-12",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 939571
-            },
-            {
-              "id": "YBT-938866",
-              "title": "Bava Kamma 45b Mekach Taos By Shor HaNiskal",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2019_12_05-Bava_Kamma_45b_Mekach_Taos_By_Shor_HaNiskal-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-12-05",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 938866
-            },
-            {
-              "id": "YBT-937522",
-              "title": "Bava Kamma 90b Shor Hamazik #3",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2019_11_21-Bava_Kamma_90b_Shor_Hamazik_#3-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-11-21",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 937522
-            },
-            {
-              "id": "YBT-936977",
-              "title": "Bava Kamma 90b Shor Hamazik #2",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2019_11_14-Bava_Kamma_90b_Shor_Hamazik_#2-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-11-14",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 936977
-            },
-            {
-              "id": "YBT-936177",
-              "title": "Bava Kamma 90b Shor Hamazik",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2019_11_07-Bava_Kamma_90b_Shor_Hamazik-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-11-07",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 936177
-            },
-            {
-              "id": "YBT-935476",
-              "title": "Bava Kamma 90a Makkah Shel Bizayon #3: Rambam",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2019_10_31-Bava_Kamma_90a_Makkah_Shel_Bizayon_#3_Rambam-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-10-31",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 935476
-            },
-            {
-              "id": "YBT-934032",
-              "title": "Bava Kamma 90a Makkah Shel Bizayon #2: Rambam",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2019_10_03-Bava_Kamma_90a_Makkah_Shel_Bizayon_#2_Rambam-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-10-03",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 934032
-            },
-            {
-              "id": "YBT-933711",
-              "title": "Bava Kamma 90a Makkah Shel Tzaar vs Makkah Shel Bizayon",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2019_09_26-Bava_Kamma_90a_Makkah_Shel_Tzaar_vs_Makkah_Shel_Bizayon-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-09-26",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 933711
-            },
-            {
-              "id": "YBT-933016",
-              "title": "Bava Kamma 90a Kanasei Boshes #3",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2019_09_19-Bava_Kamma_90a_Kanasei_Boshes_#3-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-09-19",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 933016
-            },
-            {
-              "id": "YBT-932235",
-              "title": "Bava Kamma 90a Kanasei Boshes #2",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2019_09_12-Bava_Kamma_90a_Kanasei_Boshes_#2-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-09-12",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 932235
-            },
-            {
-              "id": "YBT-931558",
-              "title": "Bava Kamma 90a Kanasei Boshes",
-              "audioUrl": "http://ybt.org/audio/2019-2020/rjkoppel/2019_09_05-Bava_Kamma_90a_Kanasei_Boshes-Rabbi_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-09-05",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 931558
-            },
-            {
-              "id": "YBT-928751",
-              "title": "Bava Kamma 4a Kofer #3",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_07_18-Bava_Kamma_4a_Kofer_#3-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-07-18",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 928751
-            },
-            {
               "id": "YBT-928321",
               "title": "Bava Kamma 15a Chatzi Nezek Mamon Or Knass",
               "audioUrl": "http://ybt.org/students/2018-2019/refeder/gemara/2019_07_14-Bava_Kamma_15a_Chatzi_Nezek_Mamon_Or-Knass-Rabbi_E_Feder.MP3",
@@ -166241,32 +165889,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 928321
-            },
-            {
-              "id": "YBT-928275",
-              "title": "Bava Kamma 4a Kofer #2",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_07_11-Bava_Kamma_4a_Kofer_#2-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-07-11",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 928275
-            },
-            {
-              "id": "YBT-927378",
-              "title": "Bava Kamma 4a Kofer",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_06_27-Bava_Kamma_4a_Kofer-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-06-27",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 927378
             },
             {
               "id": "YBT-925024",
@@ -166309,84 +165931,6 @@
               "sourceId": 924436
             },
             {
-              "id": "YBT-924241",
-              "title": "Bava Kamma 90a Possesions In A Kesuba The Husband Has Responsibility Over",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_05_09-Bava_Kamma_90a_Items_In_A_Ksuba_The_Husband_Has_Responsibility_For-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-05-09",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 924241
-            },
-            {
-              "id": "YBT-922776",
-              "title": "Bava Kamma 87b Chavala To Your Own Kids Ramban",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_04_11-Bava_Kamma_87b_Chavala_To_Your_Own_Kids_Ramban-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-04-11",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 922776
-            },
-            {
-              "id": "YBT-922174",
-              "title": "Bava Kamma 87b Ze Nehene Veze Lo Chaser",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_04_04-Bava_Kamma_87b_Ze_Nehene_Veze_Lo_Chaser-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-04-04",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 922174
-            },
-            {
-              "id": "YBT-921631",
-              "title": "Bava Kamma 87b Tosfos Sheves #6",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_03_28-Bava_Kamma_87b_Tosfos_Sheves_#6-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-03-28",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 921631
-            },
-            {
-              "id": "YBT-919939",
-              "title": "Bava Kamma 87b Meiri Vs Tosfos Chovel Bebas Ketana #2",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_03_07-Bava_Kamma_87b_Meiri_Vs_Tosfos_Chovel_Bebas_Ketana_#2-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-03-07",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 919939
-            },
-            {
-              "id": "YBT-919329",
-              "title": "Bava Kamma 87b Meiri Vs Tosfos Chovel Bebas Ketana",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_02_28-Bava_Kamma_87b_Meiri_Vs_Tosfos_Chovel_Bebas_Ketana-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-02-28",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 919329
-            },
-            {
               "id": "YBT-919006",
               "title": "Bava Kama Keitzad HaRegel 24a sv SheRicheka",
               "audioUrl": "http://www.ybt.org/audio/2018-2019/rychait/gemara/2019_02_26-Bava_Kama_Keitzad_HaRegel_24a_sv_SheRicheka-Rabbi_Y_Chait.mp3",
@@ -166424,19 +165968,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 918717
-            },
-            {
-              "id": "YBT-918657",
-              "title": "Bava Kamma 87b Tosfos Sheves",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_02_21-Bava_Kamma_87b_Tosfos_Sheves-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-02-21",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 918657
             },
             {
               "id": "YBT-919194",
@@ -166478,19 +166009,6 @@
               "sourceId": 918018
             },
             {
-              "id": "YBT-918103",
-              "title": "Bava Kamma 87b Ramban Baal Meor Sheves #4",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_02_14-Bava_Kamma_87b_Ramban_Baal_Meor_Sheves_#4-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-02-14",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 918103
-            },
-            {
               "id": "YBT-917808",
               "title": "Bava Kamma 22a, Tosfos Apich",
               "audioUrl": "http://ybt.org/audio/2018-2019/rhbald/2019_02_10-Bava_Kamma_22a,_Tosfos_Apich-Rabbi_H_Bald.mp3",
@@ -166515,19 +166033,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 917132
-            },
-            {
-              "id": "YBT-916887",
-              "title": "Bava Kamma 87b Ramban Baal Meor Sheves #3",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_01_31-Bava_Kamma_87b_Ramban_Baal_Meor_Sheves_#3-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-01-31",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 916887
             },
             {
               "id": "YBT-916851",
@@ -166582,32 +166087,6 @@
               "sourceId": 914784
             },
             {
-              "id": "YBT-914817",
-              "title": "Bava Kamma 87b Ramban Baal Meor Sheves #2",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_01_03-Bava_Kamma_87b_Ramban_Baal_Meor_Sheves_#2-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-01-03",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 914817
-            },
-            {
-              "id": "YBT-914358",
-              "title": "Bava Kamma 87b Ramban Baal Meor Sheves",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2018_12_27-Bava_Kamma_87b_Ramban_Baal_Meor_Sheves-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-12-27",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 914358
-            },
-            {
               "id": "YBT-914452",
               "title": "Bava Kamma 18a Milchamos and Rashi",
               "audioUrl": "http://ybt.org/audio/2018-2019/rhbald/2018_12_23-Bava_Kamma_18a_Milchamos_and_Rashi-Rabbi_H_Bald.mp3",
@@ -166632,19 +166111,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 913735
-            },
-            {
-              "id": "YBT-913879",
-              "title": "Bava Kamma 87b Chovel Eved #3",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2018_12_20-Bava_Kamma_87b_Chovel_Eved_#3-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-12-20",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 913879
             },
             {
               "id": "YBT-913623",
@@ -166697,19 +166163,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 913780
-            },
-            {
-              "id": "YBT-913227",
-              "title": "Bava Kamma 87a Chovel Eved #2",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2018_12_13-Bava_Kamma_87a_Chovel_Eved_#2-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-12-13",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 913227
             },
             {
               "id": "YBT-913058",
@@ -166766,19 +166219,6 @@
               "sourceId": 912879
             },
             {
-              "id": "YBT-912695",
-              "title": "Bava Kamma 87a Chovel Eved",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2018_12_06-Bava_Kamma_87a_Chovel_Eved_#1-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-12-06",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 912695
-            },
-            {
               "id": "YBT-912135",
               "title": "Bava Kama 100a-100b Da'in Dina D'garmi",
               "audioUrl": "http://ybt.org/audio/2018-2019/rpchait/gemara/2018_11_29-Bava_Kama_100a-100b_Dain_Dina_Dgarmi-Rabbi_P_Chait.mp3",
@@ -166803,19 +166243,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 912140
-            },
-            {
-              "id": "YBT-912229",
-              "title": "Bava Kamma 87b Chovel Bebas Ketanah #7 Even Haazel Tosfos",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2018_11_29-Bava_Kamma_87b_Chovel_Bebas_Ketanah_#7_Even_Haazel_Tosfos-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-11-29",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 912229
             },
             {
               "id": "YBT-911832",
@@ -166870,19 +166297,6 @@
               "sourceId": 911218
             },
             {
-              "id": "YBT-911181",
-              "title": "Bava Kamma 87b Chovel Bebas Ketanah #6",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2018_11_15-Bava_Kamma_87b_Chovel_Bebas_Ketanah_#6-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-11-15",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 911181
-            },
-            {
               "id": "YBT-911026",
               "title": "Bava Kama - Keitzad HaRegel 18a - Rif pgs 9a or 11a - Milchamos Hashem - sv Amar HaKoseiv - ssv VeYeish Derech Acheres",
               "audioUrl": "http://www.ybt.org/audio/2018-2019/rychait/gemara/2018_11_14-Bava_Kama_Keitzad_HaRegel_18a_Rif_pgs_9a_or_11a_Milchamos_Hashem_sv_Amar_HaKoseiv_ssv_VeYeish_Derech_Acheres-Rabbi_Y_Chait.mp3",
@@ -166907,19 +166321,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 910658
-            },
-            {
-              "id": "YBT-910624",
-              "title": "Bava Kamma 87a Chovel Bebas Ketanah #5",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2018_11_08-Bava_Kamma_87a_Chovel_Bebas_Ketanah_#5-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-11-08",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 910624
             },
             {
               "id": "YBT-910477",
@@ -166959,19 +166360,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 910263
-            },
-            {
-              "id": "YBT-910075",
-              "title": "Bava Kamma 87a Chovel Bebas Ketanah #4",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2018_11_01-Bava_Kamma_87a_Chovel_Bebas_Ketanah_#4-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-11-01",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 910075
             },
             {
               "id": "YBT-910030",
@@ -167040,19 +166428,6 @@
               "sourceId": 909403
             },
             {
-              "id": "YBT-909470",
-              "title": "Bava Kamma 87a Chovel Bebas Ketanah #3",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2018_10_25-Bava_Kamma_87a_Chovel_Bebas_Ketanah_#3-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-10-25",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 909470
-            },
-            {
               "id": "YBT-909299",
               "title": "Bava Kama - Keitzad HaRegel 17a - sv Mishna ssv HaTarnigol",
               "audioUrl": "http://www.ybt.org/audio/2018-2019/rychait/gemara/2018_10_24-Bava_Kama_Keitzad_HaRegel_17a_sv_Mishna_ssv_HaTarnigol-Rabbi_Y_Chait.mp3",
@@ -167092,19 +166467,6 @@
               "sourceId": 909706
             },
             {
-              "id": "YBT-908906",
-              "title": "Bava Kamma 49a Meshalem Dmei Velados",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2018_10_18-Bava_Kamma_49a_Meshalem_Dmei_Velados-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-10-18",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 908906
-            },
-            {
               "id": "YBT-908966",
               "title": "Bava Kama",
               "audioUrl": "http://ybt.org/audio/2018-2019/rhbald/2018_10_14-Bava_Kama-Rabbi_H_Bald.mp3",
@@ -167118,32 +166480,6 @@
               "sourceId": 908966
             },
             {
-              "id": "YBT-907916",
-              "title": "Bava Kamma 87a Chovel Bebas Ketanah #2",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2018_10_04-Bava_Kamma_87a_Chovel_Bebas_Ketanah_#2-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-10-04",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 907916
-            },
-            {
-              "id": "YBT-906953",
-              "title": "Bava Kamma 87a Chovel Bebas Ketanah",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2018_09_07-Bava_Kamma_87a_Chovel_Bebas_Ketanah-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-09-06",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 906953
-            },
-            {
               "id": "YBT-902368",
               "title": "Bava Kamma 72a 3 Which Part Of Shchita Is Essential",
               "audioUrl": "http://ybt.org/audio/2017-2018/rpchait/gemara/2018_06_07-Bava_Kamma_72a_3_Which_Part_Of_Shchita_Is_Essential-Rabbi_P_Chait.mp3",
@@ -167155,19 +166491,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 902368
-            },
-            {
-              "id": "YBT-902370",
-              "title": "Bava Kamma 86b Boshes Mishpacha",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2018_06_07-Bava_Kamma_86b_Boshes_Mishpacha-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-06-07",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 902370
             },
             {
               "id": "YBT-902354",
@@ -167391,19 +166714,6 @@
               "sourceId": 902162
             },
             {
-              "id": "YBT-899494",
-              "title": "Bava Kamma 86b Bishu Yashen Vemais #2",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2018_04_19-Bava_Kamma_86b_Bishu_Yashen_Vemais_2-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-04-19",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 899494
-            },
-            {
               "id": "YBT-901894",
               "title": "Bava Kamma 70b 2 Kim Leih Bederabah Mineih",
               "audioUrl": "http://ybt.org/audio/2017-2018/rpchait/gemara/2018_04_17-Bava_Kamma_70b_2_Kim_Leih_Bederabah_Mineih-Rabbi_P_Chait.mp3",
@@ -167443,19 +166753,6 @@
               "sourceId": 899491
             },
             {
-              "id": "YBT-899493",
-              "title": "Bava Kamma 86b Bishu Yashen Vemais",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2018_04_12-Bava_Kamma_86b_Bishu_Yashen_Vemais-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-04-12",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 899493
-            },
-            {
               "id": "YBT-899490",
               "title": "Bava Kamma #66 70b Chalipin",
               "audioUrl": "http://ybt.org/audio/2017-2018/rpchait/gemara/2018_04_10-Bava_Kamma_66_70b_Chalipin-Rabbi_P_Chait.mp3",
@@ -167480,32 +166777,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 899488
-            },
-            {
-              "id": "YBT-897946",
-              "title": "Bava Kamma 86b Bishu Aron Chayev Tosfos",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2018_03_22-Bava_Kamma_86b-Bishu_Aron_Chayev_Tosfos-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-03-22",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 897946
-            },
-            {
-              "id": "YBT-897938",
-              "title": "Bava Kamma 86b Bar Boshes",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2018_03_15-Bava_Kamma_86b_Bar_Boshes-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-03-15",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 897938
             },
             {
               "id": "YBT-897939",
@@ -167545,19 +166816,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 897656
-            },
-            {
-              "id": "YBT-897936",
-              "title": "Bava Kamma Rashis Shitah On Boshes Varying Locations",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2018_03_08_Bava_Kamma_Rashis_Shitah_On_Boshes_Varying_Locations_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-03-08",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 897936
             },
             {
               "id": "YBT-897655",
@@ -167612,19 +166870,6 @@
               "sourceId": 897652
             },
             {
-              "id": "YBT-897937",
-              "title": "Bava Kamma 86b Dibros Moshe Sugya of Boshes ",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2018_02_22_Dibros_Moshe_Sugya_of_Boshes_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-02-22",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 897937
-            },
-            {
               "id": "YBT-897651",
               "title": "Bava Kamma #56 68a Must_Yeush Precede Shinoy Rishus",
               "audioUrl": "http://ybt.org/audio/2017-2018/rpchait/gemara/2018_02_22-Bava_Kamma_56_68a_Must_Yeush_Precede_Shinoy_Rishus_-Rabbi_P_Chait.mp3",
@@ -167675,19 +166920,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 896088
-            },
-            {
-              "id": "YBT-896098",
-              "title": "Bava Kamma #16 86b Mevayesh A Naked Person",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2018_02_15_Bava_Kamma_16_86b_Mevayesh_A_Naked_Person_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-02-15",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 896098
             },
             {
               "id": "YBT-896095",
@@ -167766,32 +166998,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 895163
-            },
-            {
-              "id": "YBT-895164",
-              "title": "Bava Kamma 86b Embarassing An Unclothed Human ",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2018_02_08_Bava_Kamma_86b_Embarassing_An_Unclothed_Human_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-02-08",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 895164
-            },
-            {
-              "id": "YBT-895160",
-              "title": "Bava Kamma 86a Missing Target Embarassing Someone Else",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2018_02_01_Bava_Kamma_86a_Missing_Target_Embarassing_Someone_Else_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-02-01",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 895160
             },
             {
               "id": "YBT-894118",
@@ -167898,19 +167104,6 @@
               "sourceId": 892274
             },
             {
-              "id": "YBT-892252",
-              "title": "Bava Kamma 86a #13 Boshes by a Child vs Adult ",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_12_28_Bava_Kamma_86a_13_Boshes_by_a_Child_vs_Adult_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-12-28",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 892252
-            },
-            {
               "id": "YBT-892272",
               "title": "Bava Kamma #36 Rav Chaim Hilchos Gezeila Vaveidah 9:1",
               "audioUrl": "http://ybt.org/audio/2017-2018/rpchait/gemara/2017_12_28_Bava_Kamma_36_Rav_Chaim_Hilchos_Gezeila_Vaveidah_9-1_Rabbi_P_Chait.mp3",
@@ -167976,19 +167169,6 @@
               "sourceId": 891653
             },
             {
-              "id": "YBT-891654",
-              "title": "Bava Kamma 86a #12 Boshes of Child or Adult",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_12_21_Bava_Kamma_86a_12_Boshes_of_Child_or_Adult_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-12-21",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 891654
-            },
-            {
               "id": "YBT-891649",
               "title": "Bava Kamma #31 66b Yeiush Given Up Hope of Finding Item",
               "audioUrl": "http://ybt.org/audio/2017-2018/rpchait/gemara/2017_12_19_Bava_Kamma_31_66b_Yeiush_Given_Up_Hope_of_Finding_Item_Rabbi_P_Chait.mp3",
@@ -168000,19 +167180,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 891649
-            },
-            {
-              "id": "YBT-891645",
-              "title": "Bava Kamma 26a #11 Boshes by Eish Hannukah Edition",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_12_14_Bava_Kamma_26a_11_Boshes_by_Eish_Hannukah_Edition_Dr_J_Koppel.mp3",
-              "duration": 2160,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-12-14",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 891645
             },
             {
               "id": "YBT-891076",
@@ -168039,19 +167206,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 891070
-            },
-            {
-              "id": "YBT-890831",
-              "title": "Bava Kamma 23a #10 Boshes from Esh ",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_12_07_Bava_Kamma_23a_10_Boshes_from_Esh_Dr_J_Koppel.mp3",
-              "duration": 2160,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-12-07",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 890831
             },
             {
               "id": "YBT-890833",
@@ -168091,19 +167245,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 890237
-            },
-            {
-              "id": "YBT-890235",
-              "title": "Bava Kamma 23a #9 Rambam vs Rashi Boshes from Esh ",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_11_30_Bava_Kamma_23a_9_Rambam_vs_Rashi_Boshes_from_Esh_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-11-30",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 890235
             },
             {
               "id": "YBT-890231",
@@ -168236,19 +167377,6 @@
               "sourceId": 889051
             },
             {
-              "id": "YBT-889059",
-              "title": "Bava Kamma 21a #8 Isho Mishum Chetzyo or Mamono ",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_11_16_Bava_Kamma_21a_8_Isho_Mishum_Chetzyo_or_Mamono_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-11-16",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 889059
-            },
-            {
               "id": "YBT-889050",
               "title": "Bava Kamma #15 65a Retuning the Value of a Stolen Object ",
               "audioUrl": "http://ybt.org/audio/2017-2018/rpchait/gemara/2017_11_15_Bava_Kamma_15_65a_Retuning_the_Value_of_a_Stolen_Object_Rabbi_P_Chait.mp3",
@@ -168286,19 +167414,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 888785
-            },
-            {
-              "id": "YBT-888430",
-              "title": "Bava Kamma 86a 53b #7 Arba Devarim",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_11_09_Bava_Kamma_86a_53b_7_Arba_Devarim_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-11-09",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 888430
             },
             {
               "id": "YBT-888426",
@@ -168353,19 +167468,6 @@
               "sourceId": 888152
             },
             {
-              "id": "YBT-888211",
-              "title": "Bava Kamma 86a #6 Nimukei Yosef Psik Reisha ",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_11_02_Bava_Kamma_86a_6_Nimukei_Yosef_Psik_Reisha_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-11-02",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 888211
-            },
-            {
               "id": "YBT-888154",
               "title": "Bava Kamma #7 65a Ravs Drasha ",
               "audioUrl": "http://ybt.org/audio/2017-2018/rpchait/gemara/2017_11_01_Bava_Kamma_7_65a_Ravs_Drasha_Rabbi_P_Chait.mp3",
@@ -168405,19 +167507,6 @@
               "sourceId": 887458
             },
             {
-              "id": "YBT-887347",
-              "title": "Bava Kamma 86a #5 Does Boshes Require Kavanah ",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_10_26_Bava_Kamma_86a_5_Does_Boshes_Require_Kavanah_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-10-26",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 887347
-            },
-            {
               "id": "YBT-887344",
               "title": "Bava Kamma #4 Yatzu Shtaros Tosfos ",
               "audioUrl": "http://ybt.org/audio/2017-2018/rpchait/gemara/2017_10_23_Bava_Kamma_4_Yatzu_Shtaros_Tosfos_Rabbi_P_Chait.mp3",
@@ -168444,19 +167533,6 @@
               "sourceId": 886768
             },
             {
-              "id": "YBT-886834",
-              "title": "Bava Kamma 86a Man Tanna #4",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_10_19_Bava_Kamma_86a_Man_Tanna_4_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-10-19",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 886834
-            },
-            {
               "id": "YBT-886767",
               "title": "Bava Kamma #1 Perek Merubah - Mishnah",
               "audioUrl": "http://ybt.org/audio/2017-2018/rpchait/gemara/2017_10_17_Bava_Kamma_2_Perek_Merubah_Rabbi_P_Chait.mp3",
@@ -168468,344 +167544,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 886767
-            },
-            {
-              "id": "YBT-886832",
-              "title": "Bava Kamma #3 86a 27a Biah Bli Kavanah Falling From the Roof ",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_09_28_Bava_Kamma_86a_27a_Biah_Bli_Kavanah_Falling_From_the_Roof_3_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-09-28",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 886832
-            },
-            {
-              "id": "YBT-885476",
-              "title": "Bava Kamma 86a Boshes Payment #2",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_09_14_Bava_Kamma_86a_Boshes_Payment_2_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-09-14",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 885476
-            },
-            {
-              "id": "YBT-884591",
-              "title": "Bava Kamma 86a Boshes Payment #1",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_09_07_Bava_Kamma_86a_Boshes_Payment_1_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-09-07",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 884591
-            },
-            {
-              "id": "YBT-884349",
-              "title": "Bava Kamma Hurting Friends Eved Ivri #3",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_08_24_Bava_Kamma_Hurting_Friends_Eved_Ivri_3_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-08-24",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 884349
-            },
-            {
-              "id": "YBT-884348",
-              "title": "Bava Kamma 86a Hurting Friends Eved Ivri #2 Dr_J_Koppel",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_08_10_Bava_Kamma_86a_Hurting_Friends_Eved_Ivri_2_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-08-10",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 884348
-            },
-            {
-              "id": "YBT-884347",
-              "title": "Bava Kamma 86a Tosfos Hurting Friends Eved Ivri ",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2017_08_03_Bava_Kamma_86a_Tosfos_Hurting_Friends_Eved_Ivri_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-08-03",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 884347
-            },
-            {
-              "id": "YBT-882071",
-              "title": "Bava Kamma 86a Chovel Eved Ivri of a Friend",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/2017_07_13_Bava_Kamma_86a_Chovel_Eved_Ivri_of_a_Friend_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-07-13",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 882071
-            },
-            {
-              "id": "YBT-881388",
-              "title": "Bava Kamma Rif Machlokes Abaya and Rava By Sheves",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/2017_06_29_Bava_Kamma_Rif_Machlokes_Abaya_and_Rava_By_Sheves_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-06-29",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 881388
-            },
-            {
-              "id": "YBT-880797",
-              "title": "Bava Kamma 85b Sheves Hapochtosah Bdamim ",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/2016_06_22_Bava_Kamma_85b_Sheves_Hapochtosah_Bdamim_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-06-22",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 880797
-            },
-            {
-              "id": "YBT-880796",
-              "title": "Bava Kamma 85b Sheves Hapochtosah Bdamim ",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/2016_06_15_Bava_Kamma_85b_Sheves_Hapochtosah_Bdamim_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-06-15",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 880796
-            },
-            {
-              "id": "YBT-880795",
-              "title": "Bava Kamma 85b Baal Hamaor Sheves Payment",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/2016_06_08_Bava_Kamma_85b_Baal_Hamaor_Sheves_Payment_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-06-08",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 880795
-            },
-            {
-              "id": "YBT-879054",
-              "title": "Bava Kamma Sheves Shomer Kishuin Evaluating Sheves ",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/2017_05_18_Sheves_Shomer_Kishuin_Evaluating_Sheves_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-05-18",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 879054
-            },
-            {
-              "id": "YBT-878301",
-              "title": "Bava Kamma 93b Baal Hameor Sheves",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/2017_05_04_Bava_Kamma_93b_Baal_Hameor_Sheves_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-05-04",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 878301
-            },
-            {
-              "id": "YBT-877429",
-              "title": "Bava Kamma 93b Sheves Payment for Missed Work ",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/2017_04_27_Bava_Kamma_93b_Sheves_Payment_for_Missed_Work_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-04-27",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 877429
-            },
-            {
-              "id": "YBT-876258",
-              "title": "Bava Kamma Confining Someone Who is Subsequently Hurt ",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/2017_03_30_Bava_Kamma_Confing_Someone_Who_is_Subsequetnly_Hurt_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-03-30",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 876258
-            },
-            {
-              "id": "YBT-875778",
-              "title": "Bava Kamma 85b Obligation of the Chovel Explaining Verapo Yerapeh ",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/2017_03_23_Bava_Kamma_85b_Obligation_of_the_Chovel_Explaining_Verapo_Yerapeh_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-03-23",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 875778
-            },
-            {
-              "id": "YBT-875196",
-              "title": "Bava Kamma Paying Refuah Bmakom Nezek Resolving the Posukim ",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/2017_03_16_Bava_Kamma_Paying_Refuah_Bmakom_Nezek_Resolving_the_Posukim_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-03-16",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 875196
-            },
-            {
-              "id": "YBT-874250",
-              "title": "Bava Kamma Verapo Yerapeh Rambams Formulation of Heter Refuah ",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/2017_03_02_Bava_Kamma_Verapo_Yerapeh_Rambams_Formulation_of_Heter_Refuah_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2017-03-02",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 874250
-            },
-            {
-              "id": "YBT-868935",
-              "title": "Bava Kamma #85a Rifoy Machmas Hamakeh Dibros Moshe ",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/Bava_Kamma_85a_Rifoy_Machmas_Hamakeh_Dibros_Moshe_12_15_16_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-12-15",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 868935
-            },
-            {
-              "id": "YBT-868473",
-              "title": " Bava Kamma 85a Rifoy For A Wound That Reopens ",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/Bava_Kamma_85a_Rifoy_For_A_Wound_That_Reopens_12_01_16_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-12-01",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 868473
-            },
-            {
-              "id": "YBT-868118",
-              "title": "Bava Kamma 85a Rifoy For A Wound That Reopens",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/Bava_Kamma_85a_Rifoy_For_A_Wound_That_Reopens_12_01_16_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-12-01",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 868118
-            },
-            {
-              "id": "YBT-866917",
-              "title": "Bava Kamma #5 84b Tzar Bmokem Nezek ",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/Bava_Kamma_5_84b_Tzar_Bmokem_Nezek_11_17_16_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-11-17",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 866917
-            },
-            {
-              "id": "YBT-865826",
-              "title": "Bava Kamm #4 84b Tzar Bmokem Nezek ",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/Bava_Kamma_4_84b_Tzar_Bmokem_Nezek_11_03_16_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-11-03",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 865826
-            },
-            {
-              "id": "YBT-865278",
-              "title": "Bava Kamma 84b Tzar Bmakom Nezek",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/Bava_Kamma_84b_Tzar_Bmakom_Nezek_10_27_16_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-10-27",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 865278
-            },
-            {
-              "id": "YBT-863729",
-              "title": "Bava Kamma 2 84b What is Tzaar? Why do we need both Tzaar and Nezek",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/Bava_Kamma_2_84b_Hachovel_Bchavero_&_Tzaar_Payment_9_22_16_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-09-22",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 863729
-            },
-            {
-              "id": "YBT-862582",
-              "title": "Bava Kamma #1 84b Hachovel Bchavero & Tzaar Payment",
-              "audioUrl": "http://ybt.org/audio/2016-2017/misc/Bava_Kamma_1_84b_Hachovel_Bchavero_&_Tzaar_Payment_9_08_16_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-09-08",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 862582
             },
             {
               "id": "YBT-859804",
@@ -168845,19 +167583,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 858498
-            },
-            {
-              "id": "YBT-858495",
-              "title": "Bava Kamma 90a Hatokeah Lchavairo ",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_90a_Hatokeah_Lchavairo_6_2_16_Dr_J_Koppel.mp3",
-              "duration": 1977,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-06-02",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 858495
             },
             {
               "id": "YBT-858497",
@@ -169110,19 +167835,6 @@
               "sourceId": 855424
             },
             {
-              "id": "YBT-856424",
-              "title": "Bava Kamma Machlokes Ramabam and Tosfos ",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_Machlokes_Ramabam_and_Tosfos_4_7_16_Dr_J_Koppel.mp3",
-              "duration": 1751,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-04-07",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 856424
-            },
-            {
               "id": "YBT-855423",
               "title": "Bava Kamma #77 20a Zeh Neheneh Vzeh Lo Chaser ",
               "audioUrl": "http://ybt.org/audio/2015-2016/rpchait/gemara/Bava_Kamma_77_20a_Zeh_Neheneh_Vzeh_Lo_Chaser_4_6_16_Rabbi_P_Chait.mp3",
@@ -169147,19 +167859,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 855081
-            },
-            {
-              "id": "YBT-854998",
-              "title": "Bava Kamma 8b Tosfos Shibud Between Three People ",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8b_Tosfos_Shibud_Between_Three_People_3_31_16_Dr_J_Koppel.mp3",
-              "duration": 2682,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-04-04",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 854998
             },
             {
               "id": "YBT-854999",
@@ -169212,19 +167911,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 854595
-            },
-            {
-              "id": "YBT-854091",
-              "title": "Bava Kamma 8b Tosfos Zavan Idis Vzburis ",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8b_Tosfos_Zavan_Idis_Vzburis_3_17_16_Dr_J_Koppel.mp3",
-              "duration": 2602,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-03-17",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 854091
             },
             {
               "id": "YBT-853642",
@@ -169357,19 +168043,6 @@
               "sourceId": 852525
             },
             {
-              "id": "YBT-854090",
-              "title": "Bava Kamma 8b Tosfos Zavan Idis Vzburis ",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8b_Tosfos_Zavan_Idis_Vzburis_2_25_16_Dr_J_Koppel.mp3",
-              "duration": 2510,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-02-25",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 854090
-            },
-            {
               "id": "YBT-852524",
               "title": "Bava Kamma #61 18b Tzroros Chatzi Nezek Mi'alyah or Mgufo ",
               "audioUrl": "http://ybt.org/audio/2015-2016/rpchait/gemara/Bava_Kamma_61_18a_18b_Tzroros_Chatzi_Nezek_Mi-alyah_or_Mgufo_2_24_16_Rabbi_P_Chait.mp3",
@@ -169420,19 +168093,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 851934
-            },
-            {
-              "id": "YBT-854089",
-              "title": "Bava Kamma 8b Taking Back Loan From Beinonis or Ziburis",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8b_Taking_Back_Loan_From_Beinonis_or_Ziburis_2_18_16_Dr_J_Koppel.mp3",
-              "duration": 2282,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-02-18",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 854089
             },
             {
               "id": "YBT-851836",
@@ -169526,19 +168186,6 @@
               "sourceId": 850950
             },
             {
-              "id": "YBT-851243",
-              "title": "Bava Kamma 8b Standing in for the Owner ",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8b_Standing_in_for_the_Owner_2_4_16_Dr_J_Koppel.mp3",
-              "duration": 3510,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-02-04",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 851243
-            },
-            {
               "id": "YBT-850843",
               "title": "Bava Kamma #50 17a Muad, Regel, Dorsah ",
               "audioUrl": "http://ybt.org/audio/2015-2016/rpchait/gemara/Bava_Kamma_50_17b_Muad_Regel_Dorsah_2_3_16_Rabbi_P_Chait.mp3",
@@ -169617,19 +168264,6 @@
               "sourceId": 848206
             },
             {
-              "id": "YBT-848521",
-              "title": "Bava Kamma 8b Ishaskis - Ziburis Beinonis Iddis ",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8b_Ishaskis-Ziburis_Beinonis_Iddis_1_7_16_Dr_J_Koppel.mp3",
-              "duration": 1770,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-01-07",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 848521
-            },
-            {
               "id": "YBT-848205",
               "title": "Bava Kamma #44 10b Hechsarti Nizko Case of Safsal and Metzatzem",
               "audioUrl": "http://ybt.org/audio/2015-2016/rpchait/gemara/Bava_Kamma_44_10b_Hechsarti_Nizko_Case_of_Safsal_and_Metzatzem_1_6_16_Rabbi_P_Chait.mp3",
@@ -169667,19 +168301,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 848203
-            },
-            {
-              "id": "YBT-848199",
-              "title": "Bava Kamma 8a Ishaskis Rav Simcha Shepps on the Rambam",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8a_Ishaskis_Rav_Simcha_Shepps_on_the_Rambam_12_31_15_Dr_J_Koppel.mp3",
-              "duration": 2198,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-12-31",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 848199
             },
             {
               "id": "YBT-848202",
@@ -169747,19 +168368,6 @@
               "sourceId": 847570
             },
             {
-              "id": "YBT-847573",
-              "title": "Bava Kamma Ishaskis 109b ",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_Ishaskis_109b_12_24_15_Dr_J_Koppel.mp3",
-              "duration": 2073,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-12-24",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 847573
-            },
-            {
               "id": "YBT-847391",
               "title": "Bava Kamma #36 50b Bor Chavatah or Hevel ",
               "audioUrl": "http://ybt.org/audio/2015-2016/rpchait/gemara/Bava_Kamma_36_50b_Bor_Chavatah_or_Hevel_12_23_15_Rabbi_P_Chait.mp3",
@@ -169810,19 +168418,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 847028
-            },
-            {
-              "id": "YBT-847030",
-              "title": "Bava Kamma- Ishaskis, Kesuvos 109b",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_Ishaskis_Kesvos_109b_12_17_15_Dr_J_Koppel.mp3",
-              "duration": 3772,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-12-17",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 847030
             },
             {
               "id": "YBT-847027",
@@ -169903,19 +168498,6 @@
               "sourceId": 846373
             },
             {
-              "id": "YBT-846103",
-              "title": "Bava Kamma 8a Rosh Iy Shaskas",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8a_Rosh_Iy_Shaskas_12_3_15_Dr_J_Koppel.mp3",
-              "duration": 2035,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-12-03",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 846103
-            },
-            {
               "id": "YBT-845741",
               "title": "Bava Kamma #26 6a Tzad Hashava for Toldos and Avos ",
               "audioUrl": "http://ybt.org/audio/2015-2016/rpchait/gemara/Bava_Kamma_26_6a_Tzad_Hashava_for_Toldos_and_Avos_11_25_15_Rabbi_P_Chait.mp3",
@@ -169966,19 +168548,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 845257
-            },
-            {
-              "id": "YBT-846102",
-              "title": "Bava Kamma 8a",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8a_11_19_15_Dr_J_Koppel.mp3",
-              "duration": 1794,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-11-19",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 846102
             },
             {
               "id": "YBT-844963",
@@ -170033,19 +168602,6 @@
               "sourceId": 844642
             },
             {
-              "id": "YBT-845352",
-              "title": "Bava Kamma The Rav on 8a",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_The_Rav_on_8a_11_12_15_Dr_J_Koppel.mp3",
-              "duration": 2514,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-11-12",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 845352
-            },
-            {
               "id": "YBT-844641",
               "title": "Bava Kamma #18 3b Aish",
               "audioUrl": "http://ybt.org/audio/2015-2016/rpchait/gemara/Bava_Kamma_18_3b_Aish_11_11_15_Rabbi_P_Chait.mp3",
@@ -170098,19 +168654,6 @@
               "sourceId": 844069
             },
             {
-              "id": "YBT-844074",
-              "title": "Bava Kamma 8a ",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8a_11_5_15_Dr_J_Koppel.mp3",
-              "duration": 1632,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-11-05",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 844074
-            },
-            {
               "id": "YBT-843926",
               "title": "Bava Kamma #14 3a 3b Bor",
               "audioUrl": "http://ybt.org/audio/2015-2016/rpchait/gemara/Bava_Kamma_14_3a_3b_Bor_11_4_15_Rabbi_P_Chait.mp3",
@@ -170148,19 +168691,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 843428
-            },
-            {
-              "id": "YBT-843539",
-              "title": "Bava Kamma 8a ",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8a_Rav_10_29_15_Dr_J_Koppel.mp3",
-              "duration": 1190,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-10-29",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 843539
             },
             {
               "id": "YBT-843309",
@@ -170213,19 +168743,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 842862
-            },
-            {
-              "id": "YBT-842901",
-              "title": "Bava Kamma 8a",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8a_10_22_15_Dr_J_Koppel.mp3",
-              "duration": 1943,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-10-22",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 842901
             },
             {
               "id": "YBT-842861",
@@ -170291,137 +168808,6 @@
                 "Bava Kamma"
               ],
               "sourceId": 842026
-            },
-            {
-              "id": "YBT-842258",
-              "title": "Bava Kamma 8a",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8a_9_24_15_Dr_J_Koppel.mp3",
-              "duration": 2816,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-09-24",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 842258
-            },
-            {
-              "id": "YBT-838568",
-              "title": "Bava Kamma 36b Shor Shenagach ",
-              "audioUrl": "http://ybt.org/audio/2014-2015/misc/Bava_Kamma_36b_Shor_Shenagach_6_11_15_Dr_Koppel.mp3",
-              "duration": 3131,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-06-11",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 838568
-            },
-            {
-              "id": "YBT-838567",
-              "title": "Bava Kamma 36b Shor Shenagach",
-              "audioUrl": "http://ybt.org/audio/2014-2015/misc/Bava_Kamma_36b_Shor_Shenagach_6_4_15_Dr_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-06-04",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 838567
-            },
-            {
-              "id": "YBT-836651",
-              "title": "Rav Chaim Nizkei Mamon",
-              "audioUrl": "http://ybt.org/audio/2014-2015/rpchait/gemara/Rav_Chaim_Nizkei_Mamon_5_14_15_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-05-14",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 836651
-            },
-            {
-              "id": "YBT-835695",
-              "title": "Rav Chaim Bava Kamma Borrowing a shor muad",
-              "audioUrl": "http://ybt.org/audio/2014-2015/misc/Rav_Chaim_Bava_Kamma_Borrowing_a_shor_muad_4_30_15_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-04-30",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 835695
-            },
-            {
-              "id": "YBT-835681",
-              "title": "Bava Kamma 45a 40A Tosfos",
-              "audioUrl": "http://ybt.org/audio/2014-2015/misc/Bava_Kamma_45a_40b_Tosfos_4_23_15_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-04-23",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 835681
-            },
-            {
-              "id": "YBT-832297",
-              "title": "Bava Kamma 45a Returning Shor that has issur hanaah",
-              "audioUrl": "http://ybt.org/audio/2014-2015/misc/Bava_Kamma_45a_Returning_Shor_that_has_issur_hanaah_3_18_15_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-03-18",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 832297
-            },
-            {
-              "id": "YBT-832160",
-              "title": "Rav Chaim Nizkei Mamon Perek 4 Halacha 4",
-              "audioUrl": "http://ybt.org/audio/2014-2015/misc/Rav_Chaim_Nizkei_Mamon_Perek_4_Halacha_4_3_12_15_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-03-12",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 832160
-            },
-            {
-              "id": "YBT-831162",
-              "title": "Rav Chaim Perek4 Halacha4 ",
-              "audioUrl": "http://ybt.org/audio/2014-2015/misc/Rav_Chaim_Perek4_Halacha4_2_26_15_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-02-26",
-              "tags": [
-                "Bava Kamma",
-                "Nezikin"
-              ],
-              "sourceId": 831162
-            },
-            {
-              "id": "YBT-829506",
-              "title": "Rav Chaim Perek - 4 Halacha 4",
-              "audioUrl": "http://ybt.org/audio/2014-2015/misc/Rav_Chaim_Perek4_Halacha4_2_12_15_Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2015-02-12",
-              "tags": [
-                "Bava Kamma"
-              ],
-              "sourceId": 829506
             },
             {
               "id": "YBT-817325",
@@ -173327,50 +171713,6 @@
                 "Gemara"
               ],
               "sourceId": 5240
-            },
-            {
-              "id": "YBT-808903",
-              "title": "Bava Kamma 20a - Birchas Shmuel",
-              "audioUrl": "http://www.ybt.org/audio/2013-2014/misc/Bava_Kamma_20a-Birchas_Shmuel_12_12_13_Dr._J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2013-12-12",
-              "tags": [],
-              "sourceId": 808903
-            },
-            {
-              "id": "YBT-808905",
-              "title": "_Bava Kamma 20a",
-              "audioUrl": "http://www.ybt.org/audio/2013-2014/misc/Bava_Kamma_20a_12_05_13_Dr._J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2013-12-05",
-              "tags": [],
-              "sourceId": 808905
-            },
-            {
-              "id": "YBT-808942",
-              "title": "_Bava Kamma 20a",
-              "audioUrl": "http://ybt.org/audio/2013-2014/misc/Dr_Koppel_11_17_13.pdf",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2013-11-17",
-              "tags": [],
-              "sourceId": 808942
-            },
-            {
-              "id": "YBT-808917",
-              "title": "_Bava Kamma 20a",
-              "audioUrl": "http://72.32.58.92/ybt.org/audio/2013-2014/misc/Dr_Koppel_10_13_13.pdf",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2013-10-13",
-              "tags": [],
-              "sourceId": 808917
             },
             {
               "id": "YBT-807998",
@@ -207622,61 +205964,6 @@
               "sourceId": 942517
             },
             {
-              "id": "YBT-929064",
-              "title": "Bava Kamma 4a Kim Leih Beshogeg",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_07_25-Bava_Kamma_4a_Kim_Leih_Beshogeg-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-07-25",
-              "tags": [
-                "Ketuvot",
-                "Bava Kamma"
-              ],
-              "sourceId": 929064
-            },
-            {
-              "id": "YBT-925686",
-              "title": "Bava Kamma 87a Mefateh and Anos vs Bas Ketanah",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_05_30-Bava%20Kamma%2087a%20Mefateh%20and%20Anos%20vs%20Bas%20Ketanah-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-05-30",
-              "tags": [
-                "Ketuvot",
-                "Bava Kamma"
-              ],
-              "sourceId": 925686
-            },
-            {
-              "id": "YBT-925017",
-              "title": "Dibros Moshe Chovel Bebas Ketana #1",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_05_16-Dibros_Moshe_Chovel_Bebas_Ketana_#1-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-05-16",
-              "tags": [
-                "Ketuvot",
-                "Bava Kamma"
-              ],
-              "sourceId": 925017
-            },
-            {
-              "id": "YBT-920607",
-              "title": "Kesubos 46b Tosfos Chovel Bebas Ketana #3",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2019_03_14-Kesubos_46b_Tosfos_Chovel_Bebas_Ketana_#3-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2019-03-14",
-              "tags": [
-                "Ketuvot"
-              ],
-              "sourceId": 920607
-            },
-            {
               "id": "YBT-910961",
               "title": "Kesubos 68a Tzedakah #12",
               "audioUrl": "http://ybt.org/students/2018-2019/refeder/gemara/2018_11_13-Kesubos_68a_Tzedakah_#12-Rabbi_E_Feder.MP3",
@@ -207794,19 +206081,6 @@
               "sourceId": 908663
             },
             {
-              "id": "YBT-908303",
-              "title": "Kesubos 65b Boshes Eishes Ish",
-              "audioUrl": "http://ybt.org/audio/2018-2019/misc/2018_10_11-Kesubos_65b_Boshes_Eishes_Ish-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-10-11",
-              "tags": [
-                "Ketuvot"
-              ],
-              "sourceId": 908303
-            },
-            {
               "id": "YBT-908307",
               "title": "Kesubos 67b Tzedakah #3",
               "audioUrl": "http://ybt.org/students/2018-2019/refeder/gemara/2018_10_11-Kesubos_67b_Tzedakah_#3-Rabbi_E_Feder.MP3",
@@ -207847,20 +206121,6 @@
               "sourceId": 907913
             },
             {
-              "id": "YBT-902355",
-              "title": "Bava Kamma 86b Boshes Mishpacha",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2018_05_24-Bava_Kamma_86b_Boshes_Mishpacha-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-05-24",
-              "tags": [
-                "Ketuvot",
-                "Bava Kamma"
-              ],
-              "sourceId": 902355
-            },
-            {
               "id": "YBT-902211",
               "title": "Kesubos 37a 8 Kim Leih Bederabah Mineih",
               "audioUrl": "http://ybt.org/audio/2017-2018/rpchait/gemara/2018_05_02-Kesubos_37a_8_Kim_Leih_Bederabah_Mineih-Rabbi_P_Chait.mp3",
@@ -207872,19 +206132,6 @@
                 "Ketuvot"
               ],
               "sourceId": 902211
-            },
-            {
-              "id": "YBT-900880",
-              "title": "Kesubos 66a Boshes Mishpacha",
-              "audioUrl": "http://ybt.org/audio/2017-2018/misc/2018_04_26-Kesubos_66a_Boshes_Mishpacha-Dr_J_Koppel.mp3",
-              "duration": 0,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2018-04-26",
-              "tags": [
-                "Ketuvot"
-              ],
-              "sourceId": 900880
             },
             {
               "id": "YBT-902165",
@@ -208021,20 +206268,6 @@
                 "General"
               ],
               "sourceId": 860803
-            },
-            {
-              "id": "YBT-851542",
-              "title": "Bava Kamma 8b Kesuvos Standing in for the Owner ",
-              "audioUrl": "http://ybt.org/audio/2015-2016/misc/Bava_Kamma_8b_Kesuvos_Standing_in_for_the_Owner_2_11_16_Dr_J_Koppel.mp3",
-              "duration": 2501,
-              "description": "",
-              "speaker": "Dr. Jeremy Koppel",
-              "date": "2016-02-11",
-              "tags": [
-                "Ketuvot",
-                "Bava Kamma"
-              ],
-              "sourceId": 851542
             },
             {
               "id": "YBT-840493",

@@ -1,0 +1,403 @@
+    {
+      "id": "nach",
+      "label": "Nach",
+      "icon": "📖",
+      "lectures": [
+        {
+          "id": "N-3",
+          "title": "Eichah V'Inyanai Tisha B'Av 1 (Summer 1985) (N-3)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-003%20Eicha%20and%20Ideas%20of%20Tisha%20BAv%20no.1.mp3",
+          "duration": 5570,
+          "description": "(Summer 1985)",
+          "speaker": "Rabbi Chait",
+          "date": "1985-01-01",
+          "tags": [
+            "eicha",
+            "tisha bav"
+          ]
+        },
+        {
+          "id": "N-4",
+          "title": "Eichah V'Inyanai Tisha B'Av 2 (Summer 1977/1984/1985) (N-4)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-004%20Eicha%20and%20Ideas%20of%20Tisha%20Bav%20no.2.mp3",
+          "duration": 5225,
+          "description": "(Summer 1977, 1984 1985",
+          "speaker": "Rabbi Chait",
+          "date": "",
+          "tags": [
+            "eicha",
+            "tisha bav"
+          ]
+        },
+        {
+          "id": "N-23",
+          "title": "Haftorat Vayikra - Yishayahu Chapter 43:21 (N-23)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-023%20Haphtoras%20VaYikra.mp3",
+          "duration": 3609,
+          "description": "Yishayahu Chapter 43:21",
+          "speaker": "Rabbi Chait",
+          "date": "",
+          "tags": [
+            "nach"
+          ]
+        },
+        {
+          "id": "N-24",
+          "title": "Neizirut Shel Shmuel (N-24)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-024%20The%20Nezirus%20of%20Shmuel.mp3",
+          "duration": 5035,
+          "description": "RABBI MANN",
+          "speaker": "Rabbi Mann",
+          "date": "",
+          "tags": [
+            "nach"
+          ]
+        },
+        {
+          "id": "N-40",
+          "title": "Nature of Amalek 1 (N-40)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-040%20Nature%20of%20Amalek%20no.1.mp3",
+          "duration": 5667,
+          "description": "",
+          "speaker": "Rabbi Chait",
+          "date": "",
+          "tags": [
+            "amalek"
+          ]
+        },
+        {
+          "id": "N-41",
+          "title": "Nature of Amalek 2 (N-41)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-041%20Nature%20of%20Amalek%20no.2%2C%20and%20Ben%20Krach%20She'halach%20LaIr.mp3",
+          "duration": 5011,
+          "description": "",
+          "speaker": "Rabbi Chait",
+          "date": "",
+          "tags": [
+            "amalek"
+          ]
+        },
+        {
+          "id": "N-42",
+          "title": "The Book of Yonah - Part A (N-42)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-042%20Sefer%20Yona%20no.1.mp3",
+          "duration": 5652,
+          "description": "Part A",
+          "speaker": "Rabbi Chait",
+          "date": "",
+          "tags": [
+            "yonah"
+          ]
+        },
+        {
+          "id": "N-43",
+          "title": "The Book of Yonah - Part B (N-43)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-043%20Sefer%20Yona%20no.2.mp3",
+          "duration": 213,
+          "description": "Part B",
+          "speaker": "Rabbi Chait",
+          "date": "",
+          "tags": [
+            "yonah"
+          ]
+        },
+        {
+          "id": "N-44",
+          "title": "Methodology in Thinking 1 - Mishley 10:6,11 (N-44)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-044%20Methodology%20in%20Thinking%20no.1.mp3",
+          "duration": 3660,
+          "description": "R. Moskowitz. Mishley 10:6,11",
+          "speaker": "Rabbi Moskowitz",
+          "date": "",
+          "tags": [
+            "mishlei",
+            "methodology"
+          ]
+        },
+        {
+          "id": "N-45",
+          "title": "Methodology in Thinking 2 - Mishley 10:13,15 (N-45)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-045%20Methodology%20in%20Thinking%20no.2.mp3",
+          "duration": 3285,
+          "description": "(cont. of prev.). Mishley 10:13,15. (60 min)",
+          "speaker": "Rabbi Moskowitz",
+          "date": "",
+          "tags": [
+            "mishlei",
+            "methodology"
+          ]
+        },
+        {
+          "id": "N-46",
+          "title": "Methodology in Thinking 3 - Mishley 10:16-19 (N-46)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-046%20Methodology%20in%20Thinking%20no.3.mp3",
+          "duration": 3506,
+          "description": "(cont. of prev.). Mishley 10:16-19. (60 min)",
+          "speaker": "Rabbi Moskowitz",
+          "date": "",
+          "tags": [
+            "mishlei",
+            "methodology"
+          ]
+        },
+        {
+          "id": "N-78",
+          "title": "Devorah & Barak (N-78)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-078%20Devora%20and%20Barak.mp3",
+          "duration": 2955,
+          "description": "",
+          "speaker": "Rabbi Chait",
+          "date": "",
+          "tags": [
+            "nach"
+          ]
+        },
+        {
+          "id": "N-82",
+          "title": "Atzmos Yeveishos Yechezkel ch 37 (N-82)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-082%20Nevuas%20Yechezkel%2C%20Atzamos%20Yivaishos.mp3",
+          "duration": 4128,
+          "description": "",
+          "speaker": "Rabbi Chait",
+          "date": "",
+          "tags": [
+            "yechezkel"
+          ]
+        },
+        {
+          "id": "N-25",
+          "title": "Bais Shemesh - Bechukosai (N-25)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-025%20Bais%20Shemesh%20-%20Bechukosai.mp3",
+          "duration": 4875,
+          "description": "RABBI MANN",
+          "speaker": "",
+          "date": "",
+          "tags": []
+        },
+        {
+          "id": "N-62",
+          "title": "Misc. Discussion (N-62)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-062%20Misc.%20Discussion.mp3",
+          "duration": 5313,
+          "description": "Proverbs Chapter 15:8. Samuel II Chap. 15:25. Proverbs Chap. 10:6,8(R.",
+          "speaker": "",
+          "date": "",
+          "tags": []
+        },
+        {
+          "id": "N-108",
+          "title": "The Primacy of Kedushas Hashem (N-108)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-108%20The%20Primacy%20of%20Kedushas%20Hashem.mp3",
+          "duration": 4708,
+          "description": "",
+          "speaker": "",
+          "date": "",
+          "tags": []
+        },
+        {
+          "id": "N-109",
+          "title": "King David and the Temple 1 (N-109)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-109%20King%20David%20and%20the%20Temple%201.mp3",
+          "duration": 5385,
+          "description": "",
+          "speaker": "",
+          "date": "",
+          "tags": []
+        },
+        {
+          "id": "N-110",
+          "title": "King David and the Temple 2 (N-110)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-110%20King%20David%20and%20the%20Temple%202.mp3",
+          "duration": 1214,
+          "description": "",
+          "speaker": "",
+          "date": "",
+          "tags": []
+        },
+        {
+          "id": "N-135",
+          "title": "Eishes Chayil 1 (N-135)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-135%20Eishes%20Chayil%201.mp3",
+          "duration": 5916,
+          "description": "",
+          "speaker": "",
+          "date": "",
+          "tags": []
+        },
+        {
+          "id": "N-136",
+          "title": "Eishes Chayil 2 (N-136)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-136%20Eishes%20Chayil%202.mp3",
+          "duration": 5021,
+          "description": "",
+          "speaker": "",
+          "date": "",
+          "tags": []
+        },
+        {
+          "id": "N-139",
+          "title": "Yishai, and the Difference Between God's and Humans' Perception (N-139)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Mishlei/N-139%20Hilchos%20Talmud%20Torah%2C%20Mishlei%20Ch.%2013.mp3",
+          "duration": 5928,
+          "description": "",
+          "speaker": "",
+          "date": "",
+          "tags": []
+        },
+        {
+          "id": "N-140",
+          "title": "Understanding the Evil Inclination (N-140)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-140%20Understanding%20the%20Evil%20Inclination.mp3",
+          "duration": 5488,
+          "description": "",
+          "speaker": "",
+          "date": "",
+          "tags": []
+        },
+        {
+          "id": "N-141",
+          "title": "Relating to Everyday Life and Making Decisions (N-141)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-141%20Relating%20to%20Everyday%20Life%20and%20Making%20Decisions.mp3",
+          "duration": 5475,
+          "description": "",
+          "speaker": "",
+          "date": "",
+          "tags": []
+        },
+        {
+          "id": "N-143",
+          "title": "Training Your Mind and Mentality Through Mussar (N-143)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-143%20Training%20Your%20Mind%20and%20Mentality%20Through%20Mussar.mp3",
+          "duration": 5405,
+          "description": "",
+          "speaker": "",
+          "date": "",
+          "tags": []
+        },
+        {
+          "id": "N-146",
+          "title": "Charity, the Fear of God, Wisdom (N-146)",
+          "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/N-146%20Charity%2C%20the%20Fear%20of%20God%2C%20Wisdom.mp3",
+          "duration": 3281,
+          "description": "",
+          "speaker": "",
+          "date": "",
+          "tags": []
+        }
+      ],
+      "children": [
+        {
+          "id": "nach-iyov",
+          "label": "Iyov",
+          "lectures": [
+            {
+              "id": "N-13",
+              "title": "Iyov 1 (N-13)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Iyov/N-013%20Iyov%20no.1.mp3",
+              "duration": 5554,
+              "description": "",
+              "speaker": "Rabbi Chait",
+              "date": "",
+              "tags": [
+                "iyov"
+              ]
+            },
+            {
+              "id": "N-14",
+              "title": "Iyov 2 (N-14)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Iyov/N-014%20Iyov%20no.2.mp3",
+              "duration": 5504,
+              "description": "",
+              "speaker": "Rabbi Chait",
+              "date": "",
+              "tags": [
+                "iyov"
+              ]
+            },
+            {
+              "id": "N-15",
+              "title": "Iyov 3 (N-15)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Iyov/N-015%20Iyov%20no.3.mp3",
+              "duration": 5495,
+              "description": "",
+              "speaker": "Rabbi Chait",
+              "date": "",
+              "tags": [
+                "iyov"
+              ]
+            },
+            {
+              "id": "N-16",
+              "title": "Iyov 4 (N-16)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Iyov/N-016%20Iyov%20no.4.mp3",
+              "duration": 1447,
+              "description": "",
+              "speaker": "Rabbi Chait",
+              "date": "",
+              "tags": [
+                "iyov"
+              ]
+            },
+            {
+              "id": "N-17",
+              "title": "Iyov 5 (19-23) (N-17)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Iyov/N-017%20Iyov%20no.5.mp3",
+              "duration": 5603,
+              "description": "(1/2 SIDE)",
+              "speaker": "Rabbi Chait",
+              "date": "",
+              "tags": [
+                "iyov"
+              ]
+            },
+            {
+              "id": "N-19",
+              "title": "Iyov 6 (N-19)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Iyov/N-019%20Iyov%20no.6.mp3",
+              "duration": 5586,
+              "description": "",
+              "speaker": "Rabbi Chait",
+              "date": "",
+              "tags": [
+                "iyov"
+              ]
+            },
+            {
+              "id": "N-20",
+              "title": "Iyov 7 (N-20)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Iyov/N-020%20Iyov%20no.7.mp3",
+              "duration": 5610,
+              "description": "",
+              "speaker": "Rabbi Chait",
+              "date": "",
+              "tags": [
+                "iyov"
+              ]
+            },
+            {
+              "id": "N-21",
+              "title": "Iyov 8 (N-21)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Iyov/N-021%20Iyov%20no.8.mp3",
+              "duration": 5457,
+              "description": "",
+              "speaker": "Rabbi Chait",
+              "date": "",
+              "tags": [
+                "iyov"
+              ]
+            },
+            {
+              "id": "N-22",
+              "title": "Iyov 9 (N-22)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Nach/Iyov/N-022%20Iyov%209.mp3",
+              "duration": 1079,
+              "description": "",
+              "speaker": "Rabbi Chait",
+              "date": "",
+              "tags": [
+                "iyov"
+              ]
+            }
+          ]
+        }]
+    }

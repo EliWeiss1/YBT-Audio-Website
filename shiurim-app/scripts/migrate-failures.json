@@ -1,0 +1,50 @@
+[
+  {
+    "shiurID": "1152198",
+    "stage": "unknown",
+    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts\\pilot-output\\migrate-media\\1152198.mp3",
+    "url": "/2025/248687/1152198.MP3"
+  },
+  {
+    "shiurID": "1152186",
+    "stage": "unknown",
+    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts\\pilot-output\\migrate-media\\1152186.mp3",
+    "url": "/2025/248687/1152186.MP3"
+  },
+  {
+    "shiurID": "1152180",
+    "stage": "unknown",
+    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts\\pilot-output\\migrate-media\\1152180.mp3",
+    "url": "/2025/248687/1152180.MP3"
+  },
+  {
+    "shiurID": "1152188",
+    "stage": "unknown",
+    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts\\pilot-output\\migrate-media\\1152188.mp3",
+    "url": "/2025/248687/1152188.MP3"
+  },
+  {
+    "shiurID": "1152189",
+    "stage": "unknown",
+    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts\\pilot-output\\migrate-media\\1152189.mp3",
+    "url": "/2025/248687/1152189.MP3"
+  },
+  {
+    "shiurID": "1152187",
+    "stage": "unknown",
+    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts\\pilot-output\\migrate-media\\1152187.mp3",
+    "url": "/2025/248687/1152187.MP3"
+  },
+  {
+    "shiurID": "1152179",
+    "stage": "unknown",
+    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts\\pilot-output\\migrate-media\\1152179.mp3",
+    "url": "/2025/248687/1152179.MP3"
+  },
+  {
+    "shiurID": "1152159",
+    "stage": "unknown",
+    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts\\pilot-output\\migrate-media\\1152159.mp3",
+    "url": "/2025/248687/1152159.MP3"
+  }
+]

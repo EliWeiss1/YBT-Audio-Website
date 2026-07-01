@@ -1,7 +1,7 @@
 import { resolveViaZoomApi } from '@/lib/zoom/recordings'
 
 export type ZoomResolveResult =
-  | { ok: true; downloadUrl: string; contentType: string }
+  | { ok: true; downloadUrl: string; contentType: string; matchedBy?: 'exact' | 'fallback' }
   | { ok: false; reason: 'passcode_required' | 'fetch_failed' | 'no_audio_found' | 'no_oauth_token'; detail?: string }
 
 const AUDIO_CONTENT_TYPES = ['audio/', 'video/', 'application/octet-stream', 'mpeg']

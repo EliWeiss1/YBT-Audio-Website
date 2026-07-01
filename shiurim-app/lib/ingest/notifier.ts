@@ -61,6 +61,37 @@ export async function sendFailureNotification(opts: {
   })
 }
 
+export async function sendFallbackMatchNotification(opts: {
+  title: string
+  rabbi: string
+  senderEmail: string
+  zoomShareUrl: string
+  lectureId: string
+}): Promise<void> {
+  if (process.env.INGEST_DRY_RUN === 'true') {
+    console.log('[DRY RUN] Would send fallback-match notification for:', opts.title)
+    return
+  }
+  const adminUrl = process.env.NEXT_PUBLIC_APP_URL
+    ? `${process.env.NEXT_PUBLIC_APP_URL}/admin`
+    : '/admin'
+  await resend.emails.send({
+    from: 'ingest@noreply.ybt.org',
+    to: adminEmail,
+    subject: `[Shiur Ingest] Verify audio: ${opts.title}`,
+    html: `
+      <h2>Recording matched by fallback, not exact URL</h2>
+      <p>The forwarded Zoom link for <strong>${opts.title}</strong> (${opts.rabbi || opts.senderEmail})
+      didn't exactly match any recording on ${opts.senderEmail}'s Zoom account, so the
+      <strong>most recent cloud recording</strong> was used instead. If this rebbe recorded more than
+      one shiur recently, this could be the wrong audio.</p>
+      <p><strong>Lecture ID:</strong> ${opts.lectureId}</p>
+      <p><strong>Forwarded Zoom URL:</strong> <a href="${opts.zoomShareUrl}">${opts.zoomShareUrl}</a></p>
+      <p><a href="${adminUrl}">Review in admin panel →</a></p>
+    `,
+  })
+}
+
 export async function sendOAuthMissingNotification({
   title, rabbi, senderEmail, zoomShareUrl,
 }: { title: string; rabbi: string; senderEmail: string; zoomShareUrl: string }): Promise<void> {

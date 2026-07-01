@@ -4,7 +4,7 @@ import { resolveRecordingUrl } from '@/lib/ingest/zoom-resolver'
 import { uploadAudioToR2 } from '@/lib/ingest/r2-uploader'
 import { categorize } from '@/lib/ingest/categorizer'
 import { writePendingLecture, writeFailedIngestion, writeCategoryFlag, triggerDeploy } from '@/lib/ingest/lectures-writer'
-import { sendFlagNotification, sendFailureNotification, sendOAuthMissingNotification } from '@/lib/ingest/notifier'
+import { sendFlagNotification, sendFailureNotification, sendOAuthMissingNotification, sendFallbackMatchNotification } from '@/lib/ingest/notifier'
 import { generateLectureId } from '@/lib/ingest/types'
 
 export const runtime = 'nodejs'
@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
   }
 
   const { title, rabbi, description, recordingUrl, date, senderEmail } = parsed
+  const lectureId = generateLectureId()
 
   // Step 2: Resolve recording URL to a direct download URL
   const zoomResult = await resolveRecordingUrl(recordingUrl, senderEmail)
@@ -41,9 +42,11 @@ export async function POST(req: NextRequest) {
     })
     return NextResponse.json({ error: `Recording resolution failed: ${zoomResult.reason}` }, { status: 422 })
   }
+  if (zoomResult.matchedBy === 'fallback') {
+    await sendFallbackMatchNotification({ title, rabbi, senderEmail, zoomShareUrl: recordingUrl, lectureId })
+  }
 
   // Step 3: Upload to R2
-  const lectureId = generateLectureId()
   const r2Key = `ingest/${date}/${lectureId}.mp3`
   const uploadResult = await uploadAudioToR2(zoomResult.downloadUrl, r2Key)
   if ('reason' in uploadResult) {

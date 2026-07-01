@@ -46,8 +46,9 @@ export async function resolveViaZoomApi(
   }
 
   const normalizedShare = shareUrlPath(shareUrl)
+  const exactMatch = meetings.find(m => shareUrlPath(m.share_url) === normalizedShare)
   const meeting =
-    meetings.find(m => shareUrlPath(m.share_url) === normalizedShare) ??
+    exactMatch ??
     meetings.sort((a, b) => new Date(b.start_time).getTime() - new Date(a.start_time).getTime())[0]
 
   const audioFile = meeting.recording_files.find(
@@ -61,5 +62,6 @@ export async function resolveViaZoomApi(
     ok: true,
     downloadUrl: `${audioFile.download_url}?access_token=${encodeURIComponent(accessToken)}`,
     contentType: 'audio/mp4',
+    matchedBy: exactMatch ? 'exact' : 'fallback',
   }
 }

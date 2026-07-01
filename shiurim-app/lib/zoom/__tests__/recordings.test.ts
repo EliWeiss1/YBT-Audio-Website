@@ -47,14 +47,15 @@ describe('resolveViaZoomApi', () => {
       ok: true,
       downloadUrl: 'https://us06web.zoom.us/rec/download/AUDIO?access_token=mytoken',
       contentType: 'audio/mp4',
+      matchedBy: 'exact',
     })
   })
 
-  it('falls back to most recent recording when share URL does not match', async () => {
+  it('falls back to most recent recording when share URL does not match, and flags it', async () => {
     mockGetValidAccessToken.mockResolvedValue('tok')
     mockFetch.mockResolvedValue({ ok: true, json: async () => makeApiResponse('https://zoom.us/rec/share/OTHER') })
     const result = await resolveViaZoomApi(SHARE_URL, 'rabbi@example.com')
-    expect(result).toMatchObject({ ok: true })
+    expect(result).toMatchObject({ ok: true, matchedBy: 'fallback' })
   })
 
   it('returns no_audio_found when no meetings exist', async () => {

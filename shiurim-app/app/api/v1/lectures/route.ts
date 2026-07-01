@@ -1,4 +1,5 @@
 import { getAllLectures } from '@/lib/lectures'
+import { normalizeRabbi } from '@/lib/rabbi-normalization'
 import { logApiCall } from '@/lib/api-logger'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -33,7 +34,7 @@ export async function GET(request: NextRequest) {
 
   if (speaker) {
     const s = speaker.toLowerCase()
-    results = results.filter(l => l.speaker?.toLowerCase().includes(s))
+    results = results.filter(l => normalizeRabbi(l.speaker ?? '').toLowerCase().includes(s))
   }
   if (category) {
     const c = category.toLowerCase()

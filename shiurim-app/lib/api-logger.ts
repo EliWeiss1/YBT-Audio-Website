@@ -22,9 +22,7 @@ export function logApiCall(entry: ApiLogEntry): void {
   const client = getServiceClient()
   if (!client) return
 
-  client
-    .from('api_logs')
-    .insert(entry)
+  void Promise.resolve(client.from('api_logs').insert(entry))
     .then(({ error }) => { if (error) console.error('[api-logger]', error.message) })
     .catch((err) => console.error('[api-logger] unexpected:', err))
 }

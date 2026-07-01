@@ -4,7 +4,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 const mockSingle = vi.fn()
 const mockEq = vi.fn(() => ({ single: mockSingle }))
 const mockSelect = vi.fn(() => ({ eq: mockEq }))
-const mockUpsert = vi.fn(() => Promise.resolve({ error: null }))
+const mockUpsert = vi.fn(() => Promise.resolve({ error: null as { message: string } | null }))
 const mockFrom = vi.fn(() => ({ select: mockSelect, upsert: mockUpsert }))
 vi.mock('@supabase/supabase-js', () => ({
   createClient: vi.fn(() => ({ from: mockFrom })),
@@ -86,5 +86,19 @@ describe('storeToken', () => {
       }),
       { onConflict: 'sender_email' }
     )
+  })
+
+  it('throws when the upsert fails (e.g. table missing)', async () => {
+    mockUpsert.mockResolvedValueOnce({ error: { message: 'relation "zoom_oauth_tokens" does not exist' } })
+    await expect(storeToken('r@example.com', 'uid1', 'atk', 'rtk', 3600)).rejects.toThrow(
+      /Failed to store Zoom token/
+    )
+  })
+})
+
+describe('getStoredToken error handling', () => {
+  it('throws on unexpected errors instead of silently returning null', async () => {
+    mockSingle.mockResolvedValue({ data: null, error: { code: '42P01', message: 'relation does not exist' } })
+    await expect(getStoredToken('r@example.com')).rejects.toThrow(/Failed to read Zoom token/)
   })
 })

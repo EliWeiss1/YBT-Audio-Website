@@ -151,3 +151,25 @@ create policy "Logged-in users can insert speaker overrides"
   on public.speaker_overrides for insert with check (auth.uid() is not null);
 create policy "Logged-in users can update speaker overrides"
   on public.speaker_overrides for update using (auth.uid() is not null);
+
+-- ============================================
+-- ZOOM OAUTH TOKENS
+-- Stores per-ingest-email Zoom OAuth tokens for
+-- the shiur ingestion pipeline. Written only by
+-- the server (service role key) via
+-- /api/zoom/authorize and /api/zoom/callback.
+-- No client-side access, so RLS has no policies
+-- (service role bypasses RLS; everyone else is
+-- denied by default).
+-- Run this block if adding to an existing deployment.
+-- ============================================
+create table public.zoom_oauth_tokens (
+  sender_email text primary key,
+  zoom_user_id text not null,
+  access_token text not null,
+  refresh_token text not null,
+  expires_at timestamp with time zone not null,
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+alter table public.zoom_oauth_tokens enable row level security;

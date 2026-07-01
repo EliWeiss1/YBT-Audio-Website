@@ -54,7 +54,11 @@ export async function GET(req: NextRequest) {
   }
   const user = await userRes.json() as { id: string; email: string }
 
-  await storeToken(email, user.id, tokens.access_token, tokens.refresh_token, tokens.expires_in)
+  try {
+    await storeToken(email, user.id, tokens.access_token, tokens.refresh_token, tokens.expires_in)
+  } catch (err) {
+    return html(`<h1>Failed to save Zoom connection</h1><pre>${err instanceof Error ? err.message : String(err)}</pre>`, 500)
+  }
 
   return html(
     `<h1>&#10003; Connected</h1>

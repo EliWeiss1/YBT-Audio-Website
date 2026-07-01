@@ -16,11 +16,15 @@ export interface TokenRow {
 }
 
 export async function getStoredToken(email: string): Promise<TokenRow | null> {
-  const { data } = await db()
+  const { data, error } = await db()
     .from('zoom_oauth_tokens')
     .select('*')
     .eq('sender_email', email.toLowerCase())
     .single()
+  if (error) {
+    if (error.code === 'PGRST116') return null // no matching row
+    throw new Error(`Failed to read Zoom token for ${email}: ${error.message}`)
+  }
   return data ?? null
 }
 
@@ -32,7 +36,7 @@ export async function storeToken(
   expiresIn: number
 ): Promise<void> {
   const expiresAt = new Date(Date.now() + expiresIn * 1000).toISOString()
-  await db().from('zoom_oauth_tokens').upsert(
+  const { error } = await db().from('zoom_oauth_tokens').upsert(
     {
       sender_email: email.toLowerCase(),
       zoom_user_id: zoomUserId,
@@ -43,6 +47,9 @@ export async function storeToken(
     },
     { onConflict: 'sender_email' }
   )
+  if (error) {
+    throw new Error(`Failed to store Zoom token for ${email}: ${error.message}`)
+  }
 }
 
 async function doRefresh(row: TokenRow): Promise<string> {

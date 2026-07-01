@@ -21,7 +21,7 @@ Returns a paginated list of lectures, optionally filtered.
 
 | Parameter  | Type   | Default | Description |
 |------------|--------|---------|-------------|
-| `speaker`  | string | —       | Filter by speaker name (case-insensitive partial match). E.g. `speaker=Chait` matches "Rabbi Chait". |
+| `speaker`  | string | —       | Filter by speaker name (case-insensitive partial match against canonical name). Speaker names are normalized — e.g. `speaker=Chait` matches lectures by "Rabbi Yisroel Chait" and all other variants grouped under "Rabbi Chait". Use the canonical names returned by `GET /api/v1/categories` or browse `/api/v1/lectures` to discover available speakers. |
 | `category` | string | —       | Filter by category or subcategory label (case-insensitive exact match against any level of the breadcrumb). E.g. `category=Gemarah` or `category=Bava Kamma`. Also accepts subcategory node IDs. |
 | `tag`      | string | —       | Filter by tag (case-insensitive exact match). E.g. `tag=bereishis`. |
 | `search`   | string | —       | Partial text match on lecture title (case-insensitive). E.g. `search=genesis`. |

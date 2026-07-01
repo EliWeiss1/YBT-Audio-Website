@@ -1,8 +1,9 @@
-import { categories, getAllLectures, flattenLectures } from '@/lib/lectures'
+import { categories, getAllLectures } from '@/lib/lectures'
 import Link from 'next/link'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase-server'
 import MyShiurim from '@/components/lectures/MyShiurim'
+import RecentlyGiven from '@/components/lectures/RecentlyGiven'
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -30,7 +31,16 @@ export default async function HomePage() {
   const recentProgressRows = progressResult.data ?? []
   const savedIds = (savedResult.data ?? []).map((r: { lecture_id: string }) => r.lecture_id)
 
-  const totalLectures = getAllLectures().length
+  const allLectures = getAllLectures()
+  const totalLectures = allLectures.length
+
+  // "Recently Given" = newest by the shiur's delivery date. Drop entries with
+  // no date (can't claim to be recently given); ISO YYYY-MM-DD sorts
+  // chronologically. getAllLectures() already dedups cross-listed shiurim.
+  const recentlyGiven = allLectures
+    .filter(l => l.date)
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, 15)
 
   return (
     <div className="p-8 max-w-4xl mx-auto">
@@ -75,58 +85,8 @@ export default async function HomePage() {
         />
       )}
 
-      {/* Category grid */}
-      <h2 className="text-lg font-semibold text-stone-700 mb-4">Browse by Category</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {categories.map(cat => {
-          const total = flattenLectures(cat).length
-          if (total === 0) return null  // hide empty categories
-
-          // Show top-level children labels as preview chips
-          const childLabels = cat.children
-            ? cat.children.slice(0, 4).map(c => c.label)
-            : []
-          const extraChildren = cat.children && cat.children.length > 4
-            ? cat.children.length - 4
-            : 0
-
-          return (
-            <Link
-              key={cat.id}
-              href={`/lectures?node=${cat.id}`}
-              className="bg-white rounded-xl border border-stone-200 p-5 hover:border-emerald-200
-                         hover:shadow-sm transition-all group"
-            >
-              {/* Icon + title */}
-              <div className="text-3xl mb-3">{cat.icon}</div>
-              <h3 className="font-semibold text-stone-900 group-hover:text-emerald-800
-                             transition-colors mb-1">
-                {cat.label}
-              </h3>
-              <p className="text-sm text-stone-400 mb-3">
-                {total.toLocaleString()} shiurim
-              </p>
-
-              {/* Child labels as chips */}
-              {childLabels.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  {childLabels.map(label => (
-                    <span key={label}
-                      className="text-xs px-2 py-0.5 bg-stone-100 text-stone-500 rounded-full">
-                      {label}
-                    </span>
-                  ))}
-                  {extraChildren > 0 && (
-                    <span className="text-xs px-2 py-0.5 bg-stone-100 text-stone-400 rounded-full">
-                      +{extraChildren} more
-                    </span>
-                  )}
-                </div>
-              )}
-            </Link>
-          )
-        })}
-      </div>
+      {/* Recently Given — newest shiurim by delivery date */}
+      <RecentlyGiven lectures={recentlyGiven} />
     </div>
   )
 }

@@ -13,7 +13,7 @@
 
 // Any byte change to this file triggers the browser's SW update flow —
 // bump this on future edits to force one.
-const SW_VERSION = 'v2'
+const SW_VERSION = 'v3'
 
 const AUDIO_CACHE = 'audio-downloads-v1'
 const PAGES_CACHE = 'pages-v1'
@@ -174,7 +174,12 @@ async function audioFromCache(request) {
 
 // ── Strategies ───────────────────────────────────────────────────────────────
 
-/** Pages: network first, fall back to cache, then to the offline page. */
+/** Pages: network first, fall back to cache, then to the offline page.
+ *  The /offline fallback is only for genuine offline navigations. If the fetch
+ *  throws while the browser reports itself online (a transient server/edge
+ *  hiccup), surfacing "You're offline" is wrong and confusing — retry once and
+ *  otherwise return the real error, so a page like /feed isn't misreported as
+ *  unavailable offline. */
 async function pageNetworkFirst(request) {
   try {
     const response = await fetch(request)
@@ -182,12 +187,26 @@ async function pageNetworkFirst(request) {
       putInCache(PAGES_CACHE, request, response.clone(), 60)
     }
     return response
-  } catch {
+  } catch (err) {
     const cached = await caches.match(request, { cacheName: PAGES_CACHE })
     if (cached) return cached
-    const offline = await caches.match(OFFLINE_URL, { cacheName: PAGES_CACHE })
-    if (offline) return offline
-    return new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } })
+
+    // Genuinely offline → show the offline shell.
+    if (!self.navigator.onLine) {
+      const offline = await caches.match(OFFLINE_URL, { cacheName: PAGES_CACHE })
+      if (offline) return offline
+      return new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } })
+    }
+
+    // Online but the navigation fetch failed: retry once before giving up.
+    try {
+      return await fetch(request)
+    } catch {
+      return new Response('Temporarily unavailable', {
+        status: 503,
+        headers: { 'Content-Type': 'text/plain' },
+      })
+    }
   }
 }
 

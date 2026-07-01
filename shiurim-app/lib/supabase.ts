@@ -87,11 +87,16 @@ export async function getLectureComments(lectureId: string) {
 }
 
 export async function getFeedComments(limit = 20) {
-  const { data } = await supabase
-    .from('feed_comments')
-    .select('*')
-    .limit(limit)
-  return data ?? []
+  try {
+    const { data } = await supabase
+      .from('feed_comments')
+      .select('*')
+      .limit(limit)
+    return data ?? []
+  } catch {
+    // A backend hiccup should render the empty state, not crash the page.
+    return []
+  }
 }
 
 export async function updateComment(

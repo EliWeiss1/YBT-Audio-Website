@@ -54,6 +54,17 @@ export async function GET(req: NextRequest) {
   }
   const user = await userRes.json() as { id: string; email: string }
 
+  if (user.email.toLowerCase() !== email.toLowerCase()) {
+    return html(
+      `<h1>Wrong Zoom account</h1>
+       <p>This link is for connecting the Zoom account for <strong>${email}</strong>,
+       but you're currently signed into Zoom as <strong>${user.email}</strong>.</p>
+       <p>Sign out of Zoom (or open this link in a private/incognito browser window),
+       sign back in as <strong>${email}</strong>, then click the link again.</p>`,
+      409
+    )
+  }
+
   try {
     await storeToken(email, user.id, tokens.access_token, tokens.refresh_token, tokens.expires_in)
   } catch (err) {

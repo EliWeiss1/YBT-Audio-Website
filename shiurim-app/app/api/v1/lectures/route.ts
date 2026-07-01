@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 
   if (speaker) {
     const s = speaker.toLowerCase()
-    results = results.filter(l => l.speaker.toLowerCase().includes(s))
+    results = results.filter(l => l.speaker?.toLowerCase().includes(s))
   }
   if (category) {
     const c = category.toLowerCase()
@@ -44,11 +44,11 @@ export async function GET(request: NextRequest) {
   }
   if (tag) {
     const t = tag.toLowerCase()
-    results = results.filter(l => l.tags.some(lTag => lTag.toLowerCase() === t))
+    results = results.filter(l => l.tags?.some(lTag => lTag.toLowerCase() === t))
   }
   if (search) {
     const s = search.toLowerCase()
-    results = results.filter(l => l.title.toLowerCase().includes(s))
+    results = results.filter(l => l.title?.toLowerCase().includes(s))
   }
   if (date_from) results = results.filter(l => l.date >= date_from)
   if (date_to)   results = results.filter(l => l.date <= date_to)

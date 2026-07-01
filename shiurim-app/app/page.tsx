@@ -86,7 +86,7 @@ export default async function HomePage() {
       )}
 
       {/* Recently Given — newest shiurim by delivery date */}
-      <RecentlyGiven lectures={recentlyGiven} />
+      <RecentlyGiven lectures={recentlyGiven} userId={user?.id ?? null} />
     </div>
   )
 }

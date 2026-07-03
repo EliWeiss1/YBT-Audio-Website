@@ -60,8 +60,11 @@ Rules:
     messages: [{ role: 'user', content: prompt }],
   })
 
-  const text = message.content.find(b => b.type === 'text')?.text ?? '{}'
-  const parsed = JSON.parse(text) as {
+  const raw = message.content.find(b => b.type === 'text')?.text ?? '{}'
+  // Haiku sometimes wraps the JSON in ```json fences or adds stray prose despite the
+  // instruction; extract the first {...} object so JSON.parse doesn't choke on backticks.
+  const jsonMatch = raw.match(/\{[\s\S]*\}/)
+  const parsed = JSON.parse(jsonMatch ? jsonMatch[0] : raw) as {
     proposed_path: string[]
     confidence: 'high' | 'low'
     alternatives: string[][]

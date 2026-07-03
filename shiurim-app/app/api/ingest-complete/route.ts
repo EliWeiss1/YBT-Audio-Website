@@ -22,11 +22,11 @@ export async function POST(req: NextRequest) {
 
   const {
     lectureId, title, rabbi, description, date, senderEmail,
-    publicUrl, duration, shareUrl, error,
+    publicUrl, duration, shareUrl, rawEmailSnippet, error,
   } = body as {
     lectureId?: string; title?: string; rabbi?: string; description?: string
     date?: string; senderEmail?: string; publicUrl?: string; duration?: number
-    shareUrl?: string; error?: string
+    shareUrl?: string; rawEmailSnippet?: string; error?: string
   }
 
   // Failure branch: the worker couldn't download/upload the recording.
@@ -37,13 +37,14 @@ export async function POST(req: NextRequest) {
       rawRabbi: rabbi ?? '',
       zoomShareUrl: shareUrl ?? '',
       failureReason: `browser_ingest_failed: ${error}`,
-      rawEmailSnippet: '',
+      rawEmailSnippet: rawEmailSnippet ?? '',
     })
     await sendFailureNotification({
       title: title ?? '',
       rabbi: rabbi ?? '',
       zoomShareUrl: shareUrl ?? '',
       reason: `browser_ingest_failed: ${error}`,
+      rawEmailSnippet,
     })
     return NextResponse.json({ ok: true, recorded: 'failure' })
   }
@@ -101,7 +102,7 @@ export async function POST(req: NextRequest) {
       rawRabbi: rabbi ?? '',
       zoomShareUrl: shareUrl ?? '',
       failureReason: `Write failed: ${String(e)}`,
-      rawEmailSnippet: '',
+      rawEmailSnippet: rawEmailSnippet ?? '',
     })
     return NextResponse.json({ error: 'Failed to persist shiur' }, { status: 500 })
   }

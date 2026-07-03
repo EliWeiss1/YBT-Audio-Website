@@ -15,7 +15,7 @@ import { parseBuffer } from 'music-metadata'
 import { writeFile } from 'node:fs/promises'
 
 const {
-  SHARE_URL, LECTURE_ID, TITLE, RABBI, DESCRIPTION, DATE, SENDER_EMAIL,
+  SHARE_URL, LECTURE_ID, TITLE, RABBI, DESCRIPTION, DATE, SENDER_EMAIL, RAW_EMAIL_SNIPPET,
   INGEST_COMPLETE_URL, INGEST_SECRET, DRY_RUN,
 } = process.env
 
@@ -77,7 +77,8 @@ async function main() {
     if (DRY_RUN === 'true') {
       await postResult({
         lectureId: LECTURE_ID, title: TITLE, rabbi: RABBI, description: DESCRIPTION,
-        date: DATE, senderEmail: SENDER_EMAIL, r2Key, publicUrl: `DRY_RUN/${r2Key}`, duration,
+        date: DATE, senderEmail: SENDER_EMAIL, shareUrl: SHARE_URL, rawEmailSnippet: RAW_EMAIL_SNIPPET,
+        r2Key, publicUrl: `DRY_RUN/${r2Key}`, duration,
       })
       console.log(`[DRY RUN] Captured ${buf.length} bytes, duration ${duration}s; skipped R2 upload.`)
       return
@@ -100,8 +101,8 @@ async function main() {
 
     await postResult({
       lectureId: LECTURE_ID, title: TITLE, rabbi: RABBI, description: DESCRIPTION,
-      date: DATE, senderEmail: SENDER_EMAIL, r2Key,
-      publicUrl: `${process.env.R2_PUBLIC_URL}/${r2Key}`, duration,
+      date: DATE, senderEmail: SENDER_EMAIL, shareUrl: SHARE_URL, rawEmailSnippet: RAW_EMAIL_SNIPPET,
+      r2Key, publicUrl: `${process.env.R2_PUBLIC_URL}/${r2Key}`, duration,
     })
     console.log(`Uploaded ${buf.length} bytes to R2 key ${r2Key}, duration ${duration}s.`)
   } finally {
@@ -119,7 +120,7 @@ main().catch(async (e) => {
   try {
     const res = await postResult({
       lectureId: LECTURE_ID, title: TITLE, rabbi: RABBI, senderEmail: SENDER_EMAIL,
-      shareUrl: SHARE_URL, error: String(e),
+      shareUrl: SHARE_URL, rawEmailSnippet: RAW_EMAIL_SNIPPET, error: String(e),
     })
     if (res && res.ok) await writeFile('.ingest-reported', '1').catch(() => {})
   } catch {

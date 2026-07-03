@@ -32,6 +32,7 @@ jobs:
           DESCRIPTION: ${{ github.event.client_payload.description }}
           DATE: ${{ github.event.client_payload.date }}
           SENDER_EMAIL: ${{ github.event.client_payload.senderEmail }}
+          RAW_EMAIL_SNIPPET: ${{ github.event.client_payload.rawEmailSnippet }}
           INGEST_COMPLETE_URL: https://ybtshiurim.org/api/ingest-complete
           INGEST_SECRET: ${{ secrets.INGEST_SECRET }}
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
@@ -52,8 +53,8 @@ jobs:
             -H "Content-Type: application/json" \
             -H "x-ingest-secret: $INGEST_SECRET" \
             -d "$(jq -n \
-              --arg id "$LECTURE_ID" --arg t "$TITLE" --arg r "$RABBI" --arg u "$SHARE_URL" \
-              '{lectureId:$id,title:$t,rabbi:$r,shareUrl:$u,error:"github_action_job_failed"}')"
+              --arg id "$LECTURE_ID" --arg t "$TITLE" --arg r "$RABBI" --arg u "$SHARE_URL" --arg s "$RAW_EMAIL_SNIPPET" \
+              '{lectureId:$id,title:$t,rabbi:$r,shareUrl:$u,rawEmailSnippet:$s,error:"github_action_job_failed"}')"
         env:
           INGEST_COMPLETE_URL: https://ybtshiurim.org/api/ingest-complete
           INGEST_SECRET: ${{ secrets.INGEST_SECRET }}
@@ -61,3 +62,4 @@ jobs:
           TITLE: ${{ github.event.client_payload.title }}
           RABBI: ${{ github.event.client_payload.rabbi }}
           SHARE_URL: ${{ github.event.client_payload.shareUrl }}
+          RAW_EMAIL_SNIPPET: ${{ github.event.client_payload.rawEmailSnippet }}

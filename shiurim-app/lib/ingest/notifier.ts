@@ -41,6 +41,7 @@ export async function sendFailureNotification(opts: {
   rabbi: string
   zoomShareUrl: string
   reason: string
+  rawEmailSnippet?: string
 }): Promise<void> {
   if (process.env.INGEST_DRY_RUN === 'true') {
     console.log('[DRY RUN] Would send failure notification for:', opts.title)
@@ -57,6 +58,52 @@ export async function sendFailureNotification(opts: {
       <p><strong>Zoom URL:</strong> <a href="${opts.zoomShareUrl}">${opts.zoomShareUrl}</a></p>
       <p><strong>Reason:</strong> ${opts.reason}</p>
       <p>You may need to add this shiur manually.</p>
+      ${opts.rawEmailSnippet ? `<p><strong>Original email (excerpt):</strong></p><pre style="white-space:pre-wrap;background:#f5f5f5;padding:8px;">${opts.rawEmailSnippet}</pre>` : ''}
+    `,
+  })
+}
+
+export async function sendParseFailureNotification(opts: {
+  senderEmail: string
+  subject: string
+  reason: 'no_title' | 'no_recording_url'
+  rawEmailSnippet: string
+}): Promise<void> {
+  if (process.env.INGEST_DRY_RUN === 'true') {
+    console.log('[DRY RUN] Would send parse-failure notifications for:', opts.senderEmail, opts.reason)
+    return
+  }
+
+  const guidance = opts.reason === 'no_title'
+    ? `We couldn't find a title for the shiur. Please resend with the shiur's title as the very first line of your message (e.g. "Chullin 42a - Treifos"), optionally followed by the rabbi's name on the second line and a short description on the third.`
+    : `We couldn't find a Zoom recording link in your message. Please make sure the "zoom.us/rec/share/..." link is included.`
+
+  // Let the sender know so they can just resend correctly, without needing an admin.
+  if (opts.senderEmail) {
+    await resend.emails.send({
+      from: 'ingest@noreply.ybt.org',
+      to: opts.senderEmail,
+      subject: `Couldn't process your shiur${opts.subject ? `: ${opts.subject}` : ''}`,
+      html: `
+        <p>Thanks for sending in a shiur! We ran into a problem processing it:</p>
+        <p><strong>${guidance}</strong></p>
+        <p>Just forward the recording again in the correct format and it'll go through automatically.</p>
+      `,
+    })
+  }
+
+  // Keep the admin in the loop too, consistent with every other failure path.
+  await resend.emails.send({
+    from: 'ingest@noreply.ybt.org',
+    to: adminEmail,
+    subject: `[Shiur Ingest] Unparseable email from ${opts.senderEmail || 'unknown sender'}`,
+    html: `
+      <h2>Could not parse an incoming shiur email</h2>
+      <p><strong>From:</strong> ${opts.senderEmail || '(unknown)'}</p>
+      <p><strong>Subject:</strong> ${opts.subject || '(none)'}</p>
+      <p><strong>Reason:</strong> ${opts.reason}</p>
+      <p><strong>Original email (excerpt):</strong></p>
+      <pre style="white-space:pre-wrap;background:#f5f5f5;padding:8px;">${opts.rawEmailSnippet}</pre>
     `,
   })
 }

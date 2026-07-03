@@ -19,6 +19,10 @@ export type UploadResult = {
   r2Key: string
 }
 
+export type ParseResult =
+  | { ok: true; data: IngestRequest }
+  | { ok: false; reason: 'no_title' | 'no_recording_url'; senderEmail: string; subject: string }
+
 export type IngestOutcome =
   | { status: 'success'; lectureId: string; nodePath: string[]; flagged: boolean }
   | { status: 'failed'; reason: string; recordingUrl?: string }

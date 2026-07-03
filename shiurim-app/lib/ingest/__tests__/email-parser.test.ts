@@ -9,9 +9,9 @@ Date: Wed, 15 Jan 2025 10:30:00 +0000
 Subject: Fwd: Recording Ready
 Content-Type: text/plain; charset=utf-8
 
-Title: Bava Kamma 34a — Damages for Fire
-Rabbi: Rabbi Weiss
-Description: Covers the halacha of aish mamono
+Bava Kamma 34a — Damages for Fire
+Rabbi Weiss
+Covers the halacha of aish mamono
 
 ---------- Forwarded message ---------
 From: no-reply@zoom.us
@@ -26,7 +26,7 @@ Date: Thu, 16 Jan 2025 08:00:00 +0000
 Subject: Fwd: Recording Ready
 Content-Type: text/plain; charset=utf-8
 
-Title: Shabbos 10b — Kavod Shabbat
+Shabbos 10b — Kavod Shabbat
 
 ---------- Forwarded message ---------
 From: no-reply@zoom.us
@@ -34,10 +34,24 @@ From: no-reply@zoom.us
 Join URL: https://zoom.us/rec/share/XYZ789
 `
 
-const FIXTURE_NO_TITLE_OR_RABBI = `From: unknown@gmail.com
+const FIXTURE_KNOWN_SENDER_NO_RABBI_LINE = `From: rabbi.example@gmail.com
+To: shiurim@ybt.org
+Date: Thu, 16 Jan 2025 08:00:00 +0000
+Subject: Fwd: Recording Ready
+Content-Type: text/plain; charset=utf-8
+
+Shabbos 10b — Kavod Shabbat
+
+---------- Forwarded message ---------
+From: no-reply@zoom.us
+
+Join URL: https://zoom.us/rec/share/XYZ789
+`
+
+const FIXTURE_NO_PREAMBLE = `From: unknown@gmail.com
 To: shiurim@ybt.org
 Date: Fri, 17 Jan 2025 09:00:00 +0000
-Subject: Fwd: Recording Ready
+Subject: Meeting assets are ready
 Content-Type: text/plain; charset=utf-8
 
 ---------- Forwarded message ---------
@@ -52,42 +66,95 @@ Date: Sat, 18 Jan 2025 09:00:00 +0000
 Subject: Fwd: Recording Ready
 Content-Type: text/plain; charset=utf-8
 
-Title: Multi-link test
-Rabbi: Rabbi Test
+Multi-link test
+Rabbi Test
 
 ---------- Forwarded message ---------
 Join URL: https://zoom.us/rec/share/FIRST
 Additional: https://zoom.us/rec/share/SECOND
 `
 
+const FIXTURE_LABELED = `From: rabbi@example.com
+To: shiurim@ybt.org
+Date: Wed, 15 Jan 2025 10:30:00 +0000
+Subject: Fwd: Recording Ready
+Content-Type: text/plain; charset=utf-8
+
+Title: Bava Kamma 34a — Damages for Fire
+Rabbi: Rabbi Weiss
+Description: Covers the halacha of aish mamono
+
+---------- Forwarded message ---------
+From: no-reply@zoom.us
+
+Join URL: https://zoom.us/rec/share/ABCDEF123456
+`
+
 describe('parseIngestEmail', () => {
-  it('extracts all fields from a complete forwarded email', async () => {
+  it('extracts all fields positionally: title/rabbi/description on lines 1-3', async () => {
     const result = await parseIngestEmail(Buffer.from(FIXTURE_FULL))
     expect(result).toEqual({
-      title: 'Bava Kamma 34a — Damages for Fire',
-      rabbi: 'Rabbi Weiss',
-      description: 'Covers the halacha of aish mamono',
-      recordingUrl: 'https://zoom.us/rec/share/ABCDEF123456',
-      date: '2025-01-15',
-      senderEmail: 'rabbi@example.com',
+      ok: true,
+      data: {
+        title: 'Bava Kamma 34a — Damages for Fire',
+        rabbi: 'Rabbi Weiss',
+        description: 'Covers the halacha of aish mamono',
+        recordingUrl: 'https://zoom.us/rec/share/ABCDEF123456',
+        date: '2025-01-15',
+        senderEmail: 'rabbi@example.com',
+      },
     })
   })
 
-  it('leaves rabbi empty when line is absent (caller resolves from sender map)', async () => {
+  it('leaves rabbi empty when line 2 is absent and sender is unknown', async () => {
     const result = await parseIngestEmail(Buffer.from(FIXTURE_NO_RABBI))
-    expect(result.rabbi).toBe('')
-    expect(result.title).toBe('Shabbos 10b — Kavod Shabbat')
-    expect(result.senderEmail).toBe('known@yeshiva.edu')
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.data.rabbi).toBe('')
+      expect(result.data.title).toBe('Shabbos 10b — Kavod Shabbat')
+      expect(result.data.senderEmail).toBe('known@yeshiva.edu')
+    }
   })
 
-  it('returns null when title and zoom URL are both missing', async () => {
-    const result = await parseIngestEmail(Buffer.from(FIXTURE_NO_TITLE_OR_RABBI))
-    expect(result).toBeNull()
+  it('falls back to the sender-rabbi map when line 2 is absent and sender is known', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_KNOWN_SENDER_NO_RABBI_LINE))
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.data.rabbi).toBe('Rabbi Example')
+  })
+
+  it('still accepts legacy Title:/Rabbi:/Description: labels', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_LABELED))
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.data.title).toBe('Bava Kamma 34a — Damages for Fire')
+      expect(result.data.rabbi).toBe('Rabbi Weiss')
+      expect(result.data.description).toBe('Covers the halacha of aish mamono')
+    }
+  })
+
+  it('returns a no_title failure when the preamble is empty, ignoring the Zoom-generated Subject', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_NO_PREAMBLE))
+    expect(result).toEqual({ ok: false, reason: 'no_title', senderEmail: 'unknown@gmail.com', subject: 'Meeting assets are ready' })
+  })
+
+  it('returns a no_recording_url failure when no link is found', async () => {
+    const fixture = `From: rabbi@example.com
+To: shiurim@ybt.org
+Date: Wed, 15 Jan 2025 10:30:00 +0000
+Subject: Fwd: Recording Ready
+Content-Type: text/plain; charset=utf-8
+
+Berachos 5a
+Rabbi Cohen
+`
+    const result = await parseIngestEmail(Buffer.from(fixture))
+    expect(result).toEqual({ ok: false, reason: 'no_recording_url', senderEmail: 'rabbi@example.com', subject: 'Fwd: Recording Ready' })
   })
 
   it('uses only the first zoom share URL when multiple are present', async () => {
     const result = await parseIngestEmail(Buffer.from(FIXTURE_MULTI_ZOOM))
-    expect(result?.recordingUrl).toBe('https://zoom.us/rec/share/FIRST')
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.data.recordingUrl).toBe('https://zoom.us/rec/share/FIRST')
   })
 
   it('extracts a Dropbox link as the recording URL', async () => {
@@ -97,14 +164,15 @@ Date: Wed, 15 Jan 2025 10:30:00 +0000
 Subject: Shiur recording
 Content-Type: text/plain; charset=utf-8
 
-Title: Berachos 5a
-Rabbi: Rabbi Cohen
-Description: On suffering
+Berachos 5a
+Rabbi Cohen
+On suffering
 
 Recording: https://www.dropbox.com/s/abc123/shiur.mp3?dl=0
 `
     const result = await parseIngestEmail(Buffer.from(fixture))
-    expect(result?.recordingUrl).toBe('https://www.dropbox.com/s/abc123/shiur.mp3?dl=0')
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.data.recordingUrl).toBe('https://www.dropbox.com/s/abc123/shiur.mp3?dl=0')
   })
 
   it('extracts a direct mp3 URL as the recording URL', async () => {
@@ -114,12 +182,13 @@ Date: Wed, 15 Jan 2025 10:30:00 +0000
 Subject: Shiur recording
 Content-Type: text/plain; charset=utf-8
 
-Title: Berachos 5a
-Rabbi: Rabbi Cohen
+Berachos 5a
+Rabbi Cohen
 
 https://cdn.example.com/recordings/berachos-5a.mp3
 `
     const result = await parseIngestEmail(Buffer.from(fixture))
-    expect(result?.recordingUrl).toBe('https://cdn.example.com/recordings/berachos-5a.mp3')
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.data.recordingUrl).toBe('https://cdn.example.com/recordings/berachos-5a.mp3')
   })
 })

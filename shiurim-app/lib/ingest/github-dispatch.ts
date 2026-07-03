@@ -6,6 +6,7 @@ export type BrowserIngestPayload = {
   description: string
   date: string
   senderEmail: string
+  rawEmailSnippet: string
 }
 
 // Fire a repository_dispatch to kick off the GitHub Actions "zoom-ingest" worker,

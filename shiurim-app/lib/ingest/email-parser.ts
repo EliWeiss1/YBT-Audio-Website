@@ -15,6 +15,40 @@ function findRecordingUrl(text: string): string {
   )
 }
 
+// Gmail wraps a forward in dashes ("---------- Forwarded message ---------");
+// Apple Mail uses no dashes at all ("Begin forwarded message:"). Both are
+// matched, but a bare "forwarded message" with neither marker is not — that's
+// too weak a signal and risks truncating a real preamble.
+const FORWARD_BOUNDARY_RE = /^(?:-{3,}\s*(?:Begin\s+)?[Ff]orwarded\s+message|Begin\s+[Ff]orwarded\s+message)\s*:?/m
+
+// Apple Mail formats nested header dates as "May 31, 2026 at 11:49:52 AM EDT" —
+// the literal "at" breaks JS Date parsing, so it's stripped first. Gmail's
+// RFC 2822 style ("Wed, 15 Jan 2025 10:30:00 +0000") parses natively either way.
+function parseHeaderDate(raw: string): string | null {
+  const d = new Date(raw.replace(/\bat\b/i, '').trim())
+  return isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10)
+}
+
+// A forwarded chain nests with the newest message on the outside and Zoom's
+// original notification buried deepest — so its "Date:" header (sent within
+// minutes of the recording finishing, i.e. right after the shiur) is either
+// the one paired with "From: ... zoom.us", or failing that, simply the LAST
+// "Date:" line in the body. This is a much closer proxy for when the shiur was
+// given than the date a rebbe/gabbai happened to get around to forwarding it.
+function extractOriginalDate(body: string): string | null {
+  const zoomBlock = body.match(/From:\s*[^\n]*(?:no-reply@)?zoom\.us[^\n]*\n\s*Date:\s*(.+)/i)
+  if (zoomBlock) {
+    const d = parseHeaderDate(zoomBlock[1])
+    if (d) return d
+  }
+  const dateLines = [...body.matchAll(/^\s*Date:\s*(.+)$/gim)]
+  for (let i = dateLines.length - 1; i >= 0; i--) {
+    const d = parseHeaderDate(dateLines[i][1])
+    if (d) return d
+  }
+  return null
+}
+
 // Rebbeim aren't expected to type "Title:"/"Rabbi:"/"Description:" labels — the
 // convention is positional (title on line 1, rabbi optionally on line 2, description
 // optionally on line 3). Still strip a leading label if someone types one out of habit.
@@ -33,10 +67,12 @@ export async function parseIngestEmail(rawEmail: Buffer): Promise<ParseResult> {
   // Prefer plain text body; fall back to stripping HTML
   const body = parsed.text ?? parsed.textAsHtml?.replace(/<[^>]+>/g, '') ?? ''
 
-  // Split on "Begin forwarded message" / "Forwarded message" boundary — only the
-  // text a human typed above that boundary is treated as title/rabbi/description.
-  const [preamble] = body.split(/^-{3,}\s*(Begin\s+)?[Ff]orwarded\s+message/m)
+  // Split on the forward boundary — only the text a human typed above it is
+  // treated as title/rabbi/description.
+  const [preamble] = body.split(FORWARD_BOUNDARY_RE)
   const lines = (preamble ?? '').split('\n').map(l => l.trim()).filter(Boolean)
+
+  const date = extractOriginalDate(body) || dateHeader
 
   const recordingUrl = findRecordingUrl(body)
 
@@ -52,5 +88,5 @@ export async function parseIngestEmail(rawEmail: Buffer): Promise<ParseResult> {
   if (!title) return { ok: false, reason: 'no_title', senderEmail, subject }
   if (!recordingUrl) return { ok: false, reason: 'no_recording_url', senderEmail, subject }
 
-  return { ok: true, data: { title, rabbi, description, recordingUrl, date: dateHeader, senderEmail } }
+  return { ok: true, data: { title, rabbi, description, recordingUrl, date, senderEmail } }
 }

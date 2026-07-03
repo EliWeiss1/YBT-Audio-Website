@@ -34,7 +34,7 @@ From: no-reply@zoom.us
 Join URL: https://zoom.us/rec/share/XYZ789
 `
 
-const FIXTURE_KNOWN_SENDER_NO_RABBI_LINE = `From: rabbi.example@gmail.com
+const FIXTURE_KNOWN_SENDER_NO_RABBI_LINE = `From: efeder@ybt.org
 To: shiurim@ybt.org
 Date: Thu, 16 Jan 2025 08:00:00 +0000
 Subject: Fwd: Recording Ready
@@ -90,7 +90,56 @@ From: no-reply@zoom.us
 Join URL: https://zoom.us/rec/share/ABCDEF123456
 `
 
+// Real Apple Mail double-forward: Feder → Akiva/Hillel → shiurim@, each hop
+// nesting "Begin forwarded message:" (no dashes) one level deeper than the last.
+const FIXTURE_APPLE_MAIL_NESTED = `From: hillel@example.com
+To: shiurim@ybt.org
+Date: Wed, 3 Jun 2026 09:00:00 +0000
+Subject: Fwd: Fwd: Meeting assets for Rabbi Feder's Shiur are ready!
+Content-Type: text/plain; charset=utf-8
+
+Shiur title here
+
+Begin forwarded message:
+
+From: Rabbi Elie Feder <efeder@ybt.org>
+Date: May 31, 2026 at 12:27:52 PM EDT
+To: Akiva Kreiger <akiva.krieger@gmail.com>, Hillel Wolf <wolfy12@gmail.com>
+Subject: Fwd: Meeting assets for Rabbi Feder's Shiur are ready!
+
+The philosophy of achilas kodshim
+Hillel Wolf
+
+Begin forwarded message:
+
+From: Zoom <no-reply@zoom.us>
+Date: May 31, 2026 at 11:49:52 AM EDT
+To: efeder@ybt.org
+Subject: Meeting assets for Rabbi Feder's Shiur are ready!
+
+Meeting assets for Rabbi Feder's Shiur are ready!
+
+Recording
+Duration: 01:04:41
+Shareable link: https://us06web.zoom.us/rec/share/k1kAMSoaYz69KK_qfmh0kuWXBDp9ltWJxpdWoCpwYcG5AnCRd52pT0h5FUBytrj0.MRJwbVGc0tcOx-Ak
+View in Zoom
+
+Thank you for choosing Zoom,
+The Zoom Team
+`
+
 describe('parseIngestEmail', () => {
+  it('extracts the title from an Apple Mail double-forward and dates it from the nested Zoom header, not the outer send date', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_APPLE_MAIL_NESTED))
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.data.title).toBe('Shiur title here')
+      expect(result.data.date).toBe('2026-05-31')
+      expect(result.data.senderEmail).toBe('hillel@example.com')
+    }
+  })
+
+
   it('extracts all fields positionally: title/rabbi/description on lines 1-3', async () => {
     const result = await parseIngestEmail(Buffer.from(FIXTURE_FULL))
     expect(result).toEqual({
@@ -119,7 +168,7 @@ describe('parseIngestEmail', () => {
   it('falls back to the sender-rabbi map when line 2 is absent and sender is known', async () => {
     const result = await parseIngestEmail(Buffer.from(FIXTURE_KNOWN_SENDER_NO_RABBI_LINE))
     expect(result.ok).toBe(true)
-    if (result.ok) expect(result.data.rabbi).toBe('Rabbi Example')
+    if (result.ok) expect(result.data.rabbi).toBe('Rabbi Feder')
   })
 
   it('still accepts legacy Title:/Rabbi:/Description: labels', async () => {

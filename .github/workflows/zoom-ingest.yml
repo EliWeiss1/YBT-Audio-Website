@@ -1,0 +1,63 @@
+name: zoom-ingest
+
+on:
+  repository_dispatch:
+    types: [zoom-ingest]
+
+concurrency:
+  group: zoom-ingest-${{ github.event.client_payload.lectureId }}
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: shiurim-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: shiurim-app/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/zoom-browser-ingest.mjs
+        env:
+          SHARE_URL: ${{ github.event.client_payload.shareUrl }}
+          LECTURE_ID: ${{ github.event.client_payload.lectureId }}
+          TITLE: ${{ github.event.client_payload.title }}
+          RABBI: ${{ github.event.client_payload.rabbi }}
+          DESCRIPTION: ${{ github.event.client_payload.description }}
+          DATE: ${{ github.event.client_payload.date }}
+          SENDER_EMAIL: ${{ github.event.client_payload.senderEmail }}
+          INGEST_COMPLETE_URL: https://ybtshiurim.org/api/ingest-complete
+          INGEST_SECRET: ${{ secrets.INGEST_SECRET }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+          R2_PUBLIC_URL: ${{ secrets.R2_PUBLIC_URL }}
+          DRY_RUN: ${{ vars.INGEST_DRY_RUN }}
+
+      # Safety net: if the job fails BEFORE the worker could self-report (e.g. npm ci
+      # or `playwright install` failed, or the runner died), notify the admin anyway.
+      # The `.ingest-reported` marker means the worker already sent an email, so we
+      # skip to avoid a duplicate.
+      - name: Notify admin on infrastructure failure
+        if: failure() && hashFiles('shiurim-app/.ingest-reported') == ''
+        run: |
+          curl -sS -X POST "$INGEST_COMPLETE_URL" \
+            -H "Content-Type: application/json" \
+            -H "x-ingest-secret: $INGEST_SECRET" \
+            -d "$(jq -n \
+              --arg id "$LECTURE_ID" --arg t "$TITLE" --arg r "$RABBI" --arg u "$SHARE_URL" \
+              '{lectureId:$id,title:$t,rabbi:$r,shareUrl:$u,error:"github_action_job_failed"}')"
+        env:
+          INGEST_COMPLETE_URL: https://ybtshiurim.org/api/ingest-complete
+          INGEST_SECRET: ${{ secrets.INGEST_SECRET }}
+          LECTURE_ID: ${{ github.event.client_payload.lectureId }}
+          TITLE: ${{ github.event.client_payload.title }}
+          RABBI: ${{ github.event.client_payload.rabbi }}
+          SHARE_URL: ${{ github.event.client_payload.shareUrl }}

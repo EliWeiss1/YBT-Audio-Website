@@ -5,6 +5,7 @@ import { uploadAudioToR2 } from '@/lib/ingest/r2-uploader'
 import { categorize } from '@/lib/ingest/categorizer'
 import { writePendingLecture, writeFailedIngestion, writeCategoryFlag, triggerDeploy } from '@/lib/ingest/lectures-writer'
 import { sendFlagNotification, sendFailureNotification, sendOAuthMissingNotification, sendFallbackMatchNotification } from '@/lib/ingest/notifier'
+import { dispatchBrowserIngest } from '@/lib/ingest/github-dispatch'
 import { generateLectureId } from '@/lib/ingest/types'
 
 export const runtime = 'nodejs'
@@ -26,6 +27,24 @@ export async function POST(req: NextRequest) {
 
   const { title, rabbi, description, recordingUrl, date, senderEmail } = parsed
   const lectureId = generateLectureId()
+
+  // Zoom cloud recordings are passcode-protected and can only be downloaded by driving
+  // the real player in a browser. Hand that off to the GitHub Actions worker (async) and
+  // return 202 immediately; the worker calls back into /api/ingest-complete when done.
+  if (/zoom\.us\/rec\/share\//i.test(recordingUrl)) {
+    try {
+      await dispatchBrowserIngest({ lectureId, shareUrl: recordingUrl, title, rabbi, description, date, senderEmail })
+    } catch (e) {
+      await writeFailedIngestion({
+        senderEmail, rawTitle: title, rawRabbi: rabbi,
+        zoomShareUrl: recordingUrl, failureReason: `dispatch_failed: ${String(e)}`,
+        rawEmailSnippet: rawEmail.toString('utf8').slice(0, 500),
+      })
+      await sendFailureNotification({ title, rabbi, zoomShareUrl: recordingUrl, reason: 'dispatch_failed' })
+      return NextResponse.json({ error: 'Failed to dispatch browser ingest' }, { status: 502 })
+    }
+    return NextResponse.json({ ok: true, lectureId, async: true, resolvedBy: 'browser' }, { status: 202 })
+  }
 
   // Step 2: Resolve recording URL to a direct download URL
   const zoomResult = await resolveRecordingUrl(recordingUrl, senderEmail)

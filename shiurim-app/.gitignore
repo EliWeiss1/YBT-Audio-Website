@@ -18,3 +18,15 @@ public/lectures-data/
 .DS_Store
 *.pem
 npm-debug.log*
+
+# Schneeweiss migration scratch: local scratch audio + old pilot-phase caches.
+# migrate-checkpoint.json and migrate-flagged.json ARE tracked on purpose — CI
+# needs the committed checkpoint to skip already-ingested shiurim on rerun.
+scripts/pilot-output/migrate-media/
+scripts/pilot-output/pilot-media/
+scripts/pilot-output/_api-raw.json
+scripts/pilot-output/_media-cache.json
+scripts/pilot-output/_scrape-cache.json
+scripts/pilot-output/checkpoint.json
+scripts/pilot-output/pilot-output.json
+scripts/pilot-output/pilot-report.md

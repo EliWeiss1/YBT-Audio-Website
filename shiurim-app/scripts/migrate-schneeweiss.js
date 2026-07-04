@@ -41,6 +41,7 @@ const OUT_DIR = path.join('scripts', 'pilot-output');
 const CHECKPOINT_PATH = path.join(OUT_DIR, 'migrate-checkpoint.json');
 const FLAGGED_PATH = path.join(OUT_DIR, 'migrate-flagged.json');
 const FAILURES_PATH = path.join('scripts', 'migrate-failures.json');
+fs.mkdirSync(OUT_DIR, { recursive: true }); // fresh checkouts (CI) won't have this dir yet
 
 // ─── CLI ─────────────────────────────────────────────────────────────────────
 const argv = process.argv.slice(2);

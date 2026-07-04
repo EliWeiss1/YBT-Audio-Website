@@ -1,0 +1,67 @@
+name: schneeweiss-weekly-sync
+
+on:
+  schedule:
+    - cron: '0 13 * * 0' # Sundays 13:00 UTC (~9am ET) — change to daily by using '0 13 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    defaults:
+      run:
+        working-directory: shiurim-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: shiurim-app/package-lock.json
+      - run: npm ci
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Run Schneeweiss migration (new shiurim only — checkpoint skips already-ingested ones)
+        id: migrate
+        continue-on-error: true
+        run: node scripts/migrate-schneeweiss.js 2>&1 | tee migrate-output.log
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+          R2_PUBLIC_URL: ${{ secrets.R2_PUBLIC_URL }}
+
+      # data/lectures.json is the only artifact that needs to ship — Vercel
+      # regenerates public/lectures-data/* from it during its own build.
+      - name: Commit + push new data
+        if: steps.migrate.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/lectures.json scripts/pilot-output/migrate-checkpoint.json scripts/pilot-output/migrate-flagged.json scripts/migrate-failures.json
+          if git diff --cached --quiet; then
+            echo "No data changes to commit"
+          else
+            git commit -m "chore(data): weekly Schneeweiss YUTorah sync"
+            git push
+          fi
+
+      - name: Email summary (only when there's something to review)
+        if: always()
+        run: node scripts/notify-schneeweiss-summary.js
+        env:
+          LOG_PATH: migrate-output.log
+          MIGRATE_OUTCOME: ${{ steps.migrate.outcome }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+
+      # continue-on-error above lets commit+notify run even after a crash; surface
+      # the failure as a red X on the run too, not just the email.
+      - name: Fail the job if the migration crashed
+        if: steps.migrate.outcome != 'success'
+        run: exit 1

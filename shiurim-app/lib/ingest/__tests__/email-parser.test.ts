@@ -161,7 +161,60 @@ const FIXTURE_APPLE_MAIL_HTML_ONLY = [
   '',
 ].join('\r\n')
 
+// Gmail forward: multipart/alternative carrying BOTH a text/plain and a
+// text/html part. Gmail HARD-WRAPS the plain-text part at ~70 columns, so a long
+// shiur title spans two physical lines there — while the html part keeps the
+// whole typed line in a single <div>. This is Rabbi Feder's shiur as the owner
+// actually forwarded it on 2026-07-07: the title wrapped after "The Middle", so
+// positional parsing read "Path of Tefillah and Gratitude" as the rabbi and
+// "Rabbi E. Feder" as the description (shiur INGEST-20260707-875023). The html
+// part must win so the title stays intact.
+const FULL_TITLE =
+  'How Do We Balance Hashem’s Hashgachah and the Laws of Nature? The Middle Path of Tefillah and Gratitude'
+const FIXTURE_GMAIL_WRAPPED_TITLE = [
+  'From: Eliezer Weiss <eliisaweiss@gmail.com>',
+  'To: shiurim@ybtshiurim.org',
+  'Date: Mon, 7 Jul 2026 01:27:00 +0000',
+  "Subject: Fwd: Meeting assets for Rabbi Feder's Shiur are ready!",
+  'MIME-Version: 1.0',
+  'Content-Type: multipart/alternative; boundary=GMAIL-B',
+  '',
+  '--GMAIL-B',
+  'Content-Type: text/plain; charset=UTF-8',
+  '',
+  // hard-wrapped title (two physical lines), then rabbi, then Gmail forward
+  'How Do We Balance Hashem’s Hashgachah and the Laws of Nature? The Middle',
+  'Path of Tefillah and Gratitude',
+  'Rabbi E. Feder',
+  '',
+  '---------- Forwarded message ---------',
+  'From: Rabbi Elie Feder <efeder@ybt.org>',
+  'Date: Sun, Jul 5, 2026 at 9:56 PM',
+  'Shareable link: https://us06web.zoom.us/rec/share/GmAiL123.abc',
+  '',
+  '--GMAIL-B',
+  'Content-Type: text/html; charset=UTF-8',
+  '',
+  `<div>${FULL_TITLE.replace(/’/g, '&#8217;')}</div><div>Rabbi E. Feder</div>` +
+    '<div><br></div><div>---------- Forwarded message ---------</div>' +
+    '<div>From: Rabbi Elie Feder &lt;efeder@ybt.org&gt;</div>' +
+    '<div>Date: Sun, Jul 5, 2026 at 9:56 PM</div>' +
+    '<div><a href="https://us06web.zoom.us/rec/share/GmAiL123.abc">Shareable link</a></div>',
+  '--GMAIL-B--',
+  '',
+].join('\r\n')
+
 describe('parseIngestEmail', () => {
+  it('keeps a long title intact from a Gmail forward whose plain-text part hard-wraps it', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_GMAIL_WRAPPED_TITLE))
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.data.title).toBe(FULL_TITLE)
+      expect(result.data.rabbi).toBe('Rabbi E. Feder')
+      expect(result.data.recordingUrl).toBe('https://us06web.zoom.us/rec/share/GmAiL123.abc')
+    }
+  })
+
   it('parses an HTML-only Apple Mail forward (no text/plain part) — title, recording URL, and nested Zoom date', async () => {
     const result = await parseIngestEmail(Buffer.from(FIXTURE_APPLE_MAIL_HTML_ONLY))
     expect(result.ok).toBe(true)

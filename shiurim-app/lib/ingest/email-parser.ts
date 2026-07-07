@@ -65,16 +65,19 @@ export async function parseIngestEmail(rawEmail: Buffer): Promise<ParseResult> {
   const subject = (parsed.subject ?? '').trim()
   const dateHeader = parsed.date ? parsed.date.toISOString().slice(0, 10) : ''
 
-  // Prefer plain text body, but an Apple Mail inline-forward of Zoom's rich
-  // HTML email is often HTML-ONLY (no text/plain part), in which case mailparser
-  // leaves BOTH `text` and `textAsHtml` undefined — so fall through to the html
-  // part. wordwrap must stay off (a wrapped title would spill onto line 2, which
-  // positional parsing reads as the rabbi), and blockquote `>` markers are
-  // stripped so the nested Zoom From:/Date: headers still match.
-  const body =
-    parsed.text ||
-    parsed.textAsHtml?.replace(/<[^>]+>/g, '') ||
-    (parsed.html ? htmlToText(parsed.html, { wordwrap: false }).replace(/^(?:>\s?)+/gm, '') : '')
+  // PREFER the html part, converted to text, over the plain-text alternative.
+  // Both Gmail and Apple Mail carry the human-typed preamble as one <div>/<p>
+  // per logical line, so html-to-text (wordwrap OFF) recovers each typed line
+  // intact. The text/plain alternative they ship alongside is HARD-WRAPPED at
+  // ~70 cols, which splits a long shiur title across two physical lines — and
+  // positional parsing then misreads the title's overflow as the rabbi and the
+  // rabbi as the description. Blockquote `>` markers are stripped so the nested
+  // Zoom From:/Date: headers still match. Fall back to the plain-text part only
+  // when there is no html at all (e.g. a plain-text-only client).
+  const htmlBody = parsed.html
+    ? htmlToText(parsed.html, { wordwrap: false }).replace(/^(?:>\s?)+/gm, '')
+    : ''
+  const body = htmlBody || parsed.text || parsed.textAsHtml?.replace(/<[^>]+>/g, '') || ''
 
   // Split on the forward boundary — only the text a human typed above it is
   // treated as title/rabbi/description.

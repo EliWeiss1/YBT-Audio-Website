@@ -3,6 +3,14 @@ import { Resend } from 'resend'
 const resend = new Resend(process.env.RESEND_API_KEY)
 const adminEmail = process.env.ADMIN_EMAIL ?? 'eliisaweiss@gmail.com'
 
+// Resend's default sender. It only delivers to the Resend account owner's own
+// address (adminEmail), so admin notifications work — but sends to anyone else
+// (the rebbe-facing guidance emails) are rejected by Resend and land in the
+// try/catch below. To make those deliver, verify a YBT domain in Resend and put
+// it here. The owner rejected using the already-verified schedusolver.com for
+// rabbi-facing mail (wrong brand), and ybt.org can't be verified on this account.
+const fromAddress = 'YBT Shiurim <onboarding@resend.dev>'
+
 export async function sendFlagNotification(opts: {
   shiurId: string
   title: string
@@ -22,7 +30,7 @@ export async function sendFlagNotification(opts: {
 
   try {
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: fromAddress,
       to: adminEmail,
       subject: `[Shiur Ingest] Low-confidence categorization: ${opts.title}`,
       html: `
@@ -53,7 +61,7 @@ export async function sendFailureNotification(opts: {
   }
   try {
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: fromAddress,
       to: adminEmail,
       subject: `[Shiur Ingest] FAILED: ${opts.title}`,
       html: `
@@ -87,14 +95,12 @@ export async function sendParseFailureNotification(opts: {
     : `We couldn't find a Zoom recording link in your message. Please make sure the "zoom.us/rec/share/..." link is included.`
 
   // Let the sender know so they can just resend correctly, without needing an admin.
-  // NOTE: 'ingest@noreply.ybt.org' is not a verified sending domain in Resend yet,
-  // so this send currently fails — needs domain verification (DNS) to actually
-  // reach senders. Isolated in its own try/catch so that failure can never block
-  // the admin notification below.
+  // Isolated in its own try/catch so a failure can never block the admin
+  // notification below.
   if (opts.senderEmail) {
     try {
       await resend.emails.send({
-        from: 'ingest@noreply.ybt.org',
+        from: fromAddress,
         to: opts.senderEmail,
         subject: `Couldn't process your shiur${opts.subject ? `: ${opts.subject}` : ''}`,
         html: `
@@ -111,7 +117,7 @@ export async function sendParseFailureNotification(opts: {
   // Keep the admin in the loop too, consistent with every other failure path.
   try {
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: fromAddress,
       to: adminEmail,
       subject: `[Shiur Ingest] Unparseable email from ${opts.senderEmail || 'unknown sender'}`,
       html: `
@@ -144,7 +150,7 @@ export async function sendFallbackMatchNotification(opts: {
     : '/admin'
   try {
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: fromAddress,
       to: adminEmail,
       subject: `[Shiur Ingest] Verify audio: ${opts.title}`,
       html: `
@@ -174,7 +180,7 @@ export async function sendOAuthMissingNotification({
   const authorizeUrl = `${appUrl}/api/zoom/authorize?email=${encodeURIComponent(senderEmail)}&secret=${process.env.INGEST_SECRET}`
   try {
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: fromAddress,
       to: adminEmail,
       subject: `Action needed: Connect Zoom for ${senderEmail}`,
       html: `

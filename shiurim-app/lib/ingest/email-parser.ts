@@ -1,4 +1,5 @@
 import { simpleParser } from 'mailparser'
+import { convert as htmlToText } from 'html-to-text'
 import type { ParseResult } from './types'
 import senderRabbiMap from '@/data/sender-rabbi-map.json'
 
@@ -64,8 +65,16 @@ export async function parseIngestEmail(rawEmail: Buffer): Promise<ParseResult> {
   const subject = (parsed.subject ?? '').trim()
   const dateHeader = parsed.date ? parsed.date.toISOString().slice(0, 10) : ''
 
-  // Prefer plain text body; fall back to stripping HTML
-  const body = parsed.text ?? parsed.textAsHtml?.replace(/<[^>]+>/g, '') ?? ''
+  // Prefer plain text body, but an Apple Mail inline-forward of Zoom's rich
+  // HTML email is often HTML-ONLY (no text/plain part), in which case mailparser
+  // leaves BOTH `text` and `textAsHtml` undefined — so fall through to the html
+  // part. wordwrap must stay off (a wrapped title would spill onto line 2, which
+  // positional parsing reads as the rabbi), and blockquote `>` markers are
+  // stripped so the nested Zoom From:/Date: headers still match.
+  const body =
+    parsed.text ||
+    parsed.textAsHtml?.replace(/<[^>]+>/g, '') ||
+    (parsed.html ? htmlToText(parsed.html, { wordwrap: false }).replace(/^(?:>\s?)+/gm, '') : '')
 
   // Split on the forward boundary — only the text a human typed above it is
   // treated as title/rabbi/description.

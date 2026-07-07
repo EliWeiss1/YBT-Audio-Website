@@ -19,6 +19,7 @@
     "date-fns": "^3.3.1",
     "dotenv": "^17.3.1",
     "fuse.js": "^7.0.0",
+    "html-to-text": "^10.0.0",
     "mailparser": "^3.9.11",
     "music-metadata": "^11.13.0",
     "next": "latest",
@@ -28,6 +29,7 @@
     "resend": "^6.14.0"
   },
   "devDependencies": {
+    "@types/html-to-text": "^9.0.4",
     "@types/mailparser": "^3.4.6",
     "@types/node": "^20",
     "@types/react": "^18",

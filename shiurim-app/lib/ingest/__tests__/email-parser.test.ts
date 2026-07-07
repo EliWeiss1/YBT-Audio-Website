@@ -128,7 +128,55 @@ Thank you for choosing Zoom,
 The Zoom Team
 `
 
+// Apple Mail inline-forwards of Zoom's rich HTML email are often HTML-ONLY —
+// no text/plain alternative at all (mailparser then leaves both `text` and
+// `textAsHtml` undefined). This is exactly what Rabbi Feder's live tests sent
+// on 2026-07-05/06; all three failed `no_title` because the parser only read
+// the text part. The title is deliberately >80 chars to pin html-to-text's
+// wordwrap OFF (wrapping would spill the title onto line 2, which the
+// positional parser would misread as the rabbi's name).
+const FIXTURE_APPLE_MAIL_HTML_ONLY = [
+  'From: Rabbi Elie Feder <efeder@ybt.org>',
+  'To: shiurim@ybtshiurim.org',
+  'Date: Sun, 5 Jul 2026 21:56:38 -0400',
+  "Subject: Fwd: Meeting assets for Rabbi Feder's Shiur are ready!",
+  'MIME-Version: 1.0',
+  'Content-Type: multipart/alternative; boundary=APPLE-BOUNDARY',
+  '',
+  '--APPLE-BOUNDARY',
+  'Content-Type: text/html; charset=utf-8',
+  '',
+  '<html><body>',
+  '<div>How Do We Balance Hashem&#8217;s Hashgachah and the Laws of Nature? The Middle Path of Tefillah and Gratitude</div>',
+  '<br><div>Begin forwarded message:</div>',
+  '<blockquote type="cite">',
+  '<div>From: Zoom &lt;no-reply@zoom.us&gt;</div>',
+  '<div>Date: July 2, 2026 at 7:46:02 PM EDT</div>',
+  '<div>To: efeder@ybt.org</div>',
+  "<div>Subject: Meeting assets for Rabbi Feder's Shiur are ready!</div>",
+  '<div><a href="https://us06web.zoom.us/rec/share/k1kAMSoaYz69KK_qfmh0kuWXBDp9ltWJxpdWoCpwYcG5AnCRd52pT0h5FUBytrj0.MRJwbVGc0tcOx-Ak">View recording</a></div>',
+  '</blockquote>',
+  '</body></html>',
+  '--APPLE-BOUNDARY--',
+  '',
+].join('\r\n')
+
 describe('parseIngestEmail', () => {
+  it('parses an HTML-only Apple Mail forward (no text/plain part) — title, recording URL, and nested Zoom date', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_APPLE_MAIL_HTML_ONLY))
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.data.title).toBe(
+        'How Do We Balance Hashem’s Hashgachah and the Laws of Nature? The Middle Path of Tefillah and Gratitude'
+      )
+      expect(result.data.recordingUrl).toBe(
+        'https://us06web.zoom.us/rec/share/k1kAMSoaYz69KK_qfmh0kuWXBDp9ltWJxpdWoCpwYcG5AnCRd52pT0h5FUBytrj0.MRJwbVGc0tcOx-Ak'
+      )
+      expect(result.data.date).toBe('2026-07-02')
+      expect(result.data.rabbi).toBe('Rabbi Feder') // from sender-rabbi-map, no line 2
+    }
+  })
+
   it('extracts the title from an Apple Mail double-forward and dates it from the nested Zoom header, not the outer send date', async () => {
     const result = await parseIngestEmail(Buffer.from(FIXTURE_APPLE_MAIL_NESTED))
     expect(result.ok).toBe(true)

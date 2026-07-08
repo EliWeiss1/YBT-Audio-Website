@@ -40,10 +40,10 @@ export default async function HomePage() {
   const recentlyGiven = allLectures
     .filter(l => l.date)
     .sort((a, b) => b.date.localeCompare(a.date))
-    .slice(0, 15)
+    .slice(0, 200)
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
+    <div className="px-4 py-6 sm:p-8 max-w-4xl mx-auto">
 
       {/* Hero */}
       <div className="mb-12">

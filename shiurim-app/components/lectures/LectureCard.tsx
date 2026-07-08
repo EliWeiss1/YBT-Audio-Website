@@ -57,11 +57,12 @@ export default function LectureCard({ lecture, index, progress, speakerOverride,
   const isCompleted  = !!progress?.completed
   const hasBarData   = isInProgress && effectiveDuration > 0 && progressPct > 0
 
-  // Subtitle: breadcrumb if available, otherwise speaker (prefer override)
+  // Subtitle: speaker (prefer override), falling back to breadcrumb only if no speaker
   const effectiveSpeaker = speakerOverride ?? lecture.speaker
-  const subtitle = 'breadcrumb' in lecture && lecture.breadcrumb.length > 1
-    ? lecture.breadcrumb.slice(1).join(' › ')
-    : effectiveSpeaker
+  const subtitle = effectiveSpeaker
+    || ('breadcrumb' in lecture && lecture.breadcrumb.length > 1
+          ? lecture.breadcrumb.slice(1).join(' › ')
+          : undefined)
 
   return (
     <div className={`group flex items-start gap-4 p-4 rounded-xl border transition-all

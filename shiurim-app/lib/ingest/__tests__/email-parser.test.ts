@@ -204,7 +204,125 @@ const FIXTURE_GMAIL_WRAPPED_TITLE = [
   '',
 ].join('\r\n')
 
+// A rebbe stopped/restarted recording mid-shiur and wants the clips joined into
+// one shiur — signalled by a bare `merge` keyword line under the usual preamble.
+const FIXTURE_MERGE = `From: rabbi@example.com
+To: shiurim@ybt.org
+Date: Wed, 15 Jan 2025 10:30:00 +0000
+Subject: Fwd: Recording Ready
+Content-Type: text/plain; charset=utf-8
+
+Bava Kamma 34a — Damages for Fire
+Rabbi Weiss
+Covers the halacha of aish mamono
+merge
+
+---------- Forwarded message ---------
+From: no-reply@zoom.us
+
+Join URL: https://zoom.us/rec/share/ABCDEF123456
+`
+
+// Two distinct shiurim in one recording session — `separate` keyword, then the
+// remaining titles one per line (line 1 is reused as the first shiur's title).
+const FIXTURE_SEPARATE = `From: rabbi@example.com
+To: shiurim@ybt.org
+Date: Wed, 15 Jan 2025 10:30:00 +0000
+Subject: Fwd: Recording Ready
+Content-Type: text/plain; charset=utf-8
+
+Bava Kamma 12a
+Rabbi Weiss
+Damages for fire
+separate
+Bava Kamma 12b
+
+---------- Forwarded message ---------
+From: no-reply@zoom.us
+
+Join URL: https://zoom.us/rec/share/ABCDEF123456
+`
+
+// Separate with the optional rabbi/description lines omitted — the keyword lands
+// right under the title. It must still be recognized by its text (not misread as
+// the rabbi), which is why detection is by keyword, not fixed line number.
+const FIXTURE_SEPARATE_MINIMAL = `From: rabbi@example.com
+To: shiurim@ybt.org
+Date: Wed, 15 Jan 2025 10:30:00 +0000
+Subject: Fwd: Recording Ready
+Content-Type: text/plain; charset=utf-8
+
+Bava Kamma 12a
+separate
+Bava Kamma 12b
+
+---------- Forwarded message ---------
+From: no-reply@zoom.us
+
+Join URL: https://zoom.us/rec/share/ABCDEF123456
+`
+
+// `separate` with no title after the keyword — nothing to split into, so it fails.
+const FIXTURE_SEPARATE_NO_TITLES = `From: rabbi@example.com
+To: shiurim@ybt.org
+Date: Wed, 15 Jan 2025 10:30:00 +0000
+Subject: Fwd: Recording Ready
+Content-Type: text/plain; charset=utf-8
+
+Bava Kamma 12a
+Rabbi Weiss
+separate
+
+---------- Forwarded message ---------
+From: no-reply@zoom.us
+
+Join URL: https://zoom.us/rec/share/ABCDEF123456
+`
+
 describe('parseIngestEmail', () => {
+  it('parses a `merge` keyword into multi.mode = merge, leaving title/rabbi/description positional', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_MERGE))
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.data.title).toBe('Bava Kamma 34a — Damages for Fire')
+      expect(result.data.rabbi).toBe('Rabbi Weiss')
+      expect(result.data.description).toBe('Covers the halacha of aish mamono')
+      expect(result.data.multi).toEqual({ mode: 'merge', titles: ['Bava Kamma 34a — Damages for Fire'] })
+    }
+  })
+
+  it('parses a `separate` keyword: line 1 is the first title, lines after the keyword are the rest', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_SEPARATE))
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.data.title).toBe('Bava Kamma 12a')
+      expect(result.data.rabbi).toBe('Rabbi Weiss')
+      expect(result.data.description).toBe('Damages for fire')
+      expect(result.data.multi).toEqual({ mode: 'separate', titles: ['Bava Kamma 12a', 'Bava Kamma 12b'] })
+    }
+  })
+
+  it('recognizes the keyword even when rabbi/description are omitted (does not misread it as the rabbi)', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_SEPARATE_MINIMAL))
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.data.title).toBe('Bava Kamma 12a')
+      expect(result.data.rabbi).toBe('') // unknown sender, no line 2 — NOT 'separate'
+      expect(result.data.multi).toEqual({ mode: 'separate', titles: ['Bava Kamma 12a', 'Bava Kamma 12b'] })
+    }
+  })
+
+  it('fails with no_separate_titles when `separate` has no title after the keyword', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_SEPARATE_NO_TITLES))
+    expect(result).toEqual({ ok: false, reason: 'no_separate_titles', senderEmail: 'rabbi@example.com', subject: 'Fwd: Recording Ready' })
+  })
+
+  it('leaves multi undefined when no keyword is present', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_FULL))
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.data.multi).toBeUndefined()
+  })
+
   it('keeps a long title intact from a Gmail forward whose plain-text part hard-wraps it', async () => {
     const result = await parseIngestEmail(Buffer.from(FIXTURE_GMAIL_WRAPPED_TITLE))
     expect(result.ok).toBe(true)

@@ -1,3 +1,5 @@
+import type { RecordingPlan } from './types'
+
 export type BrowserIngestPayload = {
   lectureId: string
   shareUrl: string
@@ -7,6 +9,9 @@ export type BrowserIngestPayload = {
   date: string
   senderEmail: string
   rawEmailSnippet: string
+  // Multi-recording plan (merge/separate + titles), when the rebbe specified one.
+  // Passed through to the browser worker; null/omitted = single-recording behavior.
+  recordings?: RecordingPlan | null
 }
 
 // Fire a repository_dispatch to kick off the GitHub Actions "zoom-ingest" worker,

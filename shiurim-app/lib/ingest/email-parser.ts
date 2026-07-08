@@ -1,6 +1,6 @@
 import { simpleParser } from 'mailparser'
 import { convert as htmlToText } from 'html-to-text'
-import type { ParseResult } from './types'
+import type { ParseResult, RecordingPlan } from './types'
 import senderRabbiMap from '@/data/sender-rabbi-map.json'
 
 const ZOOM_RE     = /https:\/\/(?:[\w-]+\.)?zoom\.us\/rec\/share\/[A-Za-z0-9._\-]+/
@@ -58,6 +58,12 @@ function stripLabel(line: string, label: string): string {
   return (m ? m[1] : line).trim()
 }
 
+// A Zoom share link can hold multiple recordings (an accidental stop/restart, or two
+// shiurim back-to-back). A rebbe can optionally add a bare `merge` or `separate` line
+// under the preamble to say what to do. Detected by its exact text (not a fixed line
+// number) so it still works when the optional rabbi/description lines are omitted.
+const MODE_RE = /^(merge|separate)$/i
+
 export async function parseIngestEmail(rawEmail: Buffer): Promise<ParseResult> {
   const parsed = await simpleParser(rawEmail)
 
@@ -88,17 +94,35 @@ export async function parseIngestEmail(rawEmail: Buffer): Promise<ParseResult> {
 
   const recordingUrl = findRecordingUrl(body)
 
+  // A merge/separate keyword line splits the preamble: everything ABOVE it is the
+  // usual positional title/rabbi/description; everything BELOW a `separate` keyword
+  // is the remaining per-shiur titles. `merge` needs nothing below it.
+  const modeIdx = lines.findIndex(l => MODE_RE.test(l))
+  const mode = modeIdx >= 0 ? (lines[modeIdx].toLowerCase() as 'merge' | 'separate') : null
+  const headLines = modeIdx >= 0 ? lines.slice(0, modeIdx) : lines
+
   // Title must come from the first typed line — the Subject header is always
   // Zoom's generic "Meeting assets are ready" text, not the shiur's title, so it
   // is never usable as a fallback.
-  const title = lines[0] ? stripLabel(lines[0], 'title') : ''
+  const title = headLines[0] ? stripLabel(headLines[0], 'title') : ''
 
   const knownRabbi = (senderRabbiMap as Record<string, string>)[senderEmail] || ''
-  const rabbi = lines[1] ? stripLabel(lines[1], 'rabbi') : knownRabbi
-  const description = lines[2] ? stripLabel(lines[2], 'description') : ''
+  const rabbi = headLines[1] ? stripLabel(headLines[1], 'rabbi') : knownRabbi
+  const description = headLines[2] ? stripLabel(headLines[2], 'description') : ''
 
   if (!title) return { ok: false, reason: 'no_title', senderEmail, subject }
   if (!recordingUrl) return { ok: false, reason: 'no_recording_url', senderEmail, subject }
 
-  return { ok: true, data: { title, rabbi, description, recordingUrl, date, senderEmail } }
+  let multi: RecordingPlan | undefined
+  if (mode === 'merge') {
+    multi = { mode: 'merge', titles: [title] }
+  } else if (mode === 'separate') {
+    // Line 1 is reused as the first shiur's title; each line after the keyword is
+    // another shiur's title. Need at least two, or there is nothing to split.
+    const titles = [title, ...lines.slice(modeIdx + 1).map(l => l.trim()).filter(Boolean)]
+    if (titles.length < 2) return { ok: false, reason: 'no_separate_titles', senderEmail, subject }
+    multi = { mode: 'separate', titles }
+  }
+
+  return { ok: true, data: { title, rabbi, description, recordingUrl, date, senderEmail, ...(multi ? { multi } : {}) } }
 }

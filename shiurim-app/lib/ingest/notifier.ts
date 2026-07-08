@@ -82,7 +82,7 @@ export async function sendFailureNotification(opts: {
 export async function sendParseFailureNotification(opts: {
   senderEmail: string
   subject: string
-  reason: 'no_title' | 'no_recording_url'
+  reason: 'no_title' | 'no_recording_url' | 'no_separate_titles'
   rawEmailSnippet: string
 }): Promise<void> {
   if (process.env.INGEST_DRY_RUN === 'true') {
@@ -92,6 +92,8 @@ export async function sendParseFailureNotification(opts: {
 
   const guidance = opts.reason === 'no_title'
     ? `We couldn't find a title for the shiur. Please resend with the shiur's title as the very first line of your message (e.g. "Chullin 42a - Treifos"), optionally followed by the rabbi's name on the second line and a short description on the third.`
+    : opts.reason === 'no_separate_titles'
+    ? `You marked the recordings as "separate" but only gave one title. Please resend with the first shiur's title on line 1, and each additional shiur's title on its own line after the word "separate".`
     : `We couldn't find a Zoom recording link in your message. Please make sure the "zoom.us/rec/share/..." link is included.`
 
   // Let the sender know so they can just resend correctly, without needing an admin.
@@ -166,6 +168,43 @@ export async function sendFallbackMatchNotification(opts: {
     })
   } catch (e) {
     console.error('sendFallbackMatchNotification: failed to send admin email', e)
+  }
+}
+
+export async function sendAutoMergeNotification(opts: {
+  title: string
+  rabbi: string
+  senderEmail: string
+  zoomShareUrl: string
+  lectureId: string
+  recordingCount: number
+}): Promise<void> {
+  if (process.env.INGEST_DRY_RUN === 'true') {
+    console.log('[DRY RUN] Would send auto-merge notification for:', opts.title)
+    return
+  }
+  const adminUrl = process.env.NEXT_PUBLIC_APP_URL
+    ? `${process.env.NEXT_PUBLIC_APP_URL}/admin`
+    : '/admin'
+  try {
+    await resend.emails.send({
+      from: fromAddress,
+      to: adminEmail,
+      subject: `[Shiur Ingest] Auto-merged ${opts.recordingCount} recordings: ${opts.title}`,
+      html: `
+        <h2>Multiple recordings were auto-merged into one shiur</h2>
+        <p>The Zoom share for <strong>${opts.title}</strong> (${opts.rabbi || opts.senderEmail})
+        held <strong>${opts.recordingCount} recordings</strong>, but the email didn't say whether to
+        merge or separate them. They were <strong>joined into one shiur</strong> (assuming an accidental
+        stop/restart). If these were meant to be separate shiurim, resend with a
+        <code>separate</code> line and a title per recording.</p>
+        <p><strong>Lecture ID:</strong> ${opts.lectureId}</p>
+        <p><strong>Forwarded Zoom URL:</strong> <a href="${opts.zoomShareUrl}">${opts.zoomShareUrl}</a></p>
+        <p><a href="${adminUrl}">Review in admin panel →</a></p>
+      `,
+    })
+  } catch (e) {
+    console.error('sendAutoMergeNotification: failed to send admin email', e)
   }
 }
 

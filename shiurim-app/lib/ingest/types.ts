@@ -1,5 +1,15 @@
 import { randomBytes } from 'crypto'
 
+// When a Zoom share link holds more than one recording, the rebbe can (optionally)
+// tell the pipeline what to do with the extra clips by writing a bare `merge` or
+// `separate` keyword line in the forwarded email. `merge` = concatenate every clip
+// into one shiur; `separate` = one shiur per clip, titled from `titles` in order.
+// Absent entirely = today's single-recording behavior.
+export type RecordingPlan = {
+  mode: 'merge' | 'separate'
+  titles: string[]    // merge → [title]; separate → [line-1 title, ...each title line after the keyword]
+}
+
 export type IngestRequest = {
   title: string
   rabbi: string
@@ -7,6 +17,7 @@ export type IngestRequest = {
   recordingUrl: string
   date: string        // ISO date string from email Date header
   senderEmail: string
+  multi?: RecordingPlan
 }
 
 export type CategorizeResult =
@@ -21,7 +32,7 @@ export type UploadResult = {
 
 export type ParseResult =
   | { ok: true; data: IngestRequest }
-  | { ok: false; reason: 'no_title' | 'no_recording_url'; senderEmail: string; subject: string }
+  | { ok: false; reason: 'no_title' | 'no_recording_url' | 'no_separate_titles'; senderEmail: string; subject: string }
 
 export type IngestOutcome =
   | { status: 'success'; lectureId: string; nodePath: string[]; flagged: boolean }

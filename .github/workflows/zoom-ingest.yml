@@ -23,6 +23,11 @@ jobs:
           cache-dependency-path: shiurim-app/package-lock.json
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+      # ffmpeg is preinstalled on ubuntu-latest and is required to concatenate
+      # multi-recording "merge" clips. Fail fast (before touching the recording) if
+      # a future runner image ever drops it, rather than mid-download.
+      - name: Verify ffmpeg is available
+        run: ffmpeg -version
       - run: node scripts/zoom-browser-ingest.mjs
         env:
           SHARE_URL: ${{ github.event.client_payload.shareUrl }}
@@ -33,6 +38,7 @@ jobs:
           DATE: ${{ github.event.client_payload.date }}
           SENDER_EMAIL: ${{ github.event.client_payload.senderEmail }}
           RAW_EMAIL_SNIPPET: ${{ github.event.client_payload.rawEmailSnippet }}
+          RECORDINGS_JSON: ${{ toJSON(github.event.client_payload.recordings) }}
           INGEST_COMPLETE_URL: https://ybtshiurim.org/api/ingest-complete
           INGEST_SECRET: ${{ secrets.INGEST_SECRET }}
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}

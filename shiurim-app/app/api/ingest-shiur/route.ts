@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: `Could not parse email: ${reason}` }, { status: 422 })
   }
 
-  const { title, rabbi, description, recordingUrl, date, senderEmail } = parseResult.data
+  const { title, rabbi, description, recordingUrl, date, senderEmail, multi } = parseResult.data
   const lectureId = generateLectureId()
 
   // Zoom cloud recordings are passcode-protected and can only be downloaded by driving
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
   // return 202 immediately; the worker calls back into /api/ingest-complete when done.
   if (/zoom\.us\/rec\/share\//i.test(recordingUrl)) {
     try {
-      await dispatchBrowserIngest({ lectureId, shareUrl: recordingUrl, title, rabbi, description, date, senderEmail, rawEmailSnippet })
+      await dispatchBrowserIngest({ lectureId, shareUrl: recordingUrl, title, rabbi, description, date, senderEmail, rawEmailSnippet, recordings: multi ?? null })
     } catch (e) {
       await writeFailedIngestion({
         senderEmail, rawTitle: title, rawRabbi: rabbi,

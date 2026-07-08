@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { categorize } from '@/lib/ingest/categorizer'
 import { writePendingLecture, writeFailedIngestion, writeCategoryFlag, triggerDeploy } from '@/lib/ingest/lectures-writer'
-import { sendFlagNotification, sendFailureNotification } from '@/lib/ingest/notifier'
+import { sendFlagNotification, sendFailureNotification, sendAutoMergeNotification } from '@/lib/ingest/notifier'
 
 export const runtime = 'nodejs'
 
@@ -23,10 +23,14 @@ export async function POST(req: NextRequest) {
   const {
     lectureId, title, rabbi, description, date, senderEmail,
     publicUrl, duration, shareUrl, rawEmailSnippet, error,
+    deferDeploy, autoMerged, recordingCount,
   } = body as {
     lectureId?: string; title?: string; rabbi?: string; description?: string
     date?: string; senderEmail?: string; publicUrl?: string; duration?: number
     shareUrl?: string; rawEmailSnippet?: string; error?: string
+    // Multi-recording: `deferDeploy` skips the rebuild for all but the last of N
+    // "separate" shiurim; `autoMerged`/`recordingCount` flag an unprompted merge.
+    deferDeploy?: boolean; autoMerged?: boolean; recordingCount?: number
   }
 
   // Failure branch: the worker couldn't download/upload the recording.
@@ -93,8 +97,22 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    // Step 7: Trigger rebuild
-    await triggerDeploy()
+    // Let the admin know when the worker merged multiple recordings without being
+    // told to (no merge/separate directive in the email).
+    if (autoMerged) {
+      await sendAutoMergeNotification({
+        title,
+        rabbi: rabbi ?? '',
+        senderEmail: senderEmail ?? '',
+        zoomShareUrl: shareUrl ?? '',
+        lectureId,
+        recordingCount: recordingCount ?? 0,
+      })
+    }
+
+    // Step 7: Trigger rebuild — skipped for all but the last of N "separate" shiurim
+    // so a single multi-recording email produces one deploy, not N.
+    if (!deferDeploy) await triggerDeploy()
   } catch (e) {
     await writeFailedIngestion({
       senderEmail: senderEmail ?? '',

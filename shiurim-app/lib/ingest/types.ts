@@ -1,13 +1,16 @@
 import { randomBytes } from 'crypto'
 
 // When a Zoom share link holds more than one recording, the rebbe can (optionally)
-// tell the pipeline what to do with the extra clips by writing a bare `merge` or
-// `separate` keyword line in the forwarded email. `merge` = concatenate every clip
-// into one shiur; `separate` = one shiur per clip, titled from `titles` in order.
+// tell the pipeline what to do with the extra clips via a keyword line in the email:
+//   `merge`    → concatenate every clip into one shiur
+//   `separate` → one shiur per clip, titled from `titles` in order
+//   `only N`   → keep only the Nth recording (1-based) and discard the rest, e.g. the
+//                first recording was a mistake — `index` holds N
 // Absent entirely = today's single-recording behavior.
 export type RecordingPlan = {
-  mode: 'merge' | 'separate'
-  titles: string[]    // merge → [title]; separate → [line-1 title, ...each title line after the keyword]
+  mode: 'merge' | 'separate' | 'pick'
+  titles: string[]    // merge/pick → [title]; separate → [line-1 title, ...each title line after the keyword]
+  index?: number      // 'pick' only: 1-based recording to keep
 }
 
 export type IngestRequest = {

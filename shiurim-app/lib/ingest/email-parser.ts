@@ -59,10 +59,12 @@ function stripLabel(line: string, label: string): string {
 }
 
 // A Zoom share link can hold multiple recordings (an accidental stop/restart, or two
-// shiurim back-to-back). A rebbe can optionally add a bare `merge` or `separate` line
-// under the preamble to say what to do. Detected by its exact text (not a fixed line
-// number) so it still works when the optional rabbi/description lines are omitted.
+// shiurim back-to-back). A rebbe can optionally add a keyword line under the preamble to
+// say what to do: `merge`, `separate`, or `only N` (keep just the Nth recording, e.g. the
+// first one was a mistake). Detected by exact text (not a fixed line number) so it still
+// works when the optional rabbi/description lines are omitted.
 const MODE_RE = /^(merge|separate)$/i
+const PICK_RE = /^only\s+(\d+)$/i
 
 export async function parseIngestEmail(rawEmail: Buffer): Promise<ParseResult> {
   const parsed = await simpleParser(rawEmail)
@@ -94,11 +96,14 @@ export async function parseIngestEmail(rawEmail: Buffer): Promise<ParseResult> {
 
   const recordingUrl = findRecordingUrl(body)
 
-  // A merge/separate keyword line splits the preamble: everything ABOVE it is the
+  // A recording-plan keyword line splits the preamble: everything ABOVE it is the
   // usual positional title/rabbi/description; everything BELOW a `separate` keyword
-  // is the remaining per-shiur titles. `merge` needs nothing below it.
-  const modeIdx = lines.findIndex(l => MODE_RE.test(l))
-  const mode = modeIdx >= 0 ? (lines[modeIdx].toLowerCase() as 'merge' | 'separate') : null
+  // is the remaining per-shiur titles. `merge` and `only N` need nothing below them.
+  const modeIdx = lines.findIndex(l => MODE_RE.test(l) || PICK_RE.test(l))
+  const pickMatch = modeIdx >= 0 ? lines[modeIdx].match(PICK_RE) : null
+  const mode = modeIdx < 0 ? null
+    : pickMatch ? 'pick'
+    : (lines[modeIdx].toLowerCase() as 'merge' | 'separate')
   const headLines = modeIdx >= 0 ? lines.slice(0, modeIdx) : lines
 
   // Title must come from the first typed line — the Subject header is always
@@ -116,6 +121,10 @@ export async function parseIngestEmail(rawEmail: Buffer): Promise<ParseResult> {
   let multi: RecordingPlan | undefined
   if (mode === 'merge') {
     multi = { mode: 'merge', titles: [title] }
+  } else if (mode === 'pick') {
+    // `only N` — keep just the Nth recording. N is 1-based; the worker validates it
+    // against the actual clip count.
+    multi = { mode: 'pick', titles: [title], index: parseInt(pickMatch![1], 10) }
   } else if (mode === 'separate') {
     // Line 1 is reused as the first shiur's title; each line after the keyword is
     // another shiur's title. Need at least two, or there is nothing to split.

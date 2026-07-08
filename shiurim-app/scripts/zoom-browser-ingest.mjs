@@ -234,6 +234,22 @@ async function main() {
     shareUrl: SHARE_URL, rawEmailSnippet: RAW_EMAIL_SNIPPET,
   }
 
+  if (mode === 'pick') {
+    // `only N` — keep just the Nth recording, discard the rest. One shiur, line-1 title.
+    const n = plan?.index ?? 1
+    const idx = n - 1
+    if (idx < 0 || idx >= clips.length) {
+      throw new Error(`pick_out_of_range: asked for recording ${n} but the share has ${clips.length}`)
+    }
+    const buf = clips[idx]
+    const duration = await getDuration(buf, 'audio/mp4')
+    const r2Key = `ingest/${DATE}/${LECTURE_ID}.mp3`
+    const publicUrl = await uploadToR2(r2, r2Key, buf)
+    await postResult({ ...common, lectureId: LECTURE_ID, title: TITLE, r2Key, publicUrl, duration })
+    console.log(`pick: kept recording ${n}/${clips.length} (${buf.length} bytes, ${duration}s).`)
+    return
+  }
+
   if (mode === 'separate') {
     // One shiur per clip. Title from the plan; fall back to "<title> (Part N)".
     const titles = Array.isArray(plan?.titles) ? plan.titles : []

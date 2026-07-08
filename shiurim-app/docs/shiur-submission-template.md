@@ -32,6 +32,7 @@ what to do by adding ONE extra line after the description:
 
   merge     ← the recordings are one shiur; we'll join them into a single audio file
   separate  ← the recordings are separate shiurim (see below)
+  only 2    ← keep ONLY the 2nd recording, discard the rest (e.g. the 1st was a mistake)
 
 MERGE example (accidental stop/restart → one shiur):
 
@@ -49,6 +50,16 @@ put each additional shiur's title on its own line after "separate":
   Bava Kamma 12b
 
   → creates two shiurim: "Bava Kamma 12a" and "Bava Kamma 12b"
+
+ONLY-ONE example (the first recording was a mistake — keep just the second):
+
+  Bava Kamma 12a
+  Rabbi Weiss
+  Shiur on the halacha of aish mamono
+  only 2
+
+  → one shiur from the 2nd recording; the 1st is discarded
+    ("only 1" keeps the first, "only 3" the third, etc.)
 
 - If a share has multiple recordings and you write neither word, we assume an
   accidental stop/restart and MERGE them into one shiur (and email the admin so it

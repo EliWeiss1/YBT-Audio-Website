@@ -279,7 +279,36 @@ From: no-reply@zoom.us
 Join URL: https://zoom.us/rec/share/ABCDEF123456
 `
 
+// The first recording was a mistake — keep only the second via `only 2`.
+const FIXTURE_PICK = `From: rabbi@example.com
+To: shiurim@ybt.org
+Date: Wed, 15 Jan 2025 10:30:00 +0000
+Subject: Fwd: Recording Ready
+Content-Type: text/plain; charset=utf-8
+
+Bava Kamma 12a
+Rabbi Weiss
+Damages for fire
+only 2
+
+---------- Forwarded message ---------
+From: no-reply@zoom.us
+
+Join URL: https://zoom.us/rec/share/ABCDEF123456
+`
+
 describe('parseIngestEmail', () => {
+  it('parses an `only N` keyword into multi.mode = pick with the 1-based index', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_PICK))
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.data.title).toBe('Bava Kamma 12a')
+      expect(result.data.rabbi).toBe('Rabbi Weiss')
+      expect(result.data.description).toBe('Damages for fire')
+      expect(result.data.multi).toEqual({ mode: 'pick', titles: ['Bava Kamma 12a'], index: 2 })
+    }
+  })
+
   it('parses a `merge` keyword into multi.mode = merge, leaving title/rabbi/description positional', async () => {
     const result = await parseIngestEmail(Buffer.from(FIXTURE_MERGE))
     expect(result.ok).toBe(true)

@@ -1,4 +1,5 @@
 import { getLectureById, formatDuration, getAllLectures } from '@/lib/lectures'
+import { lectureIdFromParam, lectureSharePath } from '@/lib/lecture-utils'
 import { normalizeRabbi } from '@/lib/rabbi-normalization'
 import { notFound } from 'next/navigation'
 import LectureAuthSection from '@/components/lectures/LectureAuthSection'
@@ -21,8 +22,10 @@ type Props = {
 export default async function LecturePage({ params }: Props) {
   const { id: rawId } = await params
   // Next.js 16 + Turbopack doesn't decode dynamic route params
-  const id = decodeURIComponent(rawId)
-  const lecture = getLectureById(id)
+  const decoded = decodeURIComponent(rawId)
+  // Resolve either the bare-id form (older links) or the `{slug}--{id}` share
+  // form. Try the whole param as an id first, then the id after the "--".
+  const lecture = getLectureById(decoded) ?? getLectureById(lectureIdFromParam(decoded))
   if (!lecture) notFound()
 
   const breadcrumbItems = lecture.breadcrumb
@@ -115,7 +118,7 @@ export default async function LecturePage({ params }: Props) {
         {/* Save for later — self-fetches auth + saved state client-side */}
         <BookmarkButton lectureId={lecture.id} size="md" />
         {/* Share — native share sheet on mobile, clipboard copy fallback on desktop */}
-        <ShareButton title={lecture.title} />
+        <ShareButton title={lecture.title} sharePath={lectureSharePath(lecture.id, lecture.title)} />
       </div>
 
       {/* Tags */}

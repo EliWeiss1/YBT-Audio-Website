@@ -4,6 +4,9 @@ import { useState } from 'react'
 
 type Props = {
   title: string
+  // Human-readable path to share (e.g. "/lectures/genesis-25--BN-9293").
+  // Falls back to the current URL if omitted.
+  sharePath?: string
 }
 
 const ShareIcon = ({ cls }: { cls: string }) => (
@@ -19,11 +22,11 @@ const CheckIcon = ({ cls }: { cls: string }) => (
   </svg>
 )
 
-export default function ShareButton({ title }: Props) {
+export default function ShareButton({ title, sharePath }: Props) {
   const [copied, setCopied] = useState(false)
 
   const handleShare = async () => {
-    const url = window.location.href
+    const url = sharePath ? window.location.origin + sharePath : window.location.href
 
     if (navigator.share) {
       try {

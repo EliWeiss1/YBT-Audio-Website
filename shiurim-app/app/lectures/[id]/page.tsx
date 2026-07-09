@@ -5,6 +5,7 @@ import LectureAuthSection from '@/components/lectures/LectureAuthSection'
 import CommentsLoader from '@/components/discussions/CommentsLoader'
 import SpeakerEditor from '@/components/lectures/SpeakerEditor'
 import BookmarkButton from '@/components/lectures/BookmarkButton'
+import ShareButton from '@/components/lectures/ShareButton'
 import DownloadButton from '@/components/lectures/DownloadButton'
 import Link from 'next/link'
 import { format } from 'date-fns'
@@ -113,6 +114,8 @@ export default async function LecturePage({ params }: Props) {
         )}
         {/* Save for later — self-fetches auth + saved state client-side */}
         <BookmarkButton lectureId={lecture.id} size="md" />
+        {/* Share — native share sheet on mobile, clipboard copy fallback on desktop */}
+        <ShareButton title={lecture.title} />
       </div>
 
       {/* Tags */}

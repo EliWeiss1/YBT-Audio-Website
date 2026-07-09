@@ -28,7 +28,7 @@ export default function ShareButton({ title }: Props) {
     if (navigator.share) {
       try {
         await navigator.share({ title, url })
-      } catch (err) {
+      } catch {
         // AbortError = user cancelled the share sheet — not an error.
         // Any other failure is also not actionable here, so it's swallowed too.
       }

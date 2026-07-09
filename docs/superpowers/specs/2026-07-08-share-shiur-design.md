@@ -14,7 +14,7 @@ New action button added to the existing meta/action row on the individual shiur 
 New file: `shiurim-app/components/lectures/ShareButton.tsx`
 
 - `'use client'` component (needs `navigator.share` / `navigator.clipboard`, both browser-only APIs).
-- Props: `{ lectureId: string; title: string }`. The lecture ID is accepted for consistency with sibling components (`BookmarkButton`, `DownloadButton`) even though the current implementation doesn't need it directly — the share URL is derived from `window.location.href`, not constructed from the ID.
+- Props: `{ title: string }`. The share URL is derived from `window.location.href` at click time — no lecture ID needed.
 - No external icon library (none is used anywhere in this codebase) — a hand-written inline `<svg>` share glyph (square with an upward-pointing arrow, stroke `currentColor`), matching the pattern used by `BookmarkOutline`/`BookmarkFilled` in `BookmarkButton.tsx`.
 
 ## Behavior

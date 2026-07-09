@@ -5,15 +5,17 @@ import { createClient } from '@/lib/supabase-browser'
 import { getLectureDescription } from '@/lib/supabase'
 import LecturePlayer from '@/components/player/LecturePlayer'
 import DescriptionSection from '@/components/lectures/DescriptionSection'
+import type { FlatLecture } from '@/lib/lecture-utils'
 
 type Props = {
   lectureId: string
   jsonDescription: string // fallback from lectures.json while Supabase loads
+  lecture: FlatLecture    // authoritative server lecture, forwarded to the player
 }
 
 // Handles description + player only.
 // CommentsSection is rendered separately (after prev/next nav) via CommentsLoader.
-export default function LectureAuthSection({ lectureId, jsonDescription }: Props) {
+export default function LectureAuthSection({ lectureId, jsonDescription, lecture }: Props) {
   const [userId, setUserId] = useState<string | undefined>()
   const [description, setDescription] = useState(jsonDescription)
 
@@ -37,7 +39,7 @@ export default function LectureAuthSection({ lectureId, jsonDescription }: Props
         initialDescription={description}
         userId={userId}
       />
-      <LecturePlayer lectureId={lectureId} userId={userId} />
+      <LecturePlayer lectureId={lectureId} userId={userId} lecture={lecture} />
     </>
   )
 }

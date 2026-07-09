@@ -14,7 +14,7 @@ type PlayerState = {
   currentTime: number
   duration: number
   playbackSpeed: number
-  play: (lectureId: string, startAt?: number) => void
+  play: (lectureId: string, startAt?: number, fallback?: FlatLecture) => void
   pause: () => void
   resume: () => void
   seek: (seconds: number) => void
@@ -233,10 +233,14 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     updatePositionState()
   }, [ensureAudioElement, setupMediaSession, updatePositionState])
 
-  const play = useCallback((lectureId: string, startAt = 0) => {
+  const play = useCallback((lectureId: string, startAt = 0, fallback?: FlatLecture) => {
     // Downloaded shiurim must play even when the catalog isn't available
     // (fully offline) — synthesize the lecture from the download record.
-    const cached = getLectureByIdSync(lectureId) ?? getDownloadAsLecture(lectureId)
+    // `fallback` is the authoritative, server-rendered lecture (the detail
+    // page reads the freshly-deployed lectures.json server-side): it lets a
+    // just-ingested shiur play on the first visit after a redeploy, before the
+    // service worker's stale-while-revalidate catalog copy has caught up.
+    const cached = getLectureByIdSync(lectureId) ?? getDownloadAsLecture(lectureId) ?? fallback
     if (cached) {
       if (cached.audioUrl) startPlayback(cached, startAt)
       return
@@ -248,7 +252,7 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     audio.play().catch(() => {})
     loadCatalog()
       .then(() => {
-        const found = getLectureByIdSync(lectureId) ?? getDownloadAsLecture(lectureId)
+        const found = getLectureByIdSync(lectureId) ?? getDownloadAsLecture(lectureId) ?? fallback
         if (found?.audioUrl) startPlayback(found, startAt)
       })
       .catch(() => {

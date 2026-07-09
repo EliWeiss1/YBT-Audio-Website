@@ -3,15 +3,21 @@
 import { useEffect, useState } from 'react'
 import { usePlayer, PLAYBACK_SPEEDS } from '@/lib/player-context'
 import { getProgress } from '@/lib/supabase'
-import { formatDuration } from '@/lib/lecture-utils'
-import { useCatalog } from '@/lib/use-catalog'
+import { formatDuration, type FlatLecture } from '@/lib/lecture-utils'
 
 type Props = {
   lectureId: string
   userId?: string
+  // The authoritative, server-rendered lecture. The detail page reads the
+  // freshly-deployed lectures.json server-side, so this is correct even on the
+  // first visit after a redeploy — unlike the client catalog, which the
+  // service worker serves stale-while-revalidate and lags a just-ingested
+  // shiur by one load. We trust this for the availability badge and hand it to
+  // play() as a fallback so a brand-new shiur is playable immediately.
+  lecture: FlatLecture
 }
 
-export default function LecturePlayer({ lectureId, userId }: Props) {
+export default function LecturePlayer({ lectureId, userId, lecture: serverLecture }: Props) {
   const { play, pause, resume, seek, skip, isPlaying, currentTime, duration, lecture, playbackSpeed, setSpeed } = usePlayer()
   const [resumePosition, setResumePosition] = useState<number | null>(null)
   const [completed, setCompleted] = useState(false)
@@ -33,17 +39,18 @@ export default function LecturePlayer({ lectureId, userId }: Props) {
     })
   }, [userId, lectureId])
 
-  // Check if audio is available for this lecture.
-  // While the catalog is still loading, render the player optimistically.
-  const { ready, getLectureById } = useCatalog()
-  const lectureInfo = getLectureById(lectureId)
-  const hasAudio = !ready || !!(lectureInfo?.audioUrl)
+  // Audio availability comes from the authoritative server lecture, not the
+  // client catalog — the latter is served stale-while-revalidate and would
+  // wrongly report a just-ingested shiur as unavailable until the next load.
+  const hasAudio = !!serverLecture.audioUrl
 
   const handlePlay = () => {
     if (isThisLecture) {
       isPlaying ? pause() : resume()
     } else {
-      play(lectureId, resumePosition ?? 0)
+      // Pass the server lecture as a fallback so a brand-new shiur plays even
+      // before the client catalog has caught up with the redeploy.
+      play(lectureId, resumePosition ?? 0, serverLecture)
     }
   }
 

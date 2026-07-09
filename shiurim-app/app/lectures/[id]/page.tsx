@@ -134,6 +134,10 @@ export default async function LecturePage({ params }: Props) {
       <LectureAuthSection
         lectureId={lecture.id}
         jsonDescription={lecture.description ?? ''}
+        // Authoritative server lecture for the player. description is dropped —
+        // it's already passed via jsonDescription and the player never uses it,
+        // so this avoids duplicating it in the RSC payload.
+        lecture={{ ...lecture, description: '' }}
       />
 
       {/* Comments — loads client-side after cache hit */}

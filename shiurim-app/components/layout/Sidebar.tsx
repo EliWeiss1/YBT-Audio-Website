@@ -222,6 +222,11 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
             offline
           </span>
         </Link>
+        <Link href="/feedback"
+          className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors
+            ${pathname === '/feedback' ? 'bg-emerald-50 text-emerald-800' : 'text-stone-600 hover:bg-stone-50'}`}>
+          <span>💬</span> Feedback
+        </Link>
       </div>
 
       {/* Tree */}

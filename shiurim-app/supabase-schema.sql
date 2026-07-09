@@ -173,3 +173,25 @@ create table public.zoom_oauth_tokens (
 );
 
 alter table public.zoom_oauth_tokens enable row level security;
+
+-- ============================================
+-- SUGGESTIONS
+-- Anonymous bug reports / feature requests from
+-- the public /feedback page. Written only by the
+-- server (service role key) via /api/feedback,
+-- which also files a matching GitHub Issue.
+-- No client-side access, so RLS has no policies
+-- (service role bypasses RLS; everyone else is
+-- denied by default).
+-- Run this block if adding to an existing deployment.
+-- ============================================
+create table public.suggestions (
+  id uuid default uuid_generate_v4() primary key,
+  type text not null check (type in ('bug', 'feature')),
+  description text not null,
+  github_issue_number integer,
+  github_issue_url text,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+alter table public.suggestions enable row level security;

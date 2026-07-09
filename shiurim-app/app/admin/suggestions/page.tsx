@@ -47,6 +47,7 @@ export default async function AdminSuggestionsPage() {
               </span>
             </div>
             <p className="text-sm whitespace-pre-wrap">{s.description}</p>
+            <p className="text-xs text-gray-500">By {s.submitted_by ?? 'Anonymous'}</p>
             {s.github_issue_url && (
               <a href={s.github_issue_url} target="_blank" rel="noreferrer"
                 className="text-sm text-blue-600 hover:underline">

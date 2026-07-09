@@ -189,6 +189,7 @@ create table public.suggestions (
   id uuid default uuid_generate_v4() primary key,
   type text not null check (type in ('bug', 'feature')),
   description text not null,
+  submitted_by text,                          -- display name of the logged-in submitter, null if anonymous
   github_issue_number integer,
   github_issue_url text,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null

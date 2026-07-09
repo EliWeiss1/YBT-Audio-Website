@@ -12,9 +12,11 @@ const GITHUB_API_HEADERS = {
 export async function createSuggestionIssue(opts: {
   type: 'bug' | 'feature'
   description: string
+  submittedBy: string | null
 }): Promise<{ number: number; url: string } | null> {
   const prefix = opts.type === 'bug' ? '[Bug]' : '[Feature]'
   const title = `${prefix} ${opts.description.slice(0, 60)}`
+  const body = `${opts.description}\n\n---\nSubmitted by: ${opts.submittedBy ?? 'Anonymous'}`
 
   try {
     const res = await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPO}/issues`, {
@@ -22,7 +24,7 @@ export async function createSuggestionIssue(opts: {
       headers: GITHUB_API_HEADERS,
       body: JSON.stringify({
         title,
-        body: opts.description,
+        body,
         labels: [opts.type === 'bug' ? 'bug' : 'enhancement', 'suggestion-box'],
       }),
     })

@@ -4,6 +4,7 @@ export type Suggestion = {
   id: string
   type: 'bug' | 'feature'
   description: string
+  submitted_by: string | null
   github_issue_number: number | null
   github_issue_url: string | null
   created_at: string
@@ -19,11 +20,12 @@ function getServiceClient() {
 export async function insertSuggestion(opts: {
   type: 'bug' | 'feature'
   description: string
+  submittedBy: string | null
 }): Promise<string> {
   const supabase = getServiceClient()
   const { data, error } = await supabase
     .from('suggestions')
-    .insert({ type: opts.type, description: opts.description })
+    .insert({ type: opts.type, description: opts.description, submitted_by: opts.submittedBy })
     .select('id')
     .single()
   if (error) throw new Error(`suggestions insert failed: ${error.message}`)

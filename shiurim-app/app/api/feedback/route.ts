@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { insertSuggestion, attachGithubIssue } from '@/lib/feedback/writer'
 import { createSuggestionIssue } from '@/lib/feedback/github-issues'
+import { createClient } from '@/lib/supabase-server'
 
 export const runtime = 'nodejs'
 
@@ -21,11 +22,25 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'description is too long' }, { status: 400 })
   }
 
-  const suggestionId = await insertSuggestion({ type, description: description.trim() })
+  // Silently attribute the submission if the visitor happens to be logged in —
+  // not exposed as a form field, just read off their session.
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  let submittedBy: string | null = null
+  if (user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('display_name')
+      .eq('id', user.id)
+      .single()
+    submittedBy = profile?.display_name || user.email || null
+  }
+
+  const suggestionId = await insertSuggestion({ type, description: description.trim(), submittedBy })
 
   // Fail-soft: a GitHub API problem shouldn't stop the visitor's submission
   // from succeeding — the row is already saved and visible on /admin/suggestions.
-  const issue = await createSuggestionIssue({ type, description: description.trim() })
+  const issue = await createSuggestionIssue({ type, description: description.trim(), submittedBy })
   if (issue) {
     await attachGithubIssue(suggestionId, issue)
   }

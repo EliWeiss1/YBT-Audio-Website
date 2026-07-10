@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { categorize } from '@/lib/ingest/categorizer'
+import { categorizeDrive } from '@/lib/ingest/drive-categorizer'
 import { writePendingLecture, writeFailedIngestion, writeCategoryFlag, triggerDeploy } from '@/lib/ingest/lectures-writer'
 import { sendFlagNotification, sendFailureNotification, sendAutoMergeNotification } from '@/lib/ingest/notifier'
 
@@ -23,7 +24,7 @@ export async function POST(req: NextRequest) {
   const {
     lectureId, title, rabbi, description, date, senderEmail,
     publicUrl, duration, shareUrl, rawEmailSnippet, error,
-    deferDeploy, autoMerged, recordingCount,
+    deferDeploy, autoMerged, recordingCount, source, suppressNotify, category, aliases,
   } = body as {
     lectureId?: string; title?: string; rabbi?: string; description?: string
     date?: string; senderEmail?: string; publicUrl?: string; duration?: number
@@ -31,6 +32,13 @@ export async function POST(req: NextRequest) {
     // Multi-recording: `deferDeploy` skips the rebuild for all but the last of N
     // "separate" shiurim; `autoMerged`/`recordingCount` flag an unprompted merge.
     deferDeploy?: boolean; autoMerged?: boolean; recordingCount?: number
+    // `source` tags where the shiur came from (e.g. 'drive'); `suppressNotify` skips the
+    // per-item flag email — the Google Drive worker sends one run-summary instead of an
+    // email per shiur (avoids ~150 emails during the initial backfill).
+    // `category` is a Drive folder's category pin: when set, categorize within it (with a
+    // per-rabbi fallback) instead of searching the whole tree by title (Zoom path).
+    // `aliases` maps title keywords → a node id for that folder (e.g. yomtov → gemarah-beitza).
+    source?: string; suppressNotify?: boolean; category?: string; aliases?: Record<string, string>
   }
 
   // Failure branch: the worker couldn't download/upload the recording.
@@ -57,9 +65,27 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Missing required success fields' }, { status: 400 })
   }
 
-  // Step 4: Categorize
-  const catResult = await categorize(title, description ?? '')
-  const shouldFlag = catResult.tier === 2 && catResult.confidence === 'low'
+  // Step 4: Categorize. Drive shiurim carry a `category` folder pin → categorize within it
+  // (per-rabbi fallback handles the unsure ones, so no manual flag). Everything else uses
+  // the whole-tree title categorizer and flags low-confidence results for /admin/flags.
+  let nodePath: string[]
+  let nodeLabel: string | undefined
+  let shouldFlag = false
+  let flagInfo: { tier: number; confidence: 'high' | 'low'; alternatives: string[][] } | null = null
+
+  const driveResult = category ? await categorizeDrive(title, category, rabbi || 'Unknown', aliases ?? {}).catch(() => null) : null
+  if (driveResult) {
+    nodePath = driveResult.nodePath
+    nodeLabel = driveResult.nodeLabel
+  } else {
+    // Zoom path (or a Drive pin that failed to resolve → fall back to whole-tree).
+    const catResult = await categorize(title, description ?? '')
+    nodePath = catResult.nodePath
+    shouldFlag = catResult.tier === 2 && catResult.confidence === 'low'
+    if (shouldFlag) {
+      flagInfo = { tier: catResult.tier, confidence: catResult.confidence, alternatives: 'alternatives' in catResult ? catResult.alternatives : [] }
+    }
+  }
 
   // Steps 5-7: Persist to DB, flag, and deploy.
   try {
@@ -73,28 +99,30 @@ export async function POST(req: NextRequest) {
       audio_url: publicUrl,
       duration: duration ?? 0,
       tags: [],
-      node_path: catResult.nodePath,
+      node_path: nodePath,
+      node_label: nodeLabel,
     })
 
-    // Step 6: Write flag if low confidence
-    if (shouldFlag) {
-      const alternatives = 'alternatives' in catResult ? catResult.alternatives : []
+    // Step 6: Write flag if low confidence (whole-tree path only)
+    if (shouldFlag && flagInfo) {
       await writeCategoryFlag({
         shiurId: lectureId,
-        proposedPath: catResult.nodePath,
-        alternatives,
-        tier: catResult.tier,
-        confidence: catResult.confidence,
+        proposedPath: nodePath,
+        alternatives: flagInfo.alternatives,
+        tier: flagInfo.tier,
+        confidence: flagInfo.confidence,
       })
-      await sendFlagNotification({
-        shiurId: lectureId,
-        title,
-        rabbi: rabbi ?? '',
-        proposedPath: catResult.nodePath,
-        alternatives,
-        confidence: catResult.confidence,
-        tier: catResult.tier,
-      })
+      if (!suppressNotify) {
+        await sendFlagNotification({
+          shiurId: lectureId,
+          title,
+          rabbi: rabbi ?? '',
+          proposedPath: nodePath,
+          alternatives: flagInfo.alternatives,
+          confidence: flagInfo.confidence,
+          tier: flagInfo.tier,
+        })
+      }
     }
 
     // Let the admin know when the worker merged multiple recordings without being
@@ -128,7 +156,9 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({
     ok: true,
     lectureId,
-    nodePath: catResult.nodePath,
+    source: source ?? 'zoom',
+    nodePath,
+    nodeLabel,
     flagged: shouldFlag,
     dryRun: process.env.INGEST_DRY_RUN === 'true',
   })

@@ -196,3 +196,35 @@ create table public.suggestions (
 );
 
 alter table public.suggestions enable row level security;
+
+-- ============================================
+-- DRIVE INGEST LOG
+-- Dedup + audit trail for the Google Drive ingest
+-- pipeline (scripts/drive-sync.mjs, run daily by
+-- .github/workflows/drive-ingest.yml). One row per
+-- Drive file id: the daily poll skips any file whose
+-- row is status='done'. Written only by the server /
+-- worker (service role key). No client-side access,
+-- so RLS has no policies (service role bypasses RLS;
+-- everyone else is denied by default).
+-- Run this block if adding to an existing deployment.
+-- ============================================
+create table public.drive_ingest_log (
+  file_id text primary key,                   -- Google Drive file id (stable, unique)
+  lecture_id text,                            -- the id written to pending_lectures on success
+  file_name text,
+  title text,
+  speaker text,
+  node_path jsonb,                            -- categorizer placement, for the audit trail
+  status text not null,                       -- 'done' | 'parse_failed' | 'error'
+  error text,
+  ingested_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+alter table public.drive_ingest_log enable row level security;
+
+-- The Drive per-rabbi fallback creates a new tree node (e.g. a "Rabbi Bald" folder under
+-- Gemarah) at build time; its label rides along on the pending_lectures row. Add the column
+-- to the existing pending_lectures table (which lives outside this file). Null for every
+-- normal placement into an existing node (Zoom + most Drive shiurim).
+alter table public.pending_lectures add column if not exists node_label text;

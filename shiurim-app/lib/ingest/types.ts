@@ -51,6 +51,9 @@ export type PendingLecture = {
   duration: number
   tags: string[]
   node_path: string[]
+  // Label for a node the merge step must CREATE (the Drive per-rabbi fallback folder).
+  // Absent for normal placements into existing nodes.
+  node_label?: string
 }
 
 export function generateLectureId(): string {

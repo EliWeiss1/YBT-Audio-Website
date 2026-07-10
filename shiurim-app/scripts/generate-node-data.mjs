@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { createClient } from '@supabase/supabase-js'
+import { resolvePlacement } from './lib/merge-pending.mjs'
 import dotenv from 'dotenv'
 dotenv.config({ path: '.env.local' })
 
@@ -26,10 +27,9 @@ async function mergePendingLectures(lecturesData) {
   const categories = JSON.parse(JSON.stringify(lecturesData.categories))
 
   for (const shiur of pending) {
-    const [catId, nodeId] = shiur.node_path
-    const cat = categories.find(c => c.id === catId)
-    if (!cat) { console.warn(`[generate] Unknown category: ${catId} for shiur ${shiur.id}`); continue }
-    const node = (cat.children ?? []).find(n => n.id === nodeId) ?? cat
+    // Walk the node_path at any depth; create the per-rabbi fallback leaf when node_label is set.
+    const node = resolvePlacement(categories, shiur.node_path, shiur.node_label)
+    if (!node) { console.warn(`[generate] Could not place shiur ${shiur.id} at ${JSON.stringify(shiur.node_path)}`); continue }
     if (!node.lectures) node.lectures = []
     node.lectures.unshift({
       id: shiur.id,

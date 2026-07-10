@@ -1,0 +1,48 @@
+name: drive-ingest
+
+on:
+  schedule:
+    - cron: '0 12 * * *' # daily 12:00 UTC (~8am ET)
+  workflow_dispatch:
+    inputs:
+      max:
+        description: 'Max files to ingest this run (blank = no cap)'
+        required: false
+        default: ''
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: shiurim-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: shiurim-app/package-lock.json
+      - run: npm ci
+      # ffmpeg transcodes the Drive .m4a recordings to .mp3. Not on ubuntu-latest by
+      # default, so install it explicitly (same as the other ingest workflows).
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Sync new Google Drive recordings (drive_ingest_log skips already-ingested files)
+        run: node scripts/drive-sync.mjs ${{ github.event.inputs.max && format('--max {0}', github.event.inputs.max) || '' }}
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          INGEST_COMPLETE_URL: https://ybtshiurim.org/api/ingest-complete
+          INGEST_SECRET: ${{ secrets.INGEST_SECRET }}
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+          R2_PUBLIC_URL: ${{ secrets.R2_PUBLIC_URL }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          INGEST_DRY_RUN: ${{ vars.INGEST_DRY_RUN }}

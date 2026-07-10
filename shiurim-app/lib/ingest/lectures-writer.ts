@@ -14,7 +14,9 @@ export async function writePendingLecture(lecture: PendingLecture): Promise<void
     return
   }
   const supabase = getServiceClient()
-  const { error } = await supabase.from('pending_lectures').insert(lecture)
+  // node_label is only present for auto-created nodes (Drive per-rabbi fallback); default
+  // to null so the column exists in the row shape regardless of source.
+  const { error } = await supabase.from('pending_lectures').insert({ node_label: null, ...lecture })
   if (error) throw new Error(`pending_lectures insert failed: ${error.message}`)
 }
 

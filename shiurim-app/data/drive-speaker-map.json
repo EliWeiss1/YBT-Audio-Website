@@ -1,0 +1,3 @@
+{
+  "_comment": "Optional canonical-name overrides for Drive-ingested shiurim. Keys may be the raw filename rabbi token (e.g. \"RabbiBald\") OR the auto-normalized name (e.g. \"Rabbi Bald\"); matching is case-insensitive. Leave empty to use the auto-derived name from the filename. Keys starting with _ are ignored."
+}

@@ -4,7 +4,9 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import {
   DISMISS_KEY,
   REMIND_AFTER_DAYS,
+  isMobileUserAgent,
   resolvePlatform,
+  shouldOfferInstall,
   wasDismissedRecently,
   type InstallPlatform,
 } from './pwa-install-logic'
@@ -28,6 +30,8 @@ type PwaInstallState = {
   dismissedRecently: boolean
   /** Record an explicit dismissal (× / "Not now") — suppresses the banner. */
   dismissBanner: () => void
+  /** Whether any install affordance should be shown at all (mobile-only, not-installed). */
+  shouldOffer: boolean
 }
 
 function detectStandalone(): boolean {
@@ -92,14 +96,18 @@ export function PwaInstallProvider({ children }: { children: React.ReactNode }) 
     } catch { /* ignore */ }
   }, [])
 
-  const value = useMemo<PwaInstallState>(() => ({
-    installed,
-    platform: resolvePlatform(userAgent, canPrompt),
-    canPrompt,
-    promptInstall,
-    dismissedRecently,
-    dismissBanner,
-  }), [installed, userAgent, canPrompt, promptInstall, dismissedRecently, dismissBanner])
+  const value = useMemo<PwaInstallState>(() => {
+    const platform = resolvePlatform(userAgent, canPrompt)
+    return {
+      installed,
+      platform,
+      canPrompt,
+      promptInstall,
+      dismissedRecently,
+      dismissBanner,
+      shouldOffer: shouldOfferInstall(installed, platform, canPrompt, isMobileUserAgent(userAgent)),
+    }
+  }, [installed, userAgent, canPrompt, promptInstall, dismissedRecently, dismissBanner])
 
   return <PwaInstallContext.Provider value={value}>{children}</PwaInstallContext.Provider>
 }

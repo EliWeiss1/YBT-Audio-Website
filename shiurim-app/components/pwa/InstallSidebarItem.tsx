@@ -2,17 +2,16 @@
 
 import { useState } from 'react'
 import { usePwaInstall } from '@/lib/pwa-install'
-import { shouldOfferInstall } from '@/lib/pwa-install-logic'
 import InstallInstructions from './InstallInstructions'
 
-/** Persistent, quiet "Install app" entry in the sidebar nav.
- *  Hidden once the app is installed (see shouldOfferInstall). Fires the native
- *  prompt when one is held, otherwise falls back to manual instructions. */
+/** Persistent, quiet "Install app" entry in the sidebar nav. Mobile-only,
+ *  hidden once the app is installed (see shouldOfferInstall). Fires the
+ *  native prompt when one is held, otherwise falls back to manual instructions. */
 export default function InstallSidebarItem() {
-  const { installed, platform, canPrompt, promptInstall } = usePwaInstall()
+  const { shouldOffer, platform, canPrompt, promptInstall } = usePwaInstall()
   const [showInstructions, setShowInstructions] = useState(false)
 
-  if (!shouldOfferInstall(installed, platform, canPrompt)) return null
+  if (!shouldOffer) return null
 
   const handleClick = async () => {
     if (canPrompt) {

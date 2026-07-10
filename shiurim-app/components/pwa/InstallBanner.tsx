@@ -5,20 +5,21 @@ import Image from 'next/image'
 import { usePlayer } from '@/lib/player-context'
 import { usePwaInstall } from '@/lib/pwa-install'
 
-/** First-visit "Install the app" nudge: native install on Android/Chrome,
- *  Add-to-Home-Screen instructions on iOS Safari. The always-available
- *  fallback lives in the sidebar (InstallSidebarItem); this is just the
- *  proactive prompt, suppressed for 30 days only on an *explicit* dismissal. */
+/** First-visit "Install the app" nudge: native install on Android,
+ *  Add-to-Home-Screen instructions on iOS Safari. Mobile-only — never shown
+ *  on desktop/laptop. The always-available fallback lives in the sidebar
+ *  (InstallSidebarItem); this is just the proactive prompt, suppressed for
+ *  30 days only on an *explicit* dismissal. */
 export default function InstallBanner() {
   const { lecture } = usePlayer()
-  const { installed, platform, canPrompt, promptInstall, dismissedRecently, dismissBanner } = usePwaInstall()
+  const { shouldOffer, platform, canPrompt, promptInstall, dismissedRecently, dismissBanner } = usePwaInstall()
   const [mode, setMode] = useState<'hidden' | 'android' | 'ios'>('hidden')
   const [visible, setVisible] = useState(false) // drives the slide-up animation
 
   useEffect(() => {
-    if (installed || dismissedRecently) return
+    if (!shouldOffer || dismissedRecently) return
     // Only auto-surface where there's an actionable next step:
-    // a native prompt (Android/desktop) or iOS's manual instructions.
+    // a native prompt (Android) or iOS's manual instructions.
     const m: 'android' | 'ios' | null =
       canPrompt ? 'android' : platform === 'ios' ? 'ios' : null
     if (!m) return
@@ -27,7 +28,7 @@ export default function InstallBanner() {
     // Slight delay so the banner slides in after the page settles
     const showTimer = setTimeout(() => setVisible(true), 2500)
     return () => clearTimeout(showTimer)
-  }, [installed, dismissedRecently, canPrompt, platform])
+  }, [shouldOffer, dismissedRecently, canPrompt, platform])
 
   const dismiss = () => {
     setVisible(false)
@@ -41,7 +42,7 @@ export default function InstallBanner() {
     await promptInstall()
   }
 
-  if (installed || mode === 'hidden') return null
+  if (mode === 'hidden') return null
 
   return (
     <div

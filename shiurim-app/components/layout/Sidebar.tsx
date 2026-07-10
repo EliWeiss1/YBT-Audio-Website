@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import { loadTree, loadSpeakerCounts, type CatalogTreeNode } from '@/lib/client-catalog'
 import { normalizeRabbi } from '@/lib/rabbi-normalization'
+import InstallSidebarItem from '@/components/pwa/InstallSidebarItem'
 
 // ─── Recursive tree node ──────────────────────────────────────────────────────
 
@@ -227,6 +228,7 @@ export default function Sidebar({ onClose }: { onClose?: () => void }) {
             ${pathname === '/feedback' ? 'bg-emerald-50 text-emerald-800' : 'text-stone-600 hover:bg-stone-50'}`}>
           <span>💬</span> Feedback
         </Link>
+        <InstallSidebarItem />
       </div>
 
       {/* Tree */}

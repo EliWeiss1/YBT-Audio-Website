@@ -3,87 +3,45 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { usePlayer } from '@/lib/player-context'
+import { usePwaInstall } from '@/lib/pwa-install'
 
-const DISMISS_KEY = 'install-banner-dismissed:v1'
-const REMIND_AFTER_DAYS = 30
-
-type BeforeInstallPromptEvent = Event & {
-  prompt: () => Promise<void>
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
-}
-
-function isStandalone(): boolean {
-  return (
-    window.matchMedia('(display-mode: standalone)').matches ||
-    // iOS Safari legacy flag
-    (navigator as unknown as { standalone?: boolean }).standalone === true
-  )
-}
-
-function isIos(): boolean {
-  return /iphone|ipad|ipod/i.test(navigator.userAgent)
-}
-
-function wasDismissedRecently(): boolean {
-  try {
-    const at = Number(localStorage.getItem(DISMISS_KEY) ?? 0)
-    return at > 0 && Date.now() - at < REMIND_AFTER_DAYS * 86_400_000
-  } catch {
-    return false
-  }
-}
-
-/** "Install the app" prompt: native install on Android/Chrome,
- *  Add-to-Home-Screen instructions on iOS Safari. */
+/** First-visit "Install the app" nudge: native install on Android/Chrome,
+ *  Add-to-Home-Screen instructions on iOS Safari. The always-available
+ *  fallback lives in the sidebar (InstallSidebarItem); this is just the
+ *  proactive prompt, suppressed for 30 days only on an *explicit* dismissal. */
 export default function InstallBanner() {
   const { lecture } = usePlayer()
+  const { installed, platform, canPrompt, promptInstall, dismissedRecently, dismissBanner } = usePwaInstall()
   const [mode, setMode] = useState<'hidden' | 'android' | 'ios'>('hidden')
   const [visible, setVisible] = useState(false) // drives the slide-up animation
-  const [promptEvent, setPromptEvent] = useState<BeforeInstallPromptEvent | null>(null)
 
   useEffect(() => {
-    if (isStandalone() || wasDismissedRecently()) return
+    if (installed || dismissedRecently) return
+    // Only auto-surface where there's an actionable next step:
+    // a native prompt (Android/desktop) or iOS's manual instructions.
+    const m: 'android' | 'ios' | null =
+      canPrompt ? 'android' : platform === 'ios' ? 'ios' : null
+    if (!m) return
 
-    let showTimer: ReturnType<typeof setTimeout> | null = null
-    const reveal = (m: 'android' | 'ios') => {
-      setMode(m)
-      // Slight delay so the banner slides in after the page settles
-      showTimer = setTimeout(() => setVisible(true), 2500)
-    }
-
-    const onPrompt = (e: Event) => {
-      e.preventDefault()
-      setPromptEvent(e as BeforeInstallPromptEvent)
-      reveal('android')
-    }
-    window.addEventListener('beforeinstallprompt', onPrompt)
-
-    if (isIos()) reveal('ios')
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', onPrompt)
-      if (showTimer) clearTimeout(showTimer)
-    }
-  }, [])
+    setMode(m)
+    // Slight delay so the banner slides in after the page settles
+    const showTimer = setTimeout(() => setVisible(true), 2500)
+    return () => clearTimeout(showTimer)
+  }, [installed, dismissedRecently, canPrompt, platform])
 
   const dismiss = () => {
     setVisible(false)
-    try {
-      localStorage.setItem(DISMISS_KEY, String(Date.now()))
-    } catch { /* ignore */ }
+    dismissBanner()
   }
 
   const install = async () => {
-    if (!promptEvent) return
+    // Cancelling or a failed native install does NOT suppress the banner —
+    // the user can still retry here or via the sidebar's Install app entry.
     setVisible(false)
-    await promptEvent.prompt()
-    const { outcome } = await promptEvent.userChoice
-    if (outcome === 'dismissed') {
-      try { localStorage.setItem(DISMISS_KEY, String(Date.now())) } catch { /* ignore */ }
-    }
+    await promptInstall()
   }
 
-  if (mode === 'hidden') return null
+  if (installed || mode === 'hidden') return null
 
   return (
     <div

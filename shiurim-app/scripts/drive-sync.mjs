@@ -294,16 +294,17 @@ async function main() {
       const lectureId = `MASORET-${parsed.date.replace(/-/g, '')}-${randomBytes(3).toString('hex')}`
       const r2Key = `drive/${speakerSlug(speaker)}/${lectureId}.mp3`
       const publicUrl = await uploadToR2(r2, r2Key, buf)
+      const title = `${parsed.title} (Masoret)`
       const res = await postToIngestComplete({
-        lectureId, title: parsed.title, rabbi: speaker, description: '', date: parsed.date, publicUrl, duration,
+        lectureId, title, rabbi: speaker, description: '', date: parsed.date, publicUrl, duration,
         category: file.category, aliases: file.aliases,
       })
       await logResult(sb, {
         file_id: file.id, lecture_id: lectureId, file_name: file.name,
-        title: parsed.title, speaker, node_path: res.nodePath ?? null, status: 'done',
+        title, speaker, node_path: res.nodePath ?? null, status: 'done',
       })
       added.push({ ...file, lectureId, speaker, flagged: res.flagged })
-      if (res.flagged) flagged.push({ ...file, speaker, title: parsed.title })
+      if (res.flagged) flagged.push({ ...file, speaker, title })
       console.log(`  OK  ${lectureId} → ${(res.nodePath || []).join(' / ') || '(uncategorized)'}${res.flagged ? ' [flagged]' : ''} — ${(buf.length / 1e6).toFixed(1)} MB, ${duration}s`)
     } catch (e) {
       console.error(`  ERROR ${file.name}: ${e.message}`)

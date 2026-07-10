@@ -40,3 +40,23 @@ export function resolvePlatform(userAgent: string, hasDeferredPrompt: boolean): 
   if (isIosUserAgent(userAgent)) return 'ios'
   return hasDeferredPrompt ? 'android' : 'other'
 }
+
+/**
+ * Whether to surface any "Install app" affordance.
+ *
+ * Never when already installed (standalone). On iOS there's no API to tell
+ * whether the site is already on the home screen, so we offer whenever not
+ * standalone. On Chromium (Android/desktop) `beforeinstallprompt` stops firing
+ * once the PWA is installed, so a held prompt (`canPrompt`) is our signal that
+ * it isn't installed yet — no prompt means we stay quiet rather than nag a user
+ * who already has the app.
+ */
+export function shouldOfferInstall(
+  installed: boolean,
+  platform: InstallPlatform,
+  canPrompt: boolean,
+): boolean {
+  if (installed) return false
+  if (platform === 'ios') return true
+  return canPrompt
+}

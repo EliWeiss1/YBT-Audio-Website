@@ -3,6 +3,7 @@ import {
   isIosUserAgent,
   wasDismissedRecently,
   resolvePlatform,
+  shouldOfferInstall,
   REMIND_AFTER_DAYS,
 } from '../pwa-install-logic'
 
@@ -77,5 +78,29 @@ describe('resolvePlatform', () => {
 
   it('is "other" on non-iOS with no deferred prompt (unknown installability)', () => {
     expect(resolvePlatform('Mozilla/5.0 (Windows NT 10.0)', false)).toBe('other')
+  })
+})
+
+describe('shouldOfferInstall', () => {
+  it('never offers when already running installed (standalone)', () => {
+    expect(shouldOfferInstall(true, 'ios', false)).toBe(false)
+    expect(shouldOfferInstall(true, 'android', true)).toBe(false)
+    expect(shouldOfferInstall(true, 'other', false)).toBe(false)
+  })
+
+  it('offers on iOS when not standalone (no API to detect home-screen install)', () => {
+    expect(shouldOfferInstall(false, 'ios', false)).toBe(true)
+  })
+
+  it('offers on non-iOS only while a native prompt is held', () => {
+    // A held prompt means Chromium considers it not-yet-installed.
+    expect(shouldOfferInstall(false, 'android', true)).toBe(true)
+  })
+
+  it('does NOT offer on non-iOS without a prompt — the app is likely already installed', () => {
+    // Chromium suppresses beforeinstallprompt once the PWA is installed, so a
+    // browser tab of an installed app lands here and must stay quiet.
+    expect(shouldOfferInstall(false, 'other', false)).toBe(false)
+    expect(shouldOfferInstall(false, 'android', false)).toBe(false)
   })
 })

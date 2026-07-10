@@ -2,16 +2,17 @@
 
 import { useState } from 'react'
 import { usePwaInstall } from '@/lib/pwa-install'
+import { shouldOfferInstall } from '@/lib/pwa-install-logic'
 import InstallInstructions from './InstallInstructions'
 
 /** Persistent, quiet "Install app" entry in the sidebar nav.
- *  Hidden once the app is installed. Fires the native prompt when one is held,
- *  otherwise falls back to manual Add-to-Home-Screen instructions. */
+ *  Hidden once the app is installed (see shouldOfferInstall). Fires the native
+ *  prompt when one is held, otherwise falls back to manual instructions. */
 export default function InstallSidebarItem() {
   const { installed, platform, canPrompt, promptInstall } = usePwaInstall()
   const [showInstructions, setShowInstructions] = useState(false)
 
-  if (installed) return null
+  if (!shouldOfferInstall(installed, platform, canPrompt)) return null
 
   const handleClick = async () => {
     if (canPrompt) {

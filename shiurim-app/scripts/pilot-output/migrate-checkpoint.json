@@ -9000,5 +9000,16 @@
     ],
     "insertedInto": [],
     "seconds": 3.2
+  },
+  "1182360": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1182360.mp3",
+    "placements": [
+      "bamidbar-masei"
+    ],
+    "insertedInto": [
+      "bamidbar-masei"
+    ],
+    "seconds": 1.4
   }
 }

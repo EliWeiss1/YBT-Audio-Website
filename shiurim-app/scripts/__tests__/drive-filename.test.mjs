@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import {
-  parseDriveFilename, normalizeSpeaker, speakerSlug,
+  parseDriveFilename, parseMasoretFilename, normalizeSpeaker, speakerSlug,
   resolveSpeaker, folderSpeaker, titleLooksMisordered, dedupePreferAudio,
 } from '../lib/drive-filename.mjs'
 
@@ -74,6 +74,61 @@ describe('parseDriveFilename', () => {
 
   it('rejects an empty title after cleanup', () => {
     expect(parseDriveFilename('2026-02-25_RabbiBald_---.m4a').ok).toBe(false)
+  })
+})
+
+describe('parseMasoretFilename', () => {
+  it('parses "Rabbi - Title - Masoret <date>"', () => {
+    expect(parseMasoretFilename('Rabbi Weiss - Haggadah - Dayeinu - Masoret 3-22-26.m4a')).toEqual({
+      ok: true,
+      date: '2026-03-22',
+      rabbiToken: 'Rabbi Weiss',
+      title: 'Haggadah - Dayeinu',
+    })
+  })
+
+  it('parses "Rabbi - Title - Masoret - <date>" (extra hyphen before the date)', () => {
+    expect(parseMasoretFilename(
+      "Rabbi Weiss - Parshat Behar - Chapter 25 Verse 25 - Don't sell all of your inheritence 2025-2026 - Masoret - 5-10-26.m4a",
+    )).toMatchObject({
+      ok: true,
+      date: '2026-05-10',
+      rabbiToken: 'Rabbi Weiss',
+      title: "Parshat Behar - Chapter 25 Verse 25 - Don't sell all of your inheritence 2025-2026",
+    })
+  })
+
+  it('tolerates double spaces and a trailing space before the extension', () => {
+    expect(parseMasoretFilename(
+      'Rabbi Weiss - Parshat Emor - The Blasphemer and The Showbread  - Masoret - 5-3-26 .m4a',
+    )).toMatchObject({
+      ok: true,
+      date: '2026-05-03',
+      title: 'Parshat Emor - The Blasphemer and The Showbread',
+    })
+  })
+
+  it('drops a trailing "Edit" marker after the date', () => {
+    expect(parseMasoretFilename('Rabbi Weiss - Parshat Mishpatim - The widow and the orphan - Masoret 2-15-26 Edit.mp3'))
+      .toMatchObject({ ok: true, date: '2026-02-15', title: 'Parshat Mishpatim - The widow and the orphan' })
+  })
+
+  it('returns a null date when the title has no date after the Masoret marker', () => {
+    expect(parseMasoretFilename(
+      'Rabbi Weiss - Parshat Shelach - Chapter 14 Verse 17 Slow to Anger - 2025-2026 - Masoret.m4a',
+    )).toMatchObject({
+      ok: true,
+      date: null,
+      title: 'Parshat Shelach - Chapter 14 Verse 17 Slow to Anger - 2025-2026',
+    })
+  })
+
+  it('rejects a filename with no "- Masoret" marker', () => {
+    expect(parseMasoretFilename('Rabbi Weiss - Some Title.m4a').ok).toBe(false)
+  })
+
+  it('rejects an impossible calendar date after the marker', () => {
+    expect(parseMasoretFilename('Rabbi Weiss - Some Title - Masoret 13-40-26.m4a').ok).toBe(false)
   })
 })
 

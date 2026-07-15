@@ -2,9 +2,12 @@
 // drive-sync.mjs — Google Drive → shiurim ingest worker.
 //
 // Third ingest mechanism (see CLAUDE.md). Rabbis' Zoom recordings land in shared
-// Google Drive folders named `YYYY-MM-DD_<Rabbi>_<Title>.m4a`. This worker (run daily
-// by .github/workflows/drive-ingest.yml, and once locally for the backfill) does, for
-// every file it hasn't already ingested:
+// Google Drive folders, most named `YYYY-MM-DD_<Rabbi>_<Title>.m4a` (parseDriveFilename)
+// but a root can opt into a different convention via `filenameFormat` in
+// data/drive-folders.json — e.g. "masoret-suffix" for Rabbi Weiss's
+// `<Rabbi> - <Title> - Masoret <M-D-YY>.m4a` files (parseMasoretFilename). This worker
+// (run daily by .github/workflows/drive-ingest.yml, and once locally for the backfill)
+// does, for every file it hasn't already ingested:
 //
 //   1. list the configured root folders recursively (Drive API, service account)
 //   2. skip files already recorded status='done' in Supabase `drive_ingest_log`
@@ -34,7 +37,7 @@ import { randomBytes } from 'node:crypto'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import {
-  parseDriveFilename, resolveSpeaker, speakerSlug,
+  parseDriveFilename, parseMasoretFilename, resolveSpeaker, speakerSlug,
   titleLooksMisordered, dedupePreferAudio, isVideoFile,
 } from './lib/drive-filename.mjs'
 
@@ -103,13 +106,15 @@ async function resolveFolderId(drive, label) {
 
 // Recurse a folder, collecting audio files with the rabbi-named folder that contains them
 // and the root's category pin (carried down so every file knows where its folder maps to).
-async function listAudioFiles(drive, folderId, folderLabel, category, aliases) {
+// `filenameFormat` selects which parser drive-filename.mjs uses for this root (default:
+// canonical date_rabbi_title); it's carried down the same way as category/aliases.
+async function listAudioFiles(drive, folderId, folderLabel, category, aliases, filenameFormat) {
   const files = []
   let pageToken
   do {
     const res = await drive.files.list({
       q: `'${folderId}' in parents and trashed = false`,
-      fields: 'nextPageToken, files(id, name, mimeType)',
+      fields: 'nextPageToken, files(id, name, mimeType, createdTime)',
       pageSize: 1000,
       pageToken,
       supportsAllDrives: true,
@@ -117,9 +122,9 @@ async function listAudioFiles(drive, folderId, folderLabel, category, aliases) {
     })
     for (const f of res.data.files ?? []) {
       if (f.mimeType === FOLDER_MIME) {
-        files.push(...await listAudioFiles(drive, f.id, f.name, category, aliases))
+        files.push(...await listAudioFiles(drive, f.id, f.name, category, aliases, filenameFormat))
       } else if (AUDIO_NAME_RE.test(f.name)) {
-        files.push({ id: f.id, name: f.name, folder: folderLabel, category, aliases })
+        files.push({ id: f.id, name: f.name, folder: folderLabel, category, aliases, filenameFormat, createdTime: f.createdTime })
       }
     }
     pageToken = res.data.nextPageToken
@@ -248,7 +253,7 @@ async function main() {
     const id = root.id || await resolveFolderId(drive, root.label)
     if (!root.id) console.log(`Resolved "${root.label}" → ${id} (add this id to data/drive-folders.json to pin it)`)
     console.log(`Listing "${root.label}" (${id})${root.category ? ` → pinned to ${root.category}` : ' → full-tree AI'} ...`)
-    all.push(...await listAudioFiles(drive, id, root.label, root.category, root.aliases))
+    all.push(...await listAudioFiles(drive, id, root.label, root.category, root.aliases, root.filenameFormat))
   }
   console.log(`Found ${all.length} audio/video file(s) across ${roots.length} root(s).`)
 
@@ -268,12 +273,24 @@ async function main() {
   const added = [], flagged = [], parseFailed = [], errored = []
 
   for (const file of todo) {
-    const parsed = parseDriveFilename(file.name)
+    const parseFn = file.filenameFormat === 'masoret-suffix' ? parseMasoretFilename : parseDriveFilename
+    let parsed = parseFn(file.name)
     if (!parsed.ok) {
       console.log(`SKIP  ${file.name} — ${parsed.reason}`)
       parseFailed.push({ ...file, reason: parsed.reason })
       await logResult(sb, { file_id: file.id, file_name: file.name, status: 'parse_failed', error: parsed.reason })
       continue
+    }
+    // Some Masoret filenames omit the date entirely — fall back to Drive's creation time.
+    if (!parsed.date) {
+      if (!file.createdTime) {
+        const reason = 'no date in filename and no Drive createdTime available'
+        console.log(`SKIP  ${file.name} — ${reason}`)
+        parseFailed.push({ ...file, reason })
+        await logResult(sb, { file_id: file.id, file_name: file.name, status: 'parse_failed', error: reason })
+        continue
+      }
+      parsed = { ...parsed, date: file.createdTime.slice(0, 10) }
     }
     const speaker = resolveSpeaker(parsed.rabbiToken, file.folder, SPEAKER_MAP)
     // A title equal to the speaker means the filename is likely date_Title_Speaker (misordered).
@@ -343,7 +360,7 @@ async function sendSummary({ added, flagged, parseFailed, errored }) {
     <h2>Google Drive shiur sync</h2>
     <p>${parts.join(', ')}.</p>
     ${flagged.length ? `<h3>Needs categorization review (see /admin/flags)</h3>${list(flagged, i => `${i.speaker} — ${i.title}`)}` : ''}
-    ${parseFailed.length ? `<h3>Could not parse filename (rename in Drive to <code>YYYY-MM-DD_Rabbi_Title</code>)</h3>${list(parseFailed, i => `${i.name} — ${i.reason}`)}` : ''}
+    ${parseFailed.length ? `<h3>Could not parse filename (check the folder's naming convention)</h3>${list(parseFailed, i => `${i.name} — ${i.reason}`)}` : ''}
     ${errored.length ? `<h3>Errored (will retry next run)</h3>${list(errored, i => `${i.name} — ${i.error}`)}` : ''}
   `
   if (!key) { console.log('No RESEND_API_KEY set — skipping summary email. Summary was:\n', parts.join(', ')); return }

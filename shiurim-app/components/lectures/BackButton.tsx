@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { isAppLoaded } from '@/lib/app-session'
 
 const BackIcon = ({ cls }: { cls: string }) => (
   <svg className={cls} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -18,13 +19,14 @@ const backLinkClasses =
 export default function BackButton() {
   const router = useRouter()
   // Defaults false during SSR/first paint (no `window`), then flips true on mount
-  // if this tab has a prior entry to go back to. A same-tab click from an internal
-  // link, or an external referrer, both count as "has history" — only a fresh tab
-  // (shared link, PWA launch, bookmark) has history.length === 1.
+  // if the app shell had already loaded before this page — see lib/app-session.ts.
+  // A directly-opened/shared link is the first thing to mount in its tab, so this
+  // stays false and the component falls back to a plain link instead of calling
+  // router.back() into a dead end.
   const [hasHistory, setHasHistory] = useState(false)
 
   useEffect(() => {
-    setHasHistory(window.history.length > 1)
+    setHasHistory(isAppLoaded())
   }, [])
 
   if (hasHistory) {

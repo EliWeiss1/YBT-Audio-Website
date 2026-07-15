@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase-browser'
+import { markAppLoaded } from '@/lib/app-session'
 import Sidebar from './Sidebar'
 import ProfileDrawer from './ProfileDrawer'
 import NavSearch from './NavSearch'
@@ -23,6 +24,11 @@ export default function LayoutShell({
   const router = useRouter()
 
   useEffect(() => { setSidebarOpen(false) }, [pathname])
+
+  // Marks that the app shell has mounted in this tab session — see lib/app-session.ts
+  useEffect(() => {
+    markAppLoaded()
+  }, [])
 
   // Keep auth state in sync with Supabase session changes
   useEffect(() => {

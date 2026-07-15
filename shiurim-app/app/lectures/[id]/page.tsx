@@ -8,6 +8,7 @@ import SpeakerEditor from '@/components/lectures/SpeakerEditor'
 import BookmarkButton from '@/components/lectures/BookmarkButton'
 import ShareButton from '@/components/lectures/ShareButton'
 import DownloadButton from '@/components/lectures/DownloadButton'
+import BackButton from '@/components/lectures/BackButton'
 import Link from 'next/link'
 import { format } from 'date-fns'
 
@@ -43,6 +44,11 @@ export default async function LecturePage({ params }: Props) {
 
   return (
     <div className="px-4 py-6 sm:p-8 max-w-3xl mx-auto">
+
+      {/* Back */}
+      <div className="mb-2">
+        <BackButton />
+      </div>
 
       {/* Breadcrumb */}
       <nav className="text-sm text-stone-400 mb-6 flex items-center gap-1.5 flex-wrap">

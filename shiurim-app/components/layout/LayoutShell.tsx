@@ -25,7 +25,11 @@ export default function LayoutShell({
 
   useEffect(() => { setSidebarOpen(false) }, [pathname])
 
-  // Marks that the app shell has mounted in this tab session — see lib/app-session.ts
+  // Marks that the app shell has mounted in this tab session — see lib/app-session.ts.
+  // Must stay a plain (passive) useEffect: BackButton's fallback relies on child effects
+  // firing before this one on a page's first mount. Converting this to useLayoutEffect,
+  // or hoisting it above LayoutShell, would make the flag visible too early and break
+  // the "opened via a direct/shared link" fallback.
   useEffect(() => {
     markAppLoaded()
   }, [])

@@ -56,10 +56,18 @@ export default function RecentlyGiven({
 
   const effectiveSpeaker = (l: FlatLecture) => overrideMap[l.id] ?? normalizeRabbi(l.speaker)
 
-  const rabbiOptions = useMemo(
-    () => Array.from(new Set(lectures.map(effectiveSpeaker).filter(Boolean))).sort(),
-    [lectures, overrideMap]
-  )
+  const rabbiOptions = useMemo(() => {
+    const counts = new Map<string, number>()
+    for (const l of lectures) {
+      const speaker = effectiveSpeaker(l)
+      if (!speaker) continue
+      counts.set(speaker, (counts.get(speaker) ?? 0) + 1)
+    }
+    return Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .map(([speaker]) => speaker)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lectures, overrideMap])
 
   const folderOptions = useMemo(() => {
     const present = new Set(lectures.map(l => l.breadcrumb[0]).filter(Boolean))

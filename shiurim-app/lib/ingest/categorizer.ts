@@ -11,7 +11,19 @@ const MASECHTA_ALIASES = Object.entries(masechtaLookup as Record<string, string[
 // Excludes years (2024, 5784) and arbitrary large numbers.
 const DAF_RE = /\b([1-9]|[1-9]\d|1\d{2}|200)[ab]?\b/
 
+// "Pirkei Avot"/"Pirkei Avos" has its own dedicated node — checked before the masechta
+// alias loop below, because the bare "avot" alias (for generic Mishnayos-style shiurim on
+// Masechet Avot) would otherwise match "Avot" here too, and the chapter/mishna numbers in
+// a Pirkei Avot title (e.g. "Chapter 2 Mishna 10") satisfy DAF_RE, misrouting it to
+// gemarah/other-gemarah instead.
+const PIRKEI_AVOT_RE = /\bpirkei\s+avo[st]\b/i
+const PIRKEI_AVOT_NODE_PATH = ['kisvei-chazal', 'kisvei-chazal-all']
+
 export async function categorize(title: string, description: string): Promise<CategorizeResult> {
+  if (PIRKEI_AVOT_RE.test(title)) {
+    return { tier: 1, nodePath: PIRKEI_AVOT_NODE_PATH, confidence: 'high' }
+  }
+
   const lower = title.toLowerCase()
 
   for (const [alias, nodePath] of MASECHTA_ALIASES) {

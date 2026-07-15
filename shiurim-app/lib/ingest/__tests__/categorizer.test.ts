@@ -59,6 +59,22 @@ describe('categorize — Tier 1 (Gemara regex)', () => {
     const r = await categorize('Shabbat Laws Overview', '')
     expect(r.tier).toBe(2)
   })
+
+  it('routes "Pirkei Avot" titles to Kisvei Chazal, not the bare "Avot" gemara alias', async () => {
+    // Regression: "avot" is a Tier-1 masechta alias for gemarah/other-gemarah, and the
+    // chapter/mishna numbers in a Pirkei Avot title (e.g. "Chapter 2 Mishna 10") were
+    // matching DAF_RE, so this was misrouted to Gemara instead of its dedicated node.
+    const r = await categorize('Pirkei Avot - Chapter 2 Mishna 10 - Honor Anger and Death (Masoret)', '')
+    expect(r.tier).toBe(1)
+    expect(r.nodePath).toEqual(['kisvei-chazal', 'kisvei-chazal-all'])
+    expect(r.confidence).toBe('high')
+  })
+
+  it('routes the Ashkenazi "Pirkei Avos" spelling the same way', async () => {
+    const r = await categorize('Pirkei Avos Perek 3 - Money and Honor', '')
+    expect(r.tier).toBe(1)
+    expect(r.nodePath).toEqual(['kisvei-chazal', 'kisvei-chazal-all'])
+  })
 })
 
 describe('categorize — Tier 2 (Haiku fallback)', () => {

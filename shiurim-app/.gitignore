@@ -19,6 +19,10 @@ public/lectures-data/
 *.pem
 npm-debug.log*
 
+# Google service-account credential keys — never commit (e.g. the Drive ingest key,
+# downloaded from GCP as `<project-id>-<key-id-prefix>.json`)
+ybt-shiurim-*.json
+
 # Schneeweiss migration scratch: local scratch audio + old pilot-phase caches.
 # migrate-checkpoint.json and migrate-flagged.json ARE tracked on purpose — CI
 # needs the committed checkpoint to skip already-ingested shiurim on rerun.

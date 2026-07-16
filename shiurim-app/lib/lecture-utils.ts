@@ -68,6 +68,17 @@ export function lectureIdFromParam(decodedParam: string): string {
   return sep === -1 ? decodedParam : decodedParam.slice(sep + 2)
 }
 
+/**
+ * Parse a lecture's `date` field ("YYYY-MM-DD") as a local calendar date.
+ * `new Date("YYYY-MM-DD")` parses as UTC midnight, which formats as the
+ * previous day in any timezone behind UTC — this constructs the Date from
+ * the local components instead so the calendar date never shifts.
+ */
+export function parseLectureDate(dateStr: string): Date {
+  const [year, month, day] = dateStr.split('-').map(Number)
+  return new Date(year, month - 1, day)
+}
+
 /** Format seconds as h:mm:ss or m:ss */
 export function formatDuration(seconds: number): string {
   const h = Math.floor(seconds / 3600)

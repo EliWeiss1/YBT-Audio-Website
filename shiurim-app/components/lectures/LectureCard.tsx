@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { FlatLecture, Lecture, formatDuration } from '@/lib/lecture-utils'
+import { FlatLecture, Lecture, formatDuration, parseLectureDate } from '@/lib/lecture-utils'
 import { usePlayer } from '@/lib/player-context'
 import BookmarkButton from './BookmarkButton'
 import DownloadButton from './DownloadButton'
@@ -138,7 +138,7 @@ export default function LectureCard({ lecture, index, progress, speakerOverride,
         </div>
         {lecture.date && (
           <span className="text-xs text-stone-300 tabular-nums">
-            {new Date(lecture.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+            {parseLectureDate(lecture.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
           </span>
         )}
         {'audioUrl' in lecture && lecture.audioUrl && (

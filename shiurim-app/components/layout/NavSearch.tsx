@@ -4,7 +4,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Fuse from 'fuse.js'
 import type { FlatLecture } from '@/lib/lecture-utils'
-import { formatDuration } from '@/lib/lecture-utils'
+import { formatDuration, parseLectureDate } from '@/lib/lecture-utils'
 import { loadCatalog } from '@/lib/client-catalog'
 import { normalizeRabbi } from '@/lib/rabbi-normalization'
 
@@ -40,7 +40,7 @@ const ResultRow = React.memo(function ResultRow({
 }) {
   const category = lecture.breadcrumb[0] ?? ''
   const dateStr = lecture.date
-    ? new Date(lecture.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
+    ? parseLectureDate(lecture.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
     : ''
   const dur = lecture.duration ? formatDuration(lecture.duration) : ''
 

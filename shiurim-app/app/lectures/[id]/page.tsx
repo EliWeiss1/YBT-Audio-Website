@@ -1,5 +1,5 @@
 import { getLectureById, formatDuration, getAllLectures } from '@/lib/lectures'
-import { lectureIdFromParam, lectureSharePath } from '@/lib/lecture-utils'
+import { lectureIdFromParam, lectureSharePath, parseLectureDate } from '@/lib/lecture-utils'
 import { normalizeRabbi } from '@/lib/rabbi-normalization'
 import { notFound } from 'next/navigation'
 import LectureAuthSection from '@/components/lectures/LectureAuthSection'
@@ -86,7 +86,7 @@ export default async function LecturePage({ params }: Props) {
         )}
         {lecture.duration > 0 && <span>⏱ {formatDuration(lecture.duration)}</span>}
         {lecture.date && (
-          <span>📅 {format(new Date(lecture.date), 'MMM d, yyyy')}</span>
+          <span>📅 {format(parseLectureDate(lecture.date), 'MMM d, yyyy')}</span>
         )}
         {lecture.audioUrl && (
           <a

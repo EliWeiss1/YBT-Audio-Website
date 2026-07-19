@@ -9011,5 +9011,16 @@
       "bamidbar-masei"
     ],
     "seconds": 1.4
+  },
+  "1183343": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1183343.mp3",
+    "placements": [
+      "devarim-devarim"
+    ],
+    "insertedInto": [
+      "devarim-devarim"
+    ],
+    "seconds": 2.5
   }
 }

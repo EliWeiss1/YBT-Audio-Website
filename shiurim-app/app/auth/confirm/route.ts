@@ -6,10 +6,21 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const token_hash = searchParams.get('token_hash')
   const type = searchParams.get('type') as EmailOtpType | null
+  const code = searchParams.get('code')
   const next = searchParams.get('next') ?? '/lectures'
 
+  const supabase = await createClient()
+
+  // PKCE flow (default Supabase email links carry a ?code=): exchange it for a session.
+  if (code) {
+    const { error } = await supabase.auth.exchangeCodeForSession(code)
+    if (!error) {
+      return NextResponse.redirect(new URL(next, request.url))
+    }
+  }
+
+  // OTP / token_hash flow (used by custom email templates).
   if (token_hash && type) {
-    const supabase = await createClient()
     const { error } = await supabase.auth.verifyOtp({ type, token_hash })
     if (!error) {
       return NextResponse.redirect(new URL(next, request.url))

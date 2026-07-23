@@ -112,8 +112,19 @@ export async function parseIngestEmail(rawEmail: Buffer): Promise<ParseResult> {
   const title = headLines[0] ? stripLabel(headLines[0], 'title') : ''
 
   const knownRabbi = (senderRabbiMap as Record<string, string>)[senderEmail] || ''
-  const rabbi = headLines[1] ? stripLabel(headLines[1], 'rabbi') : knownRabbi
-  const description = headLines[2] ? stripLabel(headLines[2], 'description') : ''
+
+  // Line 2 is normally the rabbi's name, but no rabbi's name runs past 4 words —
+  // so a longer line 2 is really a description the rebbe typed without bothering
+  // to include their name (their sender email already resolves the rabbi via
+  // senderRabbiMap). In that case take line 2 as the description and pull the
+  // rabbi from the map.
+  const line2 = headLines[1] ?? ''
+  const line2IsDescription = line2.split(/\s+/).filter(Boolean).length > 4
+
+  const rabbi = line2 && !line2IsDescription ? stripLabel(line2, 'rabbi') : knownRabbi
+  const description = line2IsDescription
+    ? stripLabel(line2, 'description')
+    : headLines[2] ? stripLabel(headLines[2], 'description') : ''
 
   if (!title) return { ok: false, reason: 'no_title', senderEmail, subject }
   if (!recordingUrl) return { ok: false, reason: 'no_recording_url', senderEmail, subject }

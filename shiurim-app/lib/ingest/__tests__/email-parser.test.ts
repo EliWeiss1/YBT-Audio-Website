@@ -48,6 +48,24 @@ From: no-reply@zoom.us
 Join URL: https://zoom.us/rec/share/XYZ789
 `
 
+// A known sender types a title on line 1 and a description on line 2 without
+// including their name. Line 2 has more than 4 words, so it's read as the
+// description (no rabbi's name is that long) and the rabbi comes from the map.
+const FIXTURE_LINE2_LONG_DESCRIPTION = `From: efeder@ybt.org
+To: shiurim@ybt.org
+Date: Thu, 16 Jan 2025 08:00:00 +0000
+Subject: Fwd: Recording Ready
+Content-Type: text/plain; charset=utf-8
+
+Shabbos 10b — Kavod Shabbat
+An in-depth look at the halachos of honoring Shabbos
+
+---------- Forwarded message ---------
+From: no-reply@zoom.us
+
+Join URL: https://zoom.us/rec/share/XYZ789
+`
+
 const FIXTURE_NO_PREAMBLE = `From: unknown@gmail.com
 To: shiurim@ybt.org
 Date: Fri, 17 Jan 2025 09:00:00 +0000
@@ -417,6 +435,16 @@ describe('parseIngestEmail', () => {
     const result = await parseIngestEmail(Buffer.from(FIXTURE_KNOWN_SENDER_NO_RABBI_LINE))
     expect(result.ok).toBe(true)
     if (result.ok) expect(result.data.rabbi).toBe('Rabbi Feder')
+  })
+
+  it('treats a line 2 with more than 4 words as the description, pulling the rabbi from the sender map', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_LINE2_LONG_DESCRIPTION))
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.data.title).toBe('Shabbos 10b — Kavod Shabbat')
+      expect(result.data.rabbi).toBe('Rabbi Feder') // from sender-rabbi-map, not line 2
+      expect(result.data.description).toBe('An in-depth look at the halachos of honoring Shabbos')
+    }
   })
 
   it('still accepts legacy Title:/Rabbi:/Description: labels', async () => {

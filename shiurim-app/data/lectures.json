@@ -23106,6 +23106,19 @@
               "label": "Va'etchanan",
               "lectures": [
                 {
+                  "id": "YBT-1184067",
+                  "title": "Vaeschanan: Rashba on What “Shema Yisrael” Demands of Us",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1184067.mp3",
+                  "duration": 629,
+                  "description": "This is the audio version of the 3-page article I wrote and published on rabbischneeweiss.substack.com/ on 7/24/26 titled: Vaeschanan: Rashba on What “Shema Yisrael” Demands of Us. There's a lot to think about in the Shema, but how many of us pause to consider what the word \"Shema\" is instructing us to do? Thankfully, the Rashba provides a comprehensive answer. https://rabbischneeweiss.substack.com/p/vaeschanan-rashba-on-what-shema-yisrael",
+                  "speaker": "Rabbi Matt Schneeweiss",
+                  "date": "2026-07-24",
+                  "tags": [
+                    "Va'etchanan",
+                    "Rashba"
+                  ]
+                },
+                {
                   "id": "YBT-1144165",
                   "title": "Vaeschanan: The Loneliness of the Jew",
                   "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1144165.mp3",
@@ -91770,6 +91783,19 @@
           "id": "kisvei-rishonim-rashba",
           "label": "Rashba",
           "lectures": [
+            {
+              "id": "YBT-1184067",
+              "title": "Vaeschanan: Rashba on What “Shema Yisrael” Demands of Us",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1184067.mp3",
+              "duration": 629,
+              "description": "This is the audio version of the 3-page article I wrote and published on rabbischneeweiss.substack.com/ on 7/24/26 titled: Vaeschanan: Rashba on What “Shema Yisrael” Demands of Us. There's a lot to think about in the Shema, but how many of us pause to consider what the word \"Shema\" is instructing us to do? Thankfully, the Rashba provides a comprehensive answer. https://rabbischneeweiss.substack.com/p/vaeschanan-rashba-on-what-shema-yisrael",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-07-24",
+              "tags": [
+                "Va'etchanan",
+                "Rashba"
+              ]
+            },
             {
               "id": "YBT-902377",
               "title": "Can A Non Jew Do Tevilas Keilim For You",

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import LayoutShell from '@/components/layout/LayoutShell'
 import BottomPlayer from '@/components/player/BottomPlayer'
@@ -51,6 +52,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <ServiceWorkerRegister />
           </PlayerProvider>
         </PwaInstallProvider>
+        <Analytics />
       </body>
     </html>
   )

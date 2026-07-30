@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import type { Lecture } from '@/lib/lecture-utils'
+import { isR2Hosted, type Lecture } from '@/lib/lecture-utils'
 import {
   downloadLecture,
   deleteDownload,
@@ -9,6 +9,8 @@ import {
   isDownloadSupported,
   onDownloadsChanged,
 } from '@/lib/downloads'
+
+const DISABLED_MESSAGE = 'Download is temporarily disabled for this shiur'
 
 type DownloadState = 'idle' | 'downloading' | 'done' | 'confirm' | 'error'
 
@@ -42,7 +44,31 @@ export default function DownloadButton({ lecture, size = 'sm', withLabel = false
 
   useEffect(() => () => { if (confirmTimer.current) clearTimeout(confirmTimer.current) }, [])
 
-  if (!supported || !lecture.audioUrl) return null
+  if (!lecture.audioUrl) return null
+
+  const dim = size === 'sm' ? 'w-7 h-7' : 'w-9 h-9'
+  const icon = size === 'sm' ? 'w-3.5 h-3.5' : 'w-4 h-4'
+
+  if (!isR2Hosted(lecture.audioUrl)) {
+    return (
+      <button
+        disabled
+        title={DISABLED_MESSAGE}
+        aria-label={DISABLED_MESSAGE}
+        className={`shrink-0 flex items-center justify-center cursor-not-allowed opacity-50
+          ${withLabel
+            ? 'rounded-lg gap-1.5 px-3 py-1.5 text-xs font-medium bg-stone-100 text-stone-400 border border-stone-200'
+            : `rounded-full ${dim} bg-transparent text-stone-300`}`}
+      >
+        <svg className={icon} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v10m0 0l-3.5-3.5M12 13l3.5-3.5M4 17.5V19a2 2 0 002 2h12a2 2 0 002-2v-1.5" />
+        </svg>
+        {withLabel && <span className="text-xs font-medium whitespace-nowrap">Unavailable</span>}
+      </button>
+    )
+  }
+
+  if (!supported) return null
 
   const handleClick = async (e: React.MouseEvent) => {
     e.preventDefault()
@@ -68,9 +94,6 @@ export default function DownloadButton({ lecture, size = 'sm', withLabel = false
       setState('idle')
     }
   }
-
-  const dim = size === 'sm' ? 'w-7 h-7' : 'w-9 h-9'
-  const icon = size === 'sm' ? 'w-3.5 h-3.5' : 'w-4 h-4'
 
   const title =
     state === 'idle' ? 'Save offline'

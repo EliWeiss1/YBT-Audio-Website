@@ -31,6 +31,19 @@ export type FlatLecture = Lecture & {
   nodeId: string          // id of the leaf TreeNode that owns this lecture
 }
 
+/** True if `url` is served from our R2 bucket — the only audio currently safe to
+ *  proxy-download through /api/download without burning Vercel's Fast Origin
+ *  Transfer quota. Other hosts (yutorah.org, ybt.org) proxy the full file through
+ *  a serverless function on every download, so their download UI is disabled
+ *  until they're migrated to R2. */
+export function isR2Hosted(url: string): boolean {
+  try {
+    return new URL(url).hostname.endsWith('.r2.dev')
+  } catch {
+    return false
+  }
+}
+
 /**
  * Build a human-readable slug from a shiur title. Everything that isn't
  * [a-z0-9] collapses to a single hyphen, so a slug can never contain "--"

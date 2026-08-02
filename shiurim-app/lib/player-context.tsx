@@ -38,6 +38,28 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
   const [duration, setDuration]     = useState(0)
   const [playbackSpeed, setPlaybackSpeed] = useState(1)
 
+  // Refs so the position can be flushed from callbacks (dismiss, lecture
+  // switch) without those callbacks needing `lecture`/`userId` in their
+  // dependency arrays (which would recreate them, and the audio element
+  // stop/switch code, on every position/lecture change).
+  const lectureRef = useRef<FlatLecture | null>(null)
+  const userIdRef  = useRef<string | undefined>(userId)
+  useEffect(() => { lectureRef.current = lecture }, [lecture])
+  useEffect(() => { userIdRef.current = userId }, [userId])
+
+  // Persist the currently-loaded lecture's position. Used any time playback
+  // state is about to be torn down or switched to a different lecture — the
+  // 10s interval save (below) only covers ongoing playback, not the moment
+  // of pausing/closing/switching itself.
+  const flushProgress = useCallback((completed = false) => {
+    const uid = userIdRef.current
+    const lec = lectureRef.current
+    if (!uid || !lec || !audioRef.current) return
+    const dur = Math.floor(audioRef.current.duration)
+    const pos = completed ? (dur > 0 ? dur : 0) : Math.floor(audioRef.current.currentTime)
+    savePosition(uid, lec.id, pos, completed, dur > 0 ? dur : undefined)
+  }, [])
+
   // Flush offline-queued progress + warm the client catalog while idle, so
   // the synchronous lookup in play() almost always hits.
   useEffect(() => {
@@ -51,12 +73,9 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
   useEffect(() => {
     onEndedRef.current = () => {
       setIsPlaying(false)
-      if (userId && lecture && audioRef.current) {
-        const dur = Math.floor(audioRef.current.duration)
-        savePosition(userId, lecture.id, dur > 0 ? dur : 0, true, dur > 0 ? dur : undefined)
-      }
+      flushProgress(true)
     }
-  }, [userId, lecture])
+  }, [flushProgress])
 
   // Save progress every 10 seconds while playing
   useEffect(() => {
@@ -216,6 +235,10 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
 
   const startPlayback = useCallback((found: FlatLecture, startAt: number) => {
     const audio = ensureAudioElement()
+    // Switching away from a different lecture (or re-playing after a close
+    // that didn't go through dismiss) — persist its last position before the
+    // src change below resets currentTime out from under us.
+    if (lectureRef.current && lectureRef.current.id !== found.id) flushProgress()
     audio.pause()
     // Downloaded shiurim play from the service-worker cache (works offline);
     // everything else streams from the original host.
@@ -231,7 +254,7 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     // Initialize the lock-screen scrubber/buttons right away, not only on
     // the first timeupdate (updatePositionState no-ops until metadata loads).
     updatePositionState()
-  }, [ensureAudioElement, setupMediaSession, updatePositionState])
+  }, [ensureAudioElement, setupMediaSession, updatePositionState, flushProgress])
 
   const play = useCallback((lectureId: string, startAt = 0, fallback?: FlatLecture) => {
     // Downloaded shiurim must play even when the catalog isn't available
@@ -267,11 +290,8 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     setIsPlaying(false)
     if (typeof navigator !== 'undefined' && 'mediaSession' in navigator)
       navigator.mediaSession.playbackState = 'paused'
-    if (userId && lecture && audioRef.current) {
-      const dur = Math.floor(audioRef.current.duration)
-      savePosition(userId, lecture.id, Math.floor(audioRef.current.currentTime), false, dur > 0 ? dur : undefined)
-    }
-  }, [userId, lecture])
+    flushProgress()
+  }, [flushProgress])
 
   const resume = useCallback(() => {
     audioRef.current?.play()
@@ -289,6 +309,10 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
   }, [updatePositionState])
 
   const dismiss = useCallback(() => {
+    // Closing the player is a valid stopping point same as pause() — persist
+    // wherever the listener currently is (including a skip/seek that hasn't
+    // hit the 10s interval save yet) before tearing down the audio element.
+    flushProgress()
     if (audioRef.current) {
       audioRef.current.pause()
       audioRef.current.src = ''
@@ -306,7 +330,7 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     setIsPlaying(false)
     setCurrentTime(0)
     setDuration(0)
-  }, [])
+  }, [flushProgress])
 
   // Keep onDismissRef current so the mediaSession 'stop' handler works
   useEffect(() => { onDismissRef.current = dismiss }, [dismiss])

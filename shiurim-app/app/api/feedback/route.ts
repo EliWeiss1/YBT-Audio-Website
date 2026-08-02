@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { insertSuggestion, attachGithubIssue } from '@/lib/feedback/writer'
 import { createSuggestionIssue } from '@/lib/feedback/github-issues'
+import { sendFeedbackNotification } from '@/lib/ingest/notifier'
 import { createClient } from '@/lib/supabase-server'
 
 export const runtime = 'nodejs'
@@ -44,6 +45,15 @@ export async function POST(req: NextRequest) {
   if (issue) {
     await attachGithubIssue(suggestionId, issue)
   }
+
+  // Fail-soft, same as the GitHub issue above — an email hiccup shouldn't
+  // stop the visitor's submission from succeeding.
+  await sendFeedbackNotification({
+    type,
+    description: description.trim(),
+    submittedBy,
+    issueUrl: issue?.url ?? null,
+  })
 
   return NextResponse.json({ ok: true })
 }

@@ -208,6 +208,34 @@ export async function sendAutoMergeNotification(opts: {
   }
 }
 
+export async function sendFeedbackNotification(opts: {
+  type: 'bug' | 'feature'
+  description: string
+  submittedBy: string | null
+  issueUrl: string | null
+}): Promise<void> {
+  if (process.env.INGEST_DRY_RUN === 'true') {
+    console.log('[DRY RUN] Would send feedback notification for:', opts.type)
+    return
+  }
+  const label = opts.type === 'bug' ? 'Bug report' : 'Feature request'
+  try {
+    await resend.emails.send({
+      from: fromAddress,
+      to: adminEmail,
+      subject: `[Feedback] ${label} submitted`,
+      html: `
+        <h2>New ${label.toLowerCase()}</h2>
+        <p><strong>Submitted by:</strong> ${opts.submittedBy ?? 'Anonymous'}</p>
+        <pre style="white-space:pre-wrap;background:#f5f5f5;padding:8px;">${opts.description}</pre>
+        ${opts.issueUrl ? `<p><a href="${opts.issueUrl}">View GitHub issue →</a></p>` : ''}
+      `,
+    })
+  } catch (e) {
+    console.error('sendFeedbackNotification: failed to send admin email', e)
+  }
+}
+
 export async function sendOAuthMissingNotification({
   title, rabbi, senderEmail, zoomShareUrl,
 }: { title: string; rabbi: string; senderEmail: string; zoomShareUrl: string }): Promise<void> {

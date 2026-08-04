@@ -8029,6 +8029,30 @@
               "label": "Vayeitzei",
               "lectures": [
                 {
+                  "id": "YBT-1177922",
+                  "title": "World of Midrash - The Aron Decimated the Leviim",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/chumash/bereishit/bereishit-vayeitzei/YBT-1177922.mp3",
+                  "duration": 2657,
+                  "description": "",
+                  "speaker": "Rabbi Aron Zimmer",
+                  "date": "2026-05-08",
+                  "tags": [
+                    "Vayeitzei"
+                  ]
+                },
+                {
+                  "id": "YBT-1179807",
+                  "title": "Sunday Shiur - Rachel and Leah and the Bris Shevatim",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/chumash/bereishit/bereishit-vayeitzei/YBT-1179807.mp3",
+                  "duration": 6731,
+                  "description": "",
+                  "speaker": "Rabbi Aron Zimmer",
+                  "date": "2026-06-14",
+                  "tags": [
+                    "Vayeitzei"
+                  ]
+                },
+                {
                   "id": "C-149",
                   "title": "Relationship Between Yaakov, Leah, And Rachel (C-149)",
                   "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Chumash/(1)%20Bereishit/7%20Vayeitzei/C-149%20Relationship%20between%20Yaakov%2C%20Leah%20and%20Rachel.mp3",
@@ -30763,6 +30787,20 @@
           "label": "Beit HaMikdash",
           "lectures": [
             {
+              "id": "YBT-1177905",
+              "title": "Sunday Shiur - Nazir, Sotah, and the Mikdash",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/discussion/discussion-beit-hamikdash/YBT-1177905.mp3",
+              "duration": 3824,
+              "description": "",
+              "speaker": "Rabbi Josh Maroof",
+              "date": "2026-05-24",
+              "tags": [
+                "Beit HaMikdash",
+                "Nazir",
+                "Sotah"
+              ]
+            },
+            {
               "id": "YBT-919330",
               "title": "Metamikdash",
               "audioUrl": "http://ybt.org/students/2018-2019/razimmer/2019_02_28-Metamikdash-Rabbi_A_Zimmer.MP3",
@@ -39696,6 +39734,19 @@
           "label": "Land of Israel",
           "lectures": [
             {
+              "id": "YBT-1177904",
+              "title": "Sunday Shiur - Eretz Yisroel in the view of Rambam, a Re-examination",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/discussion/discussion-land-of-israel/YBT-1177904.mp3",
+              "duration": 5398,
+              "description": "",
+              "speaker": "Rabbi Bernie Fox",
+              "date": "2026-05-10",
+              "tags": [
+                "Israel",
+                "Rambam"
+              ]
+            },
+            {
               "id": "D-3",
               "title": "Eretz Yisroel (D-3)",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Discussion/Land%20of%20Israel/D-003%20The%20Land%20of%20Israel.mp3",
@@ -41633,6 +41684,66 @@
           "id": "discussion-mitzvot",
           "label": "Mitzvot",
           "lectures": [
+            {
+              "id": "YBT-1176639",
+              "title": "Sefer Hamitzvos Klal Rishon Part 2",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/discussion/discussion-mitzvot/YBT-1176639.mp3",
+              "duration": 4100,
+              "description": "",
+              "speaker": "Rabbi Henoch Bald",
+              "date": "2026-05-03",
+              "tags": [
+                "Mitzvot"
+              ]
+            },
+            {
+              "id": "YBT-1176568",
+              "title": "Sefer Hamitzvos Klal Rishon Part 4",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/discussion/discussion-mitzvot/YBT-1176568.mp3",
+              "duration": 3194,
+              "description": "",
+              "speaker": "Rabbi Henoch Bald",
+              "date": "2026-05-17",
+              "tags": [
+                "Mitzvot"
+              ]
+            },
+            {
+              "id": "YBT-1181020",
+              "title": "Sefer Hamitzvos Klal Rishon-Safek Derabanan Part 5",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/discussion/discussion-mitzvot/YBT-1181020.mp3",
+              "duration": 2662,
+              "description": "",
+              "speaker": "Rabbi Henoch Bald",
+              "date": "2026-06-28",
+              "tags": [
+                "Mitzvot"
+              ]
+            },
+            {
+              "id": "YBT-1184174",
+              "title": "Sefer Hamitzvos Klal Rishon-Safek Derabanan and Lo Sasur Part 6",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/discussion/discussion-mitzvot/YBT-1184174.mp3",
+              "duration": 2752,
+              "description": "",
+              "speaker": "Rabbi Henoch Bald",
+              "date": "2026-07-12",
+              "tags": [
+                "Mitzvot"
+              ]
+            },
+            {
+              "id": "YBT-1184671",
+              "title": "Sefer Hamitzvos Klal Rishon-Rambam Lo Sasur-The Rav and Rebbe Part 7",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/discussion/discussion-mitzvot/YBT-1184671.mp3",
+              "duration": 3747,
+              "description": "",
+              "speaker": "Rabbi Henoch Bald",
+              "date": "2026-07-19",
+              "tags": [
+                "Mitzvot"
+              ]
+            },
             {
               "id": "YBT-1170408",
               "title": "How to Relate to Arbitrary Halachic Details (Part 1 - WILL BE REVISED IN THE SEQUEL)",
@@ -52919,6 +53030,19 @@
           "label": "Brachot",
           "lectures": [
             {
+              "id": "YBT-1177118",
+              "title": "Shabbos 23a Heichan Tzivanu, Dmai and Beracha Part 1",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/halacha/halacha-brachot/YBT-1177118.mp3",
+              "duration": 3539,
+              "description": "",
+              "speaker": "Rabbi Henoch Bald",
+              "date": "2026-05-24",
+              "tags": [
+                "Brachot",
+                "Shabbat"
+              ]
+            },
+            {
               "id": "YBT-1137680",
               "title": "Birchas hatorah mid'oraysa שיעור לזכר אבי מורי",
               "audioUrl": "https://download.yutorah.org/2025/22624/1137680.MP3",
@@ -56231,6 +56355,78 @@
           "id": "halacha-hechsher-keilim",
           "label": "Hechsher Keilim",
           "lectures": [
+            {
+              "id": "YBT-1183395",
+              "title": "Hechsher Keilim Bootcamp 6: Kashering Plastic",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/halacha/halacha-hechsher-keilim/YBT-1183395.mp3",
+              "duration": 2143,
+              "description": "",
+              "speaker": "Rabbi Zev Cinamon",
+              "date": "2026-06-16",
+              "tags": [
+                "Hechsher Keilim"
+              ]
+            },
+            {
+              "id": "YBT-1181602",
+              "title": "Hechsher Keilim Bootcamp 1: Hakdamah and Kibolo Kach Polto",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/halacha/halacha-hechsher-keilim/YBT-1181602.mp3",
+              "duration": 3032,
+              "description": "",
+              "speaker": "Rabbi Zev Cinamon",
+              "date": "2026-06-29",
+              "tags": [
+                "Hechsher Keilim"
+              ]
+            },
+            {
+              "id": "YBT-1181993",
+              "title": "Hechsher Keilim Bootcamp 2: Kashering Between Milk and Meat and Rov Tashmisho",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/halacha/halacha-hechsher-keilim/YBT-1181993.mp3",
+              "duration": 2711,
+              "description": "",
+              "speaker": "Rabbi Zev Cinamon",
+              "date": "2026-07-01",
+              "tags": [
+                "Hechsher Keilim"
+              ]
+            },
+            {
+              "id": "YBT-1183392",
+              "title": "Hechsher Keilim Bootcamp 3: Kashering Cheres",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/halacha/halacha-hechsher-keilim/YBT-1183392.mp3",
+              "duration": 632,
+              "description": "",
+              "speaker": "Rabbi Zev Cinamon",
+              "date": "2026-07-07",
+              "tags": [
+                "Hechsher Keilim"
+              ]
+            },
+            {
+              "id": "YBT-1183393",
+              "title": "Hechsher Keilim Bootcamp 4: Kashering Glass",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/halacha/halacha-hechsher-keilim/YBT-1183393.mp3",
+              "duration": 2771,
+              "description": "",
+              "speaker": "Rabbi Zev Cinamon",
+              "date": "2026-07-09",
+              "tags": [
+                "Hechsher Keilim"
+              ]
+            },
+            {
+              "id": "YBT-1183394",
+              "title": "Hechsher Keilim Bootcamp 5",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/halacha/halacha-hechsher-keilim/YBT-1183394.mp3",
+              "duration": 1943,
+              "description": "",
+              "speaker": "Rabbi Zev Cinamon",
+              "date": "2026-07-15",
+              "tags": [
+                "Hechsher Keilim"
+              ]
+            },
             {
               "id": "YBT-920089",
               "title": "Griz Maaseh Korbanos 8:14 Merikah Veshtifah",
@@ -62691,6 +62887,18 @@
           "id": "halacha-shabbat",
           "label": "Shabbat",
           "lectures": [
+            {
+              "id": "YBT-1180209",
+              "title": "Shabbos 23a Bein Hashemoshos Shulchan Aruch 349:5 Part 5",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/halacha/halacha-shabbat/YBT-1180209.mp3",
+              "duration": 2856,
+              "description": "",
+              "speaker": "Rabbi Henoch Bald",
+              "date": "2026-06-21",
+              "tags": [
+                "Shabbat"
+              ]
+            },
             {
               "id": "YBT-1162955",
               "title": "Griz Shabbos 29:5 Part 2",
@@ -81191,6 +81399,18 @@
           "id": "holidays-lag-baomer",
           "label": "Lag BaOmer",
           "lectures": [
+            {
+              "id": "YBT-1177902",
+              "title": "Sunday Shiur - Lag Ba'omer Lore and Law",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/holidays/holidays-lag-baomer/YBT-1177902.mp3",
+              "duration": 4534,
+              "description": "",
+              "speaker": "Rabbi Zev Cinamon",
+              "date": "2026-05-03",
+              "tags": [
+                "Lag BaOmer"
+              ]
+            },
             {
               "id": "YBT-838571",
               "title": "Mourning for the Churban Incomplete Happiness",
@@ -122430,6 +122650,24 @@
               "sourceId": 4885
             }
           ]
+        },
+        {
+          "id": "nach-yechezkel",
+          "label": "Yechezkel",
+          "lectures": [
+            {
+              "id": "YBT-1179806",
+              "title": "Sunday Shiur - Techiyas Ha’meisim and the Dry Bones",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/nach/nach-yechezkel/YBT-1179806.mp3",
+              "duration": 5265,
+              "description": "",
+              "speaker": "Rabbi E. Feder",
+              "date": "2026-06-07",
+              "tags": [
+                "Yechezkel"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -136064,6 +136302,56 @@
           "id": "shabbos-gemarah",
           "label": "Shabbos",
           "lectures": [
+            {
+              "id": "YBT-1177925",
+              "title": "Moshe’s debate with Malachim about who should receive the Torah",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/shabbos-gemarah/YBT-1177925.mp3",
+              "duration": 2769,
+              "description": "",
+              "speaker": "Rabbi E. Feder",
+              "date": "2026-05-27",
+              "tags": [
+                "Shabbat"
+              ]
+            },
+            {
+              "id": "YBT-1178761",
+              "title": "Shabbos 23a, 34a Dmai and Bein Hashemoshos Part 2",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/shabbos-gemarah/YBT-1178761.mp3",
+              "duration": 3278,
+              "description": "",
+              "speaker": "Rabbi Henoch Bald",
+              "date": "2026-05-31",
+              "tags": [
+                "Shabbat",
+                "Zmanim"
+              ]
+            },
+            {
+              "id": "YBT-1178762",
+              "title": "Shabbos 23a Dmai and Bein Hashemoshos, Ramban, Teshuvas HaRambam Part 3",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/shabbos-gemarah/YBT-1178762.mp3",
+              "duration": 4462,
+              "description": "",
+              "speaker": "Rabbi Henoch Bald",
+              "date": "2026-06-07",
+              "tags": [
+                "Shabbat",
+                "Zmanim"
+              ]
+            },
+            {
+              "id": "YBT-1180173",
+              "title": "Shabbos 23a Teshuvas HaRambam Part 4",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/shabbos-gemarah/YBT-1180173.mp3",
+              "duration": 2856,
+              "description": "",
+              "speaker": "Rabbi Henoch Bald",
+              "date": "2026-06-14",
+              "tags": [
+                "Shabbat"
+              ]
+            },
             {
               "id": "G-71",
               "title": "Shabbos - K'lall Gadol #1 (Daf 74b) (G-71)",
@@ -191350,6 +191638,18 @@
           "label": "Other Tractates",
           "lectures": [
             {
+              "id": "YBT-1177906",
+              "title": "Sunday Shiur - The Philosophy of Achilas Kodshim",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/other-gemarah/YBT-1177906.mp3",
+              "duration": 3882,
+              "description": "",
+              "speaker": "Rabbi Dr. Hillel Wolf",
+              "date": "2026-05-31",
+              "tags": [
+                "Kodshim"
+              ]
+            },
+            {
               "id": "G-83",
               "title": "Shevuos (34a) (G-83)",
               "audioUrl": "https://www.ybt.org/audio/.Converted_Audio/Gemara/rychait/25-Shevuos/G083-Shevuos-Rabbi_Y_Chait.mp3",
@@ -217170,6 +217470,66 @@
           "id": "gemarah-kiddushin",
           "label": "Kiddushin",
           "lectures": [
+            {
+              "id": "YBT-1177931",
+              "title": "Kibud Av Va’eim #17 - Kiddushin 30b",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/gemarah-kiddushin/YBT-1177931.mp3",
+              "duration": 2480,
+              "description": "",
+              "speaker": "Rabbi E. Feder",
+              "date": "2026-05-04",
+              "tags": [
+                "Kiddushin"
+              ]
+            },
+            {
+              "id": "YBT-1177932",
+              "title": "Kibud Av Va’eim #18 - Kiddushin 30b",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/gemarah-kiddushin/YBT-1177932.mp3",
+              "duration": 3226,
+              "description": "",
+              "speaker": "Rabbi E. Feder",
+              "date": "2026-05-11",
+              "tags": [
+                "Kiddushin"
+              ]
+            },
+            {
+              "id": "YBT-1177933",
+              "title": "Kibud Av Va’eim #19 - Kiddushin 30b",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/gemarah-kiddushin/YBT-1177933.mp3",
+              "duration": 2191,
+              "description": "",
+              "speaker": "Rabbi E. Feder",
+              "date": "2026-05-13",
+              "tags": [
+                "Kiddushin"
+              ]
+            },
+            {
+              "id": "YBT-1177934",
+              "title": "Kibud Av Va’eim #20 - Kiddushin 30b",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/gemarah-kiddushin/YBT-1177934.mp3",
+              "duration": 2840,
+              "description": "",
+              "speaker": "Rabbi E. Feder",
+              "date": "2026-05-25",
+              "tags": [
+                "Kiddushin"
+              ]
+            },
+            {
+              "id": "YBT-1177935",
+              "title": "Kibud Av Va’eim #21 - Kiddushin 30b",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/gemarah-kiddushin/YBT-1177935.mp3",
+              "duration": 2056,
+              "description": "",
+              "speaker": "Rabbi E. Feder",
+              "date": "2026-05-27",
+              "tags": [
+                "Kiddushin"
+              ]
+            },
             {
               "id": "YBT-1174562",
               "title": "Kibud Av Va’eim #16 - Kiddushin 30b",
@@ -248592,6 +248952,90 @@
           "label": "Yevamot",
           "lectures": [
             {
+              "id": "YBT-1177918",
+              "title": "Yevamos Daf 26b and 51a Chalitza Pesula",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/gemarah-yevamot/YBT-1177918.mp3",
+              "duration": 3985,
+              "description": "",
+              "speaker": "Rabbi Pesach Chait",
+              "date": "2026-05-07",
+              "tags": [
+                "Yevamot"
+              ]
+            },
+            {
+              "id": "YBT-1177920",
+              "title": "Yevamos 27a two answers for Shmuel",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/gemarah-yevamot/YBT-1177920.mp3",
+              "duration": 2933,
+              "description": "",
+              "speaker": "Rabbi Pesach Chait",
+              "date": "2026-05-11",
+              "tags": [
+                "Yevamot"
+              ]
+            },
+            {
+              "id": "YBT-1177921",
+              "title": "Yevamos 27a and 51a Shmuel svara",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/gemarah-yevamot/YBT-1177921.mp3",
+              "duration": 3464,
+              "description": "",
+              "speaker": "Rabbi Pesach Chait",
+              "date": "2026-05-13",
+              "tags": [
+                "Yevamot"
+              ]
+            },
+            {
+              "id": "YBT-1179809",
+              "title": "Yevamos 39a Mitzva Bigadol Svara",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/gemarah-yevamot/YBT-1179809.mp3",
+              "duration": 2669,
+              "description": "",
+              "speaker": "Rabbi Pesach Chait",
+              "date": "2026-06-01",
+              "tags": [
+                "Yevamot"
+              ]
+            },
+            {
+              "id": "YBT-1179810",
+              "title": "Yevamos 39b Chalitza Bigadol",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/gemarah-yevamot/YBT-1179810.mp3",
+              "duration": 2934,
+              "description": "",
+              "speaker": "Rabbi Pesach Chait",
+              "date": "2026-06-02",
+              "tags": [
+                "Yevamot"
+              ]
+            },
+            {
+              "id": "YBT-1179811",
+              "title": "Yevamos 102a Ger Dan Chavayro",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/gemarah-yevamot/YBT-1179811.mp3",
+              "duration": 3273,
+              "description": "",
+              "speaker": "Rabbi Pesach Chait",
+              "date": "2026-06-10",
+              "tags": [
+                "Yevamot"
+              ]
+            },
+            {
+              "id": "YBT-1179812",
+              "title": "Yevamos 102a and Sanhedrin 36b Beis Din for Chalitza",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/gemarah-yevamot/YBT-1179812.mp3",
+              "duration": 3319,
+              "description": "",
+              "speaker": "Rabbi Pesach Chait",
+              "date": "2026-06-11",
+              "tags": [
+                "Yevamot"
+              ]
+            },
+            {
               "id": "YBT-1174581",
               "title": "Yevamos 11a Rebbi Shimon after Chalitza",
               "audioUrl": "https://download.yutorah.org/2026/22624/1174581.MP3",
@@ -255559,6 +256003,66 @@
           "id": "mishna-sukkah",
           "label": "Sukkah",
           "lectures": [
+            {
+              "id": "YBT-1177926",
+              "title": "Osek Be’mitzvah Sukkah 25a #12",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/mishna/mishna-sukkah/YBT-1177926.mp3",
+              "duration": 3038,
+              "description": "",
+              "speaker": "Rabbi E. Feder",
+              "date": "2026-04-30",
+              "tags": [
+                "Sukkah"
+              ]
+            },
+            {
+              "id": "YBT-1177927",
+              "title": "Osek Be’mitzvah Sukkah 25a #13",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/mishna/mishna-sukkah/YBT-1177927.mp3",
+              "duration": 2075,
+              "description": "",
+              "speaker": "Rabbi E. Feder",
+              "date": "2026-05-05",
+              "tags": [
+                "Sukkah"
+              ]
+            },
+            {
+              "id": "YBT-1177928",
+              "title": "Osek Be’mitzvah Sukkah 25a #14",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/mishna/mishna-sukkah/YBT-1177928.mp3",
+              "duration": 2369,
+              "description": "",
+              "speaker": "Rabbi E. Feder",
+              "date": "2026-05-07",
+              "tags": [
+                "Sukkah"
+              ]
+            },
+            {
+              "id": "YBT-1177929",
+              "title": "Osek Be’mitzvah Sukkah 25a #15",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/mishna/mishna-sukkah/YBT-1177929.mp3",
+              "duration": 2550,
+              "description": "",
+              "speaker": "Rabbi E. Feder",
+              "date": "2026-05-12",
+              "tags": [
+                "Sukkah"
+              ]
+            },
+            {
+              "id": "YBT-1177930",
+              "title": "Osek Be’mitzvah Sukkah 25a #16",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/mishna/mishna-sukkah/YBT-1177930.mp3",
+              "duration": 1769,
+              "description": "",
+              "speaker": "Rabbi E. Feder",
+              "date": "2026-05-14",
+              "tags": [
+                "Sukkah"
+              ]
+            },
             {
               "id": "YBT-1174567",
               "title": "Osek Be’mitzvah Sukkah 25a #11",

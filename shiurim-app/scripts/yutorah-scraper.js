@@ -1076,7 +1076,7 @@ async function main() {
 
 // Export the category map so other scripts (e.g. migrate-schneeweiss.js) can
 // reuse the same "Category|Subcategory" -> nodeId backbone without copy-paste.
-module.exports = { CATEGORY_MAP };
+module.exports = { CATEGORY_MAP, NEW_NODES };
 
 // Only run the scrape when invoked directly, not when required as a module.
 if (require.main === module) {

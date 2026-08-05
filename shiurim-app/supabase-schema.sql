@@ -223,6 +223,31 @@ create table public.drive_ingest_log (
 
 alter table public.drive_ingest_log enable row level security;
 
+-- ============================================
+-- DROPBOX INGEST LOG
+-- Dedup + audit trail for the Dropbox ingest
+-- pipeline (scripts/dropbox-sync.mjs, run daily by
+-- .github/workflows/dropbox-ingest.yml). Mirrors
+-- drive_ingest_log; one row per Dropbox file id.
+-- The daily poll skips any file whose row is
+-- status='done'. Written only by the worker
+-- (service role key); no client-side access.
+-- Run this block if adding to an existing deployment.
+-- ============================================
+create table public.dropbox_ingest_log (
+  file_id text primary key,                   -- Dropbox file id (stable "id:...")
+  lecture_id text,                            -- the id written to pending_lectures on success
+  file_name text,
+  title text,
+  speaker text,
+  node_path jsonb,                            -- categorizer placement, for the audit trail
+  status text not null,                       -- 'done' | 'parse_failed' | 'error'
+  error text,
+  ingested_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+alter table public.dropbox_ingest_log enable row level security;
+
 -- The Drive per-rabbi fallback creates a new tree node (e.g. a "Rabbi Bald" folder under
 -- Gemarah) at build time; its label rides along on the pending_lectures row. Add the column
 -- to the existing pending_lectures table (which lives outside this file). Null for every

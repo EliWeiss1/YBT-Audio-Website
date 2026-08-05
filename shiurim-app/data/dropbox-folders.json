@@ -1,0 +1,9 @@
+[
+  {
+    "_comment": "Dropbox ingest roots (scripts/dropbox-sync.mjs). One entry per folder. The share link is a read-capability URL, so it is NOT committed here: set the real 'anyone with the link can view' URL (full copied value incl. ?rlkey=...) in the DROPBOX_SHARE_LINK env var — .env.local locally, a GitHub Actions secret in CI. (Optional: 'shareLinkEnv' names a different var per folder when there are several.) Reading via a shared link uses ZERO storage quota — no mount needed. ALTERNATIVE: omit shareLink and set 'path' to a folder mounted in your own account ('' = App-folder root; '/Sub/Folder' otherwise) — but mounting counts against your quota. speaker: the fixed display name for every shiur (the filename is the title only). idPrefix: seeds the lecture id (default 'DBX').",
+    "shareLink": "env:DROPBOX_SHARE_LINK (placeholder — real link comes from the DROPBOX_SHARE_LINK env var; a real https URL here would override)",
+    "path": "",
+    "speaker": "Rabbi Bald",
+    "idPrefix": "DBX"
+  }
+]

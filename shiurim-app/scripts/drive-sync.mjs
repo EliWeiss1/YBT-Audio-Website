@@ -25,25 +25,17 @@
 // =============================================================================
 import { config } from 'dotenv'
 import { google } from 'googleapis'
-import { createClient } from '@supabase/supabase-js'
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
-import { parseBuffer } from 'music-metadata'
-import { Resend } from 'resend'
 import { readFileSync } from 'node:fs'
-import { writeFile, readFile, mkdtemp, rm } from 'node:fs/promises'
-import { execFile } from 'node:child_process'
-import { promisify } from 'node:util'
 import { randomBytes } from 'node:crypto'
-import { tmpdir } from 'node:os'
-import { join } from 'node:path'
 import {
   parseDriveFilename, parseMasoretFilename, resolveSpeaker, speakerSlug,
   titleLooksMisordered, dedupePreferAudio, isVideoFile,
 } from './lib/drive-filename.mjs'
+import {
+  toMp3, r2Client, uploadToR2, supabase, postToIngestComplete, sendSummary, writesOff,
+} from './lib/ingest-media.mjs'
 
 config({ path: '.env.local' }) // local dev; a no-op in CI where env comes from the workflow
-
-const execFileAsync = promisify(execFile)
 
 // ── CLI flags ────────────────────────────────────────────────────────────────
 function parseArgs(argv) {
@@ -56,13 +48,9 @@ function parseArgs(argv) {
   return out
 }
 const ARGS = parseArgs(process.argv.slice(2))
-const WRITES_OFF = process.env.INGEST_DRY_RUN === 'true' // full run, but no persistent writes
+const WRITES_OFF = writesOff() // full run, but no persistent writes
 
-const { INGEST_SECRET, R2_BUCKET_NAME, VERCEL_DEPLOY_HOOK_URL } = process.env
-// Only set in the GitHub workflow; default to production so the local backfill works too.
-const INGEST_COMPLETE_URL = process.env.INGEST_COMPLETE_URL || 'https://ybtshiurim.org/api/ingest-complete'
-const R2_PUBLIC_URL = (process.env.R2_PUBLIC_URL || '').replace(/\/$/, '')
-const encodeKey = (k) => k.split('/').map(encodeURIComponent).join('/')
+const { VERCEL_DEPLOY_HOOK_URL } = process.env
 
 // ── config (resolved relative to this file, so cwd doesn't matter) ─────────────
 const readJson = (rel) => JSON.parse(readFileSync(new URL(rel, import.meta.url), 'utf8'))
@@ -140,82 +128,7 @@ async function downloadFile(drive, fileId) {
   return Buffer.from(res.data)
 }
 
-// ── media ────────────────────────────────────────────────────────────────────
-async function getDuration(buf, mimeType) {
-  try {
-    const meta = await parseBuffer(buf, { mimeType })
-    return Math.round(meta.format.duration ?? 0)
-  } catch { return 0 }
-}
-
-// Transcode a non-mp3 audio buffer to mp3 (ffmpeg). Returns { buf, duration } and throws
-// if the converted duration drifts > 5s from the source (corrupt/partial conversion).
-async function toMp3(srcBuf, srcName) {
-  const ext = (srcName.split('.').pop() || 'm4a').toLowerCase()
-  if (ext === 'mp3') return { buf: srcBuf, duration: await getDuration(srcBuf, 'audio/mpeg') }
-
-  const dir = await mkdtemp(join(tmpdir(), 'drive-ingest-'))
-  try {
-    const inPath = join(dir, `in.${ext}`)
-    const outPath = join(dir, 'out.mp3')
-    await writeFile(inPath, srcBuf)
-    await execFileAsync('ffmpeg', ['-y', '-i', inPath, '-vn', '-acodec', 'libmp3lame', '-q:a', '3', outPath])
-    const buf = await readFile(outPath)
-    const origDur = await getDuration(srcBuf, 'audio/mp4')
-    const duration = await getDuration(buf, 'audio/mpeg')
-    const drift = Math.abs(origDur - duration)
-    if (drift > 5) throw new Error(`duration drift ${drift}s (orig=${origDur}, conv=${duration})`)
-    return { buf, duration }
-  } finally {
-    await rm(dir, { recursive: true, force: true }).catch(() => {})
-  }
-}
-
-function r2Client() {
-  return new S3Client({
-    region: 'auto',
-    endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-    credentials: {
-      accessKeyId: process.env.R2_ACCESS_KEY_ID,
-      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
-    },
-  })
-}
-
-async function uploadToR2(r2, key, buf) {
-  if (WRITES_OFF) {
-    console.log(`  [DRY RUN] would upload ${(buf.length / 1e6).toFixed(1)} MB → r2://${R2_BUCKET_NAME}/${key}`)
-    return `DRY_RUN/${key}`
-  }
-  await r2.send(new PutObjectCommand({ Bucket: R2_BUCKET_NAME, Key: key, Body: buf, ContentType: 'audio/mpeg' }))
-  const url = `${R2_PUBLIC_URL}/${encodeKey(key)}`
-  const head = await fetch(url, { method: 'HEAD', redirect: 'follow' })
-  if (!head.ok) throw new Error(`uploaded object not reachable (HTTP ${head.status})`)
-  return url
-}
-
-// POST to the shared ingest-complete endpoint (categorize → pending_lectures → flag).
-// deferDeploy is always true — this worker fires a single deploy for the whole batch.
-async function postToIngestComplete(payload) {
-  if (WRITES_OFF) {
-    console.log('  [DRY RUN] would POST ingest-complete:', payload.lectureId, payload.title)
-    return { ok: true, flagged: false }
-  }
-  const res = await fetch(INGEST_COMPLETE_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'x-ingest-secret': INGEST_SECRET },
-    body: JSON.stringify({ ...payload, source: 'drive', suppressNotify: true, deferDeploy: true }),
-  })
-  const body = await res.json().catch(() => ({}))
-  if (!res.ok) throw new Error(`ingest-complete ${res.status}: ${JSON.stringify(body)}`)
-  return { ok: true, flagged: !!body.flagged, nodePath: body.nodePath }
-}
-
-// ── Supabase dedup log ─────────────────────────────────────────────────────────
-function supabase() {
-  return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
-}
-
+// ── Supabase dedup log (drive_ingest_log) ──────────────────────────────────────
 async function loadDoneFileIds(sb) {
   const done = new Set()
   // Only 'done' rows are skipped — 'error'/'parse_failed' rows are retried next run.
@@ -315,7 +228,7 @@ async function main() {
       const res = await postToIngestComplete({
         lectureId, title, rabbi: speaker, description: '', date: parsed.date, publicUrl, duration,
         category: file.category, aliases: file.aliases,
-      })
+      }, { source: 'drive' })
       await logResult(sb, {
         file_id: file.id, lecture_id: lectureId, file_name: file.name,
         title, speaker, node_path: res.nodePath ?? null, status: 'done',
@@ -337,39 +250,8 @@ async function main() {
   }
 
   console.log(`\nDONE — ${added.length} added, ${flagged.length} flagged, ${parseFailed.length} unparseable, ${errored.length} errored.`)
-  if (!ARGS.dryRun && !WRITES_OFF) await sendSummary({ added, flagged, parseFailed, errored })
-}
-
-// ── summary email ──────────────────────────────────────────────────────────────
-async function sendSummary({ added, flagged, parseFailed, errored }) {
-  if (added.length === 0 && parseFailed.length === 0 && errored.length === 0) {
-    console.log('Nothing new this run — skipping summary email.')
-    return
-  }
-  const key = process.env.RESEND_API_KEY
-  const to = process.env.ADMIN_EMAIL || 'eliisaweiss@gmail.com'
-  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-  const list = (items, fmt) => items.length ? `<ul>${items.map(i => `<li>${esc(fmt(i))}</li>`).join('')}</ul>` : ''
-
-  const parts = [`${added.length} added`]
-  if (flagged.length) parts.push(`${flagged.length} flagged`)
-  if (parseFailed.length) parts.push(`${parseFailed.length} unparseable`)
-  if (errored.length) parts.push(`${errored.length} errored`)
-
-  const html = `
-    <h2>Google Drive shiur sync</h2>
-    <p>${parts.join(', ')}.</p>
-    ${flagged.length ? `<h3>Needs categorization review (see /admin/flags)</h3>${list(flagged, i => `${i.speaker} — ${i.title}`)}` : ''}
-    ${parseFailed.length ? `<h3>Could not parse filename (check the folder's naming convention)</h3>${list(parseFailed, i => `${i.name} — ${i.reason}`)}` : ''}
-    ${errored.length ? `<h3>Errored (will retry next run)</h3>${list(errored, i => `${i.name} — ${i.error}`)}` : ''}
-  `
-  if (!key) { console.log('No RESEND_API_KEY set — skipping summary email. Summary was:\n', parts.join(', ')); return }
-  try {
-    const { error } = await new Resend(key).emails.send({ from: 'ingest@noreply.ybt.org', to, subject: `[Drive Sync] ${parts.join(', ')}`, html })
-    if (error) console.error(`Summary email rejected by Resend: ${JSON.stringify(error)} (verify the sending domain?)`)
-    else console.log(`Summary email sent to ${to}.`)
-  } catch (e) {
-    console.error(`Summary email failed: ${e.message}`)
+  if (!ARGS.dryRun && !WRITES_OFF) {
+    await sendSummary({ added, flagged, parseFailed, errored, heading: 'Google Drive shiur sync', subjectPrefix: '[Drive Sync]' })
   }
 }
 

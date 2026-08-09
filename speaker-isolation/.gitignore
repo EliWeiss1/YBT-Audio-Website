@@ -1,0 +1,23 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Model caches downloaded at runtime (pyannote / speechbrain / whisper)
+models/
+
+# Working audio — never commit recordings or intermediates
+input/**
+!input/.gitkeep
+output/**
+!output/.gitkeep
+reference_samples/**/*.mp3
+reference_samples/**/*.wav
+reference_samples/**/*.m4a
+reference_samples/**/*.mp4
+.cache/
+
+# Keep the built voice profiles (small pickles) and folder structure.
+!profiles/
+!logs/.gitkeep

@@ -18,6 +18,13 @@ public/lectures-data/
 .DS_Store
 *.pem
 npm-debug.log*
+tsconfig.tsbuildinfo
+.superpowers/
+
+# Local data backups + one-off script scratch output — never committed
+data/lectures.backup-*.json
+scripts/fetch-durations-failures.json
+scripts/fix-dead-urls-unmatched.json
 
 # Google service-account credential keys — never commit (e.g. the Drive ingest key,
 # downloaded from GCP as `<project-id>-<key-id-prefix>.json`)

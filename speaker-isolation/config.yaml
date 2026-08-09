@@ -1,0 +1,79 @@
+# ============================================================================
+# Speaker Isolation Pipeline — configuration
+# Every tunable lives here; nothing is hardcoded in src/. Edit and re-run.
+# ============================================================================
+
+# --- Compute -----------------------------------------------------------------
+# "cpu"  : force CPU (correct default for this Intel Arc laptop — no CUDA).
+# "cuda" : use an NVIDIA GPU if present.
+# "auto" : use cuda if available, else cpu (prints a speed warning on cpu).
+# NOTE: Intel Arc / XPU is experimental on Windows and NOT wired in by default.
+device: cpu
+
+# --- Models ------------------------------------------------------------------
+models:
+  # pyannote diarization (gated — you must accept its terms on HuggingFace and
+  # set HF_TOKEN in your environment; see README).
+  diarization: "pyannote/speaker-diarization-3.1"
+  # SpeechBrain ECAPA-TDNN speaker embedding.
+  embedding: "speechbrain/spkrec-ecapa-voxceleb"
+  # faster-whisper size: tiny | base | small | medium. Bigger = slower + better.
+  # "base" is a good CPU default; use "small" if transcripts look rough.
+  whisper: "base"
+  # faster-whisper compute type on CPU. int8 is fastest; int8_float32 is a hair
+  # more accurate. On GPU use "float16".
+  whisper_compute_type: "int8"
+
+# --- Classification thresholds (cosine similarity vs the rabbi's profile) -----
+# Each diarized segment gets a cosine similarity in [-1, 1] against the rabbi's
+# reference embedding:
+#   sim >= keep_high            -> KEEP  (confidently the rabbi)
+#   sim <  cut_low              -> CUT   (confidently NOT the rabbi)
+#   cut_low <= sim < keep_high  -> REVIEW (uncertain)
+# Starting guesses — TUNE THESE on the first 2-3 files during the walkthrough.
+thresholds:
+  keep_high: 0.50
+  cut_low: 0.25
+
+# --- Output construction -----------------------------------------------------
+output:
+  # Bias toward keeping the Rabbi: include uncertain ("review") segments in the
+  # cleaned audio by default so we never lose what the Rabbi says. Only
+  # confidently-not-the-rabbi ("cut") segments are removed.
+  include_review_in_output: true
+  # Safety pad added to each side of every kept interval (ms). Prevents a
+  # student's stray second (or a clipped word) at a boundary — set ~1-2s.
+  boundary_pad_ms: 1500
+  # Crossfade at each cut boundary to avoid clicks/pops (ms).
+  crossfade_ms: 30
+  # Drop kept intervals shorter than this after padding/merging (ms).
+  min_keep_segment_ms: 400
+  # Cleaned output audio format.
+  format: "mp3"
+  # libmp3lame VBR quality (matches the repo's ffmpeg convention: -q:a 3).
+  mp3_quality: 3
+
+# --- Embedding sampling ------------------------------------------------------
+# Long clips (reference shiurim, long segments) are embedded by averaging a few
+# short windows spread across the clip, rather than one giant pooled embedding.
+embedding:
+  window_s: 8.0          # length of each sampled window
+  max_windows: 8         # max windows per clip (spread evenly)
+  min_segment_s: 0.6     # segments shorter than this skip embedding -> treated as REVIEW
+
+# --- QA / outlier detection --------------------------------------------------
+qa:
+  # A file's metric is flagged when its z-score vs the running batch mean exceeds
+  # this. Lower = more sensitive.
+  outlier_zscore: 2.5
+  # Review-queue size (as % of segments) above which a file is flagged for a listen.
+  review_pct_flag: 0.25
+
+# --- Site integration --------------------------------------------------------
+site:
+  # Path to the committed source-of-truth catalog, relative to this project root.
+  lectures_json: "../shiurim-app/data/lectures.json"
+  # Where downloaded site audio is cached (so re-runs don't re-download).
+  download_cache: "input/_site_cache"
+  # HTTP User-Agent used when downloading audio (some hosts reject blank UAs).
+  user_agent: "shiur-speaker-isolation/1.0"

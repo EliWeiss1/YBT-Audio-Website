@@ -1,0 +1,22 @@
+# Speaker Isolation Pipeline — Python dependencies (CPU-oriented).
+# Install into a venv:  python -m venv venv && venv\Scripts\activate && pip install -r requirements.txt
+#
+# torch is CPU-only here. Intel Arc (XPU) acceleration is experimental on Windows and
+# NOT required — see README. If you later want it, install intel-extension-for-pytorch.
+
+# --- Core ML / audio ---
+torch                 # CPU build is fine; pyannote + speechbrain both need it
+pyannote.audio        # speaker diarization (gated model — needs HF_TOKEN, see README)
+speechbrain           # ECAPA-TDNN speaker embeddings
+faster-whisper        # transcripts (CTranslate2, fast int8 on CPU) — replaces openai-whisper
+
+# --- Audio I/O / DSP ---
+pydub                 # slicing + crossfades for building the cleaned output (needs ffmpeg on PATH)
+ffmpeg-python         # thin ffmpeg wrapper (we also shell out to ffmpeg directly)
+soundfile             # read decoded wav into numpy
+numpy
+scipy
+
+# --- Data / config ---
+pandas                # manifest + QA report
+pyyaml                # config.yaml

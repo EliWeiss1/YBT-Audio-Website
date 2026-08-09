@@ -9057,5 +9057,16 @@
       "devarim-eikev"
     ],
     "seconds": 2.2
+  },
+  "1184933": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1184933.mp3",
+    "placements": [
+      "devarim-reeh"
+    ],
+    "insertedInto": [
+      "devarim-reeh"
+    ],
+    "seconds": 24.3
   }
 }

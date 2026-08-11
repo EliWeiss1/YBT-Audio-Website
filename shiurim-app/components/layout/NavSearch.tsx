@@ -40,7 +40,7 @@ const ResultRow = React.memo(function ResultRow({
 }) {
   const category = lecture.breadcrumb[0] ?? ''
   const dateStr = lecture.date
-    ? parseLectureDate(lecture.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
+    ? parseLectureDate(lecture.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
     : ''
   const dur = lecture.duration ? formatDuration(lecture.duration) : ''
 

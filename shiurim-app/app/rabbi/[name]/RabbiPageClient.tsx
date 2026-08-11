@@ -15,10 +15,19 @@ type Props = {
 
 export default function RabbiPageClient({ canonicalName, allLectures, categories }: Props) {
   const [activeTab, setActiveTab] = useState<string>('All')
+  const [sortOrder, setSortOrder] = useState<'default' | 'newest' | 'oldest'>('default')
 
-  const visibleLectures = activeTab === 'All'
+  const tabLectures = activeTab === 'All'
     ? allLectures
     : (categories.find(c => c.label === activeTab)?.lectures ?? [])
+
+  const visibleLectures = sortOrder === 'default'
+    ? tabLectures
+    : [...tabLectures].sort((a, b) => {
+        const da = a.date ?? ''
+        const db = b.date ?? ''
+        return sortOrder === 'newest' ? db.localeCompare(da) : da.localeCompare(db)
+      })
 
   const tabs = ['All', ...categories.map(c => c.label)]
 
@@ -73,6 +82,22 @@ export default function RabbiPageClient({ canonicalName, allLectures, categories
             </button>
           )
         })}
+      </div>
+
+      {/* Sort control */}
+      <div className="flex items-center justify-end mb-5">
+        <button
+          onClick={() => setSortOrder(s => s === 'default' ? 'newest' : s === 'newest' ? 'oldest' : 'default')}
+          className={`shrink-0 flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium border transition-colors whitespace-nowrap
+            ${sortOrder !== 'default'
+              ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+              : 'bg-white text-stone-500 border-stone-200 hover:border-stone-300'}`}
+        >
+          {sortOrder === 'newest' ? 'Newest first' : sortOrder === 'oldest' ? 'Oldest first' : 'Date'}
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
+          </svg>
+        </button>
       </div>
 
       {/* Lecture list */}

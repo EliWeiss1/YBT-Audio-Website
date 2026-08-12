@@ -1,0 +1,105 @@
+name: r2-migration
+
+# One-time backfill: moves shiurim off the old ybt.org server and download.yutorah.org into
+# our own R2 bucket (scripts/migrate-remote-to-r2.mjs). Not one of the four ongoing ingest
+# mechanisms in CLAUDE.md — manual start only.
+#
+# A single run has a 340-minute job timeout, but the script self-limits to a smaller internal
+# time budget (default 300 min) so it always exits cleanly — with progress flushed to
+# data/lectures.json + scripts/r2-migration-output/*.json — well before the job would be
+# killed. If work remains when the script exits, the final step re-dispatches this same
+# workflow so it picks up right where it left off. It stops re-dispatching once
+# scripts/r2-migration-output/status.json reports remainingEligible == 0 (permanently-failed
+# URLs, e.g. dead links, don't block completion — they need manual review).
+on:
+  workflow_dispatch:
+    inputs:
+      max:
+        description: 'Cap items this run (blank = no cap — testing only)'
+        required: false
+        default: ''
+      time_budget_minutes:
+        description: 'Internal time budget in minutes (default 300)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  actions: write
+
+# Never run two migrations at once — they'd race on the same lectures.json. A re-dispatch
+# from the final step below queues behind whatever's currently running instead of racing it.
+concurrency:
+  group: r2-migration
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    defaults:
+      run:
+        working-directory: shiurim-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: shiurim-app/package-lock.json
+      - run: npm ci
+
+      - name: Migrate remote-hosted shiurim to R2
+        id: migrate
+        continue-on-error: true
+        run: node scripts/migrate-remote-to-r2.mjs ${{ github.event.inputs.max && format('--max {0}', github.event.inputs.max) || '' }} ${{ github.event.inputs.time_budget_minutes && format('--time-budget {0}', github.event.inputs.time_budget_minutes) || '' }}
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+          R2_PUBLIC_URL: ${{ secrets.R2_PUBLIC_URL }}
+
+      # data/lectures.json is the only artifact Vercel needs — it regenerates
+      # public/lectures-data/* from it during its own build, triggered by this push.
+      - name: Commit + push progress
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/lectures.json
+          [ -f scripts/r2-migration-output/status.json ] && git add scripts/r2-migration-output/status.json
+          [ -f scripts/r2-migration-output/failures.json ] && git add scripts/r2-migration-output/failures.json
+          if git diff --cached --quiet; then
+            echo "No data changes to commit"
+          else
+            git commit -m "chore(data): R2 migration progress"
+            git push
+          fi
+
+      - name: Read status
+        id: status
+        if: always()
+        run: |
+          if [ -f scripts/r2-migration-output/status.json ]; then
+            node -e "const s=require('./scripts/r2-migration-output/status.json'); console.log('remaining='+s.remainingEligible); console.log('onr2='+s.onR2); console.log('total='+s.totalLectures)" >> "$GITHUB_OUTPUT"
+          else
+            echo "remaining=0" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Continue migration in a new run (work remains)
+        if: always() && steps.status.outputs.remaining != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run r2-migration.yml --ref ${{ github.ref_name }}
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### R2 migration progress: ${{ steps.status.outputs.onr2 }}/${{ steps.status.outputs.total }} on R2, ${{ steps.status.outputs.remaining }} remaining" >> "$GITHUB_STEP_SUMMARY"
+
+      # continue-on-error above lets commit/status/re-dispatch run even after a crash; surface
+      # the failure as a red X on the run too, not just buried in logs.
+      - name: Fail the job if the migration crashed
+        if: steps.migrate.outcome != 'success'
+        run: exit 1

@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-08-13T00:05:06.359Z",
+  "updatedAt": "2026-08-13T00:13:04.515Z",
   "totalLectures": 19705,
   "onR2": 18501,
-  "remainingEligible": 1204,
-  "permanentlyFailed": 0,
+  "remainingEligible": 1150,
+  "permanentlyFailed": 54,
   "complete": false,
   "lastRun": {
-    "migrated": 15894,
+    "migrated": 0,
     "failedThisRun": 1204,
-    "queuedThisRun": 17098,
+    "queuedThisRun": 1204,
     "stoppedForDeadline": false
   }
 }

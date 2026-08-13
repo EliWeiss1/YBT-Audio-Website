@@ -8206,36 +8206,36 @@
   "YBT-871205": {
     "title": "Rav Chaim Hilchos Gezaila VeAveda CH2 HL16",
     "audioUrl": "http://www.ybt.org/audio/2002-2003/rychait/halacha/2003_01_16-Rav_Chaim_Hilchos_Gezaila_VeAveda_CH2_HL16-01_16_03-Rabbi_Y_Chait.mp3",
-    "attempts": 2,
+    "attempts": 3,
     "lastError": "download HTTP 404",
-    "lastTriedAt": "2026-08-13T00:15:44.516Z"
+    "lastTriedAt": "2026-08-13T00:22:34.555Z"
   },
   "YBT-871204": {
     "title": "Rav Chaim Hilchos Gezaila VeAveda CH9 HL1 - Combined",
     "audioUrl": "http://www.ybt.org/audio/2002-2003/rychait/halacha/2003_01_15-Rav_Chaim_Hilchos_Gezaila_VeAveda_CH9_HL1-Combined-01_15_03-Rabbi_Y_Chait.mp3",
-    "attempts": 2,
+    "attempts": 3,
     "lastError": "download HTTP 404",
-    "lastTriedAt": "2026-08-13T00:15:44.571Z"
+    "lastTriedAt": "2026-08-13T00:22:34.556Z"
   },
   "YBT-871203": {
     "title": "Rav Chaim Hilchos Ishus CH7 HL16 - Combined",
     "audioUrl": "http://www.ybt.org/audio/2002-2003/rychait/halacha/2002_12_31-Rav_Chaim_Hilchos_Ishus_CH7_HL16-Combined-12_31_02-Rabbi_Y_Chait.mp3",
-    "attempts": 2,
+    "attempts": 3,
     "lastError": "download HTTP 404",
-    "lastTriedAt": "2026-08-13T00:15:48.841Z"
+    "lastTriedAt": "2026-08-13T00:22:34.553Z"
   },
   "YBT-871200": {
     "title": "Rav Chaim Hilchos Ishus CH3 HL18 - Combined",
     "audioUrl": "http://www.ybt.org/audio/2002-2003/rychait/halacha/2002_12_19-Rav_Chaim_Hilchos_Ishus_CH3_HL18-Combined-12_19_02-Rabbi_Y_Chait.mp3",
-    "attempts": 2,
+    "attempts": 3,
     "lastError": "download HTTP 404",
-    "lastTriedAt": "2026-08-13T00:15:48.876Z"
+    "lastTriedAt": "2026-08-13T00:22:34.557Z"
   },
   "YBT-871201": {
     "title": "Rav Chaim Hilchos Shechita CH12 HL9 - Combined",
     "audioUrl": "http://www.ybt.org/audio/2002-2003/rychait/halacha/2002_12_19-Rav_Chaim_Hilchos_Shechita_CH12_HL9-Combined-12_19_02-Rabbi_Y_Chait.mp3",
-    "attempts": 2,
+    "attempts": 3,
     "lastError": "download HTTP 404",
-    "lastTriedAt": "2026-08-13T00:15:53.023Z"
+    "lastTriedAt": "2026-08-13T00:22:34.568Z"
   }
 }

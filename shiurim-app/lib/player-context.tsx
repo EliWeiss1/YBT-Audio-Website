@@ -49,7 +49,7 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
 
   // Persist the currently-loaded lecture's position. Used any time playback
   // state is about to be torn down or switched to a different lecture — the
-  // 10s interval save (below) only covers ongoing playback, not the moment
+  // interval save (below) only covers ongoing playback, not the moment
   // of pausing/closing/switching itself.
   const flushProgress = useCallback((completed = false) => {
     const uid = userIdRef.current
@@ -77,7 +77,11 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
     }
   }, [flushProgress])
 
-  // Save progress every 10 seconds while playing
+  // Periodic safety-net save while playing, in case the tab is killed
+  // without a pause/close event. Kept infrequent since flushProgress()
+  // already covers pause/switch/close — this just bounds worst-case loss
+  // (e.g. crash) to under a minute, without upserting to Supabase every
+  // few seconds for every listener.
   useEffect(() => {
     if (!userId || !lecture) return
     if (saveTimerRef.current) clearInterval(saveTimerRef.current)
@@ -93,10 +97,24 @@ export function PlayerProvider({ children, userId }: { children: ReactNode; user
             dur > 0 ? dur : undefined
           )
         }
-      }, 10000)
+      }, 45000)
     }
     return () => { if (saveTimerRef.current) clearInterval(saveTimerRef.current) }
   }, [isPlaying, lecture, userId])
+
+  // Extra insurance for the wider interval above: flush immediately when the
+  // tab is backgrounded or the page is torn down, so switching apps or
+  // closing the tab mid-shiur doesn't lose more than a few seconds.
+  useEffect(() => {
+    const flushIfPlaying = () => { if (isPlaying) flushProgress() }
+    const onVisibilityChange = () => { if (document.hidden) flushIfPlaying() }
+    document.addEventListener('visibilitychange', onVisibilityChange)
+    window.addEventListener('pagehide', flushIfPlaying)
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange)
+      window.removeEventListener('pagehide', flushIfPlaying)
+    }
+  }, [isPlaying, flushProgress])
 
   // Keyboard shortcuts
   useEffect(() => {

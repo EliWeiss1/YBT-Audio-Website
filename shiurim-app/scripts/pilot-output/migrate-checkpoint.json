@@ -9068,5 +9068,16 @@
       "devarim-reeh"
     ],
     "seconds": 24.3
+  },
+  "1186052": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1186052.mp3",
+    "placements": [
+      "devarim-ki-teitzei"
+    ],
+    "insertedInto": [
+      "devarim-ki-teitzei"
+    ],
+    "seconds": 1.9
   }
 }

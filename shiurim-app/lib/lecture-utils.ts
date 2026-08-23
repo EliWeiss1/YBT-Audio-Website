@@ -12,6 +12,7 @@ export type Lecture = {
   speaker: string
   date: string
   tags: string[]
+  pdfUrl?: string
 }
 
 // A TreeNode is either:

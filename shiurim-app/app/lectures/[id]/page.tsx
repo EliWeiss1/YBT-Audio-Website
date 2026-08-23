@@ -119,6 +119,24 @@ export default async function LecturePage({ params }: Props) {
             </span>
           )
         )}
+        {lecture.pdfUrl && (
+          <a
+            href={lecture.pdfUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg
+                       bg-stone-100 hover:bg-emerald-50 text-stone-600 hover:text-emerald-700
+                       border border-stone-200 hover:border-emerald-300 transition-all
+                       text-xs font-medium"
+            title="View sources (PDF)"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                 className="w-3.5 h-3.5">
+              <path d="M4 1.75C4 .784 4.784 0 5.75 0h4.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-7.5A1.75 1.75 0 0 1 4 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm3.5.311V4.25c0 .138.112.25.25.25h2.439a.25.25 0 0 0-.05-.077l-2.914-2.914a.25.25 0 0 0-.075-.05Z" />
+            </svg>
+            Sources
+          </a>
+        )}
         {/* Save offline — stores the audio in the browser cache for offline playback */}
         {lecture.audioUrl && (
           <DownloadButton

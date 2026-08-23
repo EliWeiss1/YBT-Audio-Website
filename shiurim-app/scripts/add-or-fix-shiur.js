@@ -23,12 +23,19 @@
 //   node add-or-fix-shiur.mjs --mode add \
 //     --node-path gemarah,gemarah-berachot \
 //     --title "..." --speaker "Rabbi X" --date 2026-07-20 \
-//     --audio-file "C:\path\to\local.mp3"
+//     --audio-file "C:\path\to\local.mp3" --pdf-file "C:\path\to\sources.pdf"
 //
 // Usage — fix an existing shiur:
 //   node add-or-fix-shiur.mjs --mode fix --id YBT-927564 --title "Corrected title"
 //   node add-or-fix-shiur.mjs --mode fix --id MISC-03 --audio-file "C:\new.mp3"
 //   node add-or-fix-shiur.mjs --mode fix --id MISC-03 --node-path chumash,bereishit,bereishit-noach
+//   node add-or-fix-shiur.mjs --mode fix --id MISC-03 --pdf-file "C:\sources.pdf"
+//   node add-or-fix-shiur.mjs --mode fix --id MISC-03 --remove-pdf
+//
+// A shiur can optionally carry a "sources" PDF alongside its audio, attached
+// via --pdf-file (local path) or --pdf-url (remote URL) on either mode, and
+// removed via --remove-pdf on --mode fix. Stored at R2 key
+// <treepath>/<id>-sources.pdf, mirroring the audio's <treepath>/<id>.mp3.
 //
 // All modes support --dry-run (no R2 writes/deletes, no file writes — prints
 // the plan instead).
@@ -244,22 +251,52 @@ async function resolveAudio(opts) {
   return null; // no new audio requested (fix-metadata-only path)
 }
 
-async function uploadToR2(r2, mp3Path, r2Key, dryRun) {
-  const audioUrl = `${R2_PUBLIC_URL}/${encodeKey(r2Key)}`;
-  if (dryRun) return { audioUrl, uploaded: false };
-  const body = fs.readFileSync(mp3Path);
-  await r2.send(new PutObjectCommand({ Bucket: process.env.R2_BUCKET_NAME, Key: r2Key, Body: body, ContentType: 'audio/mpeg' }));
-  const head = await fetch(audioUrl, { method: 'HEAD', redirect: 'follow' });
+async function uploadFileToR2(r2, filePath, r2Key, contentType, dryRun) {
+  const url = `${R2_PUBLIC_URL}/${encodeKey(r2Key)}`;
+  if (dryRun) return { url, uploaded: false };
+  const body = fs.readFileSync(filePath);
+  await r2.send(new PutObjectCommand({ Bucket: process.env.R2_BUCKET_NAME, Key: r2Key, Body: body, ContentType: contentType }));
+  const head = await fetch(url, { method: 'HEAD', redirect: 'follow' });
   if (!head.ok) throw new StageError('verify', `uploaded object not reachable (HTTP ${head.status})`);
-  return { audioUrl, uploaded: true };
+  return { url, uploaded: true };
 }
 
-async function deleteOldR2Object(r2, oldAudioUrl, dryRun) {
-  if (!oldAudioUrl || !R2_PUBLIC_URL || !oldAudioUrl.startsWith(R2_PUBLIC_URL)) return { deleted: false, reason: 'not_our_bucket' };
-  const key = decodeURIComponent(oldAudioUrl.slice(R2_PUBLIC_URL.length + 1));
+async function deleteOldR2Object(r2, oldUrl, dryRun) {
+  if (!oldUrl || !R2_PUBLIC_URL || !oldUrl.startsWith(R2_PUBLIC_URL)) return { deleted: false, reason: 'not_our_bucket' };
+  const key = decodeURIComponent(oldUrl.slice(R2_PUBLIC_URL.length + 1));
   if (dryRun) return { deleted: false, reason: 'dry_run', key };
   await r2.send(new DeleteObjectCommand({ Bucket: process.env.R2_BUCKET_NAME, Key: key }));
   return { deleted: true, key };
+}
+
+// Resolves a local or remote sources PDF into a temp file. Returns
+// { pdfPath } or null if no PDF was requested.
+async function resolvePdf(opts) {
+  fs.mkdirSync(MEDIA_DIR, { recursive: true });
+
+  let pdfPath = null;
+  if (opts.pdfFile) {
+    if (!fs.existsSync(opts.pdfFile)) throw new StageError('pdf-file', `not found: ${opts.pdfFile}`);
+    pdfPath = path.join(MEDIA_DIR, `pdf-${Date.now()}.pdf`);
+    fs.copyFileSync(opts.pdfFile, pdfPath);
+  } else if (opts.pdfUrl) {
+    pdfPath = path.join(MEDIA_DIR, `pdf-${Date.now()}.pdf`);
+    await downloadTo(opts.pdfUrl, pdfPath);
+  } else {
+    return null;
+  }
+
+  // Cheap sanity check — a bad --pdf-url can 200 with an HTML error page.
+  const head = Buffer.alloc(5);
+  const fd = fs.openSync(pdfPath, 'r');
+  fs.readSync(fd, head, 0, 5, 0);
+  fs.closeSync(fd);
+  if (head.toString('utf8') !== '%PDF-') {
+    fs.unlinkSync(pdfPath);
+    throw new StageError('pdf-file', 'downloaded/copied file is not a PDF (missing %PDF- header)');
+  }
+
+  return { pdfPath };
 }
 
 // ── CLI ───────────────────────────────────────────────────────────────────────
@@ -281,6 +318,9 @@ function parseArgs(argv) {
     else if (a === '--yutorah-org') out.yutorahOrg = val();
     else if (a === '--audio-file') out.audioFile = val();
     else if (a === '--audio-url') out.audioUrl = val();
+    else if (a === '--pdf-file') out.pdfFile = val();
+    else if (a === '--pdf-url') out.pdfUrl = val();
+    else if (a === '--remove-pdf') out.removePdf = true;
     else if (a === '--dry-run') out.dryRun = true;
     else throw new Error(`unknown arg: ${a}`);
   }
@@ -304,9 +344,16 @@ async function runAdd(args, data, r2) {
   const leafId = args.nodePath[args.nodePath.length - 1];
   const treePath = findPathToNode(data.categories, leafId) || args.nodePath;
   const r2Key = `${treePath.join('/')}/${id}.mp3`;
-  const { audioUrl } = await uploadToR2(r2, audio.mp3Path, r2Key, args.dryRun);
+  const { url: audioUrl } = await uploadFileToR2(r2, audio.mp3Path, r2Key, 'audio/mpeg', args.dryRun);
 
-  const lecture = { id, title, audioUrl, duration: audio.duration, description, speaker, date, tags: args.tags };
+  const pdf = await resolvePdf(args);
+  let pdfUrl, pdfR2Key;
+  if (pdf) {
+    pdfR2Key = `${treePath.join('/')}/${id}-sources.pdf`;
+    ({ url: pdfUrl } = await uploadFileToR2(r2, pdf.pdfPath, pdfR2Key, 'application/pdf', args.dryRun));
+  }
+
+  const lecture = { id, title, audioUrl, duration: audio.duration, description, speaker, date, tags: args.tags, ...(pdfUrl ? { pdfUrl } : {}) };
   const insertedInto = [];
   for (const nodeId of args.nodePath) {
     const node = findNode(data.categories, nodeId);
@@ -318,7 +365,8 @@ async function runAdd(args, data, r2) {
   }
 
   if (!args.dryRun && fs.existsSync(audio.mp3Path)) fs.unlinkSync(audio.mp3Path);
-  return { status: 'added', id, title, audioUrl, r2Key, duration: audio.duration, driftSeconds: audio.driftSeconds, insertedInto, lecture: args.dryRun ? lecture : undefined };
+  if (!args.dryRun && pdf && fs.existsSync(pdf.pdfPath)) fs.unlinkSync(pdf.pdfPath);
+  return { status: 'added', id, title, audioUrl, r2Key, duration: audio.duration, driftSeconds: audio.driftSeconds, pdfUrl, pdfR2Key, insertedInto, lecture: args.dryRun ? lecture : undefined };
 }
 
 async function runFix(args, data, r2) {
@@ -329,6 +377,7 @@ async function runFix(args, data, r2) {
   const result = { status: 'fixed', id: args.id, changed: [] };
   const template = occurrences[0].node.lectures[occurrences[0].index];
   const oldAudioUrl = template.audioUrl;
+  const oldPdfUrl = template.pdfUrl;
 
   // metadata patches, applied to every occurrence (cross-listed copies share the id)
   for (const field of ['title', 'description', 'speaker', 'date']) {
@@ -349,7 +398,7 @@ async function runFix(args, data, r2) {
     const currentLeaf = args.nodePath ? args.nodePath[args.nodePath.length - 1] : occurrences[0].node.id;
     const treePath = findPathToNode(data.categories, currentLeaf) || [currentLeaf];
     const r2Key = `${treePath.join('/')}/${args.id}.mp3`;
-    const { audioUrl } = await uploadToR2(r2, audio.mp3Path, r2Key, args.dryRun);
+    const { url: audioUrl } = await uploadFileToR2(r2, audio.mp3Path, r2Key, 'audio/mpeg', args.dryRun);
     result.newAudioUrl = audioUrl;
     result.newDuration = audio.duration;
     result.driftSeconds = audio.driftSeconds;
@@ -363,6 +412,28 @@ async function runFix(args, data, r2) {
     result.oldAudioDeletion = await deleteOldR2Object(r2, oldAudioUrl, args.dryRun);
   }
 
+  // sources PDF: remove, or add/replace
+  if (args.removePdf) {
+    result.changed.push('pdf-removed');
+    result.pdfDeletion = await deleteOldR2Object(r2, oldPdfUrl, args.dryRun);
+    if (!args.dryRun) for (const { node, index } of occurrences) delete node.lectures[index].pdfUrl;
+  } else {
+    const pdf = await resolvePdf(args);
+    if (pdf) {
+      result.changed.push('pdf');
+      const currentLeaf = args.nodePath ? args.nodePath[args.nodePath.length - 1] : occurrences[0].node.id;
+      const treePath = findPathToNode(data.categories, currentLeaf) || [currentLeaf];
+      const pdfR2Key = `${treePath.join('/')}/${args.id}-sources.pdf`;
+      const { url: newPdfUrl } = await uploadFileToR2(r2, pdf.pdfPath, pdfR2Key, 'application/pdf', args.dryRun);
+      result.newPdfUrl = newPdfUrl;
+      if (!args.dryRun) {
+        for (const { node, index } of occurrences) node.lectures[index].pdfUrl = newPdfUrl;
+        if (fs.existsSync(pdf.pdfPath)) fs.unlinkSync(pdf.pdfPath);
+      }
+      result.oldPdfDeletion = await deleteOldR2Object(r2, oldPdfUrl, args.dryRun);
+    }
+  }
+
   // re-categorization: move to a new set of leaf nodes
   if (args.nodePath && args.nodePath.length) {
     result.changed.push('placement');
@@ -370,6 +441,8 @@ async function runFix(args, data, r2) {
     if (audio) { lecture.audioUrl = result.newAudioUrl; lecture.duration = audio.duration; }
     for (const field of ['title', 'description', 'speaker', 'date']) if (args[field] !== undefined) lecture[field] = args[field];
     if (args.tags && args.tags.length) lecture.tags = args.tags;
+    if (args.removePdf) delete lecture.pdfUrl;
+    else if (result.newPdfUrl) lecture.pdfUrl = result.newPdfUrl;
 
     result.movedFrom = [...new Set(occurrences.map((o) => o.node.id))];
     result.movedTo = args.nodePath;
@@ -391,7 +464,7 @@ async function runFix(args, data, r2) {
     }
   }
 
-  if (!result.changed.length) throw new Error('nothing to fix — pass at least one of --title/--description/--speaker/--date/--tags/--node-path/--audio-file/--audio-url/--yutorah-id/--yutorah-url');
+  if (!result.changed.length) throw new Error('nothing to fix — pass at least one of --title/--description/--speaker/--date/--tags/--node-path/--audio-file/--audio-url/--yutorah-id/--yutorah-url/--pdf-file/--pdf-url/--remove-pdf');
   return result;
 }
 

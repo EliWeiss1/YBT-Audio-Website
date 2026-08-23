@@ -45,6 +45,9 @@ before passing it to the script. Node ids are lowercase-hyphenated (e.g. `gemara
    - A direct link to an audio file elsewhere (not YUTorah) → `--audio-url "<url>"`, same
      title/speaker requirement as a local file. If the link is to a webpage rather than a raw
      audio file, you can't fetch it this way — ask the user to download it and hand you the file.
+   - If the user also has a **sources PDF** for the shiur (a document listing the sources cited),
+     ask for it if they mention one — a local file → `--pdf-file "<path>"`, or a direct link →
+     `--pdf-url "<url>"`. Optional; only include if they have one.
 
 2. **Decide category placement.** If the user told you exactly where it goes (a node id or an
    unambiguous label), use that. Otherwise run:
@@ -66,8 +69,8 @@ before passing it to the script. Node ids are lowercase-hyphenated (e.g. `gemara
      --node-path <leaf-id> \
      --yutorah-url "<url>"        # or --yutorah-id / --audio-file / --audio-url
    ```
-   Add `--title`/`--speaker`/`--description`/`--date`/`--tags` as needed (tags is a
-   comma-separated list). For cross-listing the same shiur into more than one category, pass
+   Add `--title`/`--speaker`/`--description`/`--date`/`--tags`/`--pdf-file`/`--pdf-url` as needed
+   (tags is a comma-separated list). For cross-listing the same shiur into more than one category, pass
    `--node-path` as a comma-separated list of leaf ids (e.g. `--node-path node-a,node-b`) — this
    inserts the identical lecture object (same id) into each node's `lectures[]`, the pattern this
    repo already uses for cross-listed shiurim (see `docs/schneeweiss-migration.md`).
@@ -114,6 +117,11 @@ before passing it to the script. Node ids are lowercase-hyphenated (e.g. `gemara
      inserted fresh into the node(s) you specify. If you're not sure of the right category, run
      `categorize-shiur.mjs` the same way as in the add flow and apply the same
      confirm-if-low-confidence rule.
+   - Add/replace the sources PDF → `--pdf-file "<path>"` or `--pdf-url "<url>"`. Same
+     old-object-deletion rule as audio replacement: the previous PDF is deleted from R2 only if it
+     was actually hosted there.
+   - Remove the sources PDF entirely → `--remove-pdf` (deletes the R2 object if it was ours, and
+     drops the field from every occurrence of the lecture).
 
    You can combine multiple fixes in one call (e.g. fix the title *and* move it) — pass every
    flag that changed.
@@ -148,9 +156,11 @@ lecture page URL instead.
 
 **R2 key convention.** Audio is uploaded to a key that mirrors the shiur's place in
 `folder-hierarchy.json` (root-to-leaf node ids, e.g. `chumash/bereishit/bereishit-noach/<id>.mp3`),
-per the user's request to keep new uploads discoverable in the bucket by category. This differs
-from the live ingest pipelines' flat/source-keyed convention (`ingest/<date>/`, `drive/<speaker>/`)
-— that's fine, both conventions coexist in the same bucket.
+per the user's request to keep new uploads discoverable in the bucket by category. A sources PDF
+(if any) sits alongside it at the same path, e.g.
+`chumash/bereishit/bereishit-noach/<id>-sources.pdf`. This differs from the live ingest pipelines'
+flat/source-keyed convention (`ingest/<date>/`, `drive/<speaker>/`) — that's fine, both conventions
+coexist in the same bucket.
 
 **Every write is backed up first.** Both add and fix write a timestamped
 `data/lectures.backup-<add|fix>-shiur-<ISO timestamp>.json` before touching the real file — if

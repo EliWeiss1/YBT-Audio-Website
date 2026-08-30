@@ -56381,6 +56381,31 @@
           "label": "Hechsher Keilim",
           "lectures": [
             {
+              "id": "YBT-1183400",
+              "title": "Hechsher Keilim Bootcamp 11: Kashering Microwaves and Dealing With The Hagalah Pot",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/halacha/halacha-hechsher-keilim/YBT-1183400.mp3",
+              "duration": 3136,
+              "description": "",
+              "speaker": "Rabbi Zev Cinamon",
+              "date": "2026-08-26",
+              "tags": [
+                "Hechsher Keilim"
+              ],
+              "pdfUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/halacha/halacha-hechsher-keilim/YBT-1183400-sources.pdf"
+            },
+            {
+              "id": "YBT-1183399",
+              "title": "Hechsher Keilim Bootcamp 10: Hagalah How To Part 2 - Kashering With Other Liquids, Kashering With Steam",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/halacha/halacha-hechsher-keilim/YBT-1183399.mp3",
+              "duration": 2782,
+              "description": "",
+              "speaker": "Rabbi Zev Cinamon",
+              "date": "2026-08-24",
+              "tags": [
+                "Hechsher Keilim"
+              ]
+            },
+            {
               "id": "YBT-1183398",
               "title": "Hechsher Keilim Bootcamp 9: Hagalah How To Part 1",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/halacha/halacha-hechsher-keilim/YBT-1183398.mp3",

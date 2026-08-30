@@ -5382,19 +5382,6 @@
                   "sourceId": 874497
                 },
                 {
-                  "id": "YBTArchived-1552",
-                  "title": "Difference between Avraham and Noach",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1552.mp3",
-                  "duration": 1922,
-                  "description": "",
-                  "speaker": "Rabbi Yisroel Chait",
-                  "date": "2010-10-27",
-                  "tags": [
-                    "Hashkafa"
-                  ],
-                  "sourceId": 1552
-                },
-                {
                   "id": "YBTArchived-2913",
                   "title": "2002_10_18-Noach_and_the_Covenant_of_the_Rainbow",
                   "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-2913.mp3",
@@ -7375,19 +7362,6 @@
                     "Chayei Sara"
                   ],
                   "sourceId": 874526
-                },
-                {
-                  "id": "YBTArchived-4388",
-                  "title": "Chumash-Chayei Sarah-Choosing a Wife",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4388.mp3",
-                  "duration": 2262,
-                  "description": "",
-                  "speaker": "Rabbi Z. Cinamon",
-                  "date": "2011-11-18",
-                  "tags": [
-                    "Hashkafa"
-                  ],
-                  "sourceId": 4388
                 },
                 {
                   "id": "YBTArchived-477",
@@ -15115,33 +15089,6 @@
                   "sourceId": 2945
                 },
                 {
-                  "id": "YBTArchived-4495",
-                  "title": "Parshas BeShalach-Feeding the Birds on Shabbos Shira",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4495.mp3",
-                  "duration": 2509,
-                  "description": "",
-                  "speaker": "Rabbi Z. Cinamon",
-                  "date": "2011-01-14",
-                  "tags": [
-                    "Chumash",
-                    "The Death of Rebbi Akiva's Talmidim"
-                  ],
-                  "sourceId": 4495
-                },
-                {
-                  "id": "YBTArchived-4572",
-                  "title": "Parshas Beshalach-The Halacha of Lechem Mishne",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4572.mp3",
-                  "duration": 3337,
-                  "description": "",
-                  "speaker": "Rabbi Z. Cinamon",
-                  "date": "2010-01-29",
-                  "tags": [
-                    "Chumash"
-                  ],
-                  "sourceId": 4572
-                },
-                {
                   "id": "D-277",
                   "title": "Perfection of the Mahn #1 (D-277)",
                   "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Discussion/Perfection/D-277%20The%20Perfection%20of%20the%20Mahn%20no.1.mp3",
@@ -16638,20 +16585,6 @@
                     "Teruma"
                   ],
                   "sourceId": 872704
-                },
-                {
-                  "id": "YBTArchived-4494",
-                  "title": "Parsas Terumah-The Melacha of Koseiv Opening Library Books on Shabbos",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4494.mp3",
-                  "duration": 2601,
-                  "description": "",
-                  "speaker": "Rabbi Z. Cinamon",
-                  "date": "2011-02-04",
-                  "tags": [
-                    "Chumash",
-                    "The Death of Rebbi Akiva's Talmidim"
-                  ],
-                  "sourceId": 4494
                 }
               ]
             },
@@ -18345,19 +18278,6 @@
                     "Vayikra"
                   ],
                   "sourceId": 871188
-                },
-                {
-                  "id": "YBTArchived-4570",
-                  "title": "Parshas Shmini-Fish Parasites",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4570.mp3",
-                  "duration": 2888,
-                  "description": "",
-                  "speaker": "Rabbi Z. Cinamon",
-                  "date": "2010-04-09",
-                  "tags": [
-                    "Chumash"
-                  ],
-                  "sourceId": 4570
                 }
               ]
             },
@@ -22241,32 +22161,6 @@
                     "Bamidbar"
                   ],
                   "sourceId": 871443
-                },
-                {
-                  "id": "YBTArchived-3381",
-                  "title": "Parshas Chukas-Nachash HaNechoshes",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3381.mp3",
-                  "duration": 2772,
-                  "description": "",
-                  "speaker": "Rabbi Pesach Chait",
-                  "date": "2012-11-20",
-                  "tags": [
-                    "Hashkafa"
-                  ],
-                  "sourceId": 3381
-                },
-                {
-                  "id": "YBTArchived-3382",
-                  "title": "Parshas Chukas-Nachash HaNechoshes",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3382.mp3",
-                  "duration": 2860,
-                  "description": "",
-                  "speaker": "Rabbi Pesach Chait",
-                  "date": "2012-10-23",
-                  "tags": [
-                    "Hashkafa"
-                  ],
-                  "sourceId": 3382
                 }
               ]
             },
@@ -22582,19 +22476,6 @@
                     "Tanach"
                   ],
                   "sourceId": 3108
-                },
-                {
-                  "id": "YBTArchived-3380",
-                  "title": "Parshas Balak",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3380.mp3",
-                  "duration": 3368,
-                  "description": "",
-                  "speaker": "Rabbi Pesach Chait",
-                  "date": "2012-11-28",
-                  "tags": [
-                    "Hashkafa"
-                  ],
-                  "sourceId": 3380
                 },
                 {
                   "id": "YBTArchived-527",
@@ -23109,19 +22990,6 @@
                     "Audio"
                   ],
                   "sourceId": 967
-                },
-                {
-                  "id": "YBTArchived-4567",
-                  "title": "Parshas Behar-Onaas Devarim",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4567.mp3",
-                  "duration": 2999,
-                  "description": "",
-                  "speaker": "Rabbi Z. Cinamon",
-                  "date": "2010-05-07",
-                  "tags": [
-                    "Chumash"
-                  ],
-                  "sourceId": 4567
                 }
               ]
             },
@@ -23759,19 +23627,6 @@
                     "Ki Teitzei"
                   ],
                   "sourceId": 1110438
-                },
-                {
-                  "id": "YBT-1072999",
-                  "title": "Yefas Toar - Masoret",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1072999.mp3",
-                  "duration": 6757,
-                  "description": "",
-                  "speaker": "Rabbi Reuven Mann",
-                  "date": "2023-08-22",
-                  "tags": [
-                    "Ki Teitzei"
-                  ],
-                  "sourceId": 1072999
                 },
                 {
                   "id": "YBT-1072829",
@@ -27110,46 +26965,6 @@
               "sourceId": 1357
             },
             {
-              "id": "YBTArchived-1465",
-              "title": "Dor HaMabul",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1465.mp3",
-              "duration": 1019,
-              "description": "",
-              "speaker": "Rabbi Yisroel Chait",
-              "date": "2011-11-02",
-              "tags": [
-                "Hashkafa",
-                "Dor HaMabul"
-              ],
-              "sourceId": 1465
-            },
-            {
-              "id": "YBTArchived-1550",
-              "title": "Dechias Mitzvos Mipnei Mikrah Megilla",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1550.mp3",
-              "duration": 1204,
-              "description": "",
-              "speaker": "Rabbi Yisroel Chait",
-              "date": "2011-03-23",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 1550
-            },
-            {
-              "id": "YBTArchived-1551",
-              "title": "Dechias Mitzvos Mipnei Mikrah Megilla",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1551.mp3",
-              "duration": 3917,
-              "description": "",
-              "speaker": "Rabbi Yisroel Chait",
-              "date": "2011-03-17",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 1551
-            },
-            {
               "id": "YBTArchived-1553",
               "title": "Difference Between Knowledge and the Soul 9 16 10",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1553.mp3",
@@ -28489,19 +28304,6 @@
               "sourceId": 3357
             },
             {
-              "id": "YBTArchived-3359",
-              "title": "Rashba-Leah Giving Hodaah to Hashem",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3359.mp3",
-              "duration": 2124,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2013-02-17",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 3359
-            },
-            {
               "id": "YBTArchived-3361",
               "title": "Rashba-Kesher Shel Tefillin",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3361.mp3",
@@ -29504,19 +29306,6 @@
               "sourceId": 4887
             },
             {
-              "id": "YBTArchived-4888",
-              "title": "Omer Davar Beshem Omro",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4888.mp3",
-              "duration": 2245,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2013-06-04",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 4888
-            },
-            {
               "id": "YBTArchived-4900",
               "title": "Kever Rachel",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4900.mp3",
@@ -29543,19 +29332,6 @@
               "sourceId": 4902
             },
             {
-              "id": "YBTArchived-4903",
-              "title": "Devekus to Hashem",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4903.mp3",
-              "duration": 1530,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2012-11-17",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 4903
-            },
-            {
               "id": "YBTArchived-5046",
               "title": "Teaching Torah to Someone Who's not Hagun",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-5046.mp3",
@@ -29567,19 +29343,6 @@
                 "Hashkafa"
               ],
               "sourceId": 5046
-            },
-            {
-              "id": "YBTArchived-5047",
-              "title": "Why Yeshivas Emphasize Gemara",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-5047.mp3",
-              "duration": 3487,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2011-12-19",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 5047
             },
             {
               "id": "YBTArchived-5048",
@@ -29619,19 +29382,6 @@
                 "Hashkafa"
               ],
               "sourceId": 5197
-            },
-            {
-              "id": "YBTArchived-5200",
-              "title": "Freedom",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-5200.mp3",
-              "duration": 3187,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2011-05-24",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 5200
             },
             {
               "id": "YBTArchived-5205",
@@ -31603,19 +31353,6 @@
                 "Hashkafa"
               ],
               "sourceId": 3348
-            },
-            {
-              "id": "YBTArchived-4894",
-              "title": "Q&A-Natural Man and Free Will",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4894.mp3",
-              "duration": 3744,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2013-04-06",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 4894
             },
             {
               "id": "HL-140",
@@ -39139,20 +38876,6 @@
               "sourceId": 4038
             },
             {
-              "id": "YBTArchived-4040",
-              "title": "Nivul Peh",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4040.mp3",
-              "duration": 3056,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2008-01-04",
-              "tags": [
-                "Hashkafa",
-                "Sefer HaIkarim"
-              ],
-              "sourceId": 4040
-            },
-            {
               "id": "YBTArchived-4041",
               "title": "Lishmah & Not Lishmah",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4041.mp3",
@@ -41370,34 +41093,6 @@
                 "Tanach"
               ],
               "sourceId": 3119
-            },
-            {
-              "id": "YBTArchived-3916",
-              "title": "Love and Happiness",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3916.mp3",
-              "duration": 1860,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2008-11-04",
-              "tags": [
-                "Hashkafa",
-                "Love and Happiness"
-              ],
-              "sourceId": 3916
-            },
-            {
-              "id": "YBTArchived-3917",
-              "title": "Love and Happiness",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3917.mp3",
-              "duration": 4348,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2008-10-28",
-              "tags": [
-                "Hashkafa",
-                "Love and Happiness"
-              ],
-              "sourceId": 3917
             },
             {
               "id": "YBTArchived-4319",
@@ -44722,45 +44417,6 @@
               "sourceId": 1248
             },
             {
-              "id": "YBTArchived-4886",
-              "title": "Q&A-Keeping Mitzvos and Miracles",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4886.mp3",
-              "duration": 3541,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2013-07-13",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 4886
-            },
-            {
-              "id": "YBTArchived-4889",
-              "title": "Q&A-Giving Rebuke the Torahs Expectations",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4889.mp3",
-              "duration": 3058,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2013-06-01",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 4889
-            },
-            {
-              "id": "YBTArchived-4891",
-              "title": "Q&A-Counting Jews Mesora and Machlokes",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4891.mp3",
-              "duration": 3446,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2013-05-11",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 4891
-            },
-            {
               "id": "YBTArchived-4892",
               "title": "Q&A-Friends Omnipotence of Thoughts and Psak",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4892.mp3",
@@ -44772,19 +44428,6 @@
                 "Hashkafa"
               ],
               "sourceId": 4892
-            },
-            {
-              "id": "YBTArchived-4893",
-              "title": "Q&A-Tzitzis Getting Brachos Learning Gemara Skills",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4893.mp3",
-              "duration": 5065,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2013-04-13",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 4893
             },
             {
               "id": "YBTArchived-4896",
@@ -44824,19 +44467,6 @@
                 "Hashkafa"
               ],
               "sourceId": 4899
-            },
-            {
-              "id": "YBTArchived-4901",
-              "title": "Q & A",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4901.mp3",
-              "duration": 5127,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2012-12-29",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 4901
             }
           ]
         },
@@ -45048,19 +44678,6 @@
                 "Dating"
               ],
               "sourceId": 3511
-            },
-            {
-              "id": "YBTArchived-4890",
-              "title": "Q&A-13 Middos Torah Codes and Marriage",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4890.mp3",
-              "duration": 4592,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2013-05-18",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 4890
             },
             {
               "id": "YBT-883882",
@@ -45862,20 +45479,6 @@
                 "Evolution of Physics"
               ],
               "sourceId": 3662
-            },
-            {
-              "id": "YBTArchived-4135",
-              "title": "Science",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4135.mp3",
-              "duration": 3096,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2007-05-09",
-              "tags": [
-                "Hashkafa",
-                "Pre Shiur"
-              ],
-              "sourceId": 4135
             },
             {
               "id": "YBTArchived-4325",
@@ -47456,71 +47059,6 @@
               "sourceId": 461
             },
             {
-              "id": "YBTArchived-3351",
-              "title": "Rashba-The Order of Tefilla",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3351.mp3",
-              "duration": 2305,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2013-06-09",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 3351
-            },
-            {
-              "id": "YBTArchived-3352",
-              "title": "Rashba-The Order of Tefilla",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3352.mp3",
-              "duration": 2199,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2013-05-26",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 3352
-            },
-            {
-              "id": "YBTArchived-3356",
-              "title": "Rashba-Shikor BeTefilla",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3356.mp3",
-              "duration": 1845,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2013-04-14",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 3356
-            },
-            {
-              "id": "YBTArchived-3358",
-              "title": "Rashba-How to Stand in Tefillah",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3358.mp3",
-              "duration": 2286,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2013-03-03",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 3358
-            },
-            {
-              "id": "YBTArchived-3360",
-              "title": "Rashba-Koveah Makom Tefilla",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3360.mp3",
-              "duration": 1984,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2013-02-10",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 3360
-            },
-            {
               "id": "YBTArchived-4897",
               "title": "Q&A-Davening for Others",
               "audioUrl": "https://www.ybt.org/students/2012-2013/refeder/hashkafa/Q&A-Tefilla-Davening_for_Others_02_09_13_Rabbi_E_Feder.mp3",
@@ -48378,20 +47916,6 @@
               "sourceId": 2921
             },
             {
-              "id": "YBTArchived-3533",
-              "title": "Teshuvah-The Role of Viduy",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3533.mp3",
-              "duration": 3249,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2011-10-04",
-              "tags": [
-                "Hashkafa",
-                "Teshuvah"
-              ],
-              "sourceId": 3533
-            },
-            {
               "id": "YBTArchived-4389",
               "title": "Asres Ymei Teshuva Thoughts For Bnei Torah 3",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4389.mp3",
@@ -48403,45 +47927,6 @@
                 "Hashkafa"
               ],
               "sourceId": 4389
-            },
-            {
-              "id": "YBTArchived-4390",
-              "title": "Asres Ymei Teshuva Thoughts For Bnei Torah 2",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4390.mp3",
-              "duration": 901,
-              "description": "",
-              "speaker": "Rabbi Z. Cinamon",
-              "date": "2011-10-04",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 4390
-            },
-            {
-              "id": "YBTArchived-4391",
-              "title": "Asres Ymei Teshuva Thoughts For Bnei Torah 1",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4391.mp3",
-              "duration": 1587,
-              "description": "",
-              "speaker": "Rabbi Z. Cinamon",
-              "date": "2011-10-03",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 4391
-            },
-            {
-              "id": "YBTArchived-4904",
-              "title": "U'vchein Tein Pachdecha and Teshuva",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-4904.mp3",
-              "duration": 3225,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2012-09-20",
-              "tags": [
-                "Hashkafa"
-              ],
-              "sourceId": 4904
             },
             {
               "id": "YBTArchived-5929",
@@ -53839,19 +53324,6 @@
               "sourceId": 1225
             },
             {
-              "id": "YBTArchived-1359",
-              "title": "Rambam-Hilchos Brachos 6:4",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1359.mp3",
-              "duration": 612,
-              "description": "",
-              "speaker": "Rabbi Yisroel Chait",
-              "date": "2013-03-02",
-              "tags": [
-                "Halacha"
-              ],
-              "sourceId": 1359
-            },
-            {
               "id": "YBTArchived-1559",
               "title": "Griz Hilchos Brachos",
               "audioUrl": "https://www.ybt.org/audio/2010-2011/rychait/halacha/Griz_Hilchos_Brachos_12_10_10_Rabbi_Y_Chait.MP3",
@@ -57751,19 +57223,6 @@
                 "Kiddushin"
               ],
               "sourceId": 836052
-            },
-            {
-              "id": "YBT-836650",
-              "title": "Dating A Kesubah 3 ",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-836650.mp3",
-              "duration": 2437,
-              "description": "",
-              "speaker": "Rabbi Zev Cinamon",
-              "date": "2015-05-05",
-              "tags": [
-                "Kiddushin"
-              ],
-              "sourceId": 836650
             },
             {
               "id": "YBT-835684",
@@ -64805,19 +64264,6 @@
               "sourceId": 806182
             },
             {
-              "id": "YBT-806221",
-              "title": "Krias Shema",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-806221.mp3",
-              "duration": 2934,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2009-10-15",
-              "tags": [
-                "Shema"
-              ],
-              "sourceId": 806221
-            },
-            {
               "id": "YBT-806183",
               "title": "Krias Shema",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-806183.mp3",
@@ -64842,20 +64288,6 @@
                 "Shema"
               ],
               "sourceId": 806185
-            },
-            {
-              "id": "YBTArchived-1556",
-              "title": "holding Tzitzis during krias shema",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1556.mp3",
-              "duration": 822,
-              "description": "",
-              "speaker": "Rabbi Yisroel Chait",
-              "date": "2010-03-31",
-              "tags": [
-                "Halacha",
-                "Onen counting the Omer"
-              ],
-              "sourceId": 1556
             }
           ]
         },
@@ -65280,19 +64712,6 @@
               "sourceId": 1034240
             },
             {
-              "id": "YBT-1033805",
-              "title": "Shmitta #16 - pruzbul - gittin 36b",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1033805.mp3",
-              "duration": 2700,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2022-05-04",
-              "tags": [
-                "Shemittah"
-              ],
-              "sourceId": 1033805
-            },
-            {
               "id": "YBT-1033472",
               "title": "Shmitta #16 - pruzbul - gittin 36b",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1033472.mp3",
@@ -65343,19 +64762,6 @@
                 "Shemittah"
               ],
               "sourceId": 1032685
-            },
-            {
-              "id": "YBT-1033145",
-              "title": "Shmitta 13 pruzbul - gittin 36b",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1033145.mp3",
-              "duration": 2580,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2022-04-25",
-              "tags": [
-                "Shemittah"
-              ],
-              "sourceId": 1033145
             },
             {
               "id": "YBT-1030172",
@@ -70499,34 +69905,6 @@
                 "Parshas Shmini"
               ],
               "sourceId": 1467
-            },
-            {
-              "id": "YBTArchived-1470",
-              "title": "Baruch Shem Kevod Malchuso LeOlam Vaed",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1470.mp3",
-              "duration": 2896,
-              "description": "",
-              "speaker": "Rabbi Yisroel Chait",
-              "date": "2011-12-01",
-              "tags": [
-                "Halacha",
-                "Baruch Shem"
-              ],
-              "sourceId": 1470
-            },
-            {
-              "id": "YBTArchived-1554",
-              "title": "Shaving during omer",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1554.mp3",
-              "duration": 378,
-              "description": "",
-              "speaker": "Rabbi Yisroel Chait",
-              "date": "2011-05-20",
-              "tags": [
-                "Halacha",
-                "Shaving during Sfira"
-              ],
-              "sourceId": 1554
             },
             {
               "id": "YBTArchived-1555",
@@ -88541,19 +87919,6 @@
                   "sourceId": 1171061
                 },
                 {
-                  "id": "YBT-1174378",
-                  "title": "Rambam Shmoheh Prakim perek 8 pt 9",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1174378.mp3",
-                  "duration": 2940,
-                  "description": "",
-                  "speaker": "Rabbi Pesach Chait",
-                  "date": "2026-03-13",
-                  "tags": [
-                    "Rambam"
-                  ],
-                  "sourceId": 1174378
-                },
-                {
                   "id": "YBT-1169054",
                   "title": "Rambam Shmoheh Prakim perek 8 pt 8",
                   "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1169054.mp3",
@@ -98283,17 +97648,6 @@
               "sourceId": 1026024
             },
             {
-              "id": "YBT-1018646",
-              "title": "Sunday Shiur: The Miraculous Tales of Rabbi Chanina ben Dosa #2",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1018646.mp3",
-              "duration": 7200,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2021-11-28",
-              "tags": [],
-              "sourceId": 1018646
-            },
-            {
               "id": "YBT-1014608",
               "title": "Sefer Haikarim Book 2 Chapter 1",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1014608.mp3",
@@ -105488,18 +104842,6 @@
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1141649.mp3",
               "duration": 2602,
               "description": "דְּאָגָה בְלֶב אִישׁ יַשְׁחֶנָּהוְדָבָר טוֹב יְשַׂמְּחֶנָּה: \n\nIn our morning Mishlei shiur (11/5/20) we developed our understanding of how Mishlei advises us to deal with worry, delving deeply into the topic and discussing practicality. If you find yourself fraught with worry, stress, and anxiety about the future, then this shiur is for you!\nhttps://rabbischneeweiss.substack.com/",
-              "speaker": "Rabbi Matt Schneeweiss",
-              "date": "2020-11-05",
-              "tags": [
-                "Mishlei"
-              ]
-            },
-            {
-              "id": "YBT-1141906",
-              "title": "Mishlei 12:25 - Don't Worry, Be Happy (Part 2)",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1141906.mp3",
-              "duration": 2602,
-              "description": "דְּאָגָה בְלֶב אִישׁ יַשְׁחֶנָּהוְדָבָר טוֹב יְשַׂמְּחֶנָּה:\n\nIn our morning Mishlei shiur (11/5/20 at YBT) we developed our understanding of how Mishlei advises us to deal with worry, delving deeply into the topic and discussing practicality. If you find yourself fraught with worry, stress, and anxiety about the future, then this shiur is for you!\n\nhttps://rabbischneeweiss.substack.com/\n",
               "speaker": "Rabbi Matt Schneeweiss",
               "date": "2020-11-05",
               "tags": [
@@ -115246,19 +114588,6 @@
               "sourceId": 1032449
             },
             {
-              "id": "YBT-1032444",
-              "title": "Mishlei 19:15 - Are You Tired and Hungry or Just Lazy?",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1032444.mp3",
-              "duration": 2640,
-              "description": "This morning (2/16/20 at YBT) we starting learning a pasuk about laziness. Knowing my fondness for Saadia Gaon's definition of laziness as stated in his Introduction to Mishlei, it was inevitable that we'd end up there. Thankfully, we were able to work out an idea combining that definition of laziness with his translation of \"remiyah\" here. Tomorrow we'll look at the other meforshim.\n",
-              "speaker": "Rabbi Matt Schneeweiss",
-              "date": "2021-02-16",
-              "tags": [
-                "Mishlei"
-              ],
-              "sourceId": 1032444
-            },
-            {
               "id": "YBT-1032440",
               "title": "Mishlei 10:15 - The Self-Perpetuating Psychological Impact of Wealth and Poverty",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1032440.mp3",
@@ -115374,19 +114703,6 @@
                 "Mishlei"
               ],
               "sourceId": 1032410
-            },
-            {
-              "id": "YBT-1032418",
-              "title": "Mishlei 10:13 - The Crossroads on the Path to Becoming a Creative Thinker",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1032418.mp3",
-              "duration": 5640,
-              "description": "In our Monday Night Mishlei shiur (2/1/21 with Lomdeha, hosted by YBT, broadcasting from Seattle due to a snow storm in NY) we learned one of those pesukim in which the two halves seem to have nothing to do with each other. On top of that, the pasuk contained technical jargon of the most difficult variety: \"knowledge words\" (i.e. navon, chochmah, chasar leiv). And yet, with our usual Monday Night Mishlei teamwork, we were able to arrive at several nice ideas, with a lot of methodology along the way. And in a way, our pasuk was about methodology and the type of courage it takes to make progress in one's development as a thinker.",
-              "speaker": "Rabbi Matt Schneeweiss",
-              "date": "2021-02-01",
-              "tags": [
-                "Mishlei"
-              ],
-              "sourceId": 1032418
             },
             {
               "id": "YBT-985127",
@@ -121847,19 +121163,6 @@
               "sourceId": 1120462
             },
             {
-              "id": "YBT-1152781",
-              "title": "Machlokes man vs. God, Moshe and the Slav, Shmuel and the request for a king part 2",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1152781.mp3",
-              "duration": 5400,
-              "description": "",
-              "speaker": "Rabbi Moshe Fistel",
-              "date": "2024-12-29",
-              "tags": [
-                "Shmuel"
-              ],
-              "sourceId": 1152781
-            },
-            {
               "id": "YBT-1152780",
               "title": "Shaul Gets Navuah",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1152780.mp3",
@@ -121884,19 +121187,6 @@
                 "Shmuel"
               ],
               "sourceId": 1120185
-            },
-            {
-              "id": "YBT-1152779",
-              "title": "Machlokes man vs. God, Moshe and the Slav, Shmuel and the request for a king",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1152779.mp3",
-              "duration": 5040,
-              "description": "",
-              "speaker": "Rabbi Moshe Fistel",
-              "date": "2024-12-22",
-              "tags": [
-                "Shmuel"
-              ],
-              "sourceId": 1152779
             },
             {
               "id": "YBT-1152778",
@@ -131449,20 +130739,6 @@
               "sourceId": 1328
             },
             {
-              "id": "YBTArchived-1329",
-              "title": "Pesachim 70a",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1329.mp3",
-              "duration": 640,
-              "description": "",
-              "speaker": "Rabbi Yisroel Chait",
-              "date": "2013-03-07",
-              "tags": [
-                "Gemara",
-                "Pesachim"
-              ],
-              "sourceId": 1329
-            },
-            {
               "id": "YBTArchived-1330",
               "title": "Pesachim 70a",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1330.mp3",
@@ -132063,20 +131339,6 @@
                 "Pesachim"
               ],
               "sourceId": 3321
-            },
-            {
-              "id": "YBTArchived-3322",
-              "title": "Pesachim 108b-4 Kosos-Griz",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3322.mp3",
-              "duration": 2664,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2013-03-13",
-              "tags": [
-                "Gemara",
-                "Pesachim"
-              ],
-              "sourceId": 3322
             },
             {
               "id": "YBTArchived-3323",
@@ -137639,32 +136901,6 @@
               "sourceId": 975648
             },
             {
-              "id": "YBT-975649",
-              "title": "Shabbos 70b-71a - Kotzer Gorer Kotzer: Svara",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-975649.mp3",
-              "duration": 3420,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2020-10-29",
-              "tags": [
-                "Shabbat"
-              ],
-              "sourceId": 975649
-            },
-            {
-              "id": "YBT-975650",
-              "title": "Shabbos 70b-71a - Kotzer Gorer Kotzer: Svara",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-975650.mp3",
-              "duration": 3420,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2020-10-29",
-              "tags": [
-                "Shabbat"
-              ],
-              "sourceId": 975650
-            },
-            {
               "id": "YBT-975647",
               "title": "Shabbos 67b - Klal Gadol",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-975647.mp3",
@@ -142348,20 +141584,6 @@
                 "Shabbos"
               ],
               "sourceId": 3318
-            },
-            {
-              "id": "YBTArchived-3319",
-              "title": "Shabbos 120a-b-Grama",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3319.mp3",
-              "duration": 2048,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2013-06-13",
-              "tags": [
-                "Gemara",
-                "Shabbos"
-              ],
-              "sourceId": 3319
             },
             {
               "id": "YBTArchived-3331",
@@ -159246,19 +158468,6 @@
                 "Gemara"
               ],
               "sourceId": 4460
-            },
-            {
-              "id": "YBTArchived-4461",
-              "title": "Sukkah 25b-Hesech HaDaas for Tefilin",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/YBTArchived/YBTArchived-4461.mp3",
-              "duration": 1590,
-              "description": "",
-              "speaker": "Rabbi Z. Cinamon",
-              "date": "2010-11-09",
-              "tags": [
-                "Gemara"
-              ],
-              "sourceId": 4461
             },
             {
               "id": "YBTArchived-4462",
@@ -180873,20 +180082,6 @@
               "sourceId": 1232
             },
             {
-              "id": "YBTArchived-1285",
-              "title": "Bava Kamma 56b-Tosfos Pshitah",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1285.mp3",
-              "duration": 1016,
-              "description": "",
-              "speaker": "Rabbi Yisroel Chait",
-              "date": "2013-05-03",
-              "tags": [
-                "Gemara",
-                "Bava Kamma - HaKones"
-              ],
-              "sourceId": 1285
-            },
-            {
               "id": "YBTArchived-1286",
               "title": "Bava Kamma 56b-HaMaamid Behemas Chaveiro-Tosfos vs Rashba",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1286.mp3",
@@ -186409,19 +185604,6 @@
               "sourceId": 222
             },
             {
-              "id": "YBTArchived-223",
-              "title": "Gitin 83a-Perek 9-Hamegaresh-Rashba",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-223.mp3",
-              "duration": 3585,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2014-01-30",
-              "tags": [
-                "Gitin - 8th Perek"
-              ],
-              "sourceId": 223
-            },
-            {
               "id": "YBTArchived-224",
               "title": "Gitin 82a-Perek 9-Hamegaresh",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-224.mp3",
@@ -189470,20 +188652,6 @@
               "sourceId": 1270
             },
             {
-              "id": "YBTArchived-1271",
-              "title": "Zevachim 47a-Eizehu Mekoman-Krisus 18a",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1271.mp3",
-              "duration": 1925,
-              "description": "",
-              "speaker": "Rabbi Yisroel Chait",
-              "date": "2013-07-31",
-              "tags": [
-                "Gemara",
-                "Zevachim - Eizehu Mekoman"
-              ],
-              "sourceId": 1271
-            },
-            {
               "id": "YBTArchived-1272",
               "title": "Zevachim 47a-Eizehu Mekoman-Krisus 17a",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1272.mp3",
@@ -189622,20 +188790,6 @@
                 "Zevachim - Eizehu Mekoman"
               ],
               "sourceId": 1281
-            },
-            {
-              "id": "YBTArchived-1282",
-              "title": "Zevachim 47a-Eizehu Mekoman-Tosfos",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1282.mp3",
-              "duration": 3234,
-              "description": "",
-              "speaker": "Rabbi Yisroel Chait",
-              "date": "2013-06-21",
-              "tags": [
-                "Gemara",
-                "Zevachim - Eizehu Mekoman"
-              ],
-              "sourceId": 1282
             },
             {
               "id": "YBTArchived-1283",
@@ -194098,19 +193252,6 @@
               "sourceId": 1018641
             },
             {
-              "id": "YBT-1018642",
-              "title": "Sunday Shiur: The Miraculous Tales of Rabbi Chanina ben Dosa #2",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1018642.mp3",
-              "duration": 7200,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2021-11-28",
-              "tags": [
-                "Aggadeta"
-              ],
-              "sourceId": 1018642
-            },
-            {
               "id": "YBT-1017935",
               "title": "Sunday Shiur: The Miraculous Tales of Rabbi Chanina ben Dosa",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1017935.mp3",
@@ -195167,19 +194308,6 @@
                 "Avoda Zara"
               ],
               "sourceId": 1023413
-            },
-            {
-              "id": "YBT-1024500",
-              "title": "Avoda Zara 64a conclusion",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1024500.mp3",
-              "duration": 3120,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2022-01-18",
-              "tags": [
-                "Avoda Zara"
-              ],
-              "sourceId": 1024500
             },
             {
               "id": "YBT-1023414",
@@ -198445,20 +197573,6 @@
                 "Kiddushin"
               ],
               "sourceId": 5659
-            },
-            {
-              "id": "YBTArchived-343",
-              "title": "Rambam Hilchos Avodah Zarah Perek 1",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-343.mp3",
-              "duration": 3591,
-              "description": "",
-              "speaker": "Rabbi D. Markowitz",
-              "date": "2013-04-26",
-              "tags": [
-                "Misc.",
-                "Rambam"
-              ],
-              "sourceId": 343
             },
             {
               "id": "YBTArchived-5991",
@@ -232827,19 +231941,6 @@
               "sourceId": 217
             },
             {
-              "id": "YBTArchived-433",
-              "title": "Megilla 26b-Tashmish Kedusha-Kavod vs. Protection",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/YBTArchived/YBTArchived-433.mp3",
-              "duration": 2099,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2013-12-18",
-              "tags": [
-                "Gemara"
-              ],
-              "sourceId": 433
-            },
-            {
               "id": "YBTArchived-1101",
               "title": "2004_03_12-Megilla_HaKorei_LaMafreiah_19a_Nikras_Sefer_and_Nikras_Igeres",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-1101.mp3",
@@ -233953,20 +233054,6 @@
                 "Megillah"
               ],
               "sourceId": 332
-            },
-            {
-              "id": "YBTArchived-333",
-              "title": "Megillah 21a-b",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-333.mp3",
-              "duration": 3061,
-              "description": "",
-              "speaker": "Rabbi D. Markowitz",
-              "date": "2014-01-27",
-              "tags": [
-                "Misc.",
-                "Megillah"
-              ],
-              "sourceId": 333
             },
             {
               "id": "YBTArchived-334",
@@ -244235,20 +243322,6 @@
               "sourceId": 3239
             },
             {
-              "id": "YBTArchived-3240",
-              "title": "Sanhedrin 76b-77a",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3240.mp3",
-              "duration": 3053,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2013-07-03",
-              "tags": [
-                "Gemara",
-                "Sanhedrin"
-              ],
-              "sourceId": 3240
-            },
-            {
               "id": "YBTArchived-3241",
               "title": "Sanhedrin 29a",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3241.mp3",
@@ -244317,34 +243390,6 @@
                 "Sanhedrin"
               ],
               "sourceId": 3245
-            },
-            {
-              "id": "YBTArchived-3246",
-              "title": "Sanhedrin 29a",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3246.mp3",
-              "duration": 2290,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2013-05-30",
-              "tags": [
-                "Gemara",
-                "Sanhedrin"
-              ],
-              "sourceId": 3246
-            },
-            {
-              "id": "YBTArchived-3247",
-              "title": "Sanhedrin 29a",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3247.mp3",
-              "duration": 3446,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2013-05-29",
-              "tags": [
-                "Gemara",
-                "Sanhedrin"
-              ],
-              "sourceId": 3247
             },
             {
               "id": "YBTArchived-3248",
@@ -244457,20 +243502,6 @@
                 "Sanhedrin"
               ],
               "sourceId": 3255
-            },
-            {
-              "id": "YBTArchived-3256",
-              "title": "Sanhedrin 28a-Yad Rama",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-3256.mp3",
-              "duration": 1972,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2013-04-25",
-              "tags": [
-                "Gemara",
-                "Sanhedrin"
-              ],
-              "sourceId": 3256
             },
             {
               "id": "YBTArchived-3257",
@@ -249242,45 +248273,6 @@
               "sourceId": 1174573
             },
             {
-              "id": "YBT-1174384",
-              "title": "Pesachim 117 Birkas Hashir",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1174384.mp3",
-              "duration": 3480,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2026-03-26",
-              "tags": [
-                "Yevamot"
-              ],
-              "sourceId": 1174384
-            },
-            {
-              "id": "YBT-1174383",
-              "title": "Pesachim 116b Mishna and 117b Kos on Birkas Hamazon, Rosh",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1174383.mp3",
-              "duration": 3720,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2026-03-24",
-              "tags": [
-                "Yevamot"
-              ],
-              "sourceId": 1174383
-            },
-            {
-              "id": "YBT-1174382",
-              "title": "Pesachim 116b Hallel in the Seder",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1174382.mp3",
-              "duration": 2700,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2026-03-23",
-              "tags": [
-                "Yevamot"
-              ],
-              "sourceId": 1174382
-            },
-            {
               "id": "YBT-1171060",
               "title": "Yevamos 29a Tosfos Ela",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1171060.mp3",
@@ -249292,19 +248284,6 @@
                 "Yevamot"
               ],
               "sourceId": 1171060
-            },
-            {
-              "id": "YBT-1174381",
-              "title": "Yevamos 29a Tosfos Ela",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1174381.mp3",
-              "duration": 3360,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2026-03-19",
-              "tags": [
-                "Yevamot"
-              ],
-              "sourceId": 1174381
             },
             {
               "id": "YBT-1171059",
@@ -249320,19 +248299,6 @@
               "sourceId": 1171059
             },
             {
-              "id": "YBT-1174380",
-              "title": "Yevamos 29b Rashi",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1174380.mp3",
-              "duration": 3060,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2026-03-18",
-              "tags": [
-                "Yevamot"
-              ],
-              "sourceId": 1174380
-            },
-            {
               "id": "YBT-1171058",
               "title": "Yevamos 29a Mamar",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1171058.mp3",
@@ -249344,19 +248310,6 @@
                 "Yevamot"
               ],
               "sourceId": 1171058
-            },
-            {
-              "id": "YBT-1174379",
-              "title": "Yevamos 29a Mamar",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1174379.mp3",
-              "duration": 3600,
-              "description": "",
-              "speaker": "Rabbi Pesach Chait",
-              "date": "2026-03-16",
-              "tags": [
-                "Yevamot"
-              ],
-              "sourceId": 1174379
             },
             {
               "id": "YBT-1169060",
@@ -250617,19 +249570,6 @@
           "id": "gemarah-archived",
           "label": "2002–2014",
           "lectures": [
-            {
-              "id": "YBTArchived-39",
-              "title": "Inyonei Chanukah",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-39.mp3",
-              "duration": 1186,
-              "description": "",
-              "speaker": "Rabbi Yisroel Chait",
-              "date": "2013-11-29",
-              "tags": [
-                "Gemara"
-              ],
-              "sourceId": 39
-            },
             {
               "id": "YBTArchived-41",
               "title": "Inyonei Chanukah",
@@ -254946,20 +253886,6 @@
               "sourceId": 5325
             },
             {
-              "id": "YBTArchived-5326",
-              "title": "Rodef-Griz Perek 1 Halacha 13",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-5326.mp3",
-              "duration": 101,
-              "description": "",
-              "speaker": "Rabbi E. Feder",
-              "date": "2009-11-25",
-              "tags": [
-                "Gemara",
-                "Rodef"
-              ],
-              "sourceId": 5326
-            },
-            {
               "id": "YBTArchived-5349",
               "title": "Hilchos Teshuva",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBTArchived-5349.mp3",
@@ -255781,21 +254707,7 @@
         {
           "id": "mishna-moed-kattan",
           "label": "Moed Kattan",
-          "lectures": [
-            {
-              "id": "YBT-1169048",
-              "title": "Sunday Shiur - חכם שמת, בית מדרשו בטל",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1169048.mp3",
-              "duration": 2640,
-              "description": "",
-              "speaker": "Rabbi Zev Cinamon",
-              "date": "2026-01-04",
-              "tags": [
-                "Moed Kattan"
-              ],
-              "sourceId": 1169048
-            }
-          ]
+          "lectures": []
         },
         {
           "id": "mishna-negaim",

@@ -32,6 +32,7 @@ The service worker is disabled in `next dev`. To test PWA behavior (install prom
 - Server code reads the JSON directly via `lib/lectures.ts` (server-only, 9.4 MB — never import from a client component).
 - Client components use `lib/lecture-utils.ts` (pure types/helpers) + `lib/client-catalog.ts` (lazily fetches `catalog.json`, not bundled into JS).
 - `generate-node-data.mjs::mergePendingLectures` also folds in any Supabase `pending_lectures` rows (written by the live ingest pipeline below) at generation time.
+- Same lecture can legitimately appear under multiple `YBT`/`YBTArchived`/etc. id prefixes (re-synced from different sources over the years) — for the methodology used to find and remove true duplicates (vs. recurring weekly series that coincidentally share title/rabbi/duration), see `docs/duplicate-cleanup-2026-08.md`.
 
 ### Four separate ingest mechanisms — don't mix them up
 

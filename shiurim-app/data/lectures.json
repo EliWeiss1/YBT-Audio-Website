@@ -23821,6 +23821,18 @@
               "label": "Ki Tavo",
               "lectures": [
                 {
+                  "id": "YBT-1186780",
+                  "title": "Ki Savo – Is It Really a Great Mitzvah to Be Happy All the Time?",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1186780.mp3",
+                  "duration": 505,
+                  "description": "This is the audio version of the 5-page article I wrote and published on rabbischneeweiss.substack.com/ on 8/28/26 titled: Ki Savo – Is It Really a Great Mitzvah to Be Happy All the Time? Rebbe Nachman and the Rambam both make statements about the role of simchah in serving Hashem. Both statements are problematic in different ways, especially in light of a key pasuk. https://rabbischneeweiss.substack.com/p/ki-savo-is-it-really-a-great-mitzvah",
+                  "speaker": "Rabbi Matt Schneeweiss",
+                  "date": "2026-08-28",
+                  "tags": [
+                    "Ki Tavo"
+                  ]
+                },
+                {
                   "id": "YBT-1147749",
                   "title": "Ki Savo: The Accursed Transgressors",
                   "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1147749.mp3",
@@ -104366,6 +104378,30 @@
           "label": "Mishlei",
           "lectures": [
             {
+              "id": "YBT-1187248",
+              "title": "Mishlei 26:1 - Meteorological Metaphors for Giving Honor to a Fool Part 1)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1187248.mp3",
+              "duration": 2832,
+              "description": "This morning (9/3/26), in our first Morning Mishlei shiur of the 2026-2027 season, we took up the first pasuk in Chapter 26, which continues the series of \"straight-up mashal\" pesukim that begin in Chapter 25. This one was relatively straightforward, but has wide-reaching applications and implications. We developed our own approaches today, and we'll see what the meforshim say tomorrow. https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-09-03",
+              "tags": [
+                "Mishlei"
+              ]
+            },
+            {
+              "id": "YBT-1187427",
+              "title": "Mishlei 26:1 - Meteorological Metaphors for Giving Honor to a Fool Part 2)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1187427.mp3",
+              "duration": 2801,
+              "description": "This morning (9/3/26), in our Morning Mishlei shiur, we took continued our analysis of the first pasuk in Chapter 26. After reviewing the translations, questions, and approaches from yesterday, I shared my own interpretation. We then dove into the meforshim, learning a whopping SIX approaches! This turned out to be a fruitful pasuk (no pun intended), and a great start to this year's Mishlei learning.",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-09-04",
+              "tags": [
+                "Mishlei"
+              ]
+            },
+            {
               "id": "YBT-1141561",
               "title": "Mishlei 10:2 - Tzedakah as a Beneficial Spending Habit",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1141561.mp3",
@@ -116659,6 +116695,18 @@
           "id": "nach-tehillim",
           "label": "Tehillim",
           "lectures": [
+            {
+              "id": "YBT-1187183",
+              "title": "Tehilim 81: Shir shel Yom of Thursday and Rosh ha'Shanah (Part 1: Translation)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1187183.mp3",
+              "duration": 3804,
+              "description": "This evening (9/2/26), in our first Wednesday night Tehilim shiur of the season, we began learning a perek from the daily AND annual liturgy! I chose it because Rosh ha'Shanah is right around the corner and I remembered there being a really good Rosh ha'Shanah insight here, but I have very little recollection of what it is. This time we spent almost the entire time on the somewhat difficult translations, then attempted to identify the pivot point. At the very end I teased the Radak's introduction to the perek, which was the source of my Rosh ha'Shanah insights, but we'll have to wait until next time to pursue that.",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-09-02",
+              "tags": [
+                "Tehillim"
+              ]
+            },
             {
               "id": "YBT-1147549",
               "title": "Tehilim 95: Lechu Neranena (Part 1)",

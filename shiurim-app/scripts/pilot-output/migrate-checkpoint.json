@@ -9079,5 +9079,49 @@
       "devarim-ki-teitzei"
     ],
     "seconds": 1.9
+  },
+  "1186780": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1186780.mp3",
+    "placements": [
+      "devarim-ki-tavo"
+    ],
+    "insertedInto": [
+      "devarim-ki-tavo"
+    ],
+    "seconds": 0.9
+  },
+  "1187183": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1187183.mp3",
+    "placements": [
+      "nach-tehillim"
+    ],
+    "insertedInto": [
+      "nach-tehillim"
+    ],
+    "seconds": 3.1
+  },
+  "1187248": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1187248.mp3",
+    "placements": [
+      "nach-mishlei"
+    ],
+    "insertedInto": [
+      "nach-mishlei"
+    ],
+    "seconds": 1.7
+  },
+  "1187427": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1187427.mp3",
+    "placements": [
+      "nach-mishlei"
+    ],
+    "insertedInto": [
+      "nach-mishlei"
+    ],
+    "seconds": 28.5
   }
 }

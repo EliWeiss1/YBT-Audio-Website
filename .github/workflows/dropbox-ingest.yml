@@ -2,7 +2,7 @@ name: dropbox-ingest
 
 on:
   schedule:
-    - cron: '0 13 * * *' # daily 13:00 UTC (1h after drive-ingest, to avoid a deploy collision)
+    - cron: '0 13 * * 0-5' # daily except Saturday, 13:00 UTC (1h after drive-ingest, to avoid a deploy collision)
   workflow_dispatch:
     inputs:
       max:

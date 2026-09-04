@@ -2,7 +2,7 @@ name: drive-ingest
 
 on:
   schedule:
-    - cron: '0 12 * * *' # daily 12:00 UTC (~8am ET)
+    - cron: '0 12 * * 0-5' # daily except Saturday, 12:00 UTC (~8am ET)
   workflow_dispatch:
     inputs:
       max:

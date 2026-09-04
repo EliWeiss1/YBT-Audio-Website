@@ -1,8 +1,8 @@
-name: schneeweiss-weekly-sync
+name: schneeweiss-daily-sync
 
 on:
   schedule:
-    - cron: '0 13 * * 0' # Sundays 13:00 UTC (~9am ET) — change to daily by using '0 13 * * *'
+    - cron: '0 11 * * 0-5' # daily except Saturday, 11:00 UTC (~7am ET) — staggered before drive-ingest (12:00 UTC) / dropbox-ingest (13:00 UTC) to avoid a deploy collision
   workflow_dispatch:
 
 permissions:
@@ -47,7 +47,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No data changes to commit"
           else
-            git commit -m "chore(data): weekly Schneeweiss YUTorah sync"
+            git commit -m "chore(data): daily Schneeweiss YUTorah sync"
             git push
           fi
 

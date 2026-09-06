@@ -8,6 +8,7 @@ import { markAppLoaded } from '@/lib/app-session'
 import Sidebar from './Sidebar'
 import ProfileDrawer from './ProfileDrawer'
 import NavSearch from './NavSearch'
+import ScopeTabs from './ScopeTabs'
 import type { User } from '@supabase/supabase-js'
 
 export default function LayoutShell({
@@ -89,31 +90,49 @@ export default function LayoutShell({
       {/* ── Main content ── */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
 
-        {/* Top bar */}
-        <header className="relative flex items-center gap-3 px-4 py-3 bg-white border-b border-stone-200 shrink-0 safe-top">
-          {/* Left: hamburger + title (mobile only, hidden when mobile search is active) */}
-          {!mobileSearchActive && (
-            <div className="flex items-center gap-3 md:hidden shrink-0">
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="p-2 rounded-lg text-stone-500 hover:bg-stone-100 transition-colors"
-                aria-label="Open menu"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-              <span className="font-semibold text-stone-900 text-sm">YBT Shiurim</span>
+        {/* Top bar. Stays `relative` — NavSearch's results panel is absolutely
+            positioned against it (top-full), so it must remain the offset
+            parent and must not clip overflow. */}
+        <header className="relative bg-white border-b border-stone-200 shrink-0 safe-top">
+          <div className="flex items-center gap-3 px-4 py-3">
+            {/* Left: hamburger + title (mobile only, hidden when mobile search is active) */}
+            {!mobileSearchActive && (
+              <div className="flex items-center gap-3 md:hidden shrink-0">
+                <button
+                  onClick={() => setSidebarOpen(true)}
+                  className="p-2 rounded-lg text-stone-500 hover:bg-stone-100 transition-colors"
+                  aria-label="Open menu"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+                <span className="font-semibold text-stone-900 text-sm">YBT Shiurim</span>
+              </div>
+            )}
+
+            {/* Library tabs — desktop only; the mobile copy is the row below.
+                NavSearch keeps its own `ml-auto`, which is what leaves a wide
+                gap between the tabs and the search box. */}
+            <div className="hidden md:flex">
+              <ScopeTabs />
             </div>
-          )}
 
-          {/* NavSearch: desktop = centered bar, mobile = icon / expanded */}
-          <NavSearch onMobileSearchChange={setMobileSearchActive} />
+            {/* NavSearch: desktop = centered bar, mobile = icon / expanded */}
+            <NavSearch onMobileSearchChange={setMobileSearchActive} />
 
-          {/* Right: auth (hidden on mobile when mobile search is active) */}
+            {/* Right: auth (hidden on mobile when mobile search is active) */}
+            {!mobileSearchActive && (
+              <div className="shrink-0 ml-auto md:ml-2">
+                <AuthButton />
+              </div>
+            )}
+          </div>
+
+          {/* Library tabs — mobile second row, yielded to the expanded search */}
           {!mobileSearchActive && (
-            <div className="shrink-0 ml-auto md:ml-2">
-              <AuthButton />
+            <div className="md:hidden px-4 pb-2">
+              <ScopeTabs compact />
             </div>
           )}
         </header>

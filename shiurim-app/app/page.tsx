@@ -37,10 +37,18 @@ export default async function HomePage() {
   // "Recently Given" = newest by the shiur's delivery date. Drop entries with
   // no date (can't claim to be recently given); ISO YYYY-MM-DD sorts
   // chronologically. getAllLectures() already dedups cross-listed shiurim.
-  const recentlyGiven = allLectures
+  const dated = allLectures
     .filter(l => l.date)
     .sort((a, b) => b.date.localeCompare(a.date))
-    .slice(0, 200)
+
+  // Both pools are sent down so the "Shiurim in Yeshiva" / "All Community
+  // Shiurim" tabs (lib/scope-context.tsx) can switch without a server round
+  // trip. The yeshiva pool is the live email/Zoom pipeline's INGEST- ids only —
+  // deliberately not MASORET- (Google Drive sync) or anything else.
+  const recentPools = {
+    all: dated.slice(0, 200),
+    yeshiva: dated.filter(l => l.id.startsWith('INGEST-')).slice(0, 200),
+  }
 
   return (
     <div className="px-4 py-6 sm:p-8 max-w-4xl mx-auto">
@@ -87,7 +95,7 @@ export default async function HomePage() {
 
       {/* Recently Given — newest shiurim by delivery date */}
       <RecentlyGiven
-        lectures={recentlyGiven}
+        pools={recentPools}
         userId={user?.id ?? null}
         folderOrder={categories.map(c => c.label)}
       />

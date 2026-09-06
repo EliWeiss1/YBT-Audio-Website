@@ -9,6 +9,7 @@ import InstallBanner from '@/components/pwa/InstallBanner'
 import { createClient } from '@/lib/supabase-server'
 import { PlayerProvider } from '@/lib/player-context'
 import { PwaInstallProvider } from '@/lib/pwa-install'
+import { ScopeProvider } from '@/lib/scope-context'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -44,9 +45,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className={inter.className}>
         <PwaInstallProvider>
           <PlayerProvider userId={user?.id}>
-            <LayoutShell user={user ?? null}>
-              {children}
-            </LayoutShell>
+            <ScopeProvider>
+              <LayoutShell user={user ?? null}>
+                {children}
+              </LayoutShell>
+            </ScopeProvider>
             <BottomPlayer />
             <InstallBanner />
             <ServiceWorkerRegister />

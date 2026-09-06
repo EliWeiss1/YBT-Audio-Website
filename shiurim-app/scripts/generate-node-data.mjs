@@ -135,6 +135,36 @@ function processNode(node, breadcrumb) {
     JSON.stringify({ categories: data.categories.map(toTreeNode) })
   )
 
+  // ── ttl.json — the hand-numbered TTL back-catalogue, grouped by ID prefix ────
+  // The TTL tab (app/ttl/) browses these by section, ordered by ID number. A
+  // shiur's prefix is the grouping key on purpose — it doesn't track the
+  // category breadcrumb (HL- shiurim sit under both Halacha and Holidays).
+  // Section keys/labels must stay in sync with lib/ttl-sections.ts.
+  // Other TTL-style prefixes (G-, KC-, SA-, RA-, R-, L-, NR-) are intentionally
+  // left out of v1.
+  const TTL_SECTION_PREFIX = {
+    discussion: 'D',
+    chumash: 'C',
+    nach: 'N',
+    halacha: 'HL',
+    'bnai-noach': 'BN',
+  }
+  const prefixToSection = Object.fromEntries(
+    Object.entries(TTL_SECTION_PREFIX).map(([section, prefix]) => [prefix, section])
+  )
+  const ttlSections = Object.fromEntries(Object.keys(TTL_SECTION_PREFIX).map(k => [k, []]))
+  for (const lec of flatCatalog) {
+    const sep = lec.id.indexOf('-')
+    if (sep < 1) continue
+    const section = prefixToSection[lec.id.slice(0, sep)]
+    if (!section) continue
+    const num = lec.id.slice(sep + 1)
+    if (!/^\d+$/.test(num)) continue
+    ttlSections[section].push({ ...lec, ttlNumber: Number(num) })
+  }
+  for (const list of Object.values(ttlSections)) list.sort((a, b) => a.ttlNumber - b.ttlNumber)
+  writeFileSync(join(outDir, 'ttl.json'), JSON.stringify({ sections: ttlSections }))
+
   // ── speakers.json — raw speaker → lecture count (client normalizes names) ────
   const speakerCounts = {}
   for (const lec of flatCatalog) {
@@ -142,5 +172,9 @@ function processNode(node, breadcrumb) {
   }
   writeFileSync(join(outDir, 'speakers.json'), JSON.stringify(speakerCounts))
 
-  console.log(`[generate-node-data] wrote ${outDir} (${flatCatalog.length} lectures in catalog.json)`)
+  const ttlTotal = Object.values(ttlSections).reduce((n, list) => n + list.length, 0)
+  console.log(
+    `[generate-node-data] wrote ${outDir} ` +
+    `(${flatCatalog.length} lectures in catalog.json, ${ttlTotal} in ttl.json)`
+  )
 })()

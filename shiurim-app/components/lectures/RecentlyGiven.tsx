@@ -5,6 +5,7 @@ import Link from 'next/link'
 import type { FlatLecture } from '@/lib/lecture-utils'
 import { normalizeRabbi } from '@/lib/rabbi-normalization'
 import { createClient } from '@/lib/supabase-browser'
+import { useScope } from '@/lib/scope-context'
 import LectureCard from './LectureCard'
 import MultiSelectFilter from './MultiSelectFilter'
 
@@ -14,27 +15,42 @@ type OverrideMap = Record<string, string>
 
 /** Homepage "Recently Given" list — the newest shiurim by delivery date.
  *  Reuses LectureCard so each shiur is its own card with the full (wrapping)
- *  title, matching the list view on the navigation pages. The caller passes a
- *  pre-sorted, deduped pool of lectures (newest first, up to 200); this
- *  component reveals them 15 at a time via "View More", fetches speaker
- *  overrides for the whole pool so tiles show the same corrected rabbi names
- *  as the subfolder lecture lists, and lets the visitor narrow the pool by
- *  rabbi and/or top-level folder (local state only — filtering always runs
+ *  title, matching the list view on the navigation pages. The caller passes
+ *  pre-sorted, deduped pools of lectures (newest first, up to 200 each) — one
+ *  per library scope, so the top-bar tabs switch instantly with no server round
+ *  trip. This component reveals them 15 at a time via "View More", fetches
+ *  speaker overrides for the whole pool so tiles show the same corrected rabbi
+ *  names as the subfolder lecture lists, and lets the visitor narrow the pool
+ *  by rabbi and/or top-level folder (local state only — filtering always runs
  *  against the full pool, so changing a filter immediately reveals up to
  *  PAGE_SIZE matches rather than shrinking the current page). */
 export default function RecentlyGiven({
-  lectures,
+  pools,
   userId,
   folderOrder,
 }: {
-  lectures: FlatLecture[]
+  pools: { all: FlatLecture[]; yeshiva: FlatLecture[] }
   userId?: string | null
   folderOrder: string[]
 }) {
+  const { scope } = useScope()
+  // 'ttl' has its own page (/ttl) and never renders this, but fall back to the
+  // full pool rather than showing nothing if it somehow lands here.
+  const inYeshiva = scope === 'yeshiva'
+  const lectures = inYeshiva ? pools.yeshiva : pools.all
+
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const [overrideMap, setOverrideMap] = useState<OverrideMap>({})
   const [selectedRabbis, setSelectedRabbis] = useState<string[]>([])
   const [selectedFolders, setSelectedFolders] = useState<string[]>([])
+
+  // Switching tabs re-filters against a different pool, so drop selections that
+  // may not exist in the new one and start paging again from the top.
+  useEffect(() => {
+    setSelectedRabbis([])
+    setSelectedFolders([])
+    setVisibleCount(PAGE_SIZE)
+  }, [scope])
 
   useEffect(() => {
     const supabase = createClient()
@@ -93,14 +109,27 @@ export default function RecentlyGiven({
     setVisibleCount(PAGE_SIZE)
   }
 
-  if (lectures.length === 0) return null
+  const heading = inYeshiva ? 'Recently Given in Yeshiva' : 'Recently Given'
+
+  if (lectures.length === 0) {
+    if (!inYeshiva) return null
+    return (
+      <section>
+        <h2 className="text-lg font-semibold text-stone-700 mb-4">{heading}</h2>
+        <p className="text-sm text-stone-400">
+          No shiurim recorded in yeshiva yet. Switch to{' '}
+          <span className="text-stone-500">All Community Shiurim</span> to browse everything.
+        </p>
+      </section>
+    )
+  }
 
   const visibleLectures = filteredLectures.slice(0, visibleCount)
   const hasMore = visibleCount < filteredLectures.length
 
   return (
     <section>
-      <h2 className="text-lg font-semibold text-stone-700 mb-4">Recently Given</h2>
+      <h2 className="text-lg font-semibold text-stone-700 mb-4">{heading}</h2>
 
       <div className="flex items-center gap-2 mb-4">
         <MultiSelectFilter

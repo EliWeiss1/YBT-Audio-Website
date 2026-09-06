@@ -136,7 +136,13 @@ async function ingestShiur({ shiurID, placements, tags = [], data, r2, log = () 
   // ── 3. convert MP4 -> MP3 (skip when already MP3) + drift check ──
   let mp3Path = rawPath;
   let driftSeconds = null;
-  const origDur = ffprobeDuration(rawPath);
+  let origDur;
+  try {
+    origDur = ffprobeDuration(rawPath);
+  } catch (e) { throw new StageError('probe', `unreadable/no audio stream in source file (likely corrupt or empty at the source): ${e.message}`); }
+  if (origDur == null && mediaType !== 'mp4') {
+    throw new StageError('probe', 'source file has no detectable duration/audio stream (likely corrupt or empty at the source)');
+  }
   let finalDur = origDur;
 
   if (mediaType === 'mp4') {

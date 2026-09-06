@@ -414,18 +414,29 @@ function writeLecturesAtomic(data) {
       checkpoint[f.shiurID] = { status: 'flagged', flag: f.flag };
   }
 
-  // work list: retry-mode reprocesses failed ids; otherwise pending ingestable
+  // work list: retry-mode reprocesses failed ids (including ones we've since
+  // given up on — that's an explicit ask); otherwise pending/failed ingestable,
+  // excluding ones we've given up retrying (see SKIP_AFTER_ATTEMPTS below).
   let work;
   if (RETRY) {
     const failIds = new Set(failures.map((f) => String(f.shiurID)));
     work = ingestable.filter((e) => failIds.has(e.shiurID));
     console.log(`[retry] ${work.length} previously-failed ids to reprocess`);
   } else {
-    work = ingestable.filter((e) => checkpoint[e.shiurID]?.status !== 'done');
+    work = ingestable.filter((e) => {
+      const st = checkpoint[e.shiurID]?.status;
+      return st !== 'done' && st !== 'skipped';
+    });
   }
   if (Number.isFinite(LIMIT)) work = work.slice(0, LIMIT);
 
-  let added = 0, dup = 0, failed = 0;
+  // A shiur that fails the same way every day (e.g. the source file on YUTorah
+  // has no audio) will never fix itself on retry — after this many failed
+  // attempts, stop retrying it automatically and mark it 'skipped' so it
+  // stops showing up as a fresh failure in every day's summary. --retry-failures
+  // still reprocesses it (explicit ask), e.g. after YUTorah fixes the source.
+  const SKIP_AFTER_ATTEMPTS = 3;
+  let added = 0, dup = 0, failed = 0, skipped = 0;
   const newFailures = [];
   const fmtDur = (s) => `${Math.floor(s / 60)}m${String(Math.round(s % 60)).padStart(2, '0')}s`;
   const runStart = Date.now();
@@ -452,10 +463,17 @@ function writeLecturesAtomic(data) {
       console.log(`\r  ${tag} ${res.status} ${secs.toFixed(1)}s (avg ${avg.toFixed(1)}s, ETA ${fmtDur(eta)}) -> [${res.insertedInto.join(', ') || 'dup'}]`.padEnd(110));
     } catch (err) {
       failed++;
-      const rec = { shiurID: e.shiurID, stage: err.stage || 'unknown', error: err.message, url: e.url };
+      const attempts = (checkpoint[e.shiurID]?.attempts || 0) + 1;
+      const giveUp = attempts >= SKIP_AFTER_ATTEMPTS;
+      const rec = { shiurID: e.shiurID, stage: err.stage || 'unknown', error: err.message, url: e.url, attempts, skipped: giveUp };
       newFailures.push(rec);
-      checkpoint[e.shiurID] = { status: 'failed', stage: rec.stage, error: rec.error, placements: e.placements };
-      console.log(`\r  ${tag} FAILED [${rec.stage}] ${rec.error} (${((Date.now() - t0) / 1000).toFixed(1)}s)`.padEnd(110));
+      checkpoint[e.shiurID] = {
+        status: giveUp ? 'skipped' : 'failed',
+        stage: rec.stage, error: rec.error, attempts, placements: e.placements,
+      };
+      if (giveUp) skipped++;
+      const suffix = giveUp ? ` — giving up after ${attempts} attempts, won't auto-retry (use --retry-failures to force)` : ` (attempt ${attempts}/${SKIP_AFTER_ATTEMPTS})`;
+      console.log(`\r  ${tag} FAILED [${rec.stage}] ${rec.error}${suffix} (${((Date.now() - t0) / 1000).toFixed(1)}s)`.padEnd(110));
     }
     // Persist after EACH shiur, lectures.json FIRST then checkpoint, so a kill
     // between the two writes makes resume re-process at most ONE shiur (the
@@ -483,6 +501,7 @@ function writeLecturesAtomic(data) {
   console.log(`  skipped(dup): ${dup}`);
   console.log(`  flagged:      ${flagged.length}  (see ${FLAGGED_PATH})`);
   console.log(`  failed:       ${failed}  (see ${FAILURES_PATH})`);
+  console.log(`  gave up on:   ${skipped}  (source likely broken — won't auto-retry; see ${FAILURES_PATH})`);
   console.log(`  time:         ${fmtDur(totalSecs)} total | avg ${avgSecs.toFixed(1)}s/shiur (n=${perShiurSecs.length})`);
   if (avgSecs > 0) console.log(`  projected:    ~${fmtDur(avgSecs * ingestable.length)} for all ${ingestable.length} ingestable at this rate`);
   console.log(`  backup:       ${backup}`);

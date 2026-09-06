@@ -49,6 +49,7 @@ async function main() {
   const added = num('added');
   const flagged = num('flagged');
   const failed = num('failed');
+  const gaveUp = num('gave up on');
 
   if (added === 0 && flagged === 0 && failed === 0) {
     console.log('Nothing new this run — skipping summary email.');
@@ -58,12 +59,14 @@ async function main() {
   const parts = [`${added} added`];
   if (flagged) parts.push(`${flagged} flagged`);
   if (failed) parts.push(`${failed} failed`);
+  if (gaveUp) parts.push(`${gaveUp} gave up`);
 
   const html = `
     <h2>Rabbi Schneeweiss YUTorah sync</h2>
     <pre style="white-space:pre-wrap;background:#f5f5f5;padding:8px;">${escapeHtml(summary)}</pre>
     ${flagged ? `<p><strong>Action needed:</strong> ${flagged} shiur(s) need manual categorization — add entries to <code>SHIUR_OVERRIDES</code> in <code>scripts/migrate-schneeweiss.js</code>. They'll stay flagged (and get re-flagged in this summary) until that's done.</p>` : ''}
     ${failed ? `<p>See <code>scripts/migrate-failures.json</code> in the repo for failure details.</p>` : ''}
+    ${gaveUp ? `<p><strong>${gaveUp} shiur(s) gave up after repeated failures</strong> and will no longer auto-retry (likely a broken/empty source file on YUTorah's end) — check <code>scripts/migrate-failures.json</code> for the "skipped" entries and use <code>--retry-failures</code> to force a retry once the source is fixed.</p>` : ''}
   `;
 
   await send(`[Schneeweiss Sync] ${parts.join(', ')}`, html);

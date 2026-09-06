@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
-import Link from 'next/link'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase-browser'
 import { normalizeRabbi } from '@/lib/rabbi-normalization'
@@ -24,35 +23,50 @@ const OVERRIDE_CHUNK = 200
 
 type OverrideMap = Record<string, string>
 
-// ─── Sub-tab bar ─────────────────────────────────────────────────────────────
-// Rendered flush against the top of <main>, styled to read as a continuation of
-// the white header — i.e. "a bar that appears under the TTL tab". Sticky so it
-// stays reachable while scrolling a several-hundred-item section.
+// ─── Section switcher ────────────────────────────────────────────────────────
+// Sits where "Recently Given" sits on the other tabs. Wraps rather than
+// scrolls, so all five sections are always reachable without a scrollbar:
+// one row on desktop, two on a phone.
 
-function SectionTabs({ active }: { active: TtlSectionKey }) {
+function SectionTabs({
+  active,
+  counts,
+  onSelect,
+}: {
+  active: TtlSectionKey
+  counts: Partial<Record<TtlSectionKey, number>>
+  onSelect: (key: TtlSectionKey) => void
+}) {
   return (
-    <div className="sticky top-0 z-10 bg-white border-b border-stone-200">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="flex gap-1 overflow-x-auto" role="tablist" aria-label="TTL sections">
-          {TTL_SECTIONS.map(section => {
-            const isActive = section.key === active
-            return (
-              <Link
-                key={section.key}
-                href={`/ttl?section=${section.key}`}
-                role="tab"
-                aria-selected={isActive}
-                scroll={false}
-                className={`px-3 py-2.5 text-sm font-medium whitespace-nowrap border-b-2 -mb-px transition-colors
-                  ${isActive
-                    ? 'border-emerald-700 text-emerald-800'
-                    : 'border-transparent text-stone-500 hover:text-stone-800'}`}
+    <div className="mb-5 rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-stone-50 p-1.5">
+      <div className="flex flex-wrap gap-1" role="tablist" aria-label="TTL sections">
+        {TTL_SECTIONS.map(section => {
+          const isActive = section.key === active
+          const count = counts[section.key]
+          return (
+            <button
+              key={section.key}
+              role="tab"
+              aria-selected={isActive}
+              onClick={() => onSelect(section.key)}
+              className={`flex-1 min-w-[6rem] rounded-xl px-3 py-2 text-left transition-all
+                ${isActive
+                  ? 'bg-white shadow-sm ring-1 ring-emerald-200'
+                  : 'hover:bg-white/70'}`}
+            >
+              <span className={`block text-sm font-semibold leading-tight
+                ${isActive ? 'text-emerald-800' : 'text-stone-600'}`}
               >
                 {section.label}
-              </Link>
-            )
-          })}
-        </div>
+              </span>
+              <span className={`block text-xs tabular-nums mt-0.5
+                ${isActive ? 'text-emerald-600' : 'text-stone-400'}`}
+              >
+                {count === undefined ? ' ' : count.toLocaleString()}
+              </span>
+            </button>
+          )
+        })}
       </div>
     </div>
   )
@@ -60,28 +74,33 @@ function SectionTabs({ active }: { active: TtlSectionKey }) {
 
 // ─── Skeleton ────────────────────────────────────────────────────────────────
 
-export function LoadingSkeleton() {
+export function SectionSkeleton() {
   return (
-    <div>
-      <SectionTabs active={DEFAULT_TTL_SECTION} />
-      <div className="px-4 py-6 sm:p-8 max-w-4xl mx-auto">
-        <div className="h-9 w-48 bg-stone-100 rounded-lg animate-pulse mb-6" />
-        <div className="space-y-2">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="h-16 bg-white border border-stone-100 rounded-xl animate-pulse" />
-          ))}
-        </div>
+    <section>
+      <h2 className="text-lg font-semibold text-stone-700 mb-4">TTL Shiurim</h2>
+      <SectionTabs active={DEFAULT_TTL_SECTION} counts={{}} onSelect={() => {}} />
+      <div className="space-y-2">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="h-16 bg-white border border-stone-100 rounded-xl animate-pulse" />
+        ))}
       </div>
-    </div>
+    </section>
   )
 }
 
-// ─── Page ────────────────────────────────────────────────────────────────────
+// ─── Browser ─────────────────────────────────────────────────────────────────
 
-export default function TtlClient() {
+export default function TtlClient({ userId }: { userId?: string | null }) {
   const searchParams = useSearchParams()
-  const sectionParam = searchParams.get('section')
-  const section: TtlSectionKey = isTtlSection(sectionParam) ? sectionParam : DEFAULT_TTL_SECTION
+  const initialSection = searchParams.get('section')
+
+  // Section lives in component state, mirrored into the URL with history.
+  // pushState rather than a router navigation: ttl.json already holds every
+  // section, so switching is instant and a server round trip would only add
+  // latency. The URL stays shareable and the back button still works.
+  const [section, setSection] = useState<TtlSectionKey>(
+    isTtlSection(initialSection) ? initialSection : DEFAULT_TTL_SECTION
+  )
 
   const [data, setData] = useState<TtlData | null>(null)
   const [failed, setFailed] = useState(false)
@@ -89,9 +108,27 @@ export default function TtlClient() {
   const [selectedRabbis, setSelectedRabbis] = useState<string[]>([])
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
-  // ttl.json holds every section, so this is fetched once and switching
-  // sub-tabs is instant. The service worker already stale-while-revalidates
-  // everything under /lectures-data/.
+  const selectSection = useCallback((key: TtlSectionKey) => {
+    setSection(key)
+    setSelectedRabbis([])
+    setVisibleCount(PAGE_SIZE)
+    window.history.pushState(null, '', `/ttl?section=${key}`)
+  }, [])
+
+  // Keep the browser's back/forward buttons in step with the pushed entries.
+  useEffect(() => {
+    function onPopState() {
+      const key = new URLSearchParams(window.location.search).get('section')
+      setSection(isTtlSection(key) ? key : DEFAULT_TTL_SECTION)
+      setSelectedRabbis([])
+      setVisibleCount(PAGE_SIZE)
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [])
+
+  // ttl.json holds every section, so this is fetched once. The service worker
+  // already stale-while-revalidates everything under /lectures-data/.
   useEffect(() => {
     let cancelled = false
     fetch('/lectures-data/ttl.json')
@@ -104,7 +141,7 @@ export default function TtlClient() {
     return () => { cancelled = true }
   }, [])
 
-  // Corrected rabbi names, fetched once for the whole pool so sub-tab switches
+  // Corrected rabbi names, fetched once for the whole pool so section switches
   // need no refetch. Same table/shape as RecentlyGiven and LecturesClient.
   useEffect(() => {
     if (!data) return
@@ -135,12 +172,12 @@ export default function TtlClient() {
     return () => { cancelled = true }
   }, [data])
 
-  // Reset paging + rabbi filter when the visitor switches section — the rabbi
-  // options are section-scoped, so a carried-over selection could match nothing.
-  useEffect(() => {
-    setSelectedRabbis([])
-    setVisibleCount(PAGE_SIZE)
-  }, [section])
+  const counts = useMemo(() => {
+    if (!data) return {}
+    return Object.fromEntries(
+      Object.entries(data.sections).map(([key, list]) => [key, list.length])
+    ) as Partial<Record<TtlSectionKey, number>>
+  }, [data])
 
   const sectionLectures: TtlLecture[] = useMemo(
     () => data?.sections[section] ?? [],
@@ -151,13 +188,13 @@ export default function TtlClient() {
 
   // Only rabbis who actually have shiurim in *this* section, most first.
   const rabbiOptions = useMemo(() => {
-    const counts = new Map<string, number>()
+    const tally = new Map<string, number>()
     for (const l of sectionLectures) {
       const speaker = effectiveSpeaker(l)
       if (!speaker) continue
-      counts.set(speaker, (counts.get(speaker) ?? 0) + 1)
+      tally.set(speaker, (tally.get(speaker) ?? 0) + 1)
     }
-    return Array.from(counts.entries())
+    return Array.from(tally.entries())
       .sort((a, b) => b[1] - a[1])
       .map(([speaker]) => speaker)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -174,76 +211,73 @@ export default function TtlClient() {
     setVisibleCount(PAGE_SIZE)
   }
 
+  if (!data && !failed) return <SectionSkeleton />
+
   const label = TTL_SECTIONS.find(s => s.key === section)!.label
-
-  if (!data && !failed) return <LoadingSkeleton />
-
   const visibleLectures = filteredLectures.slice(0, visibleCount)
   const hasMore = visibleCount < filteredLectures.length
 
   return (
-    <div>
-      <SectionTabs active={section} />
+    <section>
+      <h2 className="text-lg font-semibold text-stone-700 mb-4">TTL Shiurim</h2>
 
-      <div className="px-4 py-6 sm:p-8 max-w-4xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-stone-900">{label}</h1>
-          <p className="text-stone-400 text-sm mt-1">
-            {filteredLectures.length.toLocaleString()} shiur{filteredLectures.length !== 1 ? 'im' : ''}
-            {selectedRabbis.length > 0 && ` of ${sectionLectures.length.toLocaleString()}`}
-            {' · ordered by shiur number'}
-          </p>
-        </div>
+      <SectionTabs active={section} counts={counts} onSelect={selectSection} />
 
-        {failed ? (
-          <p className="text-sm text-stone-400 py-4">
-            Couldn&apos;t load the TTL shiurim. Please refresh to try again.
-          </p>
-        ) : (
-          <>
-            {rabbiOptions.length > 1 && (
-              <div className="flex items-center gap-2 mb-4">
-                <MultiSelectFilter
-                  emptyLabel="Rabbi"
-                  pluralNoun="rabbis"
-                  allLabel="All rabbis"
-                  options={rabbiOptions}
-                  selected={selectedRabbis}
-                  onChange={handleRabbiChange}
+      {failed ? (
+        <p className="text-sm text-stone-400 py-4">
+          Couldn&apos;t load the TTL shiurim. Please refresh to try again.
+        </p>
+      ) : (
+        <>
+          <div className="flex items-center justify-between gap-3 mb-4">
+            {rabbiOptions.length > 1 ? (
+              <MultiSelectFilter
+                emptyLabel="Rabbi"
+                pluralNoun="rabbis"
+                allLabel="All rabbis"
+                options={rabbiOptions}
+                selected={selectedRabbis}
+                onChange={handleRabbiChange}
+              />
+            ) : <span />}
+            <span className="shrink-0 text-xs text-stone-400">
+              {selectedRabbis.length > 0
+                ? `${filteredLectures.length.toLocaleString()} of ${sectionLectures.length.toLocaleString()}`
+                : `${sectionLectures.length.toLocaleString()} shiurim`}
+              {' · by shiur number'}
+            </span>
+          </div>
+
+          {filteredLectures.length === 0 ? (
+            <p className="text-sm text-stone-400 py-4">
+              {selectedRabbis.length > 0
+                ? `No shiurim by ${selectedRabbis.join(' or ')} in ${label}.`
+                : `No shiurim in ${label} yet.`}
+            </p>
+          ) : (
+            <div className="space-y-2">
+              {visibleLectures.map(lec => (
+                <LectureCard
+                  key={lec.id}
+                  lecture={lec}
+                  index={lec.ttlNumber}
+                  speakerOverride={overrideMap[lec.id]}
+                  userId={userId}
                 />
-              </div>
-            )}
+              ))}
+            </div>
+          )}
 
-            {filteredLectures.length === 0 ? (
-              <p className="text-sm text-stone-400 py-4">
-                {selectedRabbis.length > 0
-                  ? `No shiurim by ${selectedRabbis.join(' or ')} in ${label}.`
-                  : `No shiurim in ${label} yet.`}
-              </p>
-            ) : (
-              <div className="space-y-2">
-                {visibleLectures.map(lec => (
-                  <LectureCard
-                    key={lec.id}
-                    lecture={lec}
-                    index={lec.ttlNumber}
-                    speakerOverride={overrideMap[lec.id]}
-                  />
-                ))}
-              </div>
-            )}
-
-            {hasMore && (
-              <button
-                onClick={() => setVisibleCount(c => Math.min(c + PAGE_SIZE, filteredLectures.length))}
-                className="mt-4 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors"
-              >
-                View More
-              </button>
-            )}
-          </>
-        )}
-      </div>
-    </div>
+          {hasMore && (
+            <button
+              onClick={() => setVisibleCount(c => Math.min(c + PAGE_SIZE, filteredLectures.length))}
+              className="mt-4 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors"
+            >
+              View More
+            </button>
+          )}
+        </>
+      )}
+    </section>
   )
 }

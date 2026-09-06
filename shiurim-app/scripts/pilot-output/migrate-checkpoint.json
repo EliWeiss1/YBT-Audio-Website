@@ -6200,8 +6200,9 @@
   },
   "1152159": {
     "status": "failed",
-    "stage": "unknown",
-    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152159.mp3",
+    "stage": "probe",
+    "error": "unreadable/no audio stream in source file (likely corrupt or empty at the source): Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152159.mp3",
+    "attempts": 1,
     "placements": [
       "discussion-qa",
       "kisvei-rishonim-rambam-general"
@@ -6222,8 +6223,9 @@
   },
   "1152179": {
     "status": "failed",
-    "stage": "unknown",
-    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152179.mp3",
+    "stage": "probe",
+    "error": "unreadable/no audio stream in source file (likely corrupt or empty at the source): Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152179.mp3",
+    "attempts": 1,
     "placements": [
       "discussion-qa",
       "halacha-death-burial"
@@ -6231,8 +6233,9 @@
   },
   "1152180": {
     "status": "failed",
-    "stage": "unknown",
-    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152180.mp3",
+    "stage": "probe",
+    "error": "unreadable/no audio stream in source file (likely corrupt or empty at the source): Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152180.mp3",
+    "attempts": 1,
     "placements": [
       "discussion-qa",
       "halacha-torah"
@@ -6240,8 +6243,9 @@
   },
   "1152186": {
     "status": "failed",
-    "stage": "unknown",
-    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152186.mp3",
+    "stage": "probe",
+    "error": "unreadable/no audio stream in source file (likely corrupt or empty at the source): Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152186.mp3",
+    "attempts": 1,
     "placements": [
       "discussion-qa",
       "halacha-torah"
@@ -6249,8 +6253,9 @@
   },
   "1152187": {
     "status": "failed",
-    "stage": "unknown",
-    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152187.mp3",
+    "stage": "probe",
+    "error": "unreadable/no audio stream in source file (likely corrupt or empty at the source): Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152187.mp3",
+    "attempts": 1,
     "placements": [
       "discussion-qa",
       "halacha-torah"
@@ -6258,8 +6263,9 @@
   },
   "1152188": {
     "status": "failed",
-    "stage": "unknown",
-    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152188.mp3",
+    "stage": "probe",
+    "error": "unreadable/no audio stream in source file (likely corrupt or empty at the source): Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152188.mp3",
+    "attempts": 1,
     "placements": [
       "discussion-qa",
       "halacha-torah"
@@ -6267,8 +6273,9 @@
   },
   "1152189": {
     "status": "failed",
-    "stage": "unknown",
-    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152189.mp3",
+    "stage": "probe",
+    "error": "unreadable/no audio stream in source file (likely corrupt or empty at the source): Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152189.mp3",
+    "attempts": 1,
     "placements": [
       "discussion-qa",
       "halacha-tzedakah"
@@ -6289,8 +6296,9 @@
   },
   "1152198": {
     "status": "failed",
-    "stage": "unknown",
-    "error": "Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152198.mp3",
+    "stage": "probe",
+    "error": "unreadable/no audio stream in source file (likely corrupt or empty at the source): Command failed: ffprobe -v quiet -print_format json -show_format -show_streams scripts/pilot-output/migrate-media/1152198.mp3",
+    "attempts": 1,
     "placements": [
       "discussion-qa",
       "halacha-torah"

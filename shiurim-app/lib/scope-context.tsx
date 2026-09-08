@@ -1,11 +1,14 @@
 'use client'
 
-// Homepage-only "which recently-given list am I looking at" preference,
+// The homepage's "which recently-given list am I looking at" preference,
 // surfaced as two of the three tabs in components/layout/ScopeTabs.tsx (the
-// third, TTL, is just a link to its own page — see below).
+// third, TTL, is just a link to its own page — see below). The tab bar itself
+// is visible on every page (LayoutShell), but this state only ever changes
+// what the homepage renders.
 //
 //   'yeshiva' — shiurim recorded in yeshiva, i.e. the INGEST- ids written by
-//               the live email/Zoom pipeline (lib/ingest/types.ts).
+//               the live email/Zoom pipeline (lib/ingest/types.ts), plus any
+//               lecture explicitly flagged inYeshiva (lib/lecture-utils.ts).
 //   'all'     — everything, the site's original behaviour.
 //
 // This deliberately isn't a site-wide "library" concept. TTL browsing lives
@@ -17,9 +20,8 @@
 // Keeping the persisted state's domain limited to the two homepage lists is
 // what makes that class of bug impossible now.
 //
-// Only used on the homepage — the tab bar itself only renders there too (see
-// LayoutShell), so search, the sidebar tree, /lectures node pages and
-// /rabbi/[name] all stay unaffected regardless.
+// Search, the sidebar tree, /lectures node pages and /rabbi/[name] all stay
+// unaffected regardless of scope.
 
 import { createContext, useContext, useEffect, useState } from 'react'
 

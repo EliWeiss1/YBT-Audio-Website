@@ -13,10 +13,9 @@ const TABS: { key: 'ttl' | Scope; label: string; short: string; href: string }[]
   { key: 'all',     label: 'All Community Shiurim', short: 'All',        href: '/' },
 ]
 
-/** The three library tabs. Only rendered on the homepage by LayoutShell —
- *  they set/reflect a homepage preference, so they'd have nothing meaningful
- *  to highlight anywhere else. Rendered twice there: inline in the header row
- *  on desktop, and as a compact second row on mobile. */
+/** The three library tabs, visible on every page. Rendered twice by
+ *  LayoutShell: inline in the header row on desktop, and as a compact second
+ *  row on mobile. */
 export default function ScopeTabs({ compact = false }: { compact?: boolean }) {
   const { scope, setScope } = useScope()
   const pathname = usePathname()
@@ -29,7 +28,12 @@ export default function ScopeTabs({ compact = false }: { compact?: boolean }) {
         ${compact ? 'w-full' : ''}`}
     >
       {TABS.map(tab => {
-        const active = tab.key === 'ttl' ? pathname === '/ttl' : scope === tab.key
+        // TTL is active exactly on /ttl. Yeshiva/All reflect the homepage
+        // preference, but only actually mean anything ON the homepage — on
+        // any other page (e.g. /ttl) neither should light up alongside TTL.
+        const active = tab.key === 'ttl'
+          ? pathname === '/ttl'
+          : pathname === '/' && scope === tab.key
         return (
           <Link
             key={tab.key}

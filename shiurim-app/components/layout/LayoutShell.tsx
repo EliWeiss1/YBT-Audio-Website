@@ -23,10 +23,6 @@ export default function LayoutShell({
   const [user, setUser] = useState<User | null>(initialUser)
   const pathname = usePathname()
   const router = useRouter()
-  // The library tabs set/reflect a homepage-only preference (lib/scope-context.tsx)
-  // — anywhere else they'd have nothing of their own to highlight, so they're
-  // simply not shown rather than shown-but-meaningless.
-  const showScopeTabs = pathname === '/'
 
   useEffect(() => { setSidebarOpen(false) }, [pathname])
 
@@ -115,14 +111,12 @@ export default function LayoutShell({
               </div>
             )}
 
-            {/* Library tabs — homepage only, desktop only; the mobile copy is
-                the row below. NavSearch keeps its own `ml-auto`, which is what
-                leaves a wide gap between the tabs and the search box. */}
-            {showScopeTabs && (
-              <div className="hidden md:flex">
-                <ScopeTabs />
-              </div>
-            )}
+            {/* Library tabs — visible on every page, desktop only; the mobile
+                copy is the row below. NavSearch keeps its own `ml-auto`, which
+                is what leaves a wide gap between the tabs and the search box. */}
+            <div className="hidden md:flex">
+              <ScopeTabs />
+            </div>
 
             {/* NavSearch: desktop = centered bar, mobile = icon / expanded */}
             <NavSearch onMobileSearchChange={setMobileSearchActive} />
@@ -135,9 +129,8 @@ export default function LayoutShell({
             )}
           </div>
 
-          {/* Library tabs — homepage only, mobile second row, yielded to the
-              expanded search */}
-          {showScopeTabs && !mobileSearchActive && (
+          {/* Library tabs — mobile second row, yielded to the expanded search */}
+          {!mobileSearchActive && (
             <div className="md:hidden px-4 pb-2">
               <ScopeTabs compact />
             </div>

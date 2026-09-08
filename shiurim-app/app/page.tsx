@@ -19,11 +19,13 @@ export default async function HomePage() {
 
   // Both pools are sent down so the "Shiurim in Yeshiva" / "All Community
   // Shiurim" tabs (lib/scope-context.tsx) can switch without a server round
-  // trip. The yeshiva pool is the live email/Zoom pipeline's INGEST- ids only —
-  // deliberately not MASORET- (Google Drive sync) or anything else.
+  // trip. "In yeshiva" is either the live email/Zoom pipeline's INGEST- ids,
+  // or a shiur explicitly flagged inYeshiva (currently: Rabbi Schneeweiss's
+  // Mishlei/Tehilim shiurim — see scripts/ingest-shiur.js) — deliberately not
+  // MASORET- (Google Drive sync) or anything else.
   const recentPools = {
     all: dated.slice(0, 200),
-    yeshiva: dated.filter(l => l.id.startsWith('INGEST-')).slice(0, 200),
+    yeshiva: dated.filter(l => l.id.startsWith('INGEST-') || l.inYeshiva).slice(0, 200),
   }
 
   return (

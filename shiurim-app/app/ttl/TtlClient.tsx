@@ -17,6 +17,10 @@ import MultiSelectFilter from '@/components/lectures/MultiSelectFilter'
 
 const PAGE_SIZE = 25
 
+/** A rabbi only shows up in a section's filter dropdown once they have this
+ *  many shiurim there. */
+const MIN_RABBI_COUNT = 5
+
 /** Supabase `.in()` builds a GET query string, so the whole TTL pool (~1,150
  *  ids) has to go over in batches or the URL blows past the server's limit. */
 const OVERRIDE_CHUNK = 200
@@ -186,7 +190,10 @@ export default function TtlClient({ userId }: { userId?: string | null }) {
 
   const effectiveSpeaker = (l: TtlLecture) => overrideMap[l.id] ?? normalizeRabbi(l.speaker)
 
-  // Only rabbis who actually have shiurim in *this* section, most first.
+  // Only rabbis with at least MIN_RABBI_COUNT shiurim in *this* section, most
+  // first — below that a rabbi's few shiurim are easy enough to spot in the
+  // unfiltered list, and the dropdown stays focused on who the section is
+  // really organized around.
   const rabbiOptions = useMemo(() => {
     const tally = new Map<string, number>()
     for (const l of sectionLectures) {
@@ -195,6 +202,7 @@ export default function TtlClient({ userId }: { userId?: string | null }) {
       tally.set(speaker, (tally.get(speaker) ?? 0) + 1)
     }
     return Array.from(tally.entries())
+      .filter(([, count]) => count >= MIN_RABBI_COUNT)
       .sort((a, b) => b[1] - a[1])
       .map(([speaker]) => speaker)
     // eslint-disable-next-line react-hooks/exhaustive-deps

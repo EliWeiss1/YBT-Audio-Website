@@ -13,6 +13,14 @@ export type Lecture = {
   date: string
   tags: string[]
   pdfUrl?: string
+  /** True when this shiur was actually delivered in yeshiva, for shiurim whose
+   *  id doesn't already say so (the live email/Zoom pipeline's INGEST- ids are
+   *  self-evident and don't need this). Currently set by the Schneeweiss
+   *  ingest for Mishlei/Tehilim shiurim — see scripts/ingest-shiur.js — and
+   *  read by the homepage's "Shiurim in Yeshiva" tab (app/page.tsx). Not a
+   *  general-purpose flag: absent/false means "not known to be", not "given
+   *  elsewhere". */
+  inYeshiva?: boolean
 }
 
 // A TreeNode is either:

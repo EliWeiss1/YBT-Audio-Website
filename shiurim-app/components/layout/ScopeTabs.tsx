@@ -1,26 +1,25 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useScope, type Scope } from '@/lib/scope-context'
 
-const TABS: { scope: Scope; label: string; short: string; href: string }[] = [
-  { scope: 'ttl',     label: 'TTL',                   short: 'TTL',        href: '/ttl' },
-  { scope: 'yeshiva', label: 'Shiurim in Yeshiva',    short: 'In Yeshiva', href: '/' },
-  { scope: 'all',     label: 'All Community Shiurim', short: 'All',        href: '/' },
+/** TTL is a plain link to its own page — it carries no persisted scope state,
+ *  see lib/scope-context.tsx. The other two set the homepage's "Recently
+ *  Given" preference and link to the homepage. */
+const TABS: { key: 'ttl' | Scope; label: string; short: string; href: string }[] = [
+  { key: 'ttl',     label: 'TTL',                   short: 'TTL',        href: '/ttl' },
+  { key: 'yeshiva', label: 'Shiurim in Yeshiva',    short: 'In Yeshiva', href: '/' },
+  { key: 'all',     label: 'All Community Shiurim', short: 'All',        href: '/' },
 ]
 
-/** The three library tabs pinned to the top bar. Rendered twice by LayoutShell:
- *  inline in the header row on desktop, and as a compact second row on mobile.
- *  A click both records the preference and navigates, so the tab always shows
- *  the visitor something rather than silently changing a setting. */
+/** The three library tabs. Only rendered on the homepage by LayoutShell —
+ *  they set/reflect a homepage preference, so they'd have nothing meaningful
+ *  to highlight anywhere else. Rendered twice there: inline in the header row
+ *  on desktop, and as a compact second row on mobile. */
 export default function ScopeTabs({ compact = false }: { compact?: boolean }) {
   const { scope, setScope } = useScope()
-  const router = useRouter()
-
-  function handleClick(tab: (typeof TABS)[number]) {
-    setScope(tab.scope)
-    router.push(tab.href)
-  }
+  const pathname = usePathname()
 
   return (
     <div
@@ -30,21 +29,22 @@ export default function ScopeTabs({ compact = false }: { compact?: boolean }) {
         ${compact ? 'w-full' : ''}`}
     >
       {TABS.map(tab => {
-        const active = scope === tab.scope
+        const active = tab.key === 'ttl' ? pathname === '/ttl' : scope === tab.key
         return (
-          <button
-            key={tab.scope}
+          <Link
+            key={tab.key}
+            href={tab.href}
             role="tab"
             aria-selected={active}
-            onClick={() => handleClick(tab)}
-            className={`rounded-md font-medium whitespace-nowrap transition-colors
+            onClick={() => { if (tab.key !== 'ttl') setScope(tab.key) }}
+            className={`rounded-md font-medium whitespace-nowrap transition-colors text-center
               ${compact ? 'flex-1 px-2 py-1.5 text-xs' : 'px-3 py-1.5 text-xs'}
               ${active
                 ? 'bg-emerald-700 text-white shadow-sm'
                 : 'text-stone-500 hover:text-stone-800 hover:bg-white'}`}
           >
             {compact ? tab.short : tab.label}
-          </button>
+          </Link>
         )
       })}
     </div>

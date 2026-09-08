@@ -34,8 +34,6 @@ export default function RecentlyGiven({
   folderOrder: string[]
 }) {
   const { scope } = useScope()
-  // 'ttl' has its own page (/ttl) and never renders this, but fall back to the
-  // full pool rather than showing nothing if it somehow lands here.
   const inYeshiva = scope === 'yeshiva'
   const lectures = inYeshiva ? pools.yeshiva : pools.all
 

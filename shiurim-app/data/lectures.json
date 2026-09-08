@@ -104387,7 +104387,8 @@
               "date": "2026-09-03",
               "tags": [
                 "Mishlei"
-              ]
+              ],
+              "inYeshiva": true
             },
             {
               "id": "YBT-1187427",
@@ -104399,7 +104400,8 @@
               "date": "2026-09-04",
               "tags": [
                 "Mishlei"
-              ]
+              ],
+              "inYeshiva": true
             },
             {
               "id": "YBT-1141561",
@@ -116705,7 +116707,8 @@
               "date": "2026-09-02",
               "tags": [
                 "Tehillim"
-              ]
+              ],
+              "inYeshiva": true
             },
             {
               "id": "YBT-1147549",

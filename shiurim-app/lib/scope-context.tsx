@@ -1,22 +1,29 @@
 'use client'
 
-// Site-wide "which library am I looking at" selector, surfaced as the three
-// tabs in the top bar (components/layout/ScopeTabs.tsx).
+// Homepage-only "which recently-given list am I looking at" preference,
+// surfaced as two of the three tabs in components/layout/ScopeTabs.tsx (the
+// third, TTL, is just a link to its own page — see below).
 //
-//   'ttl'     — the hand-numbered TTL back-catalogue (D-/C-/N-/HL-/BN- ids),
-//               browsed on its own /ttl page.
 //   'yeshiva' — shiurim recorded in yeshiva, i.e. the INGEST- ids written by
 //               the live email/Zoom pipeline (lib/ingest/types.ts).
 //   'all'     — everything, the site's original behaviour.
 //
-// The scope deliberately only governs the homepage's "Recently Given" list and
-// which page a tab click routes to. Search, the sidebar tree, /lectures node
-// pages and /rabbi/[name] all stay unscoped.
+// This deliberately isn't a site-wide "library" concept. TTL browsing lives
+// entirely at its own URL (/ttl) with no persisted state of its own — which
+// tab is highlighted there is derived straight from the pathname, not stored.
+// Earlier this type included a third 'ttl' member that got persisted to
+// localStorage on every /ttl visit, which then wrongly won the tab highlight
+// back on the homepage (nothing on '/' could ever legitimately be 'ttl').
+// Keeping the persisted state's domain limited to the two homepage lists is
+// what makes that class of bug impossible now.
+//
+// Only used on the homepage — the tab bar itself only renders there too (see
+// LayoutShell), so search, the sidebar tree, /lectures node pages and
+// /rabbi/[name] all stay unaffected regardless.
 
 import { createContext, useContext, useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
 
-export type Scope = 'ttl' | 'yeshiva' | 'all'
+export type Scope = 'yeshiva' | 'all'
 
 const STORAGE_KEY = 'ybt:scope'
 
@@ -33,7 +40,7 @@ const STORAGE_KEY = 'ybt:scope'
 export const DEFAULT_SCOPE: Scope = 'yeshiva'
 
 function isScope(v: unknown): v is Scope {
-  return v === 'ttl' || v === 'yeshiva' || v === 'all'
+  return v === 'yeshiva' || v === 'all'
 }
 
 type ScopeContextValue = {
@@ -48,15 +55,6 @@ const ScopeContext = createContext<ScopeContextValue>({
 
 export function ScopeProvider({ children }: { children: React.ReactNode }) {
   const [scope, setScopeState] = useState<Scope>(DEFAULT_SCOPE)
-  const pathname = usePathname()
-
-  function persist(next: Scope) {
-    try {
-      window.localStorage.setItem(STORAGE_KEY, next)
-    } catch {
-      // Preference just won't persist; the tab still switches for this session.
-    }
-  }
 
   // Plain (passive) effect on purpose: LayoutShell documents an effect-ordering
   // dependency in this subtree, so nothing here may run at layout time.
@@ -69,21 +67,13 @@ export function ScopeProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  // /ttl is the TTL tab's own page, so arriving there by any route — a shared
-  // link, a refresh, the back button — means the visitor is in the TTL library.
-  // Without this the tab strip would keep highlighting whatever was stored,
-  // which reads as a broken selection. Runs after the restore effect above, so
-  // it wins on a direct load of /ttl.
-  useEffect(() => {
-    if (pathname === '/ttl') {
-      setScopeState(prev => (prev === 'ttl' ? prev : 'ttl'))
-      persist('ttl')
-    }
-  }, [pathname])
-
   function setScope(next: Scope) {
     setScopeState(next)
-    persist(next)
+    try {
+      window.localStorage.setItem(STORAGE_KEY, next)
+    } catch {
+      // Preference just won't persist; the tab still switches for this session.
+    }
   }
 
   return (

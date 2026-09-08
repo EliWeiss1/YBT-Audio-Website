@@ -74,20 +74,21 @@ create index comments_created_at_idx on public.comments(created_at desc);
 -- Profiles: anyone can read, only you can update yours
 alter table public.profiles enable row level security;
 create policy "Profiles are viewable by everyone" on public.profiles for select using (true);
-create policy "Users can update their own profile" on public.profiles for update using (auth.uid() = id);
+create policy "Users can update their own profile" on public.profiles for update using ((select auth.uid()) = id);
 
 -- Progress: private per user
 alter table public.progress enable row level security;
-create policy "Users can view their own progress" on public.progress for select using (auth.uid() = user_id);
-create policy "Users can insert their own progress" on public.progress for insert with check (auth.uid() = user_id);
-create policy "Users can update their own progress" on public.progress for update using (auth.uid() = user_id);
+create policy "Users can view their own progress" on public.progress for select using ((select auth.uid()) = user_id);
+create policy "Users can insert their own progress" on public.progress for insert with check ((select auth.uid()) = user_id);
+create policy "Users can update their own progress" on public.progress for update using ((select auth.uid()) = user_id);
+create policy "Users can delete their own progress" on public.progress for delete using ((select auth.uid()) = user_id);
 
 -- Comments: anyone can read, logged-in users can post, only author can edit/delete
 alter table public.comments enable row level security;
 create policy "Comments are viewable by everyone" on public.comments for select using (true);
-create policy "Logged-in users can post comments" on public.comments for insert with check (auth.uid() = user_id);
-create policy "Users can update their own comments" on public.comments for update using (auth.uid() = user_id);
-create policy "Users can delete their own comments" on public.comments for delete using (auth.uid() = user_id);
+create policy "Logged-in users can post comments" on public.comments for insert with check ((select auth.uid()) = user_id);
+create policy "Users can update their own comments" on public.comments for update using ((select auth.uid()) = user_id);
+create policy "Users can delete their own comments" on public.comments for delete using ((select auth.uid()) = user_id);
 
 -- ============================================
 -- HELPFUL VIEW: Feed with lecture + user info
@@ -126,9 +127,9 @@ alter table public.lecture_descriptions enable row level security;
 create policy "Descriptions are viewable by everyone"
   on public.lecture_descriptions for select using (true);
 create policy "Logged-in users can insert descriptions"
-  on public.lecture_descriptions for insert with check (auth.uid() is not null);
+  on public.lecture_descriptions for insert with check ((select auth.uid()) is not null);
 create policy "Logged-in users can update descriptions"
-  on public.lecture_descriptions for update using (auth.uid() is not null);
+  on public.lecture_descriptions for update using ((select auth.uid()) is not null);
 
 -- ============================================
 -- SPEAKER OVERRIDES
@@ -148,9 +149,9 @@ alter table public.speaker_overrides enable row level security;
 create policy "Speaker overrides are viewable by everyone"
   on public.speaker_overrides for select using (true);
 create policy "Logged-in users can insert speaker overrides"
-  on public.speaker_overrides for insert with check (auth.uid() is not null);
+  on public.speaker_overrides for insert with check ((select auth.uid()) is not null);
 create policy "Logged-in users can update speaker overrides"
-  on public.speaker_overrides for update using (auth.uid() is not null);
+  on public.speaker_overrides for update using ((select auth.uid()) is not null);
 
 -- ============================================
 -- ZOOM OAUTH TOKENS

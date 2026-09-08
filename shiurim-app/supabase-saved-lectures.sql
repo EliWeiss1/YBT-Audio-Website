@@ -13,13 +13,13 @@ create table public.saved_lectures (
 alter table public.saved_lectures enable row level security;
 
 create policy "Users can view their own saved lectures"
-  on public.saved_lectures for select using (auth.uid() = user_id);
+  on public.saved_lectures for select using ((select auth.uid()) = user_id);
 
 create policy "Users can save lectures"
-  on public.saved_lectures for insert with check (auth.uid() = user_id);
+  on public.saved_lectures for insert with check ((select auth.uid()) = user_id);
 
 create policy "Users can unsave lectures"
-  on public.saved_lectures for delete using (auth.uid() = user_id);
+  on public.saved_lectures for delete using ((select auth.uid()) = user_id);
 
 -- Index for fast lookups ordered by recency
 create index saved_lectures_user_saved_at_idx

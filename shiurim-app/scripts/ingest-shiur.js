@@ -186,7 +186,14 @@ async function ingestShiur({ shiurID, placements, tags = [], data, r2, log = () 
   } catch (e) { throw new StageError('verify', e.message); }
 
   // ── 5. insert into every placement node (dedup-by-id) ──
-  const lecture = { id, title, audioUrl, duration, description, speaker: SPEAKER, date, tags };
+  // Rabbi Schneeweiss gives most of his shiurim outside yeshiva, but his
+  // Mishlei and Tehilim series are given in yeshiva — flagged here (rather
+  // than via a distinct id prefix) so the "Shiurim in Yeshiva" homepage tab
+  // can pick them up without a new id scheme, and so the flag can also be set
+  // by hand on already-ingested shiurim. Title-prefix match, same convention
+  // as the real titles ("Mishlei 3:5-6 ...", "Tehilim 81: ...").
+  const inYeshiva = /^(mishlei|tehilim)\b/i.test(title.trim()) || undefined;
+  const lecture = { id, title, audioUrl, duration, description, speaker: SPEAKER, date, tags, ...(inYeshiva ? { inYeshiva } : {}) };
   const insertedInto = [];
   let anyInserted = false;
   try {

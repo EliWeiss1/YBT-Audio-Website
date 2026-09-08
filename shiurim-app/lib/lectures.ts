@@ -5,13 +5,23 @@
 
 import { readFileSync } from 'fs'
 import { join } from 'path'
-import lecturesData from '@/data/lectures.json'
 import type { Lecture, TreeNode, FlatLecture } from '@/lib/lecture-utils'
 
 export type { Lecture, TreeNode, FlatLecture }
 export { formatDuration } from '@/lib/lecture-utils'
 
-export const categories: TreeNode[] = lecturesData.categories as TreeNode[]
+// data/lectures.json is 10MB+. A static top-level import gets parsed on every
+// cold start of every function that imports anything from this module, even
+// ones that only ever call getLectureById/getAllLectures (which work off the
+// much smaller pre-built catalog.json instead). Load it lazily so only the
+// functions that actually need the raw category tree pay that cost.
+let _categories: TreeNode[] | null = null
+export function getCategories(): TreeNode[] {
+  if (_categories) return _categories
+  const raw = readFileSync(join(process.cwd(), 'data', 'lectures.json'), 'utf8')
+  _categories = JSON.parse(raw).categories as TreeNode[]
+  return _categories
+}
 
 // ─── Recursive helpers ────────────────────────────────────────────────────────
 
@@ -50,7 +60,7 @@ export function getAllLectures(): FlatLecture[] {
     _allLectures = JSON.parse(raw) as FlatLecture[]
   } catch {
     const seen = new Set<string>()
-    _allLectures = categories
+    _allLectures = getCategories()
       .flatMap(cat => flattenLectures(cat))
       .filter(l => {
         if (seen.has(l.id)) return false
@@ -69,7 +79,7 @@ export function getLectureById(id: string): FlatLecture | null {
 /** Find the TreeNode at a given path of ids, e.g. ["chumash","bereishit","noach"] */
 export function getNodeByPath(path: string[]): TreeNode | null {
   if (!path.length) return null
-  let node: TreeNode | undefined = categories.find(c => c.id === path[0])
+  let node: TreeNode | undefined = getCategories().find(c => c.id === path[0])
   for (let i = 1; i < path.length; i++) {
     node = node?.children?.find(c => c.id === path[i])
   }
@@ -87,7 +97,7 @@ export function getPathToNode(targetId: string): string[] | null {
     }
     return null
   }
-  for (const cat of categories) {
+  for (const cat of getCategories()) {
     const result = search(cat, [])
     if (result) return result
   }

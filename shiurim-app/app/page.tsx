@@ -1,4 +1,4 @@
-import { categories, getAllLectures } from '@/lib/lectures'
+import { getCategories, getAllLectures } from '@/lib/lectures'
 import { getMyShiurimData } from '@/lib/my-shiurim-server'
 import SiteHero from '@/components/layout/SiteHero'
 import MyShiurim from '@/components/lectures/MyShiurim'
@@ -8,6 +8,7 @@ export default async function HomePage() {
   const { user, progressRows, savedIds, hasAny } = await getMyShiurimData()
 
   const allLectures = getAllLectures()
+  const categories = getCategories()
 
   // "Recently Given" = newest by the shiur's delivery date. Drop entries with
   // no date (can't claim to be recently given); ISO YYYY-MM-DD sorts

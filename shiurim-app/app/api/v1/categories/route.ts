@@ -1,4 +1,4 @@
-import { categories } from '@/lib/lectures'
+import { getCategories } from '@/lib/lectures'
 import type { TreeNode } from '@/lib/lectures'
 import { logApiCall } from '@/lib/api-logger'
 import { NextRequest, NextResponse } from 'next/server'
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
   const start = Date.now()
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null
 
-  const result = categories.map(stripLectures)
+  const result = getCategories().map(stripLectures)
 
   logApiCall({
     endpoint: '/api/v1/categories',

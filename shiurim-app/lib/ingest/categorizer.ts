@@ -89,7 +89,23 @@ Rules:
   )
   const path = parsed.proposed_path
   if (!path.length || !categoryIds.has(path[0])) {
-    // Return low-confidence with the proposed path to force an admin flag
+    // Haiku sometimes drops the top-level category id and returns just the
+    // subcategory id (e.g. ["holidays-rosh-hashana-yom-kippur"] instead of
+    // ["holidays", "holidays-rosh-hashana-yom-kippur"]). That single id is
+    // usually still a real node deeper in the hierarchy — look it up and
+    // reconstruct the full path rather than storing an unplaceable node_path
+    // (mergePendingLectures can only walk from a top-level category, so an
+    // unresolved path silently drops the shiur at build time forever).
+    const recovered = path.length ? findFullPath(folderHierarchy, path[path.length - 1]) : null
+    if (recovered) {
+      return {
+        tier: 2,
+        nodePath: recovered,
+        confidence: parsed.confidence,
+        alternatives: parsed.alternatives ?? [],
+      }
+    }
+    // Genuinely unresolvable — return low-confidence with the proposed path to force an admin flag
     return {
       tier: 2,
       nodePath: parsed.proposed_path,
@@ -104,4 +120,25 @@ Rules:
     confidence: parsed.confidence,
     alternatives: parsed.alternatives ?? [],
   }
+}
+
+type HierarchyNode = { id: string; children?: HierarchyNode[] }
+
+// Depth-first search for `targetId` anywhere in the hierarchy, returning the
+// full id path from its top-level category down to (and including) it.
+function findFullPath(hierarchy: { categories: HierarchyNode[] }, targetId: string): string[] | null {
+  function walk(node: HierarchyNode, path: string[]): string[] | null {
+    const nextPath = [...path, node.id]
+    if (node.id === targetId) return nextPath
+    for (const child of node.children ?? []) {
+      const found = walk(child, nextPath)
+      if (found) return found
+    }
+    return null
+  }
+  for (const category of hierarchy.categories) {
+    const found = walk(category, [])
+    if (found) return found
+  }
+  return null
 }

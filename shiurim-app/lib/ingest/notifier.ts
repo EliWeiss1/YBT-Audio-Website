@@ -148,8 +148,8 @@ export async function sendFallbackMatchNotification(opts: {
     return
   }
   const adminUrl = process.env.NEXT_PUBLIC_APP_URL
-    ? `${process.env.NEXT_PUBLIC_APP_URL}/admin`
-    : '/admin'
+    ? `${process.env.NEXT_PUBLIC_APP_URL}/admin/flags`
+    : '/admin/flags'
   try {
     await resend.emails.send({
       from: fromAddress,
@@ -184,8 +184,8 @@ export async function sendAutoMergeNotification(opts: {
     return
   }
   const adminUrl = process.env.NEXT_PUBLIC_APP_URL
-    ? `${process.env.NEXT_PUBLIC_APP_URL}/admin`
-    : '/admin'
+    ? `${process.env.NEXT_PUBLIC_APP_URL}/admin/flags`
+    : '/admin/flags'
   try {
     await resend.emails.send({
       from: fromAddress,

@@ -8,7 +8,6 @@ import { markAppLoaded } from '@/lib/app-session'
 import Sidebar from './Sidebar'
 import ProfileDrawer from './ProfileDrawer'
 import NavSearch from './NavSearch'
-import ScopeTabs from './ScopeTabs'
 import type { User } from '@supabase/supabase-js'
 
 export default function LayoutShell({
@@ -111,13 +110,6 @@ export default function LayoutShell({
               </div>
             )}
 
-            {/* Library tabs — visible on every page, desktop only; the mobile
-                copy is the row below. NavSearch keeps its own `ml-auto`, which
-                is what leaves a wide gap between the tabs and the search box. */}
-            <div className="hidden md:flex">
-              <ScopeTabs />
-            </div>
-
             {/* NavSearch: desktop = centered bar, mobile = icon / expanded */}
             <NavSearch onMobileSearchChange={setMobileSearchActive} />
 
@@ -128,13 +120,6 @@ export default function LayoutShell({
               </div>
             )}
           </div>
-
-          {/* Library tabs — mobile second row, yielded to the expanded search */}
-          {!mobileSearchActive && (
-            <div className="md:hidden px-4 pb-2">
-              <ScopeTabs compact />
-            </div>
-          )}
         </header>
 
         <main className="flex-1 overflow-y-auto pb-28">

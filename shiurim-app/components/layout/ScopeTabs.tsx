@@ -13,10 +13,12 @@ const TABS: { key: 'ttl' | Scope; label: string; short: string; href: string }[]
   { key: 'all',     label: 'All Community Shiurim', short: 'All',        href: '/' },
 ]
 
-/** The three library tabs, visible on every page. Rendered twice by
- *  LayoutShell: inline in the header row on desktop, and as a compact second
- *  row on mobile. */
-export default function ScopeTabs({ compact = false }: { compact?: boolean }) {
+/** The three library tabs. Sit directly above the section they control —
+ *  "Recently Given" on the homepage, the TTL section switcher on /ttl — since
+ *  Yeshiva/All only mean anything there, and TTL is the third state of the
+ *  same choice. Sized to read as the primary switch for that section, not a
+ *  bit of chrome. */
+export default function ScopeTabs() {
   const { scope, setScope } = useScope()
   const pathname = usePathname()
 
@@ -24,8 +26,7 @@ export default function ScopeTabs({ compact = false }: { compact?: boolean }) {
     <div
       role="tablist"
       aria-label="Shiurim library"
-      className={`flex items-center gap-1 rounded-lg bg-stone-100 p-0.5 shrink-0
-        ${compact ? 'w-full' : ''}`}
+      className="flex items-center gap-1.5 rounded-2xl border border-stone-200 bg-white p-1.5 shadow-sm mb-6"
     >
       {TABS.map(tab => {
         // TTL is active exactly on /ttl. Yeshiva/All reflect the homepage
@@ -41,13 +42,14 @@ export default function ScopeTabs({ compact = false }: { compact?: boolean }) {
             role="tab"
             aria-selected={active}
             onClick={() => { if (tab.key !== 'ttl') setScope(tab.key) }}
-            className={`rounded-md font-medium whitespace-nowrap transition-colors text-center
-              ${compact ? 'flex-1 px-2 py-1.5 text-xs' : 'px-3 py-1.5 text-xs'}
+            className={`flex-1 rounded-xl px-3 py-3 text-center font-semibold whitespace-nowrap
+              transition-colors text-xs sm:text-sm
               ${active
                 ? 'bg-emerald-700 text-white shadow-sm'
-                : 'text-stone-500 hover:text-stone-800 hover:bg-white'}`}
+                : 'text-stone-500 hover:text-stone-800 hover:bg-stone-50'}`}
           >
-            {compact ? tab.short : tab.label}
+            <span className="sm:hidden">{tab.short}</span>
+            <span className="hidden sm:inline">{tab.label}</span>
           </Link>
         )
       })}

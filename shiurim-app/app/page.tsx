@@ -1,6 +1,7 @@
 import { getCategories, getAllLectures } from '@/lib/lectures'
 import { getMyShiurimData } from '@/lib/my-shiurim-server'
 import SiteHero from '@/components/layout/SiteHero'
+import ScopeTabs from '@/components/layout/ScopeTabs'
 import MyShiurim from '@/components/lectures/MyShiurim'
 import RecentlyGiven from '@/components/lectures/RecentlyGiven'
 
@@ -41,6 +42,10 @@ export default async function HomePage() {
           userId={user.id}
         />
       )}
+
+      {/* Library switch — TTL / Shiurim in Yeshiva / All Community Shiurim.
+          Sits right above Recently Given since Yeshiva/All is what it changes. */}
+      <ScopeTabs />
 
       {/* Recently Given — newest shiurim by delivery date */}
       <RecentlyGiven

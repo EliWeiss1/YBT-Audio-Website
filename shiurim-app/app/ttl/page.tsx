@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { getCategories, getAllLectures } from '@/lib/lectures'
 import { getMyShiurimData } from '@/lib/my-shiurim-server'
 import SiteHero from '@/components/layout/SiteHero'
+import ScopeTabs from '@/components/layout/ScopeTabs'
 import MyShiurim from '@/components/lectures/MyShiurim'
 import TtlClient, { SectionSkeleton } from './TtlClient'
 
@@ -24,6 +25,9 @@ export default async function TtlPage() {
           userId={user.id}
         />
       )}
+
+      {/* Library switch — TTL / Shiurim in Yeshiva / All Community Shiurim. */}
+      <ScopeTabs />
 
       {/* The TTL browser sits exactly where "Recently Given" does on the other
           tabs — section switcher first, then the list. */}

@@ -104378,6 +104378,19 @@
           "label": "Mishlei",
           "lectures": [
             {
+              "id": "YBT-1187965",
+              "title": "Mishlei 26:2 - Avian Metaphors for Gratuitous Curses (Part 1)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1187965.mp3",
+              "duration": 2733,
+              "description": "This morning (9/9/26), in our Morning Mishlei shiur, we began learning the next riddle-pasuk in our perek. We spent more time than usual on the nuances of the Targum and Tafsir, and had a digression into a recap of the Abravanel's approach to keri/kesiv. Consequently, we spent most of our time on the questions and only got a chance to hear two approaches before we had to end shiur. Tomorrow (בג\"ה) we'll attempt a few more of our own interpretations before turning to the meforshim. https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-09-09",
+              "tags": [
+                "Mishlei"
+              ],
+              "inYeshiva": true
+            },
+            {
               "id": "YBT-1187248",
               "title": "Mishlei 26:1 - Meteorological Metaphors for Giving Honor to a Fool Part 1)",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1187248.mp3",
@@ -116697,6 +116710,19 @@
           "id": "nach-tehillim",
           "label": "Tehillim",
           "lectures": [
+            {
+              "id": "YBT-1188043",
+              "title": "Tehilim 81: Shir shel Yom of Thursday and Rosh ha'Shanah (Part 2: Radak)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1188043.mp3",
+              "duration": 3544,
+              "description": "This evening (9/9/26), in our Wednesday night Tehilim shiur, we continued our analysis of our perek. After a quick review of our Claude-Radakified translation, we raised a few major questions, then went straight to the Radak. I had pre-selected the key comments necessary to appreciate the thrust of his approach, which sheds a new and wild light on shofar and Rosh ha'Shanah. If you want something tantalizing to think about this year, make sure to check this shiur out before Rosh ha'Shanah starts. Next time, in our third and final session on this perek, our goal will be to answer our major questions and \"land the plane.\" https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-09-09",
+              "tags": [
+                "Tehillim"
+              ],
+              "inYeshiva": true
+            },
             {
               "id": "YBT-1187183",
               "title": "Tehilim 81: Shir shel Yom of Thursday and Rosh ha'Shanah (Part 1: Translation)",

@@ -30474,6 +30474,20 @@
           "label": "Bein Adam L'Chaveiro",
           "lectures": [
             {
+              "id": "YBT-1188327",
+              "title": "Rambam on Interpersonal Sin and Teshuvah (REDUX)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1188327.mp3",
+              "duration": 5927,
+              "description": "Tonight (9/10/26), in our Thursday night Machshavah Lab series for women, I gave a shiur on a topic I THOUGHT I had never given shiur on before. As it turns out, an hour before shiur I realized that I gave shiur on this exact topic three years ago - and when I checked the transcript, I discovered that I said almost exactly the same thing. OH WELL! Review is always beneficial, and I feel like we got it clearer this time than we did last time. The questions are still juicy, the approach is still thought-provoking (even if you end up disagreeing with it), and we had a bunch of new faces this time, so it was a worthwhile shiur in my book. I'd love to hear your thoughts! https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-09-10",
+              "tags": [
+                "Teshuvah",
+                "Rambam",
+                "Bein Adam L'Chaveiro"
+              ]
+            },
+            {
               "id": "YBT-1161264",
               "title": "Avos 1:6 - Rabbeinu Yonah on Friendship (Knei Lecha Chaver)",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1161264.mp3",
@@ -67048,6 +67062,20 @@
           "label": "Teshuvah",
           "lectures": [
             {
+              "id": "YBT-1188327",
+              "title": "Rambam on Interpersonal Sin and Teshuvah (REDUX)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1188327.mp3",
+              "duration": 5927,
+              "description": "Tonight (9/10/26), in our Thursday night Machshavah Lab series for women, I gave a shiur on a topic I THOUGHT I had never given shiur on before. As it turns out, an hour before shiur I realized that I gave shiur on this exact topic three years ago - and when I checked the transcript, I discovered that I said almost exactly the same thing. OH WELL! Review is always beneficial, and I feel like we got it clearer this time than we did last time. The questions are still juicy, the approach is still thought-provoking (even if you end up disagreeing with it), and we had a bunch of new faces this time, so it was a worthwhile shiur in my book. I'd love to hear your thoughts! https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-09-10",
+              "tags": [
+                "Teshuvah",
+                "Rambam",
+                "Bein Adam L'Chaveiro"
+              ]
+            },
+            {
               "id": "YBT-1111798",
               "title": "Asking for Mechila, according to the Rambam",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1111798.mp3",
@@ -85346,6 +85374,20 @@
               "id": "kisvei-rishonim-rambam-general",
               "label": "General",
               "lectures": [
+                {
+                  "id": "YBT-1188327",
+                  "title": "Rambam on Interpersonal Sin and Teshuvah (REDUX)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1188327.mp3",
+                  "duration": 5927,
+                  "description": "Tonight (9/10/26), in our Thursday night Machshavah Lab series for women, I gave a shiur on a topic I THOUGHT I had never given shiur on before. As it turns out, an hour before shiur I realized that I gave shiur on this exact topic three years ago - and when I checked the transcript, I discovered that I said almost exactly the same thing. OH WELL! Review is always beneficial, and I feel like we got it clearer this time than we did last time. The questions are still juicy, the approach is still thought-provoking (even if you end up disagreeing with it), and we had a bunch of new faces this time, so it was a worthwhile shiur in my book. I'd love to hear your thoughts! https://rabbischneeweiss.substack.com/",
+                  "speaker": "Rabbi Matt Schneeweiss",
+                  "date": "2026-09-10",
+                  "tags": [
+                    "Teshuvah",
+                    "Rambam",
+                    "Bein Adam L'Chaveiro"
+                  ]
+                },
                 {
                   "id": "YBT-1156402",
                   "title": "Did Rambam Actually Praise Ibn Ezra and Trash the French Jews (for Eating Salsa)?",
@@ -104377,6 +104419,19 @@
           "id": "nach-mishlei",
           "label": "Mishlei",
           "lectures": [
+            {
+              "id": "YBT-1188233",
+              "title": "Mishlei 26:2 - Avian Metaphors for Gratuitous Curses (Part 2)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1188233.mp3",
+              "duration": 2723,
+              "description": "This morning (9/10/26), in our Morning Mishlei shiur, we continued our analysis of yesterday's riddle-pasuk. We began by reviewing what we covered yesterday and soliciting any new approaches or insights from the members of the shiur. We then learned the commentaries of Metzudas David, Meiri, and R' Sheishes ben Yitzchak Gerondi. Much of what they said overlapped with (or was predicated on) our own ideas, which is a good sign, but we still managed to come away with new insights! https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-09-10",
+              "tags": [
+                "Mishlei"
+              ],
+              "inYeshiva": true
+            },
             {
               "id": "YBT-1187965",
               "title": "Mishlei 26:2 - Avian Metaphors for Gratuitous Curses (Part 1)",

@@ -9153,5 +9153,31 @@
       "nach-tehillim"
     ],
     "seconds": 43.1
+  },
+  "1188233": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1188233.mp3",
+    "placements": [
+      "nach-mishlei"
+    ],
+    "insertedInto": [
+      "nach-mishlei"
+    ],
+    "seconds": 28.3
+  },
+  "1188327": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1188327.mp3",
+    "placements": [
+      "kisvei-rishonim-rambam-general",
+      "halacha-teshuvah",
+      "discussion-bein-adam-lchaveiro"
+    ],
+    "insertedInto": [
+      "kisvei-rishonim-rambam-general",
+      "halacha-teshuvah",
+      "discussion-bein-adam-lchaveiro"
+    ],
+    "seconds": 57.1
   }
 }

@@ -35,8 +35,17 @@ export default function AuthPage() {
       else setMessage('If an account exists for that email, a password reset link is on its way.')
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email, password })
-      if (error) setError(error.message)
-      else router.push('/lectures')
+      if (error) {
+        setError(error.message)
+      } else {
+        // A plain push() reuses the cached root layout, so PlayerProvider's
+        // server-rendered userId never updates for this session (it also
+        // has its own onAuthStateChange subscription now — this refresh is
+        // belt-and-braces so nothing else server-rendered from `user` goes
+        // stale either).
+        router.push('/lectures')
+        router.refresh()
+      }
     }
     setLoading(false)
   }

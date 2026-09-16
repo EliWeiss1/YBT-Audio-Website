@@ -36,7 +36,7 @@ export default function LectureCard({ lecture, index, progress, speakerOverride,
   const handlePlay = (e: React.MouseEvent) => {
     e.preventDefault()
     if (isThisPlaying) pause()
-    else play(lecture.id, progress?.position_seconds ?? 0)
+    else play(lecture.id)
   }
 
   // Use stored duration from progress row as fallback when JSON duration is 0

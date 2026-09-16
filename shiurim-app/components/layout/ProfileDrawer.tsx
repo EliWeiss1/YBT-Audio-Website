@@ -258,7 +258,7 @@ function InProgressView({
               <div className="flex items-start gap-2.5">
                 {/* Play/pause */}
                 <button
-                  onClick={() => isThisPlaying ? pause() : play(lecture.id, row.position_seconds)}
+                  onClick={() => isThisPlaying ? pause() : play(lecture.id)}
                   className={`mt-0.5 w-7 h-7 rounded-full shrink-0 flex items-center justify-center
                     text-xs transition-colors
                     ${isActive

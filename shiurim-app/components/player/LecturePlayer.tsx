@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { usePlayer, PLAYBACK_SPEEDS } from '@/lib/player-context'
 import { getProgress } from '@/lib/supabase'
+import { getLocalProgress, reconcile } from '@/lib/progress-local'
 import { formatDuration, type FlatLecture } from '@/lib/lecture-utils'
 
 type Props = {
@@ -30,12 +31,29 @@ export default function LecturePlayer({ lectureId, userId, lecture: serverLectur
   const progress = displayDuration > 0 ? (displayTime / displayDuration) * 100 : 0
 
   useEffect(() => {
+    // Seed instantly from the local mirror — no network wait — so the
+    // "Will resume from…" badge doesn't flicker in late. This also covers
+    // anonymous listeners, who have no Supabase row at all.
+    const local = getLocalProgress(userId, lectureId)
+    const seeded = reconcile(local, null)
+    if (seeded.source !== 'none') {
+      setResumePosition(seeded.position)
+      setCompleted(seeded.completed)
+    }
     if (!userId) return
+    // Then refine against the cross-device Supabase row, same reconciliation
+    // play() itself uses — this only feeds the badge now, not play() itself,
+    // so its latency is purely cosmetic.
     getProgress(userId, lectureId).then(p => {
-      if (p) {
-        setResumePosition(p.position_seconds)
-        setCompleted(p.completed)
-      }
+      if (!p) return
+      const { position, completed } = reconcile(local, {
+        position_seconds: p.position_seconds,
+        completed: p.completed,
+        last_listened_at: p.last_listened_at,
+        duration_seconds: p.duration_seconds,
+      })
+      setResumePosition(position)
+      setCompleted(completed)
     })
   }, [userId, lectureId])
 
@@ -49,8 +67,9 @@ export default function LecturePlayer({ lectureId, userId, lecture: serverLectur
       isPlaying ? pause() : resume()
     } else {
       // Pass the server lecture as a fallback so a brand-new shiur plays even
-      // before the client catalog has caught up with the redeploy.
-      play(lectureId, resumePosition ?? 0, serverLecture)
+      // before the client catalog has caught up with the redeploy. play()
+      // resolves the resume position itself (local mirror, instantly).
+      play(lectureId, serverLecture)
     }
   }
 

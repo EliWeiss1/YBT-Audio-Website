@@ -225,7 +225,7 @@ function MyShiurimModal({
                   >
                     <div className="flex items-start gap-3">
                       <button
-                        onClick={() => isThisPlaying ? pause() : play(lecture.id, row.position_seconds)}
+                        onClick={() => isThisPlaying ? pause() : play(lecture.id)}
                         className={`mt-0.5 w-7 h-7 rounded-full shrink-0 flex items-center justify-center
                           text-xs transition-colors
                           ${isActive
@@ -325,7 +325,7 @@ function MyShiurimModal({
                 >
                   <div className="flex items-start gap-3">
                     <button
-                      onClick={() => isThisPlaying ? pause() : play(lecture.id, 0)}
+                      onClick={() => isThisPlaying ? pause() : play(lecture.id)}
                       className={`mt-0.5 w-7 h-7 rounded-full shrink-0 flex items-center justify-center
                         text-xs transition-colors
                         ${isActive
@@ -409,7 +409,7 @@ function ProgressChip({ row, onDelete }: { row: ProgressRow; onDelete: (id: stri
         onClick={e => {
           e.preventDefault()
           e.stopPropagation()
-          isThisPlaying ? pause() : play(lecture.id, row.position_seconds)
+          isThisPlaying ? pause() : play(lecture.id)
         }}
         className={`absolute top-3 right-3 w-7 h-7 rounded-full shrink-0
           flex items-center justify-center text-xs transition-colors
@@ -470,7 +470,7 @@ function SavedChip({ lectureId, onUnsave }: { lectureId: string; onUnsave: (id: 
         onClick={e => {
           e.preventDefault()
           e.stopPropagation()
-          isThisPlaying ? pause() : play(lecture.id, 0)
+          isThisPlaying ? pause() : play(lecture.id)
         }}
         className={`absolute top-3 right-3 w-7 h-7 rounded-full shrink-0
           flex items-center justify-center text-xs transition-colors

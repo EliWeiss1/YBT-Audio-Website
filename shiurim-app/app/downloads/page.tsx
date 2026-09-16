@@ -139,7 +139,7 @@ export default function DownloadsPage() {
                   ${isActive ? 'border-emerald-300 bg-emerald-50/50' : 'border-stone-100 bg-white'}`}
               >
                 <button
-                  onClick={() => isThisPlaying ? pause() : play(rec.lectureId, 0)}
+                  onClick={() => isThisPlaying ? pause() : play(rec.lectureId)}
                   className={`mt-0.5 w-9 h-9 rounded-full shrink-0 flex items-center justify-center
                     text-sm transition-colors
                     ${isActive

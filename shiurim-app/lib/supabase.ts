@@ -45,7 +45,10 @@ export async function saveProgress(
   userId: string,
   lectureId: string,
   positionSeconds: number,
-  completed = false,
+  // Tri-state: undefined = leave `completed` as whatever it already is (the
+  // routine 45s/pause/seek saves pass this), false = explicitly clear it
+  // (resuming a finished shiur), true = explicitly set it (playback ended).
+  completed?: boolean,
   durationSeconds?: number
 ) {
   const record: Record<string, unknown> = {
@@ -57,10 +60,12 @@ export async function saveProgress(
   if (durationSeconds && durationSeconds > 0) {
     record.duration_seconds = durationSeconds
   }
-  // Never downgrade a completed shiur back to in-progress.
-  // Only include `completed` in the upsert when it is true.
-  if (completed) {
-    record.completed = true
+  // Only include `completed` in the upsert when the caller explicitly wants
+  // to change it — an upsert's ON CONFLICT UPDATE only touches columns
+  // present in the record, so omitting it preserves whatever is already
+  // stored (and a fresh row falls back to the column default of `false`).
+  if (completed !== undefined) {
+    record.completed = completed
   }
   // Surface failures (e.g. offline) so lib/progress-queue.ts can queue retries.
   const { error } = await supabase.from('progress').upsert(record, { onConflict: 'user_id,lecture_id' })

@@ -52,7 +52,8 @@ export default function LectureListWithProgress({ lectures, nodeId }: Props) {
         supabase
           .from('progress')
           .select('lecture_id, position_seconds, completed, duration_seconds')
-          .eq('user_id', user.id),
+          .eq('user_id', user.id)
+          .in('lecture_id', ids),
         supabase
           .from('speaker_overrides')
           .select('lecture_id, speaker')

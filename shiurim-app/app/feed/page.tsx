@@ -23,7 +23,7 @@ export default async function FeedPage() {
           </div>
         )}
 
-        {comments.map((comment: any) => {
+        {comments.map((comment) => {
           const lecture = getLectureById(comment.lecture_id)
           const initials = (comment.display_name ?? 'A')
             .split(' ').map((w: string) => w[0]).join('').slice(0, 2).toUpperCase()

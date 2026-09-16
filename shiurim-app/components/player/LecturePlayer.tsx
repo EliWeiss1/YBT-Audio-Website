@@ -92,7 +92,7 @@ export default function LecturePlayer({ lectureId, userId, lecture: serverLectur
       {/* Status badges */}
       {completed && (
         <div className="mb-4 flex items-center gap-2 text-sm text-emerald-700 bg-emerald-50 rounded-lg px-3 py-2 w-fit">
-          ✅ You've completed this shiur
+          ✅ You&apos;ve completed this shiur
         </div>
       )}
       {!completed && resumePosition && resumePosition > 30 && !isThisLecture && (

@@ -9179,5 +9179,16 @@
       "discussion-bein-adam-lchaveiro"
     ],
     "seconds": 57.1
+  },
+  "1189078": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1189078.mp3",
+    "placements": [
+      "nach-mishlei"
+    ],
+    "insertedInto": [
+      "nach-mishlei"
+    ],
+    "seconds": 36.5
   }
 }

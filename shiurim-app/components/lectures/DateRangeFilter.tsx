@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 
 export type DateRangeValue = { from: string | null; to: string | null }
 
@@ -81,8 +81,30 @@ export default function DateRangeFilter({
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const [customOpen, setCustomOpen] = useState(false)
+  const [dropdownStyle, setDropdownStyle] = useState<CSSProperties>({ right: 0 })
   const containerRef = useRef<HTMLDivElement>(null)
   const c = ACCENT_CLASSES[accent]
+
+  // Picks whichever side keeps the dropdown fully on-screen — the pill can
+  // sit anywhere from flush-left to flush-right depending on the surface
+  // (nav search filter bar vs. rabbi page) and the viewport width, so a
+  // fixed left-0/right-0 anchor clips on some combination of the two.
+  useEffect(() => {
+    if (!isOpen || !containerRef.current) return
+    const rect = containerRef.current.getBoundingClientRect()
+    const margin = 24
+    const vw = window.innerWidth
+    const width = Math.min(288, vw - margin * 2)
+
+    if (rect.right - width >= margin) {
+      setDropdownStyle({ right: 0 })
+    } else if (rect.left + width <= vw - margin) {
+      setDropdownStyle({ left: 0 })
+    } else {
+      const desiredLeft = Math.max(margin, Math.min(vw - width - margin, rect.left - (width - rect.width) / 2))
+      setDropdownStyle({ left: desiredLeft - rect.left })
+    }
+  }, [isOpen])
 
   const isActive = value.from !== null || value.to !== null
   const activePreset = matchingPresetKey(value)
@@ -155,7 +177,10 @@ export default function DateRangeFilter({
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-stone-200 rounded-lg shadow-md z-50 overflow-hidden">
+        <div
+          className="absolute top-full mt-1 w-72 max-w-[calc(100vw-2rem)] bg-white border border-stone-200 rounded-lg shadow-md z-50 overflow-hidden"
+          style={dropdownStyle}
+        >
           <div className="py-1">
             {PRESETS.map(p => {
               const selected = activePreset === p.key

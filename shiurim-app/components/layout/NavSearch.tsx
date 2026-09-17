@@ -231,11 +231,16 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
     setRabbiDropdownOpen(false)
   }
 
-  // Close on outside click
+  // Close on outside click. Uses 'click' (not 'mousedown') and also checks
+  // document.activeElement as a fallback — native form controls (the date
+  // filter's <input type="date"> spin arrows / calendar popup) can report a
+  // mousedown target that briefly resolves outside the panel while focus is
+  // still legitimately inside it, which was closing the whole panel mid-use.
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       const target = e.target as Node
-      const inPanel = panelRef.current?.contains(target)
+      const active = document.activeElement
+      const inPanel = panelRef.current?.contains(target) || (!!active && !!panelRef.current?.contains(active))
       const inDesktop = desktopContainerRef.current?.contains(target)
       const inMobile = mobileContainerRef.current?.contains(target)
       if (!inPanel && !inDesktop && !inMobile) {
@@ -243,8 +248,8 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
         setRabbiDropdownOpen(false)
       }
     }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
+    document.addEventListener('click', handleClick)
+    return () => document.removeEventListener('click', handleClick)
   }, [])
 
   // Escape key

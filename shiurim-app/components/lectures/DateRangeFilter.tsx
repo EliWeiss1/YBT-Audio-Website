@@ -116,12 +116,20 @@ export default function DateRangeFilter({
     if (isCustom) setCustomOpen(true)
   }, [isCustom])
 
+  // 'click' (not 'mousedown') plus an activeElement fallback — clicking the
+  // native <input type="date">'s spin arrows or calendar popup can report a
+  // target that briefly resolves outside this container while focus is
+  // still legitimately on the input, which was closing the dropdown before
+  // the user finished picking both ends of a custom range.
   useEffect(() => {
     function handleClick(e: MouseEvent) {
-      if (!containerRef.current?.contains(e.target as Node)) setIsOpen(false)
+      const target = e.target as Node
+      const active = document.activeElement
+      const inside = containerRef.current?.contains(target) || (!!active && !!containerRef.current?.contains(active))
+      if (!inside) setIsOpen(false)
     }
-    document.addEventListener('mousedown', handleClick)
-    return () => document.removeEventListener('mousedown', handleClick)
+    document.addEventListener('click', handleClick)
+    return () => document.removeEventListener('click', handleClick)
   }, [])
 
   useEffect(() => {

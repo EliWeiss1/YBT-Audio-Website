@@ -104420,6 +104420,19 @@
           "label": "Mishlei",
           "lectures": [
             {
+              "id": "YBT-1189279",
+              "title": "Mishlei 26:3 - A Rod for the Back of Fools (Part 2)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1189279.mp3",
+              "duration": 2673,
+              "description": "This morning (9/17/26), in our Morning Mishlei shiur, we began with a review of yesterday's pasuk and the approaches that were suggested in shiur and a few sent after shiur. We then spent most of our time on the Meiri's surprising approach, followed by R' Sheishes ben Yitzchak Gerondi's innovative approach. Great ideas all around! https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-09-17",
+              "tags": [
+                "Mishlei"
+              ],
+              "inYeshiva": true
+            },
+            {
               "id": "YBT-1189078",
               "title": "Mishlei 26:3 - A Whip for the Back of Fools (Part 1)",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1189078.mp3",
@@ -116778,6 +116791,19 @@
           "id": "nach-tehillim",
           "label": "Tehillim",
           "lectures": [
+            {
+              "id": "YBT-1189165",
+              "title": "Tehilim 81: Shir shel Yom of Thursday and Rosh ha'Shanah (Part 3: Understanding Radak)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1189165.mp3",
+              "duration": 3523,
+              "description": "This evening (9/16/26), in our Wednesday night Tehilim shiur, after a few off-topic introductory reflections, we reviewed our perek and got to work trying to \"land the plane.\" We reviewed the translation of the perek according to the Radak, then reviewed the key Radaks from last time and read the ones we didn't have time to get to. Then we attempted to come up with a Grand Theory of the perek based on the Radak. That \"based on the Radak\" part was the real challenge: it was SO tempting to incorporate the many ideas and themes about Rosh ha'Shanah we're familiar with ... but we had to face the fact that the Radak didn't mention any of them. We ended up with two approaches, both of which were good, and neither of which were complete. I'm happy with this round, and I look forward to the next time I get to think about this! Tonight’s shiur has been sponsored by Dassa, one of my early Shalhevet students, to bring awareness for people to daven for יוסף שלום בן אסתר שיינדל, “a young married guy battling a brain tumor” who had “surgical resection today and recovery ahead.” She added that the zechus of our learning should bolster our tefilah. https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-09-16",
+              "tags": [
+                "Tehillim"
+              ],
+              "inYeshiva": true
+            },
             {
               "id": "YBT-1188043",
               "title": "Tehilim 81: Shir shel Yom of Thursday and Rosh ha'Shanah (Part 2: Radak)",

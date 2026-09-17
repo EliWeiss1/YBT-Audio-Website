@@ -58,6 +58,29 @@ async function waitUntil(cond, timeoutMs, page, intervalMs = 500) {
   return cond()
 }
 
+const MONTH_ABBR = { Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12 }
+
+// The share page renders the recording's actual date/time as plain text in a
+// `.info-container-time` span (e.g. "Mar 23, 2026 07:59 PM") — confirmed against a real
+// share link. This is the true recording date, unlike the DATE the email parser derives
+// (the sender's forwarded-header date, or just when they happened to send the email —
+// unreliable for a rebbe who pastes a bare link with no Zoom notification to forward).
+// Parsed by hand, not via `new Date()`, so a runner-timezone mismatch can't shift the
+// calendar day — only the date parts are needed, not the time. Best-effort: any miss
+// (missing element, unrecognized format) falls back to the email-derived DATE.
+async function extractPageDate(page) {
+  try {
+    const text = await page.locator('.info-container-time').first().textContent({ timeout: 5000 })
+    const m = (text || '').match(/^([A-Za-z]{3})\w*\s+(\d{1,2}),\s+(\d{4})/)
+    if (!m) return null
+    const month = MONTH_ABBR[m[1][0].toUpperCase() + m[1].slice(1, 3).toLowerCase()]
+    if (!month) return null
+    return `${m[3]}-${String(month).padStart(2, '0')}-${m[2].padStart(2, '0')}`
+  } catch {
+    return null
+  }
+}
+
 // Read "Total N Recordings" from the player's multi-clip control (video.js renders it
 // as ".vjs-multiple-clip-control"). Returns a number or null.
 async function readRecordingCount(page) {
@@ -205,6 +228,7 @@ async function uploadToR2(r2, key, buf) {
 async function main() {
   const browser = await chromium.launch({ headless: true })
   let clips = []
+  let date = DATE
   try {
     const ctx = await browser.newContext({
       userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -217,6 +241,14 @@ async function main() {
 
     // Download every clip while the authenticated context is still open.
     for (const u of urls) clips.push(await fetchClip(ctx, u))
+
+    const pageDate = await extractPageDate(page)
+    if (pageDate) {
+      console.log(`Resolved recording date from the Zoom page: ${pageDate} (email-derived date was ${DATE}).`)
+      date = pageDate
+    } else {
+      console.log(`Could not read a date off the Zoom page; using email-derived date ${DATE}.`)
+    }
   } finally {
     if (browser.isConnected()) await browser.close().catch(() => {})
   }
@@ -230,7 +262,7 @@ async function main() {
   const r2 = r2Client()
 
   const common = {
-    rabbi: RABBI, description: DESCRIPTION, date: DATE, senderEmail: SENDER_EMAIL,
+    rabbi: RABBI, description: DESCRIPTION, date, senderEmail: SENDER_EMAIL,
     shareUrl: SHARE_URL, rawEmailSnippet: RAW_EMAIL_SNIPPET,
   }
 
@@ -243,7 +275,7 @@ async function main() {
     }
     const buf = clips[idx]
     const duration = await getDuration(buf, 'audio/mp4')
-    const r2Key = `ingest/${DATE}/${LECTURE_ID}.mp3`
+    const r2Key = `ingest/${date}/${LECTURE_ID}.mp3`
     const publicUrl = await uploadToR2(r2, r2Key, buf)
     await postResult({ ...common, lectureId: LECTURE_ID, title: TITLE, r2Key, publicUrl, duration })
     console.log(`pick: kept recording ${n}/${clips.length} (${buf.length} bytes, ${duration}s).`)
@@ -259,7 +291,7 @@ async function main() {
     for (let i = 0; i < clips.length; i++) {
       const buf = clips[i]
       const lectureId = `${LECTURE_ID}-${i + 1}`
-      const r2Key = `ingest/${DATE}/${lectureId}.mp3`
+      const r2Key = `ingest/${date}/${lectureId}.mp3`
       const publicUrl = await uploadToR2(r2, r2Key, buf)
       const duration = await getDuration(buf, 'audio/mp4')
       await postResult({
@@ -285,7 +317,7 @@ async function main() {
     buf = clips[0]
     duration = await getDuration(buf, 'audio/mp4')
   }
-  const r2Key = `ingest/${DATE}/${LECTURE_ID}.mp3`
+  const r2Key = `ingest/${date}/${LECTURE_ID}.mp3`
   const publicUrl = await uploadToR2(r2, r2Key, buf)
   await postResult({
     ...common,

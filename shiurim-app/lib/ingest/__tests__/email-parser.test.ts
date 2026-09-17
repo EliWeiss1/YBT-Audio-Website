@@ -315,7 +315,37 @@ From: no-reply@zoom.us
 Join URL: https://zoom.us/rec/share/ABCDEF123456
 `
 
+// Rabbi Fistel doesn't get a Zoom notification to forward — he just pastes the
+// share link directly under the title, with no rabbi/description line and no
+// forwarded-message wrapper at all.
+const FIXTURE_BARE_LINK_KNOWN_SENDER = `From: davidfistelcpa@gmail.com
+To: shiurim@ybt.org
+Date: Wed, 15 Jan 2025 10:30:00 +0000
+Subject: Shmuel II Perek 19 - 20
+Content-Type: text/plain; charset=utf-8
+
+Shmuel II Perek 19 - 20
+
+https://us06web.zoom.us/rec/share/xyAdDVTF7IbZOtRBkg_TWDRePYAorDzJBneP4BU6IuxlVjfS8gmPZkELxxl8P4KJ.GnlBHpsXamckVskp?from=hub
+`
+
 describe('parseIngestEmail', () => {
+  it('does not misread a bare pasted share link as the rabbi/description, and resolves the sender map', async () => {
+    const result = await parseIngestEmail(Buffer.from(FIXTURE_BARE_LINK_KNOWN_SENDER))
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.data.title).toBe('Shmuel II Perek 19 - 20')
+      expect(result.data.rabbi).toBe('Rabbi Fistel')
+      expect(result.data.description).toBe('')
+      expect(result.data.recordingUrl).toBe(
+        'https://us06web.zoom.us/rec/share/xyAdDVTF7IbZOtRBkg_TWDRePYAorDzJBneP4BU6IuxlVjfS8gmPZkELxxl8P4KJ.GnlBHpsXamckVskp'
+      )
+      // No forwarded Zoom header to date it from — falls back to the email's own Date header.
+      expect(result.data.date).toBe('2025-01-15')
+    }
+  })
+
+
   it('parses an `only N` keyword into multi.mode = pick with the 1-based index', async () => {
     const result = await parseIngestEmail(Buffer.from(FIXTURE_PICK))
     expect(result.ok).toBe(true)

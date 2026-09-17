@@ -90,7 +90,13 @@ export async function parseIngestEmail(rawEmail: Buffer): Promise<ParseResult> {
   // Split on the forward boundary — only the text a human typed above it is
   // treated as title/rabbi/description.
   const [preamble] = body.split(FORWARD_BOUNDARY_RE)
+  // Some rebbeim (no Zoom notification to forward) just paste the raw share link
+  // directly under the title, with no "Join URL:"/forwarded wrapper around it. Drop
+  // any such line before positional parsing — otherwise it gets misread as the
+  // rabbi's name (one "word", no spaces) or the description. recordingUrl is
+  // already pulled from the full body independently, so this never loses the link.
   const lines = (preamble ?? '').split('\n').map(l => l.trim()).filter(Boolean)
+    .filter(l => !ZOOM_RE.test(l) && !DROPBOX_RE.test(l) && !AUDIO_RE.test(l))
 
   const date = extractOriginalDate(body) || dateHeader
 

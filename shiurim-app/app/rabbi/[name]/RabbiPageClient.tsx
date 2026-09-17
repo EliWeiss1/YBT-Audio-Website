@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import type { FlatLecture } from '@/lib/lecture-utils'
 import LectureListWithProgress from '@/components/lectures/LectureListWithProgress'
+import DateRangeFilter, { type DateRangeValue } from '@/components/lectures/DateRangeFilter'
 
 type CategoryGroup = { label: string; lectures: FlatLecture[] }
 
@@ -16,14 +17,21 @@ type Props = {
 export default function RabbiPageClient({ canonicalName, allLectures, categories }: Props) {
   const [activeTab, setActiveTab] = useState<string>('All')
   const [sortOrder, setSortOrder] = useState<'default' | 'newest' | 'oldest'>('default')
+  const [dateRange, setDateRange] = useState<DateRangeValue>({ from: null, to: null })
 
   const tabLectures = activeTab === 'All'
     ? allLectures
     : (categories.find(c => c.label === activeTab)?.lectures ?? [])
 
+  const dateFilteredLectures = tabLectures.filter(l => {
+    if (dateRange.from && (!l.date || l.date < dateRange.from)) return false
+    if (dateRange.to && (!l.date || l.date > dateRange.to)) return false
+    return true
+  })
+
   const visibleLectures = sortOrder === 'default'
-    ? tabLectures
-    : [...tabLectures].sort((a, b) => {
+    ? dateFilteredLectures
+    : [...dateFilteredLectures].sort((a, b) => {
         const da = a.date ?? ''
         const db = b.date ?? ''
         return sortOrder === 'newest' ? db.localeCompare(da) : da.localeCompare(db)
@@ -84,8 +92,10 @@ export default function RabbiPageClient({ canonicalName, allLectures, categories
         })}
       </div>
 
-      {/* Sort control */}
-      <div className="flex items-center justify-end mb-5">
+      {/* Filters */}
+      <div className="flex items-center justify-end gap-2 mb-5">
+        <DateRangeFilter value={dateRange} onChange={setDateRange} accent="emerald" />
+
         <button
           onClick={() => setSortOrder(s => s === 'default' ? 'newest' : s === 'newest' ? 'oldest' : 'default')}
           className={`shrink-0 flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium border transition-colors whitespace-nowrap
@@ -101,10 +111,22 @@ export default function RabbiPageClient({ canonicalName, allLectures, categories
       </div>
 
       {/* Lecture list */}
-      <LectureListWithProgress
-        lectures={visibleLectures}
-        nodeId={`rabbi-${canonicalName}-${activeTab}`}
-      />
+      {dateFilteredLectures.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-sm text-stone-400 mb-2">No shiurim in this date range</p>
+          <button
+            onClick={() => setDateRange({ from: null, to: null })}
+            className="text-sm text-emerald-700 hover:text-emerald-800 font-medium"
+          >
+            Clear date filter
+          </button>
+        </div>
+      ) : (
+        <LectureListWithProgress
+          lectures={visibleLectures}
+          nodeId={`rabbi-${canonicalName}-${activeTab}`}
+        />
+      )}
 
     </div>
   )

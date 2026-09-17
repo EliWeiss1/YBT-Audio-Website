@@ -7,6 +7,7 @@ import type { FlatLecture } from '@/lib/lecture-utils'
 import { formatDuration, parseLectureDate } from '@/lib/lecture-utils'
 import { loadCatalog } from '@/lib/client-catalog'
 import { normalizeRabbi } from '@/lib/rabbi-normalization'
+import DateRangeFilter, { type DateRangeValue } from '@/components/lectures/DateRangeFilter'
 
 // ─── Highlight helper ─────────────────────────────────────────────────────────
 
@@ -63,6 +64,13 @@ const ResultRow = React.memo(function ResultRow({
   )
 })
 
+function dateRangeChipLabel(range: DateRangeValue): string {
+  const fmt = (s: string) => parseLectureDate(s).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  if (range.from && range.to) return `${fmt(range.from)} – ${fmt(range.to)}`
+  if (range.from) return `From ${fmt(range.from)}`
+  return `Until ${fmt(range.to!)}`
+}
+
 // ─── NavSearch ────────────────────────────────────────────────────────────────
 
 export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChange?: (active: boolean) => void }) {
@@ -73,6 +81,7 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
   const [rabbiDropdownOpen, setRabbiDropdownOpen] = useState(false)
   const [selectedRabbis, setSelectedRabbis] = useState<string[]>([])
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+  const [dateRange, setDateRange] = useState<DateRangeValue>({ from: null, to: null })
   const [sortMode, setSortMode] = useState<'relevance' | 'newest' | 'oldest'>('relevance')
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -183,6 +192,12 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
     if (selectedCategories.length > 0) {
       results = results.filter(l => selectedCategories.includes(l.breadcrumb[0]))
     }
+    if (dateRange.from) {
+      results = results.filter(l => l.date && l.date >= dateRange.from!)
+    }
+    if (dateRange.to) {
+      results = results.filter(l => l.date && l.date <= dateRange.to!)
+    }
 
     if (sortMode !== 'relevance') {
       results = [...results].sort((a, b) => {
@@ -193,7 +208,7 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
     }
 
     return results
-  }, [rawResults, selectedRabbis, selectedCategories, sortMode])
+  }, [rawResults, selectedRabbis, selectedCategories, dateRange, sortMode])
 
   // Build regex once per debounced query — shared across all ResultRow renders
   const highlightRegex = useMemo(() => buildHighlightRegex(debouncedQuery), [debouncedQuery])
@@ -207,6 +222,7 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
     setRabbiDropdownOpen(false)
     setSelectedRabbis([])
     setSelectedCategories([])
+    setDateRange({ from: null, to: null })
   }
 
   function closePanel() {
@@ -273,7 +289,7 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
     setSelectedCategories(prev => prev.filter(c => c !== cat))
   }
 
-  const activeSummary = selectedRabbis.length > 0 || selectedCategories.length > 0
+  const activeSummary = selectedRabbis.length > 0 || selectedCategories.length > 0 || dateRange.from !== null || dateRange.to !== null
 
   // ─── Search input JSX ────────────────────────────────────────────────────────
   // Kept as a plain JSX variable (not a <Component />) so React never unmounts
@@ -385,19 +401,23 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
         ))}
       </div>
 
-      {/* Date sort pill — fixed right, cycles relevance → newest → oldest → relevance */}
-      <button
-        onClick={() => setSortMode(m => m === 'relevance' ? 'newest' : m === 'newest' ? 'oldest' : 'relevance')}
-        className={`shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors whitespace-nowrap
-          ${sortMode !== 'relevance'
-            ? 'bg-[#EEEDFE] text-[#3C3489] border-[#AFA9EC]'
-            : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'}`}
-      >
-        {sortMode === 'newest' ? 'Newest first' : sortMode === 'oldest' ? 'Oldest first' : 'Best match'}
-        <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
-        </svg>
-      </button>
+      {/* Date range + sort — fixed right */}
+      <div className="flex items-center gap-2 shrink-0">
+        <DateRangeFilter value={dateRange} onChange={setDateRange} accent="indigo" />
+
+        <button
+          onClick={() => setSortMode(m => m === 'relevance' ? 'newest' : m === 'newest' ? 'oldest' : 'relevance')}
+          className={`shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors whitespace-nowrap
+            ${sortMode !== 'relevance'
+              ? 'bg-[#EEEDFE] text-[#3C3489] border-[#AFA9EC]'
+              : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'}`}
+        >
+          {sortMode === 'newest' ? 'Newest first' : sortMode === 'oldest' ? 'Oldest first' : 'Best match'}
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
+          </svg>
+        </button>
+      </div>
     </div>
   )
 
@@ -428,6 +448,12 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
             <button onClick={() => removeCategory(c)} className="hover:text-[#534AB7]">×</button>
           </span>
         ))}
+        {(dateRange.from || dateRange.to) && (
+          <span className="flex items-center gap-1 bg-[#EEEDFE] text-[#3C3489] border border-[#AFA9EC] rounded-full px-2 py-0.5">
+            {dateRangeChipLabel(dateRange)}
+            <button onClick={() => setDateRange({ from: null, to: null })} className="hover:text-[#534AB7]">×</button>
+          </span>
+        )}
       </div>
 
       <div className="overflow-y-auto" style={{ maxHeight: 'calc(70vh - 100px)' }}>

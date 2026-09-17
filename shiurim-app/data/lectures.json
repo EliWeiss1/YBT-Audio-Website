@@ -120250,6 +120250,16 @@
           "label": "Melachim",
           "lectures": [
             {
+              "id": "INGEST-20260917-c575b6",
+              "title": "Shmuel II Perek 24 and Melachim I Perek 1",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/nach/nach-melachim/INGEST-20260917-c575b6.mp3",
+              "duration": 2079,
+              "description": "final thoughts on Shmuel II Perek 24, Avishag and Adoniyahu's rebellion Part 1",
+              "speaker": "Rabbi Fistel",
+              "date": "2026-06-15",
+              "tags": []
+            },
+            {
               "id": "YBT-1027082",
               "title": "Eliyahu at Har Carmel",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-1027082.mp3",
@@ -120567,6 +120577,16 @@
           "id": "nach-shmuel",
           "label": "Shmuel",
           "lectures": [
+            {
+              "id": "INGEST-20260917-c575b6",
+              "title": "Shmuel II Perek 24 and Melachim I Perek 1",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/nach/nach-melachim/INGEST-20260917-c575b6.mp3",
+              "duration": 2079,
+              "description": "final thoughts on Shmuel II Perek 24, Avishag and Adoniyahu's rebellion Part 1",
+              "speaker": "Rabbi Fistel",
+              "date": "2026-06-15",
+              "tags": []
+            },
             {
               "id": "YBT-1169045",
               "title": "Shmuel 2 Perek 19",

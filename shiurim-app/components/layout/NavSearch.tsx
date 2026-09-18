@@ -431,7 +431,7 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
   const ResultsPanel = () => (
     <div
       ref={panelRef}
-      className="absolute left-0 right-0 top-full z-50 bg-white border-b border-x border-stone-200 rounded-b-lg shadow-sm overflow-hidden"
+      className="absolute left-0 right-0 top-full z-50 bg-white border-b border-x border-stone-200 rounded-b-lg shadow-sm"
       style={{ maxHeight: '70vh' }}
     >
       {FilterBar()}

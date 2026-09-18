@@ -434,7 +434,7 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
       className="absolute left-0 right-0 top-full z-50 bg-white border-b border-x border-stone-200 rounded-b-lg shadow-sm overflow-hidden"
       style={{ maxHeight: '70vh' }}
     >
-      <FilterBar />
+      {FilterBar()}
 
       {/* Always-visible count bar */}
       <div className="flex items-center gap-2 px-4 py-2 bg-stone-50 border-b border-stone-200 flex-wrap text-xs text-stone-500">
@@ -516,7 +516,7 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
         </div>
       )}
 
-      {showPanel && <ResultsPanel />}
+      {showPanel && ResultsPanel()}
     </>
   )
 }

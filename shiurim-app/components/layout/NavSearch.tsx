@@ -334,7 +334,7 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
   // ─── Filter bar ───────────────────────────────────────────────────────────────
 
   const FilterBar = () => (
-    <div className="flex items-center gap-2 px-4 py-2 bg-white border-b border-stone-200">
+    <div className="flex items-center gap-2 px-4 py-2 bg-white border-b border-stone-200 overflow-x-auto sm:overflow-visible [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
       {/* Rabbi dropdown — fixed left */}
       <div className="relative shrink-0">
         <button
@@ -390,8 +390,8 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
         )}
       </div>
 
-      {/* Category pills — horizontally scrollable middle */}
-      <div className="flex items-center gap-2 overflow-x-auto flex-1 min-w-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      {/* Category pills — own scroll on desktop; on mobile just flows in the bar's single scroll */}
+      <div className="flex items-center gap-2 shrink-0 sm:flex-1 sm:min-w-0 sm:overflow-x-auto sm:[&::-webkit-scrollbar]:hidden sm:[-ms-overflow-style:none] sm:[scrollbar-width:none]">
         {availableCategories.map(cat => (
           <button
             key={cat}

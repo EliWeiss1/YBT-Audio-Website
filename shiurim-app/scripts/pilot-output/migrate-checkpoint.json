@@ -9212,5 +9212,16 @@
       "nach-mishlei"
     ],
     "seconds": 28.4
+  },
+  "1190073": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1190073.mp3",
+    "placements": [
+      "kisvei-rishonim-rambam-general"
+    ],
+    "insertedInto": [
+      "kisvei-rishonim-rambam-general"
+    ],
+    "seconds": 1.6
   }
 }

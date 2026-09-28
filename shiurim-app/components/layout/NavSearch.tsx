@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useMemo, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import Fuse from 'fuse.js'
 import type { FlatLecture } from '@/lib/lecture-utils'
@@ -79,6 +80,7 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
   const [open, setOpen] = useState(false)
   const [mobileSearchActive, setMobileSearchActive] = useState(false)
   const [rabbiDropdownOpen, setRabbiDropdownOpen] = useState(false)
+  const [rabbiMenuPos, setRabbiMenuPos] = useState<{ top: number; left: number } | null>(null)
   const [selectedRabbis, setSelectedRabbis] = useState<string[]>([])
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [dateRange, setDateRange] = useState<DateRangeValue>({ from: null, to: null })
@@ -88,6 +90,8 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
   const panelRef = useRef<HTMLDivElement>(null)
   const desktopContainerRef = useRef<HTMLDivElement>(null)
   const mobileContainerRef = useRef<HTMLDivElement>(null)
+  const rabbiButtonRef = useRef<HTMLButtonElement>(null)
+  const rabbiMenuRef = useRef<HTMLDivElement>(null)
 
   // ── Deferred init: runs after first paint so it doesn't block page load ──
   const [allLectures, setAllLectures] = useState<FlatLecture[]>([])
@@ -243,7 +247,8 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
       const inPanel = panelRef.current?.contains(target) || (!!active && !!panelRef.current?.contains(active))
       const inDesktop = desktopContainerRef.current?.contains(target)
       const inMobile = mobileContainerRef.current?.contains(target)
-      if (!inPanel && !inDesktop && !inMobile) {
+      const inRabbiMenu = rabbiMenuRef.current?.contains(target)
+      if (!inPanel && !inDesktop && !inMobile && !inRabbiMenu) {
         setOpen(false)
         setRabbiDropdownOpen(false)
       }
@@ -251,6 +256,19 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
     document.addEventListener('click', handleClick)
     return () => document.removeEventListener('click', handleClick)
   }, [])
+
+  // The rabbi menu is portaled to <body> with fixed positioning (it lives
+  // inside the filter bar's horizontally-scrolling row, whose overflow-x:auto
+  // forces overflow-y:auto too per the CSS spec — clipping any absolutely
+  // positioned child taller than the row itself). A portal escapes that
+  // clip; since it no longer moves with the row, close it if the row (or
+  // anything else) scrolls instead of leaving it stranded over stale content.
+  useEffect(() => {
+    if (!rabbiDropdownOpen) return
+    function handleScroll() { setRabbiDropdownOpen(false) }
+    document.addEventListener('scroll', handleScroll, true)
+    return () => document.removeEventListener('scroll', handleScroll, true)
+  }, [rabbiDropdownOpen])
 
   // Escape key
   useEffect(() => {
@@ -338,7 +356,19 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
       {/* Rabbi dropdown — fixed left */}
       <div className="relative shrink-0">
         <button
-          onClick={() => setRabbiDropdownOpen(o => !o)}
+          ref={rabbiButtonRef}
+          onClick={() => {
+            if (!rabbiDropdownOpen && rabbiButtonRef.current) {
+              const rect = rabbiButtonRef.current.getBoundingClientRect()
+              const width = 224 // w-56
+              const margin = 8
+              setRabbiMenuPos({
+                top: rect.bottom + 4,
+                left: Math.max(margin, Math.min(rect.left, window.innerWidth - width - margin)),
+              })
+            }
+            setRabbiDropdownOpen(o => !o)
+          }}
           className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors whitespace-nowrap
             ${selectedRabbis.length > 0
               ? 'bg-[#EEEDFE] text-[#3C3489] border-[#AFA9EC]'
@@ -350,8 +380,12 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
           </svg>
         </button>
 
-        {rabbiDropdownOpen && (
-          <div className="absolute top-full left-0 mt-1 w-56 bg-white border border-stone-200 rounded-lg shadow-md z-50 overflow-hidden">
+        {rabbiDropdownOpen && rabbiMenuPos && createPortal(
+          <div
+            ref={rabbiMenuRef}
+            className="fixed w-56 bg-white border border-stone-200 rounded-lg shadow-md z-50 overflow-hidden"
+            style={{ top: rabbiMenuPos.top, left: rabbiMenuPos.left }}
+          >
             <div className="overflow-y-auto" style={{ maxHeight: '220px' }}>
               {resultSpeakerCounts.map(([canonical, count]) => {
                 const isSelected = selectedRabbis.includes(canonical)
@@ -386,7 +420,8 @@ export default function NavSearch({ onMobileSearchChange }: { onMobileSearchChan
                 </button>
               </div>
             )}
-          </div>
+          </div>,
+          document.body
         )}
       </div>
 

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { createPortal } from 'react-dom'
 
 export type DateRangeValue = { from: string | null; to: string | null }
 
@@ -81,29 +82,49 @@ export default function DateRangeFilter({
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const [customOpen, setCustomOpen] = useState(false)
-  const [dropdownStyle, setDropdownStyle] = useState<CSSProperties>({ right: 0 })
+  const [dropdownStyle, setDropdownStyle] = useState<CSSProperties | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null)
   const c = ACCENT_CLASSES[accent]
 
-  // Picks whichever side keeps the dropdown fully on-screen — the pill can
-  // sit anywhere from flush-left to flush-right depending on the surface
-  // (nav search filter bar vs. rabbi page) and the viewport width, so a
-  // fixed left-0/right-0 anchor clips on some combination of the two.
+  // Portaled to <body> with fixed, viewport-relative coordinates (computed
+  // here from getBoundingClientRect) rather than positioned absolute inside
+  // containerRef. The nav search filter bar wraps this in a horizontally
+  // scrolling row on mobile, and overflow-x:auto there forces overflow-y to
+  // auto too (CSS spec quirk), clipping an absolutely positioned dropdown
+  // taller than that row. A portal escapes that ancestor clipping entirely.
+  // Positioning still picks whichever side keeps the dropdown fully
+  // on-screen — the pill can sit anywhere from flush-left to flush-right
+  // depending on the surface (nav search filter bar vs. rabbi page) and the
+  // viewport width, so a fixed left/right anchor clips on some combination
+  // of the two.
   useEffect(() => {
     if (!isOpen || !containerRef.current) return
     const rect = containerRef.current.getBoundingClientRect()
     const margin = 24
     const vw = window.innerWidth
     const width = Math.min(288, vw - margin * 2)
+    const top = rect.bottom + 4
 
+    let left: number
     if (rect.right - width >= margin) {
-      setDropdownStyle({ right: 0 })
+      left = rect.right - width
     } else if (rect.left + width <= vw - margin) {
-      setDropdownStyle({ left: 0 })
+      left = rect.left
     } else {
-      const desiredLeft = Math.max(margin, Math.min(vw - width - margin, rect.left - (width - rect.width) / 2))
-      setDropdownStyle({ left: desiredLeft - rect.left })
+      left = Math.max(margin, Math.min(vw - width - margin, rect.left - (width - rect.width) / 2))
     }
+    setDropdownStyle({ top, left, width })
+  }, [isOpen])
+
+  // Since the dropdown no longer moves with its trigger (fixed position,
+  // portaled out of any scrolling ancestor), close it on scroll rather than
+  // leaving it stranded over content it no longer points at.
+  useEffect(() => {
+    if (!isOpen) return
+    function handleScroll() { setIsOpen(false) }
+    document.addEventListener('scroll', handleScroll, true)
+    return () => document.removeEventListener('scroll', handleScroll, true)
   }, [isOpen])
 
   const isActive = value.from !== null || value.to !== null
@@ -125,7 +146,9 @@ export default function DateRangeFilter({
     function handleClick(e: MouseEvent) {
       const target = e.target as Node
       const active = document.activeElement
-      const inside = containerRef.current?.contains(target) || (!!active && !!containerRef.current?.contains(active))
+      const inside = containerRef.current?.contains(target)
+        || (!!active && !!containerRef.current?.contains(active))
+        || dropdownRef.current?.contains(target)
       if (!inside) setIsOpen(false)
     }
     document.addEventListener('click', handleClick)
@@ -184,9 +207,10 @@ export default function DateRangeFilter({
         </svg>
       </button>
 
-      {isOpen && (
+      {isOpen && dropdownStyle && createPortal(
         <div
-          className="absolute top-full mt-1 w-72 max-w-[calc(100vw-2rem)] bg-white border border-stone-200 rounded-lg shadow-md z-50 overflow-hidden"
+          ref={dropdownRef}
+          className="fixed max-w-[calc(100vw-2rem)] bg-white border border-stone-200 rounded-lg shadow-md z-50 overflow-hidden"
           style={dropdownStyle}
         >
           <div className="py-1">
@@ -257,7 +281,8 @@ export default function DateRangeFilter({
               </button>
             </div>
           )}
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   )

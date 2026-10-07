@@ -64,6 +64,10 @@ function stripLabel(line: string, label: string): string {
 // first one was a mistake). Detected by exact text (not a fixed line number) so it still
 // works when the optional rabbi/description lines are omitted.
 const MODE_RE = /^(merge|separate)$/i
+
+// Senders who never include a rabbi line (they only send their own shiurim; the rabbi
+// comes from sender-rabbi-map.json), so the line under the title is always the description.
+const NO_RABBI_LINE_SENDERS = new Set(['davidfistelcpa@gmail.com'])
 const PICK_RE = /^only\s+(\d+)$/i
 
 export async function parseIngestEmail(rawEmail: Buffer): Promise<ParseResult> {
@@ -124,8 +128,12 @@ export async function parseIngestEmail(rawEmail: Buffer): Promise<ParseResult> {
   // to include their name (their sender email already resolves the rabbi via
   // senderRabbiMap). In that case take line 2 as the description and pull the
   // rabbi from the map.
+  //
+  // Senders in NO_RABBI_LINE_SENDERS only ever send their own shiurim and never type
+  // a rabbi line, so for them line 2 is ALWAYS the description, however short.
   const line2 = headLines[1] ?? ''
-  const line2IsDescription = line2.split(/\s+/).filter(Boolean).length > 4
+  const line2IsDescription = NO_RABBI_LINE_SENDERS.has(senderEmail)
+    || line2.split(/\s+/).filter(Boolean).length > 4
 
   const rabbi = line2 && !line2IsDescription ? stripLabel(line2, 'rabbi') : knownRabbi
   const description = line2IsDescription

@@ -477,6 +477,18 @@ describe('parseIngestEmail', () => {
     }
   })
 
+  it('always treats line 2 as the description for Rabbi Fistel, even when short', async () => {
+    const email = FIXTURE_LINE2_LONG_DESCRIPTION
+      .replace('efeder@ybt.org', 'davidfistelcpa@gmail.com')
+      .replace('An in-depth look at the halachos of honoring Shabbos', 'Hilchos Shabbos')
+    const result = await parseIngestEmail(Buffer.from(email))
+    expect(result.ok).toBe(true)
+    if (result.ok) {
+      expect(result.data.rabbi).toBe('Rabbi Fistel')
+      expect(result.data.description).toBe('Hilchos Shabbos')
+    }
+  })
+
   it('still accepts legacy Title:/Rabbi:/Description: labels', async () => {
     const result = await parseIngestEmail(Buffer.from(FIXTURE_LABELED))
     expect(result.ok).toBe(true)

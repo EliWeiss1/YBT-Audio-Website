@@ -1,9 +1,12 @@
 import { createBrowserClient } from '@supabase/ssr'
+import { fetchWithTimeout } from '@/lib/supabase-fetch'
 
-// Browser client - used in client components and direct imports
+// Browser client - used in client components and direct imports. Also runs
+// server-side (the /feed prerender at build time), hence the timeout.
 export const supabase = createBrowserClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  { global: { fetch: fetchWithTimeout(10000) } }
 )
 
 // ---- Progress helpers ----

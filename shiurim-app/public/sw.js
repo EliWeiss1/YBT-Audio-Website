@@ -13,7 +13,7 @@
 
 // Any byte change to this file triggers the browser's SW update flow —
 // bump this on future edits to force one.
-const SW_VERSION = 'v3'
+const SW_VERSION = 'v4'
 
 const AUDIO_CACHE = 'audio-downloads-v1'
 const PAGES_CACHE = 'pages-v1'
@@ -174,20 +174,46 @@ async function audioFromCache(request) {
 
 // ── Strategies ───────────────────────────────────────────────────────────────
 
-/** Pages: network first, fall back to cache, then to the offline page.
+// How long a page navigation may wait on the network before falling back.
+const NAV_TIMEOUT_MS = 8000
+
+/** Resolve with `promise`, or reject if it hasn't settled within `ms`. */
+function withTimeout(promise, ms) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error('timeout')), ms)
+    promise.then(
+      (value) => {
+        clearTimeout(timer)
+        resolve(value)
+      },
+      (error) => {
+        clearTimeout(timer)
+        reject(error)
+      }
+    )
+  })
+}
+
+/** Pages: network first (with a timeout), fall back to cache, then to the offline page.
  *  The /offline fallback is only for genuine offline navigations. If the fetch
  *  throws while the browser reports itself online (a transient server/edge
  *  hiccup), surfacing "You're offline" is wrong and confusing — retry once and
  *  otherwise return the real error, so a page like /feed isn't misreported as
  *  unavailable offline. */
 async function pageNetworkFirst(request) {
-  try {
-    const response = await fetch(request)
+  const network = fetch(request).then((response) => {
     if (response.ok) {
       putInCache(PAGES_CACHE, request, response.clone(), 60)
     }
     return response
+  })
+  network.catch(() => {}) // may settle after we've stopped waiting on it
+
+  try {
+    return await withTimeout(network, NAV_TIMEOUT_MS)
   } catch (err) {
+    // Failed or stalled (a hung connection would otherwise spin forever).
+    // A stalled fetch keeps running and still refreshes the cache if it lands.
     const cached = await caches.match(request, { cacheName: PAGES_CACHE })
     if (cached) return cached
 
@@ -198,9 +224,10 @@ async function pageNetworkFirst(request) {
       return new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } })
     }
 
-    // Online but the navigation fetch failed: retry once before giving up.
+    // Online but the navigation fetch failed or stalled: retry on a fresh
+    // request (often a new connection) and take whichever answers first.
     try {
-      return await fetch(request)
+      return await withTimeout(Promise.any([network, fetch(request)]), NAV_TIMEOUT_MS)
     } catch {
       return new Response('Temporarily unavailable', {
         status: 503,

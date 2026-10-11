@@ -20,6 +20,7 @@ Because the app *is* the website, every deploy updates the installed app automat
 - **Listen** with playback speeds 0.5×–2×, ±15/30s skip, keyboard shortcuts, lock-screen / Bluetooth controls (Media Session API)
 - **Progress sync** — position auto-saves every 10 s to Supabase, resumes on any device; completed shiurim are tracked (and never downgraded)
 - **Offline downloads** — save shiurim to the device (browser Cache Storage) and play them in airplane mode; manage them at `/downloads`
+- **Parsha of the week** — a homepage button links to `/parsha`, which lists every shiur filed under this week's parsha (both on a double week), newest first with a rabbi filter. The week turns over on Sunday (computed per request via `@hebcal/core`, diaspora schedule — see `lib/parsha.ts`); no cron needed
 - **Offline-resilient progress** — saves made while offline are queued in localStorage and flushed when the connection returns
 - **Saved shiurim** (bookmarks), listening stats, per-shiur discussions and a global comment feed
 

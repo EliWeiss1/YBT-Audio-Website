@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import BackButton from '@/components/lectures/BackButton'
 import { getWeeklyParshiyot, formatParshaTitle } from '@/lib/parsha'
 import { getParshaLectures } from '@/lib/parsha-server'
 import { getMyShiurimData } from '@/lib/my-shiurim-server'
@@ -17,23 +17,13 @@ export default async function ParshaPage() {
 
   return (
     <div className="px-4 py-6 sm:p-8 max-w-4xl mx-auto">
+      <div className="mb-2"><BackButton href="/" /></div>
       <p className="text-xs text-stone-400 tracking-widest uppercase mb-1">Parsha of the week</p>
       <h1 className="text-3xl font-bold text-stone-900 mb-1">
         {parshiyot.length ? `Parshas ${formatParshaTitle(parshiyot)}` : 'Parsha of the week'}
       </h1>
       <p className="text-stone-500 mb-6">
-        Shiurim on this week&apos;s parsha, newest first.{' '}
-        {parshiyot.map((p, i) => (
-          <span key={p.nodeId}>
-            {i > 0 && ' · '}
-            <Link
-              href={`/lectures?node=${p.nodeId}`}
-              className="text-emerald-700 hover:text-emerald-800"
-            >
-              All of {p.name} →
-            </Link>
-          </span>
-        ))}
+        Shiurim on this week&apos;s parsha, newest first.
       </p>
 
       {parshiyot.length === 0 ? (

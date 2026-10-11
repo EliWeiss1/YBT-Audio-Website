@@ -16,7 +16,9 @@ const backLinkClasses =
   'inline-flex items-center gap-1.5 -ml-1.5 pl-1.5 pr-3 py-2 min-h-[44px] rounded-lg ' +
   'text-sm text-stone-500 hover:text-stone-700 hover:bg-stone-100 transition-colors'
 
-export default function BackButton() {
+/** With `href`, always links there (e.g. a top-level page that should return to
+ *  the homepage); without it, goes back in history when there is some. */
+export default function BackButton({ href }: { href?: string } = {}) {
   const router = useRouter()
   // Defaults false during SSR/first paint (no `window`), then flips true on mount
   // if the app shell had already loaded before this page — see lib/app-session.ts.
@@ -29,7 +31,7 @@ export default function BackButton() {
     setHasHistory(isAppLoaded())
   }, [])
 
-  if (hasHistory) {
+  if (hasHistory && !href) {
     return (
       <button onClick={() => router.back()} className={backLinkClasses}>
         <BackIcon cls="w-4 h-4" />
@@ -39,7 +41,7 @@ export default function BackButton() {
   }
 
   return (
-    <Link href="/lectures" className={backLinkClasses}>
+    <Link href={href ?? '/lectures'} className={backLinkClasses}>
       <BackIcon cls="w-4 h-4" />
       Back
     </Link>

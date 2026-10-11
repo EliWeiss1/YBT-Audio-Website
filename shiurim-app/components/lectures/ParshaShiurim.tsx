@@ -103,7 +103,7 @@ export default function ParshaShiurim({
                   type="button"
                   aria-pressed={on}
                   onClick={() => pickSection(opt.nodeId)}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors
                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600/40
                     ${on ? 'bg-emerald-700 text-white' : 'text-stone-600 hover:bg-stone-100 active:bg-stone-200'}`}
                 >

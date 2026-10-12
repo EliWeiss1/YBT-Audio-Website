@@ -41,6 +41,20 @@ export async function categorize(title: string, description: string): Promise<Ca
   return await categorizeWithHaiku(title, description)
 }
 
+// Where a shiur lands when categorization itself fails (Anthropic out of credits, outage,
+// unparseable reply). Low confidence → the caller files an /admin/flags entry, so the shiur
+// is still saved and published rather than lost with the callback returning a 500.
+const FALLBACK_NODE_PATH = ['misc', 'misc-general']
+
+export async function categorizeSafe(title: string, description: string): Promise<CategorizeResult> {
+  try {
+    return await categorize(title, description)
+  } catch (e) {
+    console.error('[categorizer] failed, placing in Misc for admin review:', e)
+    return { tier: 2, nodePath: FALLBACK_NODE_PATH, confidence: 'low', alternatives: [] }
+  }
+}
+
 async function categorizeWithHaiku(title: string, description: string): Promise<CategorizeResult> {
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 

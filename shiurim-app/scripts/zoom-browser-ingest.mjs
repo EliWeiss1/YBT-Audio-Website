@@ -48,6 +48,14 @@ async function postResult(body) {
   return res
 }
 
+// For the success path: a non-2xx callback means the shiur was NOT recorded, so fail the
+// job (→ failure report / admin email) instead of exiting 0 with the recording silently lost.
+async function postResultOrThrow(body) {
+  const res = await postResult(body)
+  if (!res.ok) throw new Error(`ingest-complete callback returned ${res.status}`)
+  return res
+}
+
 // Poll `cond` until true or the deadline; returns whether it became true.
 async function waitUntil(cond, timeoutMs, page, intervalMs = 500) {
   const deadline = Date.now() + timeoutMs
@@ -277,7 +285,7 @@ async function main() {
     const duration = await getDuration(buf, 'audio/mp4')
     const r2Key = `ingest/${date}/${LECTURE_ID}.mp3`
     const publicUrl = await uploadToR2(r2, r2Key, buf)
-    await postResult({ ...common, lectureId: LECTURE_ID, title: TITLE, r2Key, publicUrl, duration })
+    await postResultOrThrow({ ...common, lectureId: LECTURE_ID, title: TITLE, r2Key, publicUrl, duration })
     console.log(`pick: kept recording ${n}/${clips.length} (${buf.length} bytes, ${duration}s).`)
     return
   }
@@ -294,7 +302,7 @@ async function main() {
       const r2Key = `ingest/${date}/${lectureId}.mp3`
       const publicUrl = await uploadToR2(r2, r2Key, buf)
       const duration = await getDuration(buf, 'audio/mp4')
-      await postResult({
+      await postResultOrThrow({
         ...common,
         lectureId,
         title: titles[i] || `${TITLE} (Part ${i + 1})`,
@@ -319,7 +327,7 @@ async function main() {
   }
   const r2Key = `ingest/${date}/${LECTURE_ID}.mp3`
   const publicUrl = await uploadToR2(r2, r2Key, buf)
-  await postResult({
+  await postResultOrThrow({
     ...common,
     lectureId: LECTURE_ID,
     title: TITLE,

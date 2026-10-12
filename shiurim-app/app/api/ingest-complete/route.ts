@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { categorize } from '@/lib/ingest/categorizer'
+import { categorizeSafe } from '@/lib/ingest/categorizer'
 import { categorizeDrive } from '@/lib/ingest/drive-categorizer'
 import { writePendingLecture, writeFailedIngestion, writeCategoryFlag, triggerDeploy } from '@/lib/ingest/lectures-writer'
 import { sendFlagNotification, sendFailureNotification, sendAutoMergeNotification } from '@/lib/ingest/notifier'
@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
     nodeLabel = driveResult.nodeLabel
   } else {
     // Zoom path (or a Drive pin that failed to resolve → fall back to whole-tree).
-    const catResult = await categorize(title, description ?? '')
+    const catResult = await categorizeSafe(title, description ?? '')
     nodePath = catResult.nodePath
     shouldFlag = catResult.tier === 2 && catResult.confidence === 'low'
     if (shouldFlag) {

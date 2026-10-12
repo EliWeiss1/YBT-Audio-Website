@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
+import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import LayoutShell from '@/components/layout/LayoutShell'
@@ -43,6 +44,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body className={inter.className}>
+        {/* Catch Chrome's beforeinstallprompt even if it fires before React hydrates;
+            PwaInstallProvider picks the stashed event up on mount. */}
+        <Script id="pwa-early-install-prompt" strategy="beforeInteractive">{`
+          window.addEventListener('beforeinstallprompt', function (e) {
+            e.preventDefault();
+            window.__deferredInstallPrompt = e;
+          });
+        `}</Script>
         <PwaInstallProvider>
           <PlayerProvider userId={user?.id}>
             <ScopeProvider>

@@ -11,14 +11,23 @@ export const REMIND_AFTER_DAYS = 30
 
 export type InstallPlatform = 'android' | 'ios' | 'other'
 
-/** True for iOS Safari, which has no native install prompt (manual A2HS only). */
-export function isIosUserAgent(userAgent: string): boolean {
-  return /iphone|ipad|ipod/i.test(userAgent)
+/** localStorage key set once we positively know the app is installed on this device. */
+export const INSTALLED_KEY = 'pwa-installed:v1'
+
+/**
+ * True for iOS, which has no native install prompt (manual A2HS only).
+ * iPadOS 13+ defaults to "Request Desktop Website" and reports a Macintosh UA,
+ * so a Macintosh UA with a touch screen (`maxTouchPoints` > 1) is an iPad —
+ * real Macs report 0.
+ */
+export function isIosUserAgent(userAgent: string, maxTouchPoints: number = 0): boolean {
+  if (/iphone|ipad|ipod/i.test(userAgent)) return true
+  return /macintosh/i.test(userAgent) && maxTouchPoints > 1
 }
 
 /** True for phone/tablet user agents (iOS or Android) — false for desktop/laptop. */
-export function isMobileUserAgent(userAgent: string): boolean {
-  return isIosUserAgent(userAgent) || /android/i.test(userAgent)
+export function isMobileUserAgent(userAgent: string, maxTouchPoints: number = 0): boolean {
+  return isIosUserAgent(userAgent, maxTouchPoints) || /android/i.test(userAgent)
 }
 
 /**
@@ -41,8 +50,12 @@ export function wasDismissedRecently(
  * event means Android/desktop native install is available, and its absence
  * means installability is unknown (fall back to manual instructions).
  */
-export function resolvePlatform(userAgent: string, hasDeferredPrompt: boolean): InstallPlatform {
-  if (isIosUserAgent(userAgent)) return 'ios'
+export function resolvePlatform(
+  userAgent: string,
+  hasDeferredPrompt: boolean,
+  maxTouchPoints: number = 0,
+): InstallPlatform {
+  if (isIosUserAgent(userAgent, maxTouchPoints)) return 'ios'
   return hasDeferredPrompt ? 'android' : 'other'
 }
 
@@ -50,23 +63,16 @@ export function resolvePlatform(userAgent: string, hasDeferredPrompt: boolean): 
  * Whether to surface any "Install app" affordance.
  *
  * Mobile-only: this is a phone/tablet home-screen affordance, so desktop and
- * laptop user agents never see it, even though desktop Chrome/Edge can also
- * fire `beforeinstallprompt` for a desktop-app install.
+ * laptop user agents never see it.
  *
- * Never when already installed (standalone). On iOS there's no API to tell
- * whether the site is already on the home screen, so we offer whenever not
- * standalone. On Chromium (Android) `beforeinstallprompt` stops firing once
- * the PWA is installed, so a held prompt (`canPrompt`) is our signal that
- * it isn't installed yet — no prompt means we stay quiet rather than nag a user
- * who already has the app.
+ * Shown by default on every mobile device and hidden only on positive evidence
+ * that the app is already installed (`installed`: running standalone, an
+ * `appinstalled` event, or the persisted INSTALLED_KEY flag). There is no
+ * reliable way to detect an install from a normal browser tab — iOS exposes
+ * nothing, and Chromium's `beforeinstallprompt` is missing on Firefox/Samsung/
+ * in-app browsers and can fire before we attach a listener — so absence of
+ * evidence must not hide the entry.
  */
-export function shouldOfferInstall(
-  installed: boolean,
-  platform: InstallPlatform,
-  canPrompt: boolean,
-  isMobile: boolean,
-): boolean {
-  if (installed || !isMobile) return false
-  if (platform === 'ios') return true
-  return canPrompt
+export function shouldOfferInstall(installed: boolean, isMobile: boolean): boolean {
+  return isMobile && !installed
 }

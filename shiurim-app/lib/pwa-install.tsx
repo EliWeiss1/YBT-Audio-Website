@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import {
   DISMISS_KEY,
+  INSTALLED_KEY,
   REMIND_AFTER_DAYS,
   isMobileUserAgent,
   resolvePlatform,
@@ -43,6 +44,28 @@ function detectStandalone(): boolean {
   )
 }
 
+declare global {
+  interface Window {
+    /** Set by the beforeinstallprompt listener in app/layout.tsx, which runs before hydration. */
+    __deferredInstallPrompt?: Event
+  }
+}
+
+function setInstalledFlag(on: boolean) {
+  try {
+    if (on) localStorage.setItem(INSTALLED_KEY, '1')
+    else localStorage.removeItem(INSTALLED_KEY)
+  } catch { /* private mode — ignore */ }
+}
+
+function readInstalledFlag(): boolean {
+  try {
+    return localStorage.getItem(INSTALLED_KEY) === '1'
+  } catch {
+    return false
+  }
+}
+
 const PwaInstallContext = createContext<PwaInstallState | null>(null)
 
 export function PwaInstallProvider({ children }: { children: React.ReactNode }) {
@@ -50,11 +73,24 @@ export function PwaInstallProvider({ children }: { children: React.ReactNode }) 
   const [canPrompt, setCanPrompt] = useState(false)
   const [dismissedRecently, setDismissedRecently] = useState(false)
   const [userAgent, setUserAgent] = useState('')
+  const [maxTouchPoints, setMaxTouchPoints] = useState(0)
   const deferredPrompt = useRef<BeforeInstallPromptEvent | null>(null)
 
   useEffect(() => {
     setUserAgent(navigator.userAgent)
-    setInstalled(detectStandalone())
+    setMaxTouchPoints(navigator.maxTouchPoints ?? 0)
+    // Standalone = definitely installed; remember it so a later visit in a
+    // normal browser tab on this device (shared storage on Android) also knows.
+    const standalone = detectStandalone()
+    if (standalone) setInstalledFlag(true)
+    setInstalled(standalone || readInstalledFlag())
+
+    // The browser may have fired beforeinstallprompt before React hydrated;
+    // the inline listener in layout.tsx stashed it for us.
+    if (window.__deferredInstallPrompt) {
+      deferredPrompt.current = window.__deferredInstallPrompt as BeforeInstallPromptEvent
+      setCanPrompt(true)
+    }
     try {
       setDismissedRecently(wasDismissedRecently(localStorage.getItem(DISMISS_KEY), Date.now()))
     } catch { /* private mode — leave false */ }
@@ -63,10 +99,16 @@ export function PwaInstallProvider({ children }: { children: React.ReactNode }) 
       e.preventDefault()
       deferredPrompt.current = e as BeforeInstallPromptEvent
       setCanPrompt(true)
+      // Chromium only fires this when the app is NOT installed, so any
+      // earlier "installed" flag is stale (e.g. the user uninstalled it).
+      setInstalledFlag(false)
+      setInstalled(detectStandalone())
     }
     const onInstalled = () => {
       deferredPrompt.current = null
+      window.__deferredInstallPrompt = undefined
       setCanPrompt(false)
+      setInstalledFlag(true)
       setInstalled(true)
     }
 
@@ -83,8 +125,10 @@ export function PwaInstallProvider({ children }: { children: React.ReactNode }) 
     if (!evt) return 'unavailable'
     await evt.prompt()
     const { outcome } = await evt.userChoice
-    // A deferred prompt is single-use; drop it so the UI stops offering it.
+    // A deferred prompt is single-use; drop it so the UI stops offering the
+    // native dialog (the sidebar entry stays, falling back to instructions).
     deferredPrompt.current = null
+    window.__deferredInstallPrompt = undefined
     setCanPrompt(false)
     return outcome
   }, [])
@@ -97,7 +141,7 @@ export function PwaInstallProvider({ children }: { children: React.ReactNode }) 
   }, [])
 
   const value = useMemo<PwaInstallState>(() => {
-    const platform = resolvePlatform(userAgent, canPrompt)
+    const platform = resolvePlatform(userAgent, canPrompt, maxTouchPoints)
     return {
       installed,
       platform,
@@ -105,9 +149,9 @@ export function PwaInstallProvider({ children }: { children: React.ReactNode }) 
       promptInstall,
       dismissedRecently,
       dismissBanner,
-      shouldOffer: shouldOfferInstall(installed, platform, canPrompt, isMobileUserAgent(userAgent)),
+      shouldOffer: shouldOfferInstall(installed, isMobileUserAgent(userAgent, maxTouchPoints)),
     }
-  }, [installed, userAgent, canPrompt, promptInstall, dismissedRecently, dismissBanner])
+  }, [installed, userAgent, maxTouchPoints, canPrompt, promptInstall, dismissedRecently, dismissBanner])
 
   return <PwaInstallContext.Provider value={value}>{children}</PwaInstallContext.Provider>
 }

@@ -27,6 +27,17 @@ describe('isIosUserAgent', () => {
   it('returns false for empty/missing user agent', () => {
     expect(isIosUserAgent('')).toBe(false)
   })
+
+  it('detects iPadOS 13+ in desktop mode (Macintosh UA + touch screen)', () => {
+    const macUa = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Safari/605.1.15'
+    expect(isIosUserAgent(macUa, 5)).toBe(true)
+  })
+
+  it('does not mistake a real Mac (no touch screen) for an iPad', () => {
+    const macUa = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Safari/605.1.15'
+    expect(isIosUserAgent(macUa)).toBe(false)
+    expect(isIosUserAgent(macUa, 0)).toBe(false)
+  })
 })
 
 describe('isMobileUserAgent', () => {
@@ -51,6 +62,12 @@ describe('isMobileUserAgent', () => {
 
   it('returns false for empty/missing user agent', () => {
     expect(isMobileUserAgent('')).toBe(false)
+  })
+
+  it('treats an iPad reporting a Macintosh UA as mobile', () => {
+    const macUa = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Safari/605.1.15'
+    expect(isMobileUserAgent(macUa, 5)).toBe(true)
+    expect(isMobileUserAgent(macUa, 0)).toBe(false)
   })
 })
 
@@ -108,33 +125,26 @@ describe('resolvePlatform', () => {
 })
 
 describe('shouldOfferInstall', () => {
-  it('never offers when already running installed (standalone)', () => {
-    expect(shouldOfferInstall(true, 'ios', false, true)).toBe(false)
-    expect(shouldOfferInstall(true, 'android', true, true)).toBe(false)
-    expect(shouldOfferInstall(true, 'other', false, true)).toBe(false)
+  it('never offers when already running installed (standalone / known installed)', () => {
+    expect(shouldOfferInstall(true, true)).toBe(false)
   })
 
-  it('offers on iOS when not standalone (no API to detect home-screen install)', () => {
-    expect(shouldOfferInstall(false, 'ios', false, true)).toBe(true)
+  it('offers by default on any mobile device that is not known to have it installed', () => {
+    // No dependence on a held beforeinstallprompt: Firefox, Samsung Internet,
+    // in-app browsers and missed events must all still get the entry.
+    expect(shouldOfferInstall(false, true)).toBe(true)
   })
 
-  it('offers on mobile non-iOS only while a native prompt is held', () => {
-    // A held prompt means Chromium considers it not-yet-installed.
-    expect(shouldOfferInstall(false, 'android', true, true)).toBe(true)
+  it('never offers on desktop/laptop', () => {
+    expect(shouldOfferInstall(false, false)).toBe(false)
+    expect(shouldOfferInstall(true, false)).toBe(false)
   })
+})
 
-  it('does NOT offer on mobile non-iOS without a prompt — the app is likely already installed', () => {
-    // Chromium suppresses beforeinstallprompt once the PWA is installed, so a
-    // browser tab of an installed app lands here and must stay quiet.
-    expect(shouldOfferInstall(false, 'other', false, true)).toBe(false)
-    expect(shouldOfferInstall(false, 'android', false, true)).toBe(false)
-  })
-
-  it('never offers on desktop/laptop, even with a held prompt or iOS-like UA', () => {
-    // Desktop Chrome/Edge fire beforeinstallprompt too, but this is a
-    // mobile-only affordance — laptops never see the install entry.
-    expect(shouldOfferInstall(false, 'android', true, false)).toBe(false)
-    expect(shouldOfferInstall(false, 'other', false, false)).toBe(false)
-    expect(shouldOfferInstall(false, 'ios', false, false)).toBe(false)
+describe('resolvePlatform with iPadOS desktop UA', () => {
+  it('is "ios" for a touch Macintosh UA', () => {
+    const macUa = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15'
+    expect(resolvePlatform(macUa, false, 5)).toBe('ios')
+    expect(resolvePlatform(macUa, false, 0)).toBe('other')
   })
 })

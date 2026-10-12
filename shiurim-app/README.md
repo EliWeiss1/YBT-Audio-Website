@@ -7,6 +7,7 @@ A library of 18,000+ shiurim from Yeshiva Bnei Torah — browse by category, sea
 ## Installing the app on your phone
 
 - **Android (Chrome):** open the site → tap the **Install** prompt (or browser menu → *Add to Home screen* → *Install*).
+- **Any mobile browser:** the sidebar always shows an **Install app** entry (signed in or not) unless the app is known to be installed already; it fires the native prompt when the browser offers one, otherwise shows manual steps.
 - **iPhone (Safari):** open the site → tap **Share** → **Add to Home Screen**.
 
 The installed app opens full-screen, keeps you signed in, supports lock-screen playback controls, and plays downloaded shiurim with no connection.

@@ -113,6 +113,17 @@ describe('parseMasoretFilename', () => {
       .toMatchObject({ ok: true, date: '2026-02-15', title: 'Parshat Mishpatim - The widow and the orphan' })
   })
 
+  it('accepts a 4-digit year in the date (M-D-YYYY)', () => {
+    expect(parseMasoretFilename(
+      'Rabbi Weiss - Parshat Ki Teitze - Chapter 24 Verse 19 Drop your money - Masoret 8-23-2026.m4a',
+    )).toEqual({
+      ok: true,
+      date: '2026-08-23',
+      rabbiToken: 'Rabbi Weiss',
+      title: 'Parshat Ki Teitze - Chapter 24 Verse 19 Drop your money',
+    })
+  })
+
   it('returns a null date when the title has no date after the Masoret marker', () => {
     expect(parseMasoretFilename(
       'Rabbi Weiss - Parshat Shelach - Chapter 14 Verse 17 Slow to Anger - 2025-2026 - Masoret.m4a',

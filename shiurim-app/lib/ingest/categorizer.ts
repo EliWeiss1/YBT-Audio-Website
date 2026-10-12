@@ -19,9 +19,19 @@ const DAF_RE = /\b([1-9]|[1-9]\d|1\d{2}|200)[ab]?\b/
 const PIRKEI_AVOT_RE = /\bpirkei\s+avo[st]\b/i
 const PIRKEI_AVOT_NODE_PATH = ['kisvei-chazal', 'kisvei-chazal-all']
 
+// Rabbi Feder's "Kisuy Hadam" series (covering the blood, Chulin 87a) has no masechta name
+// or daf in its titles, so it fell through to Haiku, which scattered it across Chulin,
+// Menachot, Kashrut and Lashon Harah. Pin the whole series to Chulin.
+const KISUY_HADAM_RE = /\bkis+(?:uy|ui|oy|y)\s+ha-?d[ao]m\b/i
+const KISUY_HADAM_NODE_PATH = ['gemarah', 'chulin']
+
 export async function categorize(title: string, description: string): Promise<CategorizeResult> {
   if (PIRKEI_AVOT_RE.test(title)) {
     return { tier: 1, nodePath: PIRKEI_AVOT_NODE_PATH, confidence: 'high' }
+  }
+
+  if (KISUY_HADAM_RE.test(title)) {
+    return { tier: 1, nodePath: KISUY_HADAM_NODE_PATH, confidence: 'high' }
   }
 
   const lower = title.toLowerCase()

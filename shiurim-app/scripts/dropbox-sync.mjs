@@ -93,12 +93,15 @@ function dropboxClient() {
 //     '' = the app-folder root for an App-folder-scoped app; '/Sub/Folder' otherwise.
 async function listAudioFiles(dbx, { path, shareLink }) {
   const files = []
-  const pushFile = (e) => {
+  // Entries listed through a shared link come back WITHOUT path_lower, so for those the
+  // path (relative to the link root, for content ops) is built from the parent + name.
+  // Without it the download asked for the link root itself → 409 shared_link_is_directory.
+  const pushFile = (e, parent = '') => {
     if (e['.tag'] === 'file' && AUDIO_NAME_RE.test(e.name)) {
       files.push({
         id: e.id || e.path_lower,          // stable Dropbox id ("id:..."); path is the fallback key
         name: e.name,
-        path: e.path_lower,                // path within the link / account, for content ops
+        path: e.path_lower ?? `${parent}/${e.name}`, // path within the link / account, for content ops
         clientModified: e.client_modified, // ISO; the recording's timestamp
       })
     }
@@ -110,8 +113,8 @@ async function listAudioFiles(dbx, { path, shareLink }) {
       let res = await dbx.filesListFolder({ path: sub, shared_link: { url: shareLink } })
       const handle = async (entries) => {
         for (const e of entries) {
-          if (e['.tag'] === 'folder') await walk(e.path_lower)
-          else pushFile(e)
+          if (e['.tag'] === 'folder') await walk(e.path_lower ?? `${sub}/${e.name}`)
+          else pushFile(e, sub)
         }
       }
       await handle(res.result.entries)

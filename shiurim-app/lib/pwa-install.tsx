@@ -44,6 +44,9 @@ function detectStandalone(): boolean {
   )
 }
 
+/** How long a tap waits for a not-yet-delivered beforeinstallprompt before giving up. */
+const PROMPT_WAIT_MS = 1500
+
 declare global {
   interface Window {
     /** Set by the beforeinstallprompt listener in app/layout.tsx, which runs before hydration. */
@@ -75,6 +78,8 @@ export function PwaInstallProvider({ children }: { children: React.ReactNode }) 
   const [userAgent, setUserAgent] = useState('')
   const [maxTouchPoints, setMaxTouchPoints] = useState(0)
   const deferredPrompt = useRef<BeforeInstallPromptEvent | null>(null)
+  // Callbacks waiting for a late beforeinstallprompt (see promptInstall).
+  const promptWaiters = useRef<Array<() => void>>([])
 
   useEffect(() => {
     setUserAgent(navigator.userAgent)
@@ -99,6 +104,7 @@ export function PwaInstallProvider({ children }: { children: React.ReactNode }) 
       e.preventDefault()
       deferredPrompt.current = e as BeforeInstallPromptEvent
       setCanPrompt(true)
+      promptWaiters.current.splice(0).forEach((resolve) => resolve())
       // Chromium only fires this when the app is NOT installed, so any
       // earlier "installed" flag is stale (e.g. the user uninstalled it).
       setInstalledFlag(false)
@@ -121,6 +127,19 @@ export function PwaInstallProvider({ children }: { children: React.ReactNode }) 
   }, [])
 
   const promptInstall = useCallback(async (): Promise<PromptResult> => {
+    // Chromium may still be about to hand us the event (tap right after load):
+    // wait briefly so the tap installs instead of falling back to instructions.
+    // Browsers without the API (iOS Safari, Firefox) never send one — don't wait.
+    if (!deferredPrompt.current && 'onbeforeinstallprompt' in window) {
+      await new Promise<void>((resolve) => {
+        const done = () => { clearTimeout(timer); resolve() }
+        const timer = setTimeout(() => {
+          promptWaiters.current = promptWaiters.current.filter((w) => w !== done)
+          resolve()
+        }, PROMPT_WAIT_MS)
+        promptWaiters.current.push(done)
+      })
+    }
     const evt = deferredPrompt.current
     if (!evt) return 'unavailable'
     await evt.prompt()

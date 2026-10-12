@@ -5,22 +5,19 @@ import { usePwaInstall } from '@/lib/pwa-install'
 import InstallInstructions from './InstallInstructions'
 
 /** Persistent, quiet "Install app" entry in the sidebar nav. Mobile-only,
- *  hidden once the app is installed (see shouldOfferInstall). Fires the
- *  native prompt when one is held, otherwise falls back to manual instructions. */
+ *  hidden once the app is installed (see shouldOfferInstall). Installs via the
+ *  native prompt (waiting briefly for one), else falls back to manual instructions. */
 export default function InstallSidebarItem() {
-  const { shouldOffer, platform, canPrompt, promptInstall } = usePwaInstall()
+  const { shouldOffer, platform, promptInstall } = usePwaInstall()
   const [showInstructions, setShowInstructions] = useState(false)
 
   if (!shouldOffer) return null
 
   const handleClick = async () => {
-    if (canPrompt) {
-      const result = await promptInstall()
-      // If the browser had nothing to show, fall back to instructions.
-      if (result === 'unavailable') setShowInstructions(true)
-      return
-    }
-    setShowInstructions(true)
+    // Always try the native install first; only browsers with no install API
+    // (iOS Safari, Firefox) or none on offer get manual steps instead.
+    const result = await promptInstall()
+    if (result === 'unavailable') setShowInstructions(true)
   }
 
   return (

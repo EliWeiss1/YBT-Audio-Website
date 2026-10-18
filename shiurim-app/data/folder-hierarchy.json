@@ -1177,6 +1177,10 @@
             {
               "id": "kisvei-rishonim-rambam-moreh-nevuchim",
               "label": "Moreh Nevuchim"
+            },
+            {
+              "id": "kisvei-rishonim-rambam-sefer-hamitzvos",
+              "label": "Sefer Hamitzvos"
             }
           ]
         },

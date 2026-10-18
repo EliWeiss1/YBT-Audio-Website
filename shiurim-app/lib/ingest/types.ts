@@ -56,8 +56,26 @@ export type PendingLecture = {
   node_label?: string
 }
 
-export function generateLectureId(): string {
+// Senders whose shiurim are NOT given in yeshiva. Their ids use a different prefix, which
+// is what keeps them out of the homepage's "Shiurim in Yeshiva" tab (app/page.tsx only
+// treats INGEST- ids as in-yeshiva) and in "All Community Shiurim". `titleSuffix` matches
+// the label the (retired) Drive sync stamped on the same shiurim, so old and new Masoret
+// shiurim read the same.
+export const COMMUNITY_SENDERS: Record<string, { idPrefix: string; titleSuffix: string }> = {
+  'masoretclasses@gmail.com': { idPrefix: 'MASORET', titleSuffix: ' (Masoret)' },
+}
+
+export function communitySender(senderEmail: string | undefined) {
+  return COMMUNITY_SENDERS[(senderEmail ?? '').trim().toLowerCase()] ?? null
+}
+
+export function applyTitleSuffix(title: string, senderEmail: string | undefined): string {
+  const suffix = communitySender(senderEmail)?.titleSuffix
+  return suffix && !title.trim().toLowerCase().endsWith(suffix.trim().toLowerCase()) ? title.trim() + suffix : title
+}
+
+export function generateLectureId(senderEmail?: string): string {
   const date = new Date().toISOString().slice(0, 10).replace(/-/g, '')
   const rand = randomBytes(3).toString('hex')
-  return `INGEST-${date}-${rand}`
+  return `${communitySender(senderEmail)?.idPrefix ?? 'INGEST'}-${date}-${rand}`
 }

@@ -6,7 +6,7 @@ import { categorize } from '@/lib/ingest/categorizer'
 import { writePendingLecture, writeFailedIngestion, writeCategoryFlag, triggerDeploy } from '@/lib/ingest/lectures-writer'
 import { sendFlagNotification, sendFailureNotification, sendOAuthMissingNotification, sendFallbackMatchNotification, sendParseFailureNotification } from '@/lib/ingest/notifier'
 import { dispatchBrowserIngest } from '@/lib/ingest/github-dispatch'
-import { generateLectureId } from '@/lib/ingest/types'
+import { generateLectureId, applyTitleSuffix } from '@/lib/ingest/types'
 
 export const runtime = 'nodejs'
 
@@ -32,15 +32,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: `Could not parse email: ${reason}` }, { status: 422 })
   }
 
-  const { title, rabbi, description, recordingUrl, date, senderEmail, multi } = parseResult.data
-  const lectureId = generateLectureId()
+  const { rabbi, description, recordingUrl, date, senderEmail, multi } = parseResult.data
+  // Community senders (e.g. Masoret) get their own id prefix + title label — see COMMUNITY_SENDERS.
+  const title = applyTitleSuffix(parseResult.data.title, senderEmail)
+  const lectureId = generateLectureId(senderEmail)
 
   // Zoom cloud recordings are passcode-protected and can only be downloaded by driving
   // the real player in a browser. Hand that off to the GitHub Actions worker (async) and
   // return 202 immediately; the worker calls back into /api/ingest-complete when done.
   if (/zoom\.us\/rec\/share\//i.test(recordingUrl)) {
     try {
-      await dispatchBrowserIngest({ lectureId, shareUrl: recordingUrl, title, rabbi, description, date, senderEmail, rawEmailSnippet, recordings: multi ?? null })
+      await dispatchBrowserIngest({ lectureId, shareUrl: recordingUrl, title, rabbi, description, date, senderEmail, rawEmailSnippet, recordings: multi ? { ...multi, titles: multi.titles.map(t => applyTitleSuffix(t, senderEmail)) } : null })
     } catch (e) {
       await writeFailedIngestion({
         senderEmail, rawTitle: title, rawRabbi: rabbi,

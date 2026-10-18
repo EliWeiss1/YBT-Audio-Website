@@ -36935,19 +36935,6 @@
               "sourceId": 874493
             },
             {
-              "id": "YBT-880998",
-              "title": "Ramban - Sefer HaMitzvos - Shoresh 04 - VeOrpachem Loh Sakshu Ohd VeHaYisem Kekoshim - Combined",
-              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-880998.mp3",
-              "duration": 13273,
-              "description": "",
-              "speaker": "Rabbi Yisroel Chait",
-              "date": "2003-09-21",
-              "tags": [
-                "General"
-              ],
-              "sourceId": 880998
-            },
-            {
               "id": "YBT-872806",
               "title": "Nachum Ish Gamzu",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-872806.mp3",
@@ -91259,24 +91246,17 @@
                   "sourceId": 871995
                 },
                 {
-                  "id": "YBT-1175824",
-                  "title": "Sefer Hamitzvos Klal Rishon Part 2",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Discussion/Mitzvot/Sefer%20HaMitvzos%20Clal%20Rishon%20part%202.mp3",
-                  "duration": 4101,
+                  "id": "YBT-880998",
+                  "title": "Ramban - Sefer HaMitzvos - Shoresh 04 - VeOrpachem Loh Sakshu Ohd VeHaYisem Kekoshim - Combined",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/YBT-880998.mp3",
+                  "duration": 13273,
                   "description": "",
-                  "speaker": "Rabbi Bald",
-                  "date": "",
-                  "tags": []
-                },
-                {
-                  "id": "YBT-1175825",
-                  "title": "Sefer Hamitzvos Klal Rishon Part 4",
-                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Discussion/Mitzvot/sefer-hamitzvos-klal-rishon-part-4.mp3",
-                  "duration": 3194,
-                  "description": "",
-                  "speaker": "Rabbi Bald",
-                  "date": "",
-                  "tags": []
+                  "speaker": "Rabbi Yisroel Chait",
+                  "date": "2003-09-21",
+                  "tags": [
+                    "General"
+                  ],
+                  "sourceId": 880998
                 }
               ]
             }

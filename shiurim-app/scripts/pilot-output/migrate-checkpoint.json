@@ -9260,5 +9260,16 @@
       "bereishit-noach"
     ],
     "seconds": 1.6
+  },
+  "1192727": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1192727.mp3",
+    "placements": [
+      "nach-mishlei"
+    ],
+    "insertedInto": [
+      "nach-mishlei"
+    ],
+    "seconds": 28.1
   }
 }

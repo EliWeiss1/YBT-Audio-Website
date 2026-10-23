@@ -104502,6 +104502,19 @@
           "label": "Mishlei",
           "lectures": [
             {
+              "id": "YBT-1192914",
+              "title": "Mishlei 26:4-5 - To Answer or Not to Answer a Fool According to His Foolishness (Part 2)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1192914.mp3",
+              "duration": 2855,
+              "description": "[NOTE: The audio cuts out for around 3 minutes, from 10ish until 13ish on the recording. Not sure what happened.] This morning (10/22/26), in our Morning Mishlei shiur, we began by reviewing what we covered yesterday and exploring a few other original approaches. We then tackled Chazal's explanation from the Gemara through the eyes of the meforshim who adopt it. It took us a while to figure out a coherent explanation, but we finally got there. We concluded by attempting to understand an original approach by Immanuel ha'Romi. We plan to continue our analysis next week (בג\"ה).",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-10-22",
+              "tags": [
+                "Mishlei"
+              ],
+              "inYeshiva": true
+            },
+            {
               "id": "YBT-1192727",
               "title": "Mishlei 26:4-5 - To Answer or Not to Answer a Fool According to His Foolishness (Part 1)",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1192727.mp3",
@@ -116886,6 +116899,19 @@
           "id": "nach-tehillim",
           "label": "Tehillim",
           "lectures": [
+            {
+              "id": "YBT-1192868",
+              "title": "Tehilim 90: Tefilah le'Moshe (Part 2: Our Analysis)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1192868.mp3",
+              "duration": 3599,
+              "description": "This evening (10/21/26), in our Wednesday night Tehilim shiur, we began by reviewing the perek using a brand new Claude-produced critical translation and annotation of our perek. We raised a bunch of questions and problems, then spent the rest of the shiur developing our own approaches. Several overlapping and complementary theories were suggested and we all really liked what was said. Next time (בג\"ה) I'd like to learn through Sforno's commentary, which is similar to the approaches we took.\nhttps://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-10-21",
+              "tags": [
+                "Tehillim"
+              ],
+              "inYeshiva": true
+            },
             {
               "id": "YBT-1190883",
               "title": "Tehilim 90: Tefilah le'Moshe (Part 1: Translations)",

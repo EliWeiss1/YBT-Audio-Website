@@ -5462,6 +5462,18 @@
               "label": "Lech Lecha",
               "lectures": [
                 {
+                  "id": "YBT-1193141",
+                  "title": "Lech Lecha: Can We Still Call Him Avram? (A Meta-Halachic PSA)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1193141.mp3",
+                  "duration": 475,
+                  "description": "This is the audio version of the 2-page article I wrote and published on rabbischneeweiss.substack.com/ on 10/23/26 titled: Lech Lecha: Can We Still Call Him Avram? (A Meta-Halachic PSA). The Gemara says that one who calls Avraham “Avram” transgresses a positive or a negative commandment. Seems pretty clear-cut ... or is it? This turned out to be more of a PSA than a dvar Torah.",
+                  "speaker": "Rabbi Matt Schneeweiss",
+                  "date": "2026-10-23",
+                  "tags": [
+                    "Lech Lecha"
+                  ]
+                },
+                {
                   "id": "C-29",
                   "title": "Hagar #1 (C-29)",
                   "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Chumash/(1)%20Bereishit/3%20Lech%20Lecha/C-029%20Hagar%201.mp3",

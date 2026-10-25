@@ -9293,5 +9293,16 @@
       "nach-mishlei"
     ],
     "seconds": 31.8
+  },
+  "1193141": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1193141.mp3",
+    "placements": [
+      "bereishit-lech-lecha"
+    ],
+    "insertedInto": [
+      "bereishit-lech-lecha"
+    ],
+    "seconds": 3
   }
 }

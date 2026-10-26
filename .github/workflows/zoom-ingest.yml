@@ -25,14 +25,23 @@ jobs:
       # apt mirrors occasionally stall with no output; without a per-step timeout one
       # stalled step burns the whole 10-minute job budget and the job is cancelled
       # (not failed), so nothing is ingested. Cap each install and retry once.
+      # `timeout` is applied per attempt inside the shell (a step-level timeout would
+      # kill the step outright and the retry would never run). A slow mirror
+      # (observed: 48 kB/s, 8.5 min for 25 MB) usually clears on the next attempt.
       - name: Install Playwright chromium
-        timeout-minutes: 3
-        run: npx playwright install --with-deps chromium || npx playwright install --with-deps chromium
+        timeout-minutes: 6
+        run: |
+          for i in 1 2 3; do
+            timeout 110 npx playwright install --with-deps chromium && exit 0
+            echo "attempt $i failed or timed out, retrying"
+          done
+          exit 1
       # ffmpeg concatenates multi-recording "merge" clips. It is NOT on the
       # ubuntu-latest image (only Playwright's bundled copy, which isn't on PATH),
       # so install it explicitly. Harmless for the separate/pick/single paths,
       # which never invoke it.
       - name: Install ffmpeg (for merging multi-part recordings)
+        if: github.event.client_payload.recordings.mode == 'merge'
         timeout-minutes: 3
         run: sudo apt-get install -y ffmpeg || (sudo apt-get update && sudo apt-get install -y ffmpeg)
       - run: node scripts/zoom-browser-ingest.mjs

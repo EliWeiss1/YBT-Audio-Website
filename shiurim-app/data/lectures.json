@@ -4819,6 +4819,16 @@
               "label": "Noach",
               "lectures": [
                 {
+                  "id": "MISC-01",
+                  "title": "Haftaras Noach (Masoret)",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/chumash/bereishit/bereishit-noach/MISC-01.mp3",
+                  "duration": 4456,
+                  "description": "",
+                  "speaker": "Rabbi Fistel",
+                  "date": "2026-10-26",
+                  "tags": []
+                },
+                {
                   "id": "YBT-1192073",
                   "title": "Noach: Microlooting and the Mabul",
                   "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1192073.mp3",

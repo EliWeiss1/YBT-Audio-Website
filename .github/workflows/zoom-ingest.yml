@@ -22,13 +22,19 @@ jobs:
           cache: npm
           cache-dependency-path: shiurim-app/package-lock.json
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
+      # apt mirrors occasionally stall with no output; without a per-step timeout one
+      # stalled step burns the whole 10-minute job budget and the job is cancelled
+      # (not failed), so nothing is ingested. Cap each install and retry once.
+      - name: Install Playwright chromium
+        timeout-minutes: 3
+        run: npx playwright install --with-deps chromium || npx playwright install --with-deps chromium
       # ffmpeg concatenates multi-recording "merge" clips. It is NOT on the
       # ubuntu-latest image (only Playwright's bundled copy, which isn't on PATH),
       # so install it explicitly. Harmless for the separate/pick/single paths,
       # which never invoke it.
       - name: Install ffmpeg (for merging multi-part recordings)
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+        timeout-minutes: 3
+        run: sudo apt-get install -y ffmpeg || (sudo apt-get update && sudo apt-get install -y ffmpeg)
       - run: node scripts/zoom-browser-ingest.mjs
         env:
           SHARE_URL: ${{ github.event.client_payload.shareUrl }}
@@ -54,7 +60,7 @@ jobs:
       # The `.ingest-reported` marker means the worker already sent an email, so we
       # skip to avoid a duplicate.
       - name: Notify admin on infrastructure failure
-        if: failure() && hashFiles('shiurim-app/.ingest-reported') == ''
+        if: (failure() || cancelled()) && hashFiles('shiurim-app/.ingest-reported') == ''
         run: |
           curl -sS -X POST "$INGEST_COMPLETE_URL" \
             -H "Content-Type: application/json" \

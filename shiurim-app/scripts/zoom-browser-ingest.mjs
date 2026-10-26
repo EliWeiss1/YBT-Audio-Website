@@ -3,7 +3,8 @@
 // Zoom cloud recordings the rebbeim forward are passcode-protected; the only way to
 // download them without OAuth is to drive the real player in a browser. This script
 // opens the /rec/share/ page, waits for the player to mint signed ssrweb.zoom.us .m4a
-// URLs, downloads the bytes with the required Referer/Origin, uploads to R2, and POSTs
+// (audio-only) or .mp4 (video) URLs, downloads the bytes with the required Referer/Origin
+// (stripping video down to its audio track with ffmpeg), uploads to R2, and POSTs
 // the result back to /api/ingest-complete.
 //
 // A single share link can hold MORE THAN ONE recording (an accidental stop/restart, or
@@ -133,7 +134,9 @@ async function collectSignedUrls(page) {
   const seen = new Set()
   page.on('request', (r) => {
     const u = r.url()
-    if (/ssrweb\.zoom\.us.*\.m4a/i.test(u) && !seen.has(u)) {
+    // Audio-only recordings are served as .m4a; recordings made with video on are served
+    // as .mp4 (e.g. "..._Recording_640x360.mp4") and are stripped to audio in fetchClip.
+    if (/ssrweb\.zoom\.us[^?]*\.(m4a|mp4)(\?|$)/i.test(u) && !seen.has(u)) {
       seen.add(u)
       found.push(u)
     }
@@ -170,7 +173,31 @@ async function fetchClip(ctx, url) {
     headers: { Referer: `${origin}/`, Origin: origin },
   })
   if (!resp.ok()) throw new Error(`audio_fetch_${resp.status()}`)
-  return Buffer.from(await resp.body())
+  const buf = Buffer.from(await resp.body())
+  const isVideo = /\.mp4$/i.test(new URL(url).pathname)
+  return isVideo ? await extractAudioFromVideo(buf) : buf
+}
+
+// A video recording is much larger than we want to host and the site only plays audio,
+// so keep just the audio track as M4A. Zoom's audio is AAC, so stream-copy first (fast,
+// lossless); fall back to an AAC re-encode if the copy is rejected.
+async function extractAudioFromVideo(videoBuf) {
+  const dir = await mkdtemp(join(tmpdir(), 'zoom-video-'))
+  try {
+    const inPath = join(dir, 'in.mp4')
+    const outPath = join(dir, 'out.m4a')
+    await writeFile(inPath, videoBuf)
+    try {
+      await execFileAsync('ffmpeg', ['-y', '-i', inPath, '-vn', '-c:a', 'copy', outPath])
+    } catch {
+      await execFileAsync('ffmpeg', ['-y', '-i', inPath, '-vn', '-c:a', 'aac', '-b:a', '128k', outPath])
+    }
+    const out = await readFile(outPath)
+    console.log(`Video clip: extracted audio ${videoBuf.length} → ${out.length} bytes.`)
+    return out
+  } finally {
+    await rm(dir, { recursive: true, force: true }).catch(() => {})
+  }
 }
 
 async function getDuration(buf, mimeType) {

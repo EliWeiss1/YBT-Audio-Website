@@ -25,14 +25,18 @@ jobs:
       # apt mirrors occasionally stall with no output; without a per-step timeout one
       # stalled step burns the whole 10-minute job budget and the job is cancelled
       # (not failed), so nothing is ingested. Cap each install and retry once.
+      # No --with-deps: that pulls fonts/xvfb from the Ubuntu apt mirror, which is
+      # sometimes very slow (observed: 48 kB/s, 8.5 min for 25 MB, eating the whole job
+      # budget). The worker runs headless Chromium for audio only, and every shared
+      # library it needs is already on the ubuntu-latest image, so the browser binary
+      # alone (from Playwright's CDN) is enough.
       # `timeout` is applied per attempt inside the shell (a step-level timeout would
-      # kill the step outright and the retry would never run). A slow mirror
-      # (observed: 48 kB/s, 8.5 min for 25 MB) usually clears on the next attempt.
+      # kill the step outright and the retry would never run).
       - name: Install Playwright chromium
         timeout-minutes: 6
         run: |
           for i in 1 2 3; do
-            timeout 110 npx playwright install --with-deps chromium && exit 0
+            timeout 110 npx playwright install chromium && exit 0
             echo "attempt $i failed or timed out, retrying"
           done
           exit 1

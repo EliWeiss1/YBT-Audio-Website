@@ -21,7 +21,7 @@ const PAGE_SIZE = 25
  *  many shiurim there. */
 const MIN_RABBI_COUNT = 5
 
-/** Supabase `.in()` builds a GET query string, so the whole TTL pool (~1,150
+/** Supabase `.in()` builds a GET query string, so the whole TTL pool (~1,700
  *  ids) has to go over in batches or the URL blows past the server's limit. */
 const OVERRIDE_CHUNK = 200
 
@@ -29,7 +29,7 @@ type OverrideMap = Record<string, string>
 
 // ─── Section switcher ────────────────────────────────────────────────────────
 // Sits where "Recently Given" sits on the other tabs. Wraps rather than
-// scrolls, so all five sections are always reachable without a scrollbar:
+// scrolls, so all six sections are always reachable without a scrollbar:
 // one row on desktop, two on a phone.
 
 function SectionTabs({

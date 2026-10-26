@@ -140,14 +140,15 @@ function processNode(node, breadcrumb) {
   // shiur's prefix is the grouping key on purpose — it doesn't track the
   // category breadcrumb (HL- shiurim sit under both Halacha and Holidays).
   // Section keys/labels must stay in sync with lib/ttl-sections.ts.
-  // Other TTL-style prefixes (G-, KC-, SA-, RA-, R-, L-, NR-) are intentionally
-  // left out of v1.
+  // Other TTL-style prefixes (KC-, SA-, RA-, R-, L-, NR-) are intentionally
+  // left out.
   const TTL_SECTION_PREFIX = {
     discussion: 'D',
     chumash: 'C',
     nach: 'N',
     halacha: 'HL',
     'bnai-noach': 'BN',
+    gemara: 'G',
   }
   const prefixToSection = Object.fromEntries(
     Object.entries(TTL_SECTION_PREFIX).map(([section, prefix]) => [prefix, section])

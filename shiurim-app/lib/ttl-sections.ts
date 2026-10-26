@@ -5,8 +5,8 @@
 // Keep in sync with TTL_SECTION_PREFIX in scripts/generate-node-data.mjs, which
 // builds public/lectures-data/ttl.json off these same keys.
 //
-// Other TTL-style prefixes (G-, KC-, SA-, RA-, R-, L-, NR-) are deliberately not
-// part of v1 of the TTL tab.
+// Other TTL-style prefixes (KC-, SA-, RA-, R-, L-, NR-) are deliberately not
+// part of the TTL tab.
 
 import type { FlatLecture } from '@/lib/lecture-utils'
 
@@ -16,6 +16,7 @@ export const TTL_SECTIONS = [
   { key: 'nach',        label: 'Nach',       prefix: 'N' },
   { key: 'halacha',     label: 'Halacha',    prefix: 'HL' },
   { key: 'bnai-noach',  label: 'Bnai Noach', prefix: 'BN' },
+  { key: 'gemara',      label: 'Gemara',     prefix: 'G' },
 ] as const
 
 export type TtlSectionKey = (typeof TTL_SECTIONS)[number]['key']

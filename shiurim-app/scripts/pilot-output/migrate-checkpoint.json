@@ -9304,5 +9304,16 @@
       "bereishit-lech-lecha"
     ],
     "seconds": 3
+  },
+  "1193513": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1193513.mp3",
+    "placements": [
+      "nach-mishlei"
+    ],
+    "insertedInto": [
+      "nach-mishlei"
+    ],
+    "seconds": 70.3
   }
 }

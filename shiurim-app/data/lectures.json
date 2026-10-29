@@ -104524,6 +104524,19 @@
           "label": "Mishlei",
           "lectures": [
             {
+              "id": "YBT-1193948",
+              "title": "Mishlei 26:4-5 - To Answer or Not to Answer a Fool According to His Foolishness (Part 4)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1193948.mp3",
+              "duration": 2759,
+              "description": "This morning (10/29/26), in our Morning Mishlei shiur, we continued our analysis of the couplet we started last week. We began by refining our understanding of Immanuel ha'Romi and assessing whether and to what extent he and Metzudas David disagree. We then learned the intriguing and nuanced approach of R. Sheishes ben Yitzchak Gerondi. There was one point we didn't understand which we plan to revisit tomorrow before moving on to other commentaries. https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-10-29",
+              "tags": [
+                "Mishlei"
+              ],
+              "inYeshiva": true
+            },
+            {
               "id": "YBT-1193782",
               "title": "Mishlei 26:4-5 - To Answer or Not to Answer a Fool According to His Foolishness (Part 3)",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1193782.mp3",
@@ -116947,6 +116960,19 @@
           "id": "nach-tehillim",
           "label": "Tehillim",
           "lectures": [
+            {
+              "id": "YBT-1193916",
+              "title": "Tehilim 90: Tefilah le'Moshe (Part 3: Sforno)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1193916.mp3",
+              "duration": 3761,
+              "description": "This evening (10/28/26), in our Wednesday night Tehilim shiur, we began by reviewing the three approaches we took this time, thanks to Claude's excellent synthesis-summary. We then learned through the entire commentary of Sforno, which offered a beautiful approach. Although we didn't have time to really crystallize our understanding at the end, I think we still got the thrust of how he's reading the perek, and understood it enough to be able to use it. I'm sorely tempted to spend a fourth week on this. I guess we'll see! https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-10-28",
+              "tags": [
+                "Tehillim"
+              ],
+              "inYeshiva": true
+            },
             {
               "id": "YBT-1192868",
               "title": "Tehilim 90: Tefilah le'Moshe (Part 2: Our Analysis)",

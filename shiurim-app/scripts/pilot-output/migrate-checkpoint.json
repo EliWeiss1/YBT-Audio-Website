@@ -9348,5 +9348,16 @@
       "nach-mishlei"
     ],
     "seconds": 29.4
+  },
+  "1194089": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1194089.mp3",
+    "placements": [
+      "bereishit-vayeira"
+    ],
+    "insertedInto": [
+      "bereishit-vayeira"
+    ],
+    "seconds": 3
   }
 }

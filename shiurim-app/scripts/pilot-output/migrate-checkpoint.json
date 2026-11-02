@@ -9359,5 +9359,18 @@
       "bereishit-vayeira"
     ],
     "seconds": 3
+  },
+  "1194427": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1194427.mp3",
+    "placements": [
+      "kisvei-rishonim-rambam-general",
+      "discussion-reward-punishment"
+    ],
+    "insertedInto": [
+      "kisvei-rishonim-rambam-general",
+      "discussion-reward-punishment"
+    ],
+    "seconds": 74
   }
 }

@@ -104,7 +104,10 @@ export default function LectureListWithProgress({ lectures, nodeId }: Props) {
           index={i + 1}
           progress={progressMap[lecture.id]}
           speakerOverride={overrideMap[lecture.id]}
-          userId={userId}
+          // Never pass `undefined` while auth is pending: BookmarkButton treats
+          // undefined as "self-fetch auth + saved status", so a 2,000-shiur
+          // rabbi page fired 2,000 getUser() + saved_lectures calls at once.
+          userId={userId ?? null}
           saved={savedSet.has(lecture.id)}
         />
       ))}

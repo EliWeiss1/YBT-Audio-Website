@@ -9372,5 +9372,16 @@
       "discussion-reward-punishment"
     ],
     "seconds": 74
+  },
+  "1194590": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1194590.mp3",
+    "placements": [
+      "nach-mishlei"
+    ],
+    "insertedInto": [
+      "nach-mishlei"
+    ],
+    "seconds": 50.2
   }
 }

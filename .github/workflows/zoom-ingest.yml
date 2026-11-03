@@ -40,14 +40,21 @@ jobs:
             echo "attempt $i failed or timed out, retrying"
           done
           exit 1
-      # ffmpeg concatenates multi-recording "merge" clips. It is NOT on the
-      # ubuntu-latest image (only Playwright's bundled copy, which isn't on PATH),
-      # so install it explicitly. Harmless for the separate/pick/single paths,
-      # which never invoke it.
-      - name: Install ffmpeg (for merging multi-part recordings)
-        if: github.event.client_payload.recordings.mode == 'merge'
-        timeout-minutes: 3
-        run: sudo apt-get install -y ffmpeg || (sudo apt-get update && sudo apt-get install -y ffmpeg)
+      # ffmpeg concatenates "merge" clips AND strips video (.mp4) recordings down to
+      # audio, so every mode can need it — don't gate this on the recordings mode.
+      # It is NOT on the ubuntu-latest image (only Playwright's bundled copy, which
+      # isn't on PATH). Prefer a static build from GitHub releases (fast from
+      # Actions runners) over the apt mirror, which has stalled before; apt is the
+      # fallback.
+      - name: Install ffmpeg
+        timeout-minutes: 4
+        run: |
+          if timeout 90 bash -c 'curl -fsSL https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz | tar -xJ -C /tmp'; then
+            echo "$(ls -d /tmp/ffmpeg-master-latest-linux64-gpl)/bin" >> "$GITHUB_PATH"
+          else
+            echo "static download failed, falling back to apt"
+            sudo apt-get install -y ffmpeg || (sudo apt-get update && sudo apt-get install -y ffmpeg)
+          fi
       - run: node scripts/zoom-browser-ingest.mjs
         env:
           SHARE_URL: ${{ github.event.client_payload.shareUrl }}

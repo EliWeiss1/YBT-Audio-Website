@@ -17,6 +17,9 @@ export async function GET(request: NextRequest) {
     if (!error) {
       return NextResponse.redirect(new URL(next, request.url))
     }
+    // Typically "PKCE code verifier not found" = link opened in a different browser
+    // than the one that requested it. Log it so failures are diagnosable.
+    console.error('[auth/confirm] exchangeCodeForSession failed:', error.message)
   }
 
   // OTP / token_hash flow (used by custom email templates).
@@ -25,7 +28,15 @@ export async function GET(request: NextRequest) {
     if (!error) {
       return NextResponse.redirect(new URL(next, request.url))
     }
+    console.error('[auth/confirm] verifyOtp failed:', error.message)
   }
 
-  return NextResponse.redirect(new URL('/auth?error=invalid-link', request.url))
+  if (!code && !(token_hash && type)) {
+    console.error('[auth/confirm] no code or token_hash in request:', request.url.split('?')[0])
+  }
+
+  const isRecovery = type === 'recovery' || next.startsWith('/auth/update-password')
+  return NextResponse.redirect(
+    new URL(`/auth?error=invalid-link${isRecovery ? '&flow=reset' : ''}`, request.url)
+  )
 }

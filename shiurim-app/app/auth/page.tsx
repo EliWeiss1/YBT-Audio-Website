@@ -100,7 +100,11 @@ export default function AuthPage() {
 
           {(error || linkError) && (
             <p className="text-red-600 text-xs">
-              {linkError ? 'This confirmation link is invalid or has expired. Please sign up again.' : error}
+              {linkError
+                ? (searchParams.get('flow') === 'reset'
+                    ? 'This password reset link is invalid or has expired. Reset links only work in the same browser you requested them from — please request a new one below and open it on this device.'
+                    : 'This confirmation link is invalid or has expired. Please sign up again.')
+                : error}
             </p>
           )}
           {message && <p className="text-emerald-600 text-xs">{message}</p>}

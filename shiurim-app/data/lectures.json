@@ -104562,6 +104562,32 @@
           "label": "Mishlei",
           "lectures": [
             {
+              "id": "YBT-1194799",
+              "title": "Mishlei 26:6 - Foolish Agents and Their Foolish Senders (Part 1)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1194799.mp3",
+              "duration": 2770,
+              "description": "This morning (11/4/26), in our Morning Mishlei shiur, we began another pasuk in the local cluster about ksilim (Mishleic fools). This one is clearly about using a ksil as an agent, but nothing else in the pasuk is clear. Nevertheless, we managed to work out a principal approach and some nice variants. Tomorrow (בג\"ה) we'll see what the meforshim have to say. https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-11-04",
+              "tags": [
+                "Mishlei"
+              ],
+              "inYeshiva": true
+            },
+            {
+              "id": "YBT-1194978",
+              "title": "Mishlei 26:6 - Foolish Agents and Their Foolish Senders (Part 2)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1194978.mp3",
+              "duration": 2789,
+              "description": " This morning (11/5/26), in our Morning Mishlei shiur, we reviewed yesterday's approaches, analyzed a new original one, then learned through two groups of meforshim: Metzudas David, Ralbag, and R. Sheishes who took one approach, and R. Zerachiah Chein and Saadia Gaon who took another. Both were interesting and practically insightful, but the latter was the most eye-opening in terms of the scope of Mishleic decision-making. Gonna be thinking about that one for a while! https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-11-05",
+              "tags": [
+                "Mishlei"
+              ],
+              "inYeshiva": true
+            },
+            {
               "id": "YBT-1194590",
               "title": "Mishlei 27:2 - Let a Stranger Praise You",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1194590.mp3",
@@ -117011,6 +117037,19 @@
           "id": "nach-tehillim",
           "label": "Tehillim",
           "lectures": [
+            {
+              "id": "YBT-1194883",
+              "title": "Tehilim 91: Yosheiv b'Seiser Elyon (Part 1: Translation)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1194883.mp3",
+              "duration": 3522,
+              "description": "This evening (11/4/26), in our Wednesday night Tehilim shiur, we began one of my favorite perakim to read but one of the most tantalizingly elusive perakim to understand. We usually spend MOST of our first session on a given perek translating it ourselves, but this time we spent the ENTIRE session. Despite saying this perek relatively frequently, the words, the grammar, and the syntax proved difficult. Although we didn't get much past the translation, I definitely feel like this was time well spent. The seeds have been planted for our analysis, and I'm looking forward to seeing what grows! https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-11-04",
+              "tags": [
+                "Tehillim"
+              ],
+              "inYeshiva": true
+            },
             {
               "id": "YBT-1193916",
               "title": "Tehilim 90: Tefilah le'Moshe (Part 3: Sforno)",

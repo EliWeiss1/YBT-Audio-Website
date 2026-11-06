@@ -9416,5 +9416,16 @@
       "nach-mishlei"
     ],
     "seconds": 30.2
+  },
+  "1195195": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1195195.mp3",
+    "placements": [
+      "bereishit-chayei-sarah"
+    ],
+    "insertedInto": [
+      "bereishit-chayei-sarah"
+    ],
+    "seconds": 2.4
   }
 }

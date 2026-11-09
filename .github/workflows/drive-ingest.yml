@@ -3,9 +3,9 @@ name: drive-ingest
 on:
   schedule:
     - cron: '0 12 * * 0-5' # daily except Saturday, 12:00 UTC (~8am ET)
-    # Sunday 10pm ET, to catch Rabbi Weiss's Sunday-night Masoret upload right away.
-    # GitHub cron is UTC-only: 03:00 UTC Monday = 10pm EST (winter); drifts to 11pm during EDT.
-    - cron: '0 3 * * 1'
+    # Monday 8pm ET, to pick up Rabbi Weiss's weekend Masoret upload.
+    # GitHub cron is UTC-only: 01:00 UTC Tuesday = 8pm EST (winter); drifts to 9pm during EDT.
+    - cron: '0 1 * * 2'
   workflow_dispatch:
     inputs:
       max:

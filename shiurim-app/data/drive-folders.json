@@ -1,4 +1,5 @@
 [
   { "id": "1U1RSNPSS5-jC_0UXUd0xkEtkJSx85ADm", "label": "Rabbi Bald - Gemara", "category": "gemarah", "aliases": { "yomtov": "gemarah-beitza" } },
-  { "id": "1SYmiyipnfDysvigZh_N-HtNTN1ix3B_W", "label": "Rabbi Zemel - Perek Chelek", "category": "kisvei-rishonim-rambam-perek-chelek" }
+  { "id": "1SYmiyipnfDysvigZh_N-HtNTN1ix3B_W", "label": "Rabbi Zemel - Perek Chelek", "category": "kisvei-rishonim-rambam-perek-chelek" },
+  { "id": "1Og6tpcS4By5AnnaQJc2LB1m6UNIV6UbZ", "label": "Rabbi Weiss - Masoret 2026-2027", "filenameFormat": "masoret-suffix" }
 ]

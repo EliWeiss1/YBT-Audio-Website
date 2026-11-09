@@ -134,6 +134,17 @@ describe('parseMasoretFilename', () => {
     })
   })
 
+  it('parses a date placed BEFORE the marker ("... - 11-8-26 - Masoret")', () => {
+    expect(parseMasoretFilename(
+      'Rabbi Weiss - Parshat Chaye Sara Chapter 24 Verse 1 - Baba Basra 16b - Avraham blessed with all - 11-8-26 - Masoret.m4a',
+    )).toEqual({
+      ok: true,
+      date: '2026-11-08',
+      rabbiToken: 'Rabbi Weiss',
+      title: 'Parshat Chaye Sara Chapter 24 Verse 1 - Baba Basra 16b - Avraham blessed with all',
+    })
+  })
+
   it('rejects a filename with no "- Masoret" marker', () => {
     expect(parseMasoretFilename('Rabbi Weiss - Some Title.m4a').ok).toBe(false)
   })

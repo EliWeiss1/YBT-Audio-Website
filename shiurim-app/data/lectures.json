@@ -101273,6 +101273,19 @@
           "label": "Mishlei",
           "lectures": [
             {
+              "id": "YBT-1195977",
+              "title": "Mishlei 26:7 - The Lameness of a Mishleic Fool (Part 2)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1195977.mp3",
+              "duration": 2736,
+              "description": "This morning (11/12/26), in our Morning Mishlei shiur, we began by testing out two Claude-produced Mishlei-learning enhancers I created: my \"Dikduk Breakdown\" Claude skill, and a Mishlei review presentation. Both were successful, even though they likely need tweaking. We then dove into the meforshim, learning five approaches, each with its own nuances and practicality. Fruitful second session! https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-11-12",
+              "tags": [
+                "Mishlei"
+              ],
+              "inYeshiva": true
+            },
+            {
               "id": "YBT-1195800",
               "title": "Mishlei 26:7 - The Lameness of a Mishleic Fool (Part 1)",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1195800.mp3",
@@ -113774,6 +113787,19 @@
           "id": "nach-tehillim",
           "label": "Tehillim",
           "lectures": [
+            {
+              "id": "YBT-1195885",
+              "title": "Tehilim 91: Yosheiv b'Seiser Elyon (Part 2: Questions)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1195885.mp3",
+              "duration": 3415,
+              "description": "This evening (11/11/26), in our Wednesday night Tehilim shiur, we began with an introductory framing by R. Elchanan Samet, then reviewed the translation of our perek, then discussed the pivot point, and spent the rest of the time raising questions and difficulties. We ended by reading the comment of Radak (bracketed by Ibn Ezra and Rambam) which I believe holds the key to the perek. We didn't get to develop any approaches yet, and we may have to skip next week and the week after (TBD), but you know what they say about slow and steady! https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-11-11",
+              "tags": [
+                "Tehillim"
+              ],
+              "inYeshiva": true
+            },
             {
               "id": "YBT-1194883",
               "title": "Tehilim 91: Yosheiv b'Seiser Elyon (Part 1: Translation)",

@@ -9449,5 +9449,27 @@
       "nach-mishlei"
     ],
     "seconds": 25.6
+  },
+  "1195885": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1195885.mp3",
+    "placements": [
+      "nach-tehillim"
+    ],
+    "insertedInto": [
+      "nach-tehillim"
+    ],
+    "seconds": 29.3
+  },
+  "1195977": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1195977.mp3",
+    "placements": [
+      "nach-mishlei"
+    ],
+    "insertedInto": [
+      "nach-mishlei"
+    ],
+    "seconds": 23.2
   }
 }

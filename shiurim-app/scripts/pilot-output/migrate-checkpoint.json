@@ -9471,5 +9471,20 @@
       "nach-mishlei"
     ],
     "seconds": 23.2
+  },
+  "1196095": {
+    "status": "flagged",
+    "flag": "multi-namespace (chumash, discussion)"
+  },
+  "1196186": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1196186.mp3",
+    "placements": [
+      "bereishit-bereishit"
+    ],
+    "insertedInto": [
+      "bereishit-bereishit"
+    ],
+    "seconds": 36
   }
 }

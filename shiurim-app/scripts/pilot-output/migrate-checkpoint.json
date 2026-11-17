@@ -9486,5 +9486,16 @@
       "bereishit-bereishit"
     ],
     "seconds": 36
+  },
+  "1196489": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1196489.mp3",
+    "placements": [
+      "nach-mishlei"
+    ],
+    "insertedInto": [
+      "nach-mishlei"
+    ],
+    "seconds": 113.4
   }
 }

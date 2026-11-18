@@ -155213,6 +155213,16 @@
           "label": "Chulin",
           "lectures": [
             {
+              "id": "MISC-02",
+              "title": "Kisuy Hadam - Shechita sheina reuyah #3",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/gemarah/chulin/MISC-02.mp3",
+              "duration": 877,
+              "description": "",
+              "speaker": "Rabbi David Feder",
+              "date": "2026-11-17",
+              "tags": []
+            },
+            {
               "id": "G-31",
               "title": "Chulin - Kol HaBasar #1 (Daf 108a) (G-31)",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/migrated/G-31.mp3",

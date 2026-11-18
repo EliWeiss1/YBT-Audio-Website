@@ -120,6 +120,7 @@ before passing it to the script. Node ids are lowercase-hyphenated (e.g. `gemara
    - Add/replace the sources PDF → `--pdf-file "<path>"` or `--pdf-url "<url>"`. Same
      old-object-deletion rule as audio replacement: the previous PDF is deleted from R2 only if it
      was actually hosted there.
+   - Show/hide under the homepage's "Shiurim in Yeshiva" tab → `--in-yeshiva` / `--not-in-yeshiva` (sets/clears the `inYeshiva` flag; also accepted in add mode). Use it for shiurim given in the yeshiva by YBT rebbeim, since only `INGEST-` ids and flagged lectures appear there.
    - Remove the sources PDF entirely → `--remove-pdf` (deletes the R2 object if it was ours, and
      drops the field from every occurrence of the lecture).
 

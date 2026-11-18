@@ -31,6 +31,7 @@
 //   node add-or-fix-shiur.mjs --mode fix --id MISC-03 --node-path chumash,bereishit,bereishit-noach
 //   node add-or-fix-shiur.mjs --mode fix --id MISC-03 --pdf-file "C:\sources.pdf"
 //   node add-or-fix-shiur.mjs --mode fix --id MISC-03 --remove-pdf
+//   --in-yeshiva / --not-in-yeshiva: set/clear the inYeshiva flag (homepage "Shiurim in Yeshiva" tab)
 //
 // A shiur can optionally carry a "sources" PDF alongside its audio, attached
 // via --pdf-file (local path) or --pdf-url (remote URL) on either mode, and
@@ -321,6 +322,8 @@ function parseArgs(argv) {
     else if (a === '--pdf-file') out.pdfFile = val();
     else if (a === '--pdf-url') out.pdfUrl = val();
     else if (a === '--remove-pdf') out.removePdf = true;
+    else if (a === '--in-yeshiva') out.inYeshiva = true;
+    else if (a === '--not-in-yeshiva') out.inYeshiva = false;
     else if (a === '--dry-run') out.dryRun = true;
     else throw new Error(`unknown arg: ${a}`);
   }
@@ -353,7 +356,7 @@ async function runAdd(args, data, r2) {
     ({ url: pdfUrl } = await uploadFileToR2(r2, pdf.pdfPath, pdfR2Key, 'application/pdf', args.dryRun));
   }
 
-  const lecture = { id, title, audioUrl, duration: audio.duration, description, speaker, date, tags: args.tags, ...(pdfUrl ? { pdfUrl } : {}) };
+  const lecture = { id, title, audioUrl, duration: audio.duration, description, speaker, date, tags: args.tags, ...(pdfUrl ? { pdfUrl } : {}), ...(args.inYeshiva ? { inYeshiva: true } : {}) };
   const insertedInto = [];
   for (const nodeId of args.nodePath) {
     const node = findNode(data.categories, nodeId);
@@ -389,6 +392,13 @@ async function runFix(args, data, r2) {
   if (args.tags && args.tags.length) {
     result.changed.push('tags');
     if (!args.dryRun) for (const { node, index } of occurrences) node.lectures[index].tags = args.tags;
+  }
+
+  if (args.inYeshiva !== undefined) {
+    result.changed.push(args.inYeshiva ? 'in-yeshiva' : 'not-in-yeshiva');
+    if (!args.dryRun) for (const { node, index } of occurrences) {
+      if (args.inYeshiva) node.lectures[index].inYeshiva = true; else delete node.lectures[index].inYeshiva;
+    }
   }
 
   // audio replacement
@@ -441,6 +451,7 @@ async function runFix(args, data, r2) {
     if (audio) { lecture.audioUrl = result.newAudioUrl; lecture.duration = audio.duration; }
     for (const field of ['title', 'description', 'speaker', 'date']) if (args[field] !== undefined) lecture[field] = args[field];
     if (args.tags && args.tags.length) lecture.tags = args.tags;
+    if (args.inYeshiva === true) lecture.inYeshiva = true; else if (args.inYeshiva === false) delete lecture.inYeshiva;
     if (args.removePdf) delete lecture.pdfUrl;
     else if (result.newPdfUrl) lecture.pdfUrl = result.newPdfUrl;
 
@@ -464,7 +475,7 @@ async function runFix(args, data, r2) {
     }
   }
 
-  if (!result.changed.length) throw new Error('nothing to fix — pass at least one of --title/--description/--speaker/--date/--tags/--node-path/--audio-file/--audio-url/--yutorah-id/--yutorah-url/--pdf-file/--pdf-url/--remove-pdf');
+  if (!result.changed.length) throw new Error('nothing to fix — pass at least one of --title/--description/--speaker/--date/--tags/--node-path/--audio-file/--audio-url/--yutorah-id/--yutorah-url/--pdf-file/--pdf-url/--remove-pdf/--in-yeshiva/--not-in-yeshiva');
   return result;
 }
 

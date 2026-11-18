@@ -155220,7 +155220,8 @@
               "description": "",
               "speaker": "Rabbi David Feder",
               "date": "2026-11-17",
-              "tags": []
+              "tags": [],
+              "inYeshiva": true
             },
             {
               "id": "G-31",

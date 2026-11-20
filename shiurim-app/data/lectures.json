@@ -8003,6 +8003,18 @@
               "label": "Vayeitzei",
               "lectures": [
                 {
+                  "id": "YBT-1196950",
+                  "title": "Vayeitzei: Yaakov’s Relationship to Wealth",
+                  "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1196950.mp3",
+                  "duration": 266,
+                  "description": "This is the audio version of the 1-page article I wrote and published on rabbischneeweiss.substack.com/ on 11/19/26 titled: Vayeitzei: Yaakov’s Relationship to Wealth. Yaakov Avinu experienced extreme ups and downs in his finances. But those were just his external circumstances. What was going on inside? https://rabbischneeweiss.substack.com/p/vayeitzei-yaakovs-relationship-to",
+                  "speaker": "Rabbi Matt Schneeweiss",
+                  "date": "2026-11-19",
+                  "tags": [
+                    "Vayeitzei"
+                  ]
+                },
+                {
                   "id": "YBT-1177922",
                   "title": "World of Midrash - The Aron Decimated the Leviim",
                   "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/chumash/bereishit/bereishit-vayeitzei/YBT-1177922.mp3",
@@ -101284,6 +101296,19 @@
           "id": "nach-mishlei",
           "label": "Mishlei",
           "lectures": [
+            {
+              "id": "YBT-1196907",
+              "title": "Mishlei 26:8 - Giving a Fool Honor is Like a Stone in a WHAT?! (Part 2)",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1196907.mp3",
+              "duration": 2763,
+              "description": "This morning (11/19/26), in our Morning Mishlei shiur, we began with a consolidated review of yesterday's approaches, then turned to the meforshim. Some we didn't understand and others expressed ideas (or permutations of ideas) we arrived at on our own yesterday, but a few gave us new approaches and practical insights. Yet another great pasuk! https://rabbischneeweiss.substack.com/",
+              "speaker": "Rabbi Matt Schneeweiss",
+              "date": "2026-11-19",
+              "tags": [
+                "Mishlei"
+              ],
+              "inYeshiva": true
+            },
             {
               "id": "YBT-1196692",
               "title": "Mishlei 26:8 - Giving a Fool Honor is Like a Stone in a WHAT?! (Part 1)",

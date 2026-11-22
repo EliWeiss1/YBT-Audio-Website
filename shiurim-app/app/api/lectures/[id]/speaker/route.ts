@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase-server'
+import { normalizeRabbi } from '@/lib/rabbi-normalization'
 
 type RouteParams = { params: Promise<{ id: string }> }
 
@@ -42,7 +43,7 @@ export async function POST(
   const { error } = await supabase
     .from('speaker_overrides')
     .upsert(
-      { lecture_id: lectureId, speaker: speaker.trim(), updated_by: user.id, updated_at: new Date().toISOString() },
+      { lecture_id: lectureId, speaker: normalizeRabbi(speaker.trim()), updated_by: user.id, updated_at: new Date().toISOString() },
       { onConflict: 'lecture_id' }
     )
 

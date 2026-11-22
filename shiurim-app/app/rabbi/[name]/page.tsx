@@ -36,8 +36,8 @@ export default async function RabbiPage({ params }: Props) {
   // - its JSON speaker normalizes to canonicalName AND it has no override pointing elsewhere
   const rabbiLectures = getAllLectures().filter(l => {
     const override = overrideMap.get(l.id)
-    if (override !== undefined) return override === canonicalName
-    return rawVariants.has(l.speaker)
+    if (override !== undefined) return normalizeRabbi(override) === canonicalName
+    return rawVariants.has(l.speaker) || normalizeRabbi(l.speaker) === canonicalName
   })
 
   if (rabbiLectures.length === 0) notFound()

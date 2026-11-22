@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { categorizeSafe } from '@/lib/ingest/categorizer'
 import { categorizeDrive } from '@/lib/ingest/drive-categorizer'
+import { normalizeRabbi } from '@/lib/rabbi-normalization'
 import { writePendingLecture, writeFailedIngestion, writeCategoryFlag, triggerDeploy } from '@/lib/ingest/lectures-writer'
 import { sendFlagNotification, sendFailureNotification, sendAutoMergeNotification } from '@/lib/ingest/notifier'
 
@@ -93,7 +94,7 @@ export async function POST(req: NextRequest) {
     await writePendingLecture({
       id: lectureId,
       title,
-      speaker: rabbi || 'Unknown',
+      speaker: normalizeRabbi(rabbi || 'Unknown'),
       date,
       description: description ?? '',
       audio_url: publicUrl,

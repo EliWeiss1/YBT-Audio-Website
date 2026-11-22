@@ -7,6 +7,7 @@ import { writePendingLecture, writeFailedIngestion, writeCategoryFlag, triggerDe
 import { sendFlagNotification, sendFailureNotification, sendOAuthMissingNotification, sendFallbackMatchNotification, sendParseFailureNotification } from '@/lib/ingest/notifier'
 import { dispatchBrowserIngest } from '@/lib/ingest/github-dispatch'
 import { generateLectureId, applyTitleSuffix } from '@/lib/ingest/types'
+import { normalizeRabbi } from '@/lib/rabbi-normalization'
 
 export const runtime = 'nodejs'
 
@@ -98,7 +99,7 @@ export async function POST(req: NextRequest) {
     await writePendingLecture({
       id: lectureId,
       title,
-      speaker: rabbi || 'Unknown',
+      speaker: normalizeRabbi(rabbi || 'Unknown'),
       date,
       description,
       audio_url: uploadResult.publicUrl,

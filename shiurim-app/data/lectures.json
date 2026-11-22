@@ -39998,6 +39998,16 @@
           "label": "Middot",
           "lectures": [
             {
+              "id": "MISC-03",
+              "title": "Kiddushin 30b - Drag the Yetzer Hara to the Beit Midrash",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/discussion/discussion-middot/MISC-03.mp3",
+              "duration": 3355,
+              "description": "",
+              "speaker": "Rabbi Weiss",
+              "date": "2026-11-19",
+              "tags": []
+            },
+            {
               "id": "YBT-1142169",
               "title": "Mishlei 13:11 - How to Get Money, Middos, and Wisdom FAST! ... Well, Slow",
               "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/Schneeweiss/1142169.mp3",
@@ -210607,6 +210617,16 @@
           "id": "gemarah-kiddushin",
           "label": "Kiddushin",
           "lectures": [
+            {
+              "id": "MISC-03",
+              "title": "Kiddushin 30b - Drag the Yetzer Hara to the Beit Midrash",
+              "audioUrl": "https://pub-f7e468cb523143d080b0a917b25420fd.r2.dev/discussion/discussion-middot/MISC-03.mp3",
+              "duration": 3355,
+              "description": "",
+              "speaker": "Rabbi Weiss",
+              "date": "2026-11-19",
+              "tags": []
+            },
             {
               "id": "YBT-1177931",
               "title": "Kibud Av Va’eim #17 - Kiddushin 30b",

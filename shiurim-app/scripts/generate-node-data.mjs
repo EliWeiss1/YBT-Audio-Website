@@ -3,6 +3,7 @@ import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { createClient } from '@supabase/supabase-js'
 import { resolvePlacement } from './lib/merge-pending.mjs'
+import { normalizeRabbi } from './lib/rabbi-normalization.cjs'
 import dotenv from 'dotenv'
 dotenv.config({ path: '.env.local' })
 
@@ -79,6 +80,19 @@ function processNode(node, breadcrumb) {
 ;(async () => {
   const rawData = JSON.parse(readFileSync(join(__dirname, '../data/lectures.json'), 'utf8'))
   const data = await mergePendingLectures(rawData)
+
+  // Backstop: canonicalize every speaker name (data/rabbi-aliases.json) so the
+  // generated files are consistent even if a variant slipped into lectures.json or
+  // a pending_lectures row. `npm run normalize-speakers` fixes the source file itself.
+  let renamed = 0
+  ;(function canonicalizeSpeakers(node) {
+    for (const lec of node.lectures ?? []) {
+      const canon = normalizeRabbi(lec.speaker)
+      if (canon !== lec.speaker) { lec.speaker = canon; renamed++ }
+    }
+    for (const child of node.children ?? []) canonicalizeSpeakers(child)
+  })({ children: data.categories })
+  if (renamed) console.log(`[generate] Canonicalized ${renamed} speaker name(s) — run \`npm run normalize-speakers\` to fix data/lectures.json`)
 
   mkdirSync(outDir, { recursive: true })
 
@@ -166,7 +180,7 @@ function processNode(node, breadcrumb) {
   for (const list of Object.values(ttlSections)) list.sort((a, b) => a.ttlNumber - b.ttlNumber)
   writeFileSync(join(outDir, 'ttl.json'), JSON.stringify({ sections: ttlSections }))
 
-  // ── speakers.json — raw speaker → lecture count (client normalizes names) ────
+  // ── speakers.json — speaker (already canonicalized above) → lecture count ────
   const speakerCounts = {}
   for (const lec of flatCatalog) {
     if (lec.speaker) speakerCounts[lec.speaker] = (speakerCounts[lec.speaker] ?? 0) + 1

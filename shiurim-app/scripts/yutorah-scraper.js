@@ -18,6 +18,7 @@
 
 const fs   = require('fs');
 const path = require('path');
+const { normalizeRabbi } = require('./lib/rabbi-normalization.cjs');
 
 // ─── CLI args ─────────────────────────────────────────────────────────────────
 const args       = process.argv.slice(2);
@@ -807,7 +808,7 @@ function buildLecture(doc) {
     audioUrl:    buildAudioUrl(doc),
     duration:    durationSecs,
     description: doc.shiurdescription || '',
-    speaker:     str(doc.teacherfullname),
+    speaker:     normalizeRabbi(str(doc.teacherfullname)),
     date,
     tags,
     sourceId:    doc.shiurid,

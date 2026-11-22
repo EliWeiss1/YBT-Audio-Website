@@ -1,24 +1,16 @@
+// Speaker-name normalization. The alias data lives in data/rabbi-aliases.json so the
+// Node scripts (scripts/lib/rabbi-normalization.cjs — build step, data scripts) apply
+// exactly the same rules. Keep the matching logic below in sync with that file.
+import aliases from '../data/rabbi-aliases.json'
+
 // Canonical rabbi name → all raw variants that map to it
-const RABBI_GROUPS: Record<string, string[]> = {
-  'Rabbi Chait': ['Rabbi Yisroel Chait', 'Rabbi Chait'],
-  'Rabbi Mann': ['Rabbi Reuven Mann', 'Rabbi Mann'],
-  'Rabbi Bald': ['Rabbi Henoch Bald', 'Rabbi H. Bald', 'R. H. Bald', 'Rabbi Bald'],
-  'Rabbi Cinamon': ['Rabbi Zev Cinamon', 'Rabbi Z. Cinamon'],
-  'Rabbi Moskowitz': ['Rabbi M. Moskowitz', 'Rabbi Morton Moskowitz', 'Rabbi Moskowitz'],
-  'Rabbi David Markowitz': ['Rabbi David Markowitz', 'Rabbi D. Markowitz'],
-  'Rabbi Schneeweiss': ['Rabbi Matthew Schneeweiss', 'Rabbi Mathew Schneeweiss', 'Rabbi Schneeweiss'],
-  'Rabbi Aaron Zimmer': [
-    'Rabbi Aaron Zimmer', 'Rabbi Aron Zimmer', 'Rabbi Aharon Zimmer', 'Rabbi A. Zimmer', 'Rabbi Zimmer',
-  ],
-}
+const RABBI_GROUPS: Record<string, string[]> = aliases.groups
 
 // Fuzzy rules for names that arrive in many spellings (ingest filenames, email lines,
-// typos). Checked after the exact-variant map. Each pattern is matched against the
-// trimmed name; titles Rabbi/Rav/R. are interchangeable, the first name is optional,
-// and Zimmer/Zimer/Zymmer etc. all count.
-const RABBI_PATTERNS: Array<[RegExp, string]> = [
-  [/^(rabbi|rav|r\.?)\s+((a|aa?ron|aharon|ahron|arron)\.?\s+)?z[iy]mm?[ae]r$/i, 'Rabbi Aaron Zimmer'],
-]
+// typos). Checked after the exact-variant map, in order.
+const RABBI_PATTERNS: Array<[RegExp, string]> = (aliases.patterns as [string, string][]).map(
+  ([src, canonical]) => [new RegExp(src, 'i'), canonical],
+)
 
 // raw variant → canonical name (built once)
 const RAW_TO_CANONICAL: Record<string, string> = {}
@@ -32,7 +24,8 @@ for (const [canonical, variants] of Object.entries(RABBI_GROUPS)) {
 export function normalizeRabbi(raw: string): string {
   const exact = RAW_TO_CANONICAL[raw]
   if (exact) return exact
-  const trimmed = (raw ?? '').replace(/\s+/g, ' ').trim()
+  const trimmed = (raw ?? '').replace(/\s+/g, ' ').trim().replace(/\s*\(masoret\)$/i, '')
+  if (RAW_TO_CANONICAL[trimmed]) return RAW_TO_CANONICAL[trimmed]
   for (const [re, canonical] of RABBI_PATTERNS) {
     if (re.test(trimmed)) return canonical
   }

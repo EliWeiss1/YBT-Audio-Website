@@ -1,0 +1,47 @@
+{
+  "_comment": [
+    "Single source of truth for speaker-name normalization. Read by lib/rabbi-normalization.ts (app + ingest routes) and scripts/lib/rabbi-normalization.cjs (build + data scripts).",
+    "Style: 'Rabbi Surname' when only one rebbe has that surname; full name when the surname is shared (Chait, Feder, Zucker, Markowitz). Exception: Rabbi Aaron Zimmer.",
+    "groups: canonical -> exact raw variants. patterns: [regex, canonical], case-insensitive, matched in order against the trimmed name (whitespace collapsed, trailing '(Masoret)' removed). Put specific first names before the bare-surname rule for shared surnames.",
+    "After editing: run `npm run normalize-speakers` to rewrite data/lectures.json, then `npm test`."
+  ],
+  "groups": {
+    "Rabbi Chait": ["Rabbi Yisroel Chait", "Rabbi Chait"],
+    "Rabbi Pesach Chait": ["Rabbi Pesach Chait", "R. Pesach Chait"],
+    "Rabbi Chaim Ozer Chait": ["Rabbi Chaim Ozer Chait", "R. C.O. Chait", "R. Chamim Ozer Chait"],
+    "Mrs. Freyda Chait": ["Mrs. Freyda Chait", "Mrs. F. Chait", "Freyda Chait"],
+    "Rabbi Mann": ["Rabbi Reuven Mann", "Rabbi Mann"],
+    "Rabbi Bald": ["Rabbi Henoch Bald", "Rabbi H. Bald", "R. H. Bald", "Rabbi Bald"],
+    "Rabbi Cinamon": ["Rabbi Zev Cinamon", "Rabbi Z. Cinamon", "Rabbi Cinamon"],
+    "Rabbi Moskowitz": ["Rabbi M. Moskowitz", "Rabbi Morton Moskowitz", "Rabbi Moskowitz"],
+    "Rabbi David Markowitz": ["Rabbi David Markowitz", "Rabbi D. Markowitz"],
+    "Rabbi Schneeweiss": ["Rabbi Matthew Schneeweiss", "Rabbi Mathew Schneeweiss", "Rabbi Schneeweiss"],
+    "Rabbi Aaron Zimmer": ["Rabbi Aaron Zimmer", "Rabbi Aron Zimmer", "Rabbi Aharon Zimmer", "Rabbi A. Zimmer", "Rabbi Zimmer"],
+    "Rabbi E. Feder": ["Rabbi E. Feder", "Rabbi Elie Feder", "Rabbi Feder"],
+    "Rabbi Saul Zucker": ["Rabbi Saul Zucker", "S. Zucker", "Rabbi Zucker"],
+    "Rabbi Fistel": ["Rabbi Moshe Fistel", "Rabbi Fistel"],
+    "Rabbi Barany": ["Rabbi Eliezer Barany", "Rabbi Barany", "Rabbi Barany (Masoret)"],
+    "Rabbi Gober": ["Rabbi Ruben Gober", "Rabbi Gober"],
+    "Rabbi Trachtman": ["Rabbi Yaakov Trachtman", "Rabbi Trachtman"],
+    "Rabbi Gisser": ["Rabbi Marshall Gisser", "R. M. Gisser", "Rabbi Gisser"]
+  },
+  "patterns": [
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?p(?:esach|esah|essach)?\\.?\\s*chait$", "Rabbi Pesach Chait"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:c\\.?\\s*o\\.?|ch[a-z]*\\s+o(?:zer|\\.)?)\\s*chait$", "Rabbi Chaim Ozer Chait"],
+    ["^(?:(?:mrs|rebbetzin|rebbitzen)\\.?\\s+)?f(?:r[eiy]+da)?\\.?\\s*chait$", "Mrs. Freyda Chait"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:(?:y|yisroel|yisrael|israel)\\.?\\s+)?chait$", "Rabbi Chait"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:(?:r|reuven|reuvain|reuben)\\.?\\s+)?mann$", "Rabbi Mann"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:(?:h|henoch|chanoch)\\.?\\s+)?bald$", "Rabbi Bald"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:(?:z|zev|ze'ev)\\.?\\s+)?cinn?amm?on$", "Rabbi Cinamon"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:(?:m|morton)\\.?\\s+)?moskowitz$", "Rabbi Moskowitz"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:(?:d|david)\\.?\\s+)?markowitz$", "Rabbi David Markowitz"],
+    ["^(?:rabbi|rav|r\\.?)\\s+((a|aa?ron|aharon|ahron|arron)\\.?\\s+)?z[iy]mm?[ae]r$", "Rabbi Aaron Zimmer"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:(?:e|eli|elie)\\.?\\s+)?feder$", "Rabbi E. Feder"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:(?:s|saul|shaul)\\.?\\s+)?zucker$", "Rabbi Saul Zucker"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:(?:m|moshe)\\.?\\s+)?fistel$", "Rabbi Fistel"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:(?:e|eliezer)\\.?\\s+)?barany$", "Rabbi Barany"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:(?:r|ruben|reuben|reuven)\\.?\\s+)?gober$", "Rabbi Gober"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:(?:y|yaakov|yaacov|yakov)\\.?\\s+)?trachtman$", "Rabbi Trachtman"],
+    ["^(?:(?:rabbi|rav|harav|r)\\.?\\s+)?(?:(?:m|marshall)\\.?\\s+)?gisser$", "Rabbi Gisser"]
+  ]
+}

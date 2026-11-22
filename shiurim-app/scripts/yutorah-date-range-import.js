@@ -81,24 +81,8 @@ function resolveTargetId(doc) {
   return specificMatch || firstMatch || null;
 }
 
-// Rabbi-normalization: canonical name -> known raw variants (copied from
-// lib/rabbi-normalization.ts; keep in sync if that map changes).
-const RABBI_GROUPS = {
-  'Rabbi Chait': ['Rabbi Yisroel Chait', 'Rabbi Chait'],
-  'Rabbi Mann': ['Rabbi Reuven Mann', 'Rabbi Mann'],
-  'Rabbi Bald': ['Rabbi Henoch Bald', 'Rabbi H. Bald', 'R. H. Bald', 'Rabbi Bald'],
-  'Rabbi Cinamon': ['Rabbi Zev Cinamon', 'Rabbi Z. Cinamon'],
-  'Rabbi Moskowitz': ['Rabbi M. Moskowitz', 'Rabbi Morton Moskowitz', 'Rabbi Moskowitz'],
-  'Rabbi David Markowitz': ['Rabbi David Markowitz', 'Rabbi D. Markowitz'],
-  'Rabbi Schneeweiss': ['Rabbi Matthew Schneeweiss', 'Rabbi Mathew Schneeweiss', 'Rabbi Schneeweiss'],
-};
-const RAW_TO_CANONICAL = {};
-for (const [canonical, variants] of Object.entries(RABBI_GROUPS)) {
-  for (const v of variants) RAW_TO_CANONICAL[v] = canonical;
-}
-function normalizeRabbi(raw) {
-  return RAW_TO_CANONICAL[raw] || raw;
-}
+// Rabbi-normalization: shared rules from data/rabbi-aliases.json.
+const { normalizeRabbi } = require('./lib/rabbi-normalization.cjs');
 // Loose last-name key for cross-speaker-scheme comparison (e.g. "Rabbi Matt
 // Schneeweiss" vs "Rabbi M. Schneeweiss" vs "R. Schneeweiss").
 function speakerKey(raw) {

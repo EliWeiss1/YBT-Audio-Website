@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "generate-node-data": "node scripts/generate-node-data.mjs",
+    "normalize-speakers": "node scripts/normalize-speakers.mjs",
     "dev": "node scripts/generate-node-data.mjs && next dev",
     "build": "node scripts/generate-node-data.mjs && next build",
     "start": "next start",

@@ -45,6 +45,7 @@ require('dotenv').config({ path: '.env.local' });
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
+const { normalizeRabbi } = require('./lib/rabbi-normalization.cjs');
 const { S3Client, PutObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 
 const API_BASE = 'https://classic.yutorah.org/search/_get_search_results.cfm';
@@ -227,7 +228,7 @@ async function resolveAudio(opts) {
         title: doc.shiurtitle || '',
         description: doc.shiurdescription || '',
         date: (doc.shiurdate || '').substring(0, 10),
-        speaker: doc.teacherfullname || '',
+        speaker: normalizeRabbi(doc.teacherfullname || ''),
       },
     };
   }
@@ -310,7 +311,7 @@ function parseArgs(argv) {
     else if (a === '--id') out.id = val();
     else if (a === '--title') out.title = val();
     else if (a === '--description') out.description = val();
-    else if (a === '--speaker') out.speaker = val();
+    else if (a === '--speaker') out.speaker = normalizeRabbi(val());
     else if (a === '--date') out.date = val();
     else if (a === '--tags') out.tags = val().split(',').map((s) => s.trim()).filter(Boolean);
     else if (a === '--node-path') out.nodePath = val().split(',').map((s) => s.trim()).filter(Boolean);

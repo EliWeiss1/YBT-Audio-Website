@@ -9530,5 +9530,16 @@
       "bereishit-vayeitzei"
     ],
     "seconds": 2.6
+  },
+  "1197370": {
+    "status": "done",
+    "r2Key": "Schneeweiss/1197370.mp3",
+    "placements": [
+      "nach-mishlei"
+    ],
+    "insertedInto": [
+      "nach-mishlei"
+    ],
+    "seconds": 56.5
   }
 }
